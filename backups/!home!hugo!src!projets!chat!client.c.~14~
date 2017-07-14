@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include "messages.h"
+#include "aux.h"
+
+#define SERVER "patron"
+
+typedef struct
+{
+  char* tube ;
+  char* pseudo ;
+  int id ;
+} data ;
+
+void* thread_ecriture (void *arg)
+{
+  data* mydata = (data*)arg ;
+  while(1)
+    {
+      send_msg(mydata->pseudo, mydata->id, mydata->tube) ;
+    }
+  pthread_exit(NULL);
+}
+
+void main_loop(char* tube_server)
+{
+  int signal ;
+  pthread_t sender ;
+  data mydata ;
+
+  mydata.tube = tube_server ;
+
+  /* INITIALISATION DU CLIENT */
+ init:
+  /* Tant que le pseudo existe, l'utilisateur doit en saisir un nouveau,
+     puis on crée le tube de l'utilisateur.*/
+  mydata.pseudo = get_input("Pseudo>") ;
+  while (access(mydata.pseudo, F_OK ) == 0 )
+    {
+      fprintf(stderr, "Ce pseudo n'est pas disponible.\n") ;
+      free(mydata.pseudo) ;
+      mydata.pseudo = get_input("Pseudo>") ;
+    }
+
+  /* On connecte le client au serveur. */
+  mydata.id = connexion(tube_server, mydata.pseudo, mydata.pseudo) ;
+  
+  /* ENVOI DES MESSAGES */
+  pthread_create(&sender, NULL, thread_ecriture, &mydata) ;
+
+  /* RÉCEPTION DES MESSAGES */
+ next:
+  signal = receive_msg(mydata.pseudo, mydata.pseudo) ;  
+  if (signal > 0) // on continue tant qu'il n'y a ni SHUT ni OUT
+    goto next ;
+
+  /* FIN DE SESSION */
+  deconnexion(mydata.pseudo) ;
+  free(mydata.pseudo) ;
+  pthread_cancel(sender) ;
+
+  if (signal == 0) // si OUT on réinitialise le client
+    goto init ;
+}
+
+int main(int argc, char* argv[])
+{
+  main_loop(SERVER) ;
+  return 1 ;
+}

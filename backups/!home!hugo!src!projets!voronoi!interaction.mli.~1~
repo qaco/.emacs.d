@@ -1,0 +1,3 @@
+val play_one : Voronoi.voronoi -> unit
+val play_all : Voronoi.voronoi list -> unit
+val dd : string -> Graphics.color -> unit

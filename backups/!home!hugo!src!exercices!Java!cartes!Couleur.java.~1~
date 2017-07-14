@@ -1,0 +1,16 @@
+public enum Couleur {
+    PIQUE("noir"),
+    TREFLE("noir"),
+    COEUR("rouge"),
+    CARREAU("rouge") ;
+
+    private String couleur = "" ;
+
+    Couleur(String c) {
+	this.couleur = editor ;
+    }
+
+    public String toString() {
+	return this.name ;
+    }
+}

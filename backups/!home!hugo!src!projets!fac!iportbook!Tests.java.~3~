@@ -1,0 +1,24 @@
+import java.util.List ;
+
+import protocol.tests.ProtocolTestRunner ;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
+public class Tests {
+    public static void main(String[] args) {
+        boolean b = true ;
+        List<Result> results = ProtocolTestRunner.run() ;
+        System.out.println("Protocol") ;
+        for (Result r : results) {
+            for (Failure failure : r.getFailures()) {
+                b = false ;
+                System.out.println(failure.toString());
+            }
+        }
+        if (b)
+            System.out.println("Protocol : success !") ;
+        else
+            System.out.println("Protocol : failure !") ;
+    }
+}
+        

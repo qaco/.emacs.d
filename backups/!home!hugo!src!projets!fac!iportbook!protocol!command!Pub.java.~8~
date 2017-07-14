@@ -1,0 +1,50 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.UnknownResultException ;
+import java.io.IOException ;
+import java.io.Writer ;
+import java.io.OutputStreamWriter ;
+import java.net.Socket ;
+import java.util.List ;
+import service.User ;
+import protocol.feedback.PubDone ;
+import protocol.knock.PublicityKnock ;
+import protocol.AbstractPub ;
+import protocol.flow.PubFlow ;
+
+public class Pub extends AbstractPub implements Anon {
+
+    public Pub(byte[] i, byte[] p, byte[] m) throws UnknownResultException {
+        super(i, p, m) ;
+    }
+    
+    public Pub(String i, String p, String m) {
+        super(i, p, m) ;
+    }
+
+    public void exec(Socket so,List<User> all) throws IOException,
+                                                      UnknownResultException {
+        Writer w = new OutputStreamWriter(so.getOutputStream()) ;
+        w.write((new PubDone()).toString()) ;
+        for (User guy : all) {
+            guy.pushFlow(new PubFlow(this.ip.toByte(),
+                                     this.port.toByte(),
+                                     this.message.toByte())) ;
+            guy.sendUDP(new PublicityKnock(guy.howManyFlows())) ;
+        }
+    }
+
+    public String getId() {
+        return this.ip.toString() ;
+    }
+    
+    public String toString() {
+        return
+            AnonVals.PUB + MainVals.SEP +
+            this.ip.toString() + MainVals.SEP +
+            this.port.toString() + MainVals.SEP +
+            this.message.toString() + MainVals.EOF ;
+    }
+}
+            

@@ -1,0 +1,46 @@
+open MyrtheAST
+open Mv
+
+let repr : value -> int = function
+  | Bool true -> 1
+  | Bool false -> 0
+  | Int i -> i
+
+let rec compil = function
+  | Const v ->
+     [Consti (repr v)]
+  | Unop (Succ, e) ->
+     (compil e) @ [Push; Consti 1; Addi]
+  | Binop (Plus, e1, e2) ->
+     (compil e1) @ [Push] @ (compil e2) @ [Addi]
+  | Binop (Times, e1, e2) ->
+     (compil e1) @ [Push] @ (compil e2) @ [Multi]
+  | Binop (Eq, e1, e2) ->
+     (compil e1) @ [Push] @ (compil e2) @ [Eqi]
+  | Binop (Leq, e1, e2) ->
+     (compil e1) @ [Push] @ (compil e2) @ [Leqi]
+  | If (e1, e2, e3) ->
+     let l1 = compil e1 in
+     let l2 = compil e2 in
+     let l3 = compil e3 in
+     (* Si le test est vrai, goto l2 *)
+     l1 @ [BranchIf (List.length l3+2)]
+     (* Le test est faux, exécution de l3 puis goto end *)
+     @ l3 @ [Branch (List.length l2+1)]
+     (* Éxécution de l2 *)
+     @ l2
+  | Caseof(e1, l, e2) ->
+     let gen_test (couple : expression*expression) : instr list = 
+       let expr = compil (snd couple) in
+       (* On compare le label avec la condition principale. *)
+       (compil (Binop (Eq, e1, fst couple))) @
+         (* On a un goto qui saute l'expression correspondant au label. *)
+         (* Si on tombe juste, on saute ce goto (et on exécute l'expression). *)
+         (* Sinon, on prend le goto. *)
+         [BranchIf 1; Branch (List.length expr+1)] @ expr in
+     let tests = List.flatten (List.map gen_test l) in
+     (* On ajoute le else. Problème : il sera exécuté dans tous les cas.*)
+     tests @ (compil e2)
+  | _ -> failwith "this is your job, student !"
+
+

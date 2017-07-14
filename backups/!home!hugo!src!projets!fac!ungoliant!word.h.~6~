@@ -1,0 +1,103 @@
+/**
+ * \file word.h
+ * \brief Interface publique du type Word.
+ * \details Le type Word représente une chaîne de caractères.
+ * \author Hugo Pompougnac
+ * \version 0.9
+ * \date 16/02/2017
+ */
+
+#ifndef WORD
+#define WORD
+
+#include <stdio.h>
+
+typedef Word ;
+
+/**
+ * \fn Word construct_word(const char *src, size_t n)
+ * \brief Construit un Word.
+ * \param src Les caractères du Word.
+ * \param n La taille du Word.
+ * \return Le nouveau Word.
+ */
+Word construct_word(const char *src, size_t n) ;
+
+/**
+ * \fn Word construct_empty_word()
+ * \brief Construit un Word vide.
+ * \return Le nouveau Word.
+ */
+Word construct_empty_word() ;
+
+/**
+ * \fn int destruct_word(Word* myword)
+ * \brief Détruit un Word.
+ * \param myword Le Word à détruire.
+ * \return -1 en cas d'échec.
+ */
+int destruct_word(Word* myword) ;
+
+/**
+ * \fn int add_char_word(Word* myword, const char mychar)
+ * \brief Ajoute un caractère à la fin d'un Word.
+ * \param myword Le Word auquel ajouter un caractère.
+ * \param mychar Le caractère à ajouter.
+ * \return -1 en cas d'échec.
+ */
+int add_char_word(Word* myword, const char mychar) ;
+
+/**
+ * \fn int insert_char_word(Word* myword, const char mychar, const int index)
+ * \brief Insère un caractère dans un Word.
+ * \param myword Le Word dans lequel insérer un caractère.
+ * \param mychar Le caractère à insérer.
+ * \param index L'index où insérer le caractère.
+ * \return -1 en cas d'échec.
+ */
+int insert_char_word(Word* myword, const char mychar, const int index) ;
+
+/**
+ * \fn int remove_char_word(Word* myword, const int index)
+ * \brief Supprime un caractère dans un Word.
+ * \param myword Le Word duquel supprimer un caractère.
+ * \param index Le caractère (représenté par son index) à supprimer.
+ * \return -1 en cas d'échec.
+ */
+int remove_char_word(Word* myword, const int index) ;
+
+/**
+ * \fn char* get_content_word(const Word myword)
+ * \brief Extrait le contenu (caractères) d'un Word.
+ * \param myword Le Word duquel extraire le contenu.
+ * \return Le contenu (caractères) du Word.
+ */
+char* get_content_word(const Word myword) ;
+
+/**
+ * \fn char get_char_word(const Word myword, const int index)
+ * \brief Extrait un caractère d'un Word.
+ * \param myword Le Word duquel extraire un caractère.
+ * \param index Le caractère (représenté par son index) à extraire.
+ * \return Le caractère extrait.
+ */
+char get_char_word(const Word myword, const int index) ;
+
+/**
+ * \fn int get_size_word(const Word myword)
+ * \brief Extrait la taille d'un Word.
+ * \param myword Le Word duquel extraire la taille.
+ * \return La taille du Word.
+ */
+int get_size_word(const Word myword) ;
+
+/**
+ * \fn int print_word(Word myword, FILE* stream)
+ * \brief Imprime un Word dans un fichier.
+ * \param myword Le Word à imprimer.
+ * \param stream Le fichier dans lequel imprimer le Word (peut être stdout).
+ * \return -1 en cas d'échec.
+ */
+int print_word(Word myword, FILE* stream) ;
+
+#endif

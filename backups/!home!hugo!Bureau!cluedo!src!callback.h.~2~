@@ -1,0 +1,8 @@
+#ifndef CALLBACK
+#define CALLBACK
+
+gboolean cb_click_on_tile (GtkWidget *widget,
+			   GdkEvent  *event,
+			   gpointer data) ;
+
+#endif

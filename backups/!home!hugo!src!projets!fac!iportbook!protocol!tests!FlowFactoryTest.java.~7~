@@ -1,0 +1,94 @@
+package protocol.tests ;
+
+import exception.UnkknownResultException ;
+import protocol.flow.* ;
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+public class FlowFactoryTest {
+
+    private FlowFactory pf ;
+
+    @Before
+    public final void setFlowFactoryUp() {
+        this.pf = new FlowFactory() ;
+    }
+
+    @Test
+    public final void testAskFriendFlowBuild() {
+        String tmp = "EIRF> hugo+++" ;
+        try {
+            Flow p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testFirstMessageFlowBuild() {
+        String tmp = "SSEM> hugo 12+++" ;
+        try {
+            Flow p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testSomeMessageFlowBuild() {
+        String tmp = "MUNEM 5 hello how are you+++" ;
+        try {
+            Flow p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testFlooMessageFlowBuild() {
+        String tmp = "OOLF> hugo hello how are you+++" ;
+        try {
+            Flow p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testFriendshipNOBuild() {
+        String tmp = "NOFRI hugo+++" ;
+        try {
+            Flow p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testFriendshipOKBuild() {
+        String tmp = "FRIEN hugo+++" ;
+        try {
+            Flow p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+        @Test
+    public final void testNoFlowBuild() {
+        String tmp = "NOCON+++" ;
+        try {
+            Flow p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+}

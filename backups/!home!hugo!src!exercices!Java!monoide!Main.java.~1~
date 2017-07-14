@@ -1,0 +1,8 @@
+public class Java {
+    public static void main(String[] args) {
+	IntegerAddMon add = new IntegerAddMon() ;
+	IntegerTimesMon times = new IntegerTimesMon() ;
+	ListMon list = new ListMon() ;
+	System.out.println(add.unit().toString()) ;
+    }
+}

@@ -1,0 +1,39 @@
+package protocol.flow ;
+
+import exception.* ;
+import main.MainVals ;
+import client.src.ServerRequest;
+import service.User ;
+import exception.UnknownResultException ;
+import protocol.answer.Answer ;
+import protocol.answer.AnswerFactory ;
+import java.util.List ;
+import java.io.Reader ;
+import java.io.IOException ;
+
+public class AskFriendFlow implements Flow {
+    private String id ;
+
+    public AskFriendFlow(String myid) throws UnknownResultException {
+        this.id = myid ;
+        if (this.id.length() > MainVals.MAX_ID_SIZE)
+            throw new RuleBrokenException("AskFriendFlow", "id > 8") ;
+    }
+    
+    public void exec(ServerRequest c) throws IOException {
+	c.client_reponse_fr(this.id);
+    }
+
+    public void treatAnswer(User rep, List<User> all) throws IOException,
+                                                             UnknownResultException {
+        AnswerFactory f = new AnswerFactory() ;
+        User want = User.getUserFromList(this.id, all) ;
+        Reader r = rep.getReader() ;
+        Answer a = f.create(r) ;
+        a.exec(want, rep) ;
+    }
+
+    public String toString() {
+        return FlowVals.ASK_FRIEND + " " + this.id + MainVals.EOF ;
+    }
+}

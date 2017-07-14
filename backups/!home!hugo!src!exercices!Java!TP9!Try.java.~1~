@@ -1,0 +1,53 @@
+public abstract class Try<R,E extends Throwable> {
+    private R resulat ;
+    private E cause ;
+
+    public abstract boolean isSuccess ;
+    public abstract R get() ;
+    public abstract E getError() ;
+    public abstract <U> U tryCatch(Function<R,U> onSuccess,
+				   Function<R,U> onFailure) ;
+
+    public static <R,E extends Throwable> Try<R,E> success(R result) {
+	return new Try<R,E>() {
+	    public <U> U tryCatch(Function<R,U> onSuccess,
+				  Function<R,U> onFailure) {
+		return onSuccess.apply(result) ;
+	    }
+	    public R get() {
+		return result ;
+	    }
+	    public E getError() {
+		throw new FailureException("actually a success") ;
+	    }
+	    public boolean isSuccess() {
+		return true ;
+	    }
+
+	};
+    }
+
+    public static <R,E extends Throwable> Try<R,E> failure(E error) {
+	return new Try<R,E>() {
+	    public <U> U tryCatch(Function<R,U> onSuccess,
+				  Function<R,U> onFailure) {
+		return onFailure.apply(error) ;
+	    }
+	    public R get() {
+		throw new FailureException("actually a failure") ;
+	    }
+	    public E getError() {
+		return error ;
+	    }
+	    public boolean isSuccess() {
+		return false ;
+	    }
+	};
+    }
+
+    static class FailureException extends RuntimeException {
+	public FailureException(Throwable origine) {
+	    super(origine) ;
+	}
+    }
+}

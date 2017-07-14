@@ -1,0 +1,5 @@
+public class Hello implements Protocol {
+    public String ToString() {
+        return "HELLO+++" ;
+    }
+}

@@ -1,0 +1,14 @@
+import java.util.List ;
+import java.util.ArrayList ;
+
+public class ListMon extends Monoid<Integer> {
+    public IntegerAddMon() {
+	this.mult = new BinaryOperator<Integer>()
+		    { public Integer apply(List x, List y) {
+			    return x.addAll(y) ; } } ;
+	this.unit = new Supplier<Integer>()
+		    { public Integer get() {
+			    return new ArrayList() ; } } ;
+    }
+}
+			    

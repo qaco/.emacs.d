@@ -1,0 +1,10 @@
+package protocol ;
+
+public class ProtocolVals {
+    public static final int MAX_ID_SIZE = 8 ;
+    public static final int MAX_FLOO_SIZE = 200 ;
+    public static final int MAX_MSG_SIZE = 200 ;
+    public static final int MAX_PUB_SIZE = 200 ;
+    public static final int MAX_UDP = 9999 ;
+    public static final int MAX_MDP = 65535 ;
+}

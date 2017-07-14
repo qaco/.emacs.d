@@ -1,0 +1,16 @@
+#include <stdlib.h>
+#include <gtk/gtk.h>
+
+GtkWidget* get_tile_img(const char* path, const int size) {
+  GError* gerror = NULL ;
+  GtkWidget* res ;
+  GdkPixbuf* tmp = gdk_pixbuf_new_from_file_at_scale (path, size, size,
+						      FALSE, &gerror);
+  if(!tmp) {
+    printf("error message: %s\n", gerror->message);
+    exit(1);
+  }
+  res = gtk_image_new_from_pixbuf(tmp) ;
+  return res ;
+}
+

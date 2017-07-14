@@ -1,0 +1,60 @@
+package protocol.feedback ;
+
+import main.MainVals ;
+import java.io.InputStreamReader ;
+import java.io.IOException ;
+import client.src.ServerRequest;
+import client.src.ConnexionRequest;
+import exception.* ;
+import protocol.field.* ;
+
+public class FirstList implements Feedback {
+    NumItemField num ;
+
+    public FirstList(byte[] mynum) throws UnknownResultException {
+        this.num = new NumItemField(mynum) ;
+    }
+    
+    public FirstList(String mynum) {
+        this.num = new NumItemField(mynum) ;
+    }
+
+    public FirstList(int mynum) {
+        this.num = new NumItemField(mynum) ;
+    }
+    
+    public String formated_num(String num) {
+   	try {
+	    return String.format("%03d", num);
+	} catch (Exception e) {
+	    System.out.println("[Problème au formatage.]");
+	}
+	return "";
+    }
+
+    public String toString() {
+        String mynum = String.valueOf(this.num) ;
+        return
+            FeedbackVals.FIRST_LIST + MainVals.SEP +
+            mynum + MainVals.EOF ;
+    }
+
+    public void exec(ServerRequest c) throws IOException {
+	if (this.num.getInt() > 0) {
+	    try {
+		System.out.println("[Nombre de clients : "+this.num.toString()+".]");
+		FeedbackFactory fbackfactory = new FeedbackFactory();
+		for (int i = 0; i < this.num.getInt() ; i++) {
+		    // System.out.println("Attente de l'id "+(i+1)+"======");
+		    Feedback fback_list = fbackfactory.create(new InputStreamReader(c.getIs()));
+		    fback_list.exec(c); 	
+		    // System.out.println("L'id"+(i+1)+" a été traité ======");
+		}
+	    } catch (UnknownResultException e) {
+		System.out.println("[Requête inconnue du serveur.]");
+	    } 
+        }
+    }
+
+    public void exec(ConnexionRequest cr) {}
+}

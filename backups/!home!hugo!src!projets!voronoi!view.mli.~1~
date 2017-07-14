@@ -1,0 +1,4 @@
+val is_border : 'a array array -> int -> int -> bool
+val draw_voronoi : int array array -> Voronoi.voronoi -> unit
+val draw_region : int -> int array array -> Voronoi.voronoi -> unit
+val dd : string -> Graphics.color -> unit

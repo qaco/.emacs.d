@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+ 
+#include <curl/curl.h>
+ 
+struct MemoryStruct {
+  char *memory;
+  size_t size;
+};
+ 
+static size_t
+WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
+{
+  size_t realsize = size * nmemb;
+  struct MemoryStruct *mem = (struct MemoryStruct *)userp;
+ 
+  mem->memory = realloc(mem->memory, mem->size + realsize + 1);
+  if(mem->memory == NULL) {
+    /* out of memory! */ 
+    printf("not enough memory (realloc returned NULL)\n");
+    return 0;
+  }
+ 
+  memcpy(&(mem->memory[mem->size]), contents, realsize);
+  mem->size += realsize;
+  mem->memory[mem->size] = 0;
+ 
+  return realsize;
+}
+ 
+static int
+url_to_ram(char* myurl, struct MemoryStruct* text)
+{
+  /* Contiendra les données enregistrées. */
+  struct MemoryStruct chunk;
+  CURL *curl_handle;
+  CURLcode res;
+
+
+  /* Grandira autant que besoin. */
+  chunk.memory = malloc(1);
+  /* Pas de données pour le moment. */
+  chunk.size = 0;    
+ 
+  curl_handle = curl_easy_init();
+ 
+  /* L'URL à télécharger. */ 
+  curl_easy_setopt(curl_handle, CURLOPT_URL, myurl);
+  /* Envoyer les données à la fonction d'enregistrement en mémoire. */
+  curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+  /* Envoyer la structure où enregistrer les données à la fonction d'enregistrement. */
+  curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
+  /* some servers don't like requests that are made without a user-agent
+     field, so we provide one */ 
+  curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+ 
+  /* On fait le téléchargement. */ 
+  res = curl_easy_perform(curl_handle);
+ 
+  /* Vérification des erreurs. */ 
+  if(res != CURLE_OK) {
+    fprintf(stderr, "curl_easy_perform() failed: %s\n",
+            curl_easy_strerror(res));
+  }
+  else {
+    *text = chunk ;
+  }
+ 
+  curl_easy_cleanup(curl_handle);
+ 
+  return 0;
+}
+
+int crawl (char* first_url)
+{
+  struct MemoryStruct text ;
+  int ret ;
+
+  curl_global_init(CURL_GLOBAL_ALL);
+
+  ret = url_to_ram(first_url, &text) ;
+
+  /* Test */
+  printf("%lu bytes retrieved\n", (long)text.size) ;
+  /* Appeler le parser ici et boucler tant qu'il y a des URL */
+  
+  curl_global_cleanup();
+
+  return 0 ;
+}

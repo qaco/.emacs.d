@@ -1,0 +1,52 @@
+#include "word.h"
+
+typedef struct liste {
+  Word word ;
+  struct liste *next ;
+} WordList ;
+
+WordList build_wordlist(Word myword)
+{
+  WordList res ;
+  res.word = myword ;
+  res.next = NULL ;
+}
+
+WordList* next_wordlist(WordList mylist)
+{
+  return mylist.next ;
+}
+
+Word get_word_wordlist(WordList mylist)
+{
+  return mylist.word ;
+}
+
+int set_word_wordlist(WordList *mylist, Word myword)
+{
+  mylist->word = myword ;
+  return 0 ;
+}
+
+int append_wordlist(WordList* dest, WordList* src)
+{
+  WordList *last = dest ;
+  while (last->next != NULL)
+    last = last-> next ;
+  last->next = src ;
+
+  return 0 ;
+}
+
+int destruct_wordlist(WordList mylist)
+{
+  WordList tmp = mylist ;
+  while (tmp.next != NULL) {
+    destruct_word(tmp.word) ;
+    tmp = *(tmp.next) ;
+  }
+  destruct_word(tmp.word) ;
+
+  return 0 ;
+}
+    

@@ -1,0 +1,153 @@
+import gi, Control
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk, Gdk
+
+TEXTVIEW_SIZE = 50, 50
+
+def button_from_stock(gtkid):
+    size = Gtk.IconSize.from_name(gtkid)
+    img = Gtk.Image.new_from_stock(gtkid, Gtk.IconSize.BUTTON)
+    but = Gtk.Button.new()
+    but.set_image(img)
+    return but
+
+def pack_widgets(widgets, setup):
+    box = Gtk.Box(orientation=setup,spacing=6)
+    for elt in widgets : box.pack_start(elt, False, True, 0)
+    return box
+
+def get_header(title):
+    box = Gtk.Box(orientation=1,spacing=6)
+    h_sep = Gtk.Separator.new(0)
+    box.pack_start(h_sep, False, True, 0)
+    h_box = Gtk.Box(orientation=0,spacing=6)
+    box.pack_start(h_box, False, True, 0)
+    lab = Gtk.Label(title)
+    h_box.pack_start(lab, False, True, 0)
+    return box
+
+def start_new_section(box, title):
+    h_sep = Gtk.Separator.new(0)
+    box.pack_start(h_sep, False, True, 0)
+    h_box = Gtk.Box(orientation=0,spacing=6)
+    box.pack_start(h_box, False, True, 0)
+    lab = Gtk.Label(title)
+    h_box.pack_start(lab, False, True, 0)
+
+class Window(Gtk.Window):
+    def __init__(self, height, param_width):
+        Gtk.Window.__init__(self, title="Hello World")
+        self.height = height
+        self.param_width = param_width
+        view_width = param_width*2
+        self.set_default_size(param_width + view_width,height)
+        self.connect("delete-event", Gtk.main_quit)
+
+        view_lab = Gtk.Label()
+        view_lab.set_markup("<b>Aperçu</b>")
+        self.img = Gtk.Image.new()
+        vert_sep = Gtk.Separator.new(1)
+        param_lab = Gtk.Label()
+        param_lab.set_markup("<b>Paramètres</b>")
+
+        whole_box = Gtk.Box(orientation=0,spacing=6)
+        param_box = Gtk.Box(orientation=1,spacing=6)
+        param_box.set_size_request(param_width,height)
+        param_box.pack_start(param_lab, False, True, 0)
+        whole_box.pack_start(param_box, False, True, 0)
+        self.control_box = Gtk.Box(orientation=1,spacing=6)
+        param_box.pack_start(self.control_box, False, True, 0)
+        whole_box.pack_start(vert_sep, False, True, 0)
+        view_box = Gtk.Box(orientation=1,spacing=6)
+        view_box.pack_start(view_lab, False, True, 0)
+        view_box.pack_start(self.img, True, True, 0)
+        whole_box.pack_start(view_box, True, True, 0)
+        
+        self.add(whole_box)
+
+        self.generate_controls()
+
+    def generate_controls(self):
+        raise NotImplementedError()
+        
+    def clear_controls(self):
+        for widget in self.control_box.get_children():
+            widget.destroy()
+        
+class Console(Window):
+
+    def __init__(self, height, param_width):
+        super().__init__(height, param_width)
+
+    def generate_controls(self):
+        self.img_but = button_from_stock(Gtk.STOCK_OPEN)
+        img_box = pack_widgets([self.img_but], 0)
+        
+        text_view = Gtk.TextView()
+        text_view.set_size_request(TEXTVIEW_SIZE[0],TEXTVIEW_SIZE[1])
+        self.text_buf = text_view.get_buffer()
+        self.font_combo = Gtk.ComboBoxText.new()
+        self.text_switch = button_from_stock(Gtk.STOCK_DISCONNECT)
+        self.fontcol_but = Gtk.ColorButton.new()
+        self.textup_but = button_from_stock(Gtk.STOCK_GO_UP)
+        self.textdown_but = button_from_stock(Gtk.STOCK_GO_DOWN)
+        self.textleft_but = button_from_stock(Gtk.STOCK_GO_BACK)
+        self.textright_but = button_from_stock(Gtk.STOCK_GO_FORWARD)
+        text_box = pack_widgets([self.text_switch, self.fontcol_but,
+                                 self.textup_but, self.textdown_but,
+                                 self.textleft_but, self.textright_but], 0)
+        
+        self.bg_switch = button_from_stock(Gtk.STOCK_DISCONNECT)
+        self.bgcol_but = Gtk.ColorButton.new()
+        self.bg_spin = Gtk.SpinButton.new_with_range(0,100,1)
+        bg_box = pack_widgets([self.bg_switch, self.bgcol_but,
+                               self.bg_spin],0)
+        
+        self.logo_but = button_from_stock(Gtk.STOCK_OPEN)
+        logo_box = pack_widgets([self.logo_but], 0)
+
+        self.control_box.pack_start(get_header("Image principale"), False, True, 0)
+        self.control_box.pack_start(img_box, False, True, 0)
+        self.control_box.pack_start(get_header("Message"), False, True, 0)
+        self.control_box.pack_start(text_view, False, True, 0)
+        self.control_box.pack_start(self.font_combo, False, True, 0)
+        self.control_box.pack_start(text_box, False, True, 0)
+        self.control_box.pack_start(get_header("Arrière-plan"), False, True, 0)
+        self.control_box.pack_start(bg_box, False, True, 0)
+        self.control_box.pack_start(get_header("Logo"), False, True, 0)
+        self.control_box.pack_start(logo_box, False, True, 0)
+        
+    def link_param_widgets(self, control):
+        self.text_buf.connect("changed", control.change_text_typed)
+        for item in control.fonts_list :
+            self.font_combo.append_text(item)
+        self.font_combo.connect("changed", control.font_changed)
+        self.text_switch.connect("clicked", control.switch_text_clicked)
+        self.fontcol_but.connect("color-set", control.textcolor_changed)
+        self.textup_but.connect("clicked", control.texttoup_clicked)
+        self.textdown_but.connect("clicked", control.texttodown_clicked)
+        self.textleft_but.connect("clicked", control.texttoleft_clicked)
+        self.textright_but.connect("clicked", control.texttoright_clicked)
+        self.bg_switch.connect("clicked", control.switch_bg_clicked)
+        self.bgcol_but.connect("color-set", control.bgcolor_changed)
+        self.bg_spin.connect("value-changed", control.bgcolor_changed)
+
+
+    def add_controler(self, control):
+        r_shut = control.shut_col[0]*256
+        g_shut = control.shut_col[1]*256
+        b_shut = control.shut_col[2]*256
+        shut_col = Gdk.Color(r_shut, g_shut, b_shut)
+        self.bgcol_but.set_color(shut_col)
+
+        self.bg_spin.set_value(control.shut_alpha)
+        
+        r_text = control.text_col[0]*256
+        g_text = control.text_col[1]*256
+        b_text = control.text_col[2]*256
+        text_col = Gdk.Color(r_text, g_text, b_text)
+        self.fontcol_but.set_color(text_col)
+
+        self.img_but.connect("clicked", control.open_image_clicked)
+
+        control.window = self

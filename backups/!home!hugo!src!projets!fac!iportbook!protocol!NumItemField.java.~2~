@@ -1,0 +1,30 @@
+package protocol ;
+
+import exception.* ;
+
+public class NumItemField extends NumStringField {
+
+    public NumItemField(byte[] myport) throws UnknownResultException {
+        super(myport) ;
+    }
+
+    public NumItemField(int myport) {
+        super(myport, ProtocolVals.NUMITEM_SIZE) ;
+    }
+
+    protected void checkRules() throws UnknownResultException {
+        String tmp = this.toString() ;
+        try {
+            int val = this.getInt() ;
+            if (val > ProtocolVals.MAX_NUMCLIENT)
+                throw new RuleBrokenException("NumItemField",tmp+" too big");
+            else if (val < 0)
+                throw new RuleBrokenException("NumItemField", tmp + " < 0");
+        } catch (NumberFormatException e) {
+            throw new WrongTypeException("NumItemField", tmp, "int") ;
+        }
+        if (this.field.length > ProtocolVals.NUMITEM_SIZE)
+            throw new RuleBrokenException("NumItemField",tmp+" too long");
+    }
+}
+        

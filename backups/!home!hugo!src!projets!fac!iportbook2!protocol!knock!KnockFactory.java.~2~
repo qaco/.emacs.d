@@ -1,0 +1,32 @@
+package protocol.knock ;
+
+import exception.UnknownResultException ;
+import java.net.DatagramPacket ;
+import java.util.Arrays ;
+
+public class KnockFactory {
+
+    public Knock create (DatagramPacket p) throws UnknownResultException {
+        return create(p.getData()) ;
+    }
+    
+    public Knock create (byte[] notif) throws UnknownResultException {
+        System.out.println(notif.length) ;
+        byte[] flows = Arrays.copyOfRange(notif, 1, 3);
+        switch(notif[0]) {
+        case KnockVals.FRIENDSHIP_CODE :
+            return new FriendshipKnock(flows) ;
+        case KnockVals.FRIENDOK_CODE :
+            return new OkFriendKnock(flows) ;
+        case KnockVals.FRIENDNO_CODE :
+            return new NoFriendKnock(flows) ;
+        case KnockVals.MESSAGE_CODE :
+            return new MessageKnock(flows) ;
+        case KnockVals.FLOO_CODE :
+            return new FlooKnock(flows) ;
+        case KnockVals.PUBLICITY_CODE :
+            return new PublicityKnock(flows) ;
+        default : throw new UnknownResultException() ;
+        }
+    }
+}

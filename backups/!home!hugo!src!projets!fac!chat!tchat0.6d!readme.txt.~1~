@@ -1,0 +1,28 @@
+/*! \mainpage Readme
+*
+* \section compil_sec Compilation
+*
+* Pour compiler, lancer la commande \c make dans le répertoire des sources.
+* Il est nécessaire d'avoir installé <b>ncurses-dev</b>.
+*
+* \section util_sec Utilisation
+*
+* \subsection exec Lancer le serveur et le/les clients
+* Pour lancer le serveur, lancer la commande <tt>./server</tt> dans le répertoire
+* des sources. Pour lancer un client, lancer la commande <tt>./client</tt>.
+*
+* \subsection connec Se connecter au serveur
+* Pour se connecter au serveur, il suffit de saisir le pseudo et le nom du tube
+* lorsqu'ils sont demandés.
+*
+* \subsection cmds Commandes
+* Lorsqu'on saisit un texte lambda, il est envoyé comme message public. Mais
+* il existe également des commandes :
+* <ul>
+* <li> <tt>private to pseudo</tt> envoie un message privé à l'utilisateur
+* correspondant.
+* <li> <tt>list</tt> demande au serveur de fournir la liste des utilisateurs
+* connectés.
+* <li> <tt>quit</tt> demande au serveur de déconnecter l'utilisateur courant.
+* </ul>
+*/

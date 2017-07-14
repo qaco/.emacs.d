@@ -1,0 +1,17 @@
+package protocol.command ;
+import protocol.* ;
+public class FlooMessage extends FromClient {
+
+    private String mess ;
+
+    public FlooMessage (String mymess) {
+        if (mymess.length() <= 200)
+            this.mess = mymess ;
+        else
+            this.mess = mymess.substring(0, 200) ;
+    }
+
+    public String toString() {
+        return "FLOO? " + this.mess + "+++" ;
+    }
+}

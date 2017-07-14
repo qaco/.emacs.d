@@ -1,0 +1,276 @@
+#include "data_container.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+int create_word_data(struct word_data **wdata, Word *word, size_t *struct_size) {
+    *struct_size = sizeof(struct word_data) - 1 + word->size * sizeof(char);
+    *wdata = malloc(*struct_size);
+    if (*wdata == NULL) return EXIT_FAILURE;
+    memcpy(&((*wdata)->word)[0], word->memory, word->size);
+    return EXIT_SUCCESS;
+}
+
+void free_word_data(struct word_data *wdata) {
+    free(wdata);
+}
+
+int create_url_data(struct url_data **udata, Word *url, size_t *struct_size) {
+    *struct_size = sizeof(struct url_data) - 1 + url->size * sizeof(char);
+    *udata = malloc(*struct_size);
+    if (*udata == NULL) return EXIT_FAILURE;
+    memcpy(&((*udata)->url)[0], url->memory, url->size);
+    return EXIT_SUCCESS;
+}
+
+void free_url_data(struct url_data *udata) {
+    free(udata);
+}
+
+int create_pair_data(struct pair_data **pdata, uint64_t word_id,
+                     uint64_t url_id, size_t *struct_size) {
+    *struct_size = sizeof(struct pair_data);
+    *pdata = malloc(*struct_size);
+    if (*pdata == NULL) return EXIT_FAILURE;
+    (*pdata)->word_id = word_id;
+    (*pdata)->url_id = url_id;
+    (*pdata)->nb_occurence = -1;
+    return EXIT_SUCCESS;
+}
+
+void free_pair_data(struct pair_data *pdata) {
+    free(pdata);
+}
+
+int create_word_data_list(struct word_data_list **wdata_list) {
+    *wdata_list = malloc(sizeof(struct word_data_list));
+    if (*wdata_list == NULL) {
+        return EXIT_FAILURE;
+    }
+    (*wdata_list)->wdata = NULL;
+    (*wdata_list)->next_word_data_list = NULL;
+    return EXIT_SUCCESS;
+}
+
+int add_wdata_clone_to_list(struct word_data_list *wdata_list,
+                            uint64_t wdata_key, struct word_data *wdata,
+                            size_t wdata_size) {
+    int ret;
+    int is_head;
+    struct word_data_list *new_wdata_list;
+    if (wdata_list->wdata == NULL) {
+        new_wdata_list = wdata_list;
+        is_head = 1;
+    } else {
+        ret = create_word_data_list(&new_wdata_list);
+        if (ret == EXIT_FAILURE) {
+            return ret;
+        }
+        new_wdata_list->next_word_data_list = wdata_list->next_word_data_list;
+        wdata_list->next_word_data_list = new_wdata_list;
+        is_head = 0;
+    }
+    new_wdata_list->wdata = malloc(wdata_size);
+    if (new_wdata_list->wdata == NULL) {
+        if (!is_head) free_word_data_list(new_wdata_list);
+        return EXIT_FAILURE;
+    }
+    memcpy(new_wdata_list->wdata, wdata, wdata_size);
+    new_wdata_list->wdata_size = wdata_size;
+    new_wdata_list->wdata_key = wdata_key;
+    return EXIT_SUCCESS;
+}
+
+int add_word_data_list(struct word_data_list *wdata_list, Word *word) {
+    int ret;
+    int is_head;
+    struct word_data_list *new_wdata_list;
+    if (wdata_list->wdata == NULL) {
+        new_wdata_list = wdata_list;
+        is_head = 1;
+    } else {
+        ret = create_word_data_list(&new_wdata_list);
+        if (ret == EXIT_FAILURE) {
+            return ret;
+        }
+        new_wdata_list->next_word_data_list = wdata_list->next_word_data_list;
+        wdata_list->next_word_data_list = new_wdata_list;
+        is_head = 0;
+    }
+    ret = create_word_data(&(new_wdata_list->wdata), word,
+                           &(new_wdata_list->wdata_size));
+    if (ret == EXIT_FAILURE) {
+        if (!is_head) free_word_data_list(new_wdata_list);
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
+
+void free_word_data_list(struct word_data_list *wdata_list) {
+    struct word_data_list *next;
+    for (next = wdata_list->next_word_data_list;
+         wdata_list == NULL;
+         wdata_list = next) {
+        next = wdata_list->next_word_data_list;
+        if (wdata_list->wdata != NULL) {
+            free_word_data(wdata_list->wdata);
+        }
+        free(wdata_list);
+    }
+}
+
+int create_url_data_list(struct url_data_list **udata_list) {
+    *udata_list = malloc(sizeof(struct url_data_list));
+    if (*udata_list == NULL) {
+        return EXIT_FAILURE;
+    }
+    (*udata_list)->udata = NULL;
+    (*udata_list)->next_url_data_list = NULL;
+    return EXIT_SUCCESS;
+}
+
+int add_udata_clone_to_list(struct url_data_list *udata_list,
+                            uint64_t udata_key, struct url_data *udata,
+                            size_t udata_size) {
+    int ret;
+    int is_head;
+    struct url_data_list *new_udata_list;
+    if (udata_list->udata == NULL) {
+        new_udata_list = udata_list;
+        is_head = 1;
+    } else {
+        ret = create_url_data_list(&new_udata_list);
+        if (ret == EXIT_FAILURE) {
+            return ret;
+        }
+        new_udata_list->next_url_data_list = udata_list->next_url_data_list;
+        udata_list->next_url_data_list = new_udata_list;
+        is_head = 0;
+    }
+    new_udata_list->udata = malloc(udata_size);
+    if (new_udata_list->udata == NULL) {
+        if (!is_head) free_url_data_list(new_udata_list);
+        return EXIT_FAILURE;
+    }
+    memcpy(new_udata_list->udata, udata, udata_size);
+    new_udata_list->udata_size = udata_size;
+    new_udata_list->udata_key = udata_key;
+    return EXIT_SUCCESS;
+}
+
+int add_url_data_list(struct url_data_list *udata_list, Word *url) {
+    int ret;
+    int is_head;
+    struct url_data_list *new_udata_list;
+    if (udata_list->udata == NULL) {
+        new_udata_list = udata_list;
+        is_head = 1;
+    } else {
+        ret = create_url_data_list(&new_udata_list);
+        if (ret == EXIT_FAILURE) {
+            return ret;
+        }
+        new_udata_list->next_url_data_list = udata_list->next_url_data_list;
+        udata_list->next_url_data_list = new_udata_list;
+        is_head = 0;
+    }
+    ret = create_url_data(&(new_udata_list->udata), url,
+                          &(new_udata_list->udata_size));
+    if (ret == EXIT_FAILURE) {
+        if (!is_head) free_url_data_list(new_udata_list);
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
+
+void free_url_data_list(struct url_data_list *udata_list) {
+    struct url_data_list *next;
+    for (next = udata_list->next_url_data_list;
+         udata_list == NULL;
+         udata_list = next) {
+        next = udata_list->next_url_data_list;
+        if (udata_list->udata != NULL) {
+            free_url_data(udata_list->udata);
+        }
+        free(udata_list);
+    }
+}
+
+int create_pair_data_list(struct pair_data_list **pdata_list) {
+    *pdata_list = malloc(sizeof(struct pair_data_list));
+    if (*pdata_list == NULL) {
+        return EXIT_FAILURE;
+    }
+    (*pdata_list)->pdata = NULL;
+    (*pdata_list)->next_pair_data_list = NULL;
+    return EXIT_SUCCESS;
+}
+
+int add_pdata_clone_to_list(struct pair_data_list *pdata_list,
+                            uint64_t pdata_key, struct pair_data *pdata,
+                            size_t pdata_size) {
+    int ret;
+    int is_head;
+    struct pair_data_list *new_pdata_list;
+    if (pdata_list->pdata == NULL) {
+        new_pdata_list = pdata_list;
+        is_head = 1;
+    } else {
+        ret = create_pair_data_list(&new_pdata_list);
+        if (ret == EXIT_FAILURE) {
+            return ret;
+        }
+        new_pdata_list->next_pair_data_list = pdata_list->next_pair_data_list;
+        pdata_list->next_pair_data_list = new_pdata_list;
+        is_head = 0;
+    }
+    new_pdata_list->pdata = malloc(pdata_size);
+    if (new_pdata_list->pdata == NULL) {
+        if (!is_head) free_pair_data_list(new_pdata_list);
+        return EXIT_FAILURE;
+    }
+    memcpy(new_pdata_list->pdata, pdata, pdata_size);
+    new_pdata_list->pdata_size = pdata_size;
+    new_pdata_list->pdata_key = pdata_key;
+    return EXIT_SUCCESS;
+}
+
+int add_pair_data_list(struct pair_data_list *pdata_list, uint64_t word_id,
+                       uint64_t url_id) {
+    int ret;
+    int is_head;
+    struct pair_data_list *new_pdata_list;
+    if (pdata_list->pdata == NULL) {
+        new_pdata_list = pdata_list;
+        is_head = 1;
+    } else {
+        ret = create_pair_data_list(&new_pdata_list);
+        if (ret == EXIT_FAILURE) {
+            return ret;
+        }
+        new_pdata_list->next_pair_data_list = pdata_list->next_pair_data_list;
+        pdata_list->next_pair_data_list = new_pdata_list;
+        is_head = 0;
+    }
+    ret = create_pair_data(&(new_pdata_list->pdata), word_id, url_id,
+                           &(new_pdata_list->pdata_size));
+    if (ret == EXIT_FAILURE) {
+        if (!is_head) free_pair_data_list(new_pdata_list);
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
+
+void free_pair_data_list(struct pair_data_list *pdata_list) {
+    struct pair_data_list *next;
+    for (next = pdata_list->next_pair_data_list;
+         pdata_list == NULL;
+         pdata_list = next) {
+        next = pdata_list->next_pair_data_list;
+        if (pdata_list->pdata != NULL) {
+            free_pair_data(pdata_list->pdata);
+        }
+        free(pdata_list);
+    }
+}

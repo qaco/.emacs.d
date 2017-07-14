@@ -1,0 +1,14 @@
+#ifndef WORD
+#define WORD
+
+typedef Word ;
+
+Word construct_word(const char *src, size_t n) ;
+Word construct_empty_word() ;
+int destruct_word(Word myword) ;
+int add_char_word(Word* myword, const char mychar) ;
+int insert_char_word(Word* myword, const char mychar, const int index) ;
+int remove_char_word(Word* myword, const int index) ;
+char get_char_word(const Word myword, const int index) ;
+
+#endif

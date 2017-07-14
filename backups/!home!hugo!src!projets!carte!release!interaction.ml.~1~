@@ -1,0 +1,10 @@
+open Voronoi
+
+let example = List.hd Examples.examples ;;
+let regions = regions_voronoi taxicab example ;;
+let mat_adj = adjacences_voronoi example ;;
+let result = compute example mat_adj ;;
+let display = regions_voronoi taxicab result ;;
+  open_graph " 900x900" ;;
+    draw_voronoi display result ;;
+    

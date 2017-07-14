@@ -1,0 +1,14 @@
+package main ;
+
+public class MainVals {
+    public static boolean verbose = true ;
+    public static int SERVERPORT = 1213 ;
+    public static int clientport = 631 ;
+    public static final String EOF = "+++" ;
+    public static final String SEP = " " ;
+    
+    public static void describe(String s) {
+        if (MainVals.verbose)
+            System.out.println(s) ;
+    }
+}

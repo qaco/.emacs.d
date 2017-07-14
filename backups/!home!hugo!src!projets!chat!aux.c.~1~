@@ -1,0 +1,91 @@
+char* int_to_string(int nb)
+{
+  char* res = malloc(sizeof(char)*(NB_SIZE+1)) ;
+  char* tmp = malloc(sizeof(char)*(NB_SIZE+1)) ;
+  int offset ;
+
+  sprintf(tmp,"%d",nb) ;
+  offset = NB_SIZE - strlen(tmp) ;
+  for (int i = 0 ; i < offset ; i++)
+    *(res + i) = '0' ;
+  strcpy(res + offset, tmp) ;
+  free(tmp) ;
+  return res ;
+}
+
+char* add_a_string (char** init, char *toadd)
+{
+  int issize = strlen(toadd) ;
+  char* ssize = int_to_string(issize) ;
+
+  *init = realloc(*init, strlen(*init) + NB_SIZE + issize + 1) ;
+  strcat(*init, ssize) ;
+  strcat(*init, toadd) ;
+
+  free(ssize) ;
+  return *init ;
+}
+
+char* get_input ()
+{
+  int size_buffer = 1 ;
+  char* input = malloc(sizeof(char)*size_buffer) ;
+  int i ;
+  char tmp = getchar() ;
+  
+  for (i = 0 ; tmp != '\n' && tmp != EOF ; i++)
+    {
+      if (size_buffer >= i)
+        {
+          size_buffer *= 2 ;
+          input = realloc(input, sizeof(char)*(size_buffer + 1)) ;
+        }
+      *(input + i) = tmp ;
+      tmp = getchar() ;
+    }
+  *(input + i) = '\0' ;
+
+  return input ;
+}
+
+char* build_msg(char* typem, ...)
+{
+  va_list va ;
+  int
+    is_in = strcmp(typem, T_IN) == 0,
+    is_public = strcmp(typem, T_PUBLIC) == 0,
+    is_private = strcmp(typem, T_PRIVE) == 0,
+    is_admin = strcmp(typem, T_ADMIN) == 0 ;
+  int total_size ;
+  char* res = malloc(sizeof(char)*(strlen(typem) + 1)) ;
+  char* new_res ;
+  
+  strcpy(res,typem) ;
+  va_start(va,typem) ;
+
+  if (!is_admin && !is_in)
+    {
+      int iid = va_arg(va,int) ;
+      char* sid = int_to_string(iid) ;
+      
+      res = realloc(res, sizeof(char)*(strlen(res) +
+                                       NB_SIZE + 1)) ;
+      strcat(res,sid) ;
+      free(sid) ;
+    }
+
+  if (is_private || is_in)
+    add_a_string(&res, va_arg(va, char*)) ;
+  if (is_public || is_private || is_in)
+    add_a_string(&res, va_arg(va, char*)) ;
+
+  total_size = strlen(res) + NB_SIZE ;
+  new_res = int_to_string(total_size) ;
+  new_res = realloc(new_res, strlen(new_res) + strlen(res)) ;
+  strcat(new_res,res) ;
+  free(res) ;
+  res = new_res ;
+
+  return new_res ;
+}
+

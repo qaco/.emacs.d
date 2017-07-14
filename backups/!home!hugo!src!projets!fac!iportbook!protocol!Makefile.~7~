@@ -1,0 +1,23 @@
+JC = javac
+
+JUNIT_PATH = /usr/share/java/junit4.jar
+PROTOCOL_PATH = ./
+FB_PATH = feedback/
+CMD_PATH = command/
+FLOW_PATH = flow/
+CODE_PATHS = $(PROTOCOL_PATH):$(FB_PATH):$(CMD_PATH):$(FLOW_PATH)
+TESTS_PATH = tests/
+TARGET_PATH = class/
+PROTOCOL_SRC = $(addprefix $(PROTOCOL_PATH),$(wildcard *.java))
+FB_SRC = $(addprefix $(FB_PATH),$(wildcard *.java))
+CMD_SRC = $(addprefix $(CMD_PATH),$(wildcard *.java))
+FLOW_SRC = $(addprefix $(FLOW_PATH),$(wildcard *.java))
+TESTS_SRC = $(addprefix $(TESTS_PATH),CommandFactoryTest.java FeedbackFactoryTest.java FlowFactoryTest.java TestRunner.java)
+
+test: TestRunner.class
+
+TestRunner.class: $(PROTOCOL_SRC) $(FB_SRC) $(CMD_SRC) $(FLOW_SRC) $(TESTS_SRC)
+	$(JC) -cp $(JUNIT_PATH):$(shell pwd)/../ -d $(TARGET_PATH) $^
+
+clean:
+	rm -r $(TARGET_PATH)*

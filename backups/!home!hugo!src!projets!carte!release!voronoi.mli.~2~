@@ -1,0 +1,19 @@
+type color_option = None | Some of Graphics.color
+type seed = { c : color_option; x : int; y : int; }
+type voronoi = { dim : int * int; seeds : seed array; }
+module Variables :
+  sig
+    type t = int * Graphics.color
+    val compare : 'a * 'b -> 'a * 'b -> int
+  end
+module Sat :
+  sig
+    type literal = bool * Variables.t
+    val solve : literal list list -> literal list option
+  end
+val euclide : int -> int -> int -> int -> int
+val taxicab : int -> int -> int -> int -> int
+val regions_voronoi :
+  (int -> int -> int -> int -> int) -> voronoi -> int array array
+val adjacences_voronoi : voronoi -> int array array -> bool array array
+val compute : voronoi -> bool array array -> voronoi

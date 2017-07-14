@@ -1,0 +1,8 @@
+package exception ;
+
+public class TooFewArgsException extends UnknownResultException {
+
+  public UnknownResultException() {
+    super(ExceptionVals.TOO_FEW);
+  }
+}

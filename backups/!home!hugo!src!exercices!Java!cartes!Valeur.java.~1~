@@ -1,0 +1,31 @@
+public enum Valeur {
+    AS(true,1),
+    DEUX(false,2),
+    TROIS(false,3),
+    QUATRE(false,4),
+    CINQ(false,5),
+    SIX(false,6),
+    SEPT(false,7),
+    HUIT(false,8),
+    NEUF(false,9),
+    DIX(false,10),
+    VALET(true,11),
+    DAME(true,12),
+    ROI(true,13) ;
+
+    private boolean figure ;
+    private int valeur ;
+
+    Valeur(boolean f, int v) {
+	this.figure = f ;
+	this.valeur = v ;
+    }
+
+    public boolean isFigure() {
+	return this.figure ;
+    }
+
+    public int getValeur() {
+	return this.valeur ;
+    }
+}

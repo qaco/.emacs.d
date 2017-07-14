@@ -1,0 +1,14 @@
+KC=kotlinc
+KMAIN=-include-runtime
+EXEC=EntierChainableKt.class
+
+all: $(EXEC)
+
+$(EXEC): EntierChainable.kt ChainableKt.class
+	$(KC) -d $@ $^ $(KMAIN)
+
+ChainableKt.class: Chainable.kt
+	$(KC) -d $@ $^
+
+clean:
+	rm -rf *.class

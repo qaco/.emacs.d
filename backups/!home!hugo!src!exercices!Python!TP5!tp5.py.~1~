@@ -1,0 +1,6 @@
+import re
+
+def extraire_lignes(s):
+    pattern = "[0-9]{4},[0-9]+,[0-9]+,[a-zA-Z]+"
+    mymatch = re.match(pattern,s)
+    print(mymatch)

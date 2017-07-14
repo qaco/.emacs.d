@@ -1,0 +1,7 @@
+package protocol.command ;
+
+import server.User ;
+
+public interface Command {
+    // public void exec(User myuser) ;
+}

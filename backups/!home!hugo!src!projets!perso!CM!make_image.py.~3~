@@ -1,0 +1,113 @@
+#! /usr/bin/env python3
+
+import sys
+from math import sqrt
+from PIL import Image, ImageDraw, ImageFont
+
+IMG_MAX_WIDTH = 1200
+IMG_MAX_HEIGHT = 630
+# OPACITY = 204
+MASK_OPACITY = 230
+PHI = (1+sqrt(5))/2
+FONT_PATH="fonts/Ubuntu-B.ttf"
+OFFSET_RATIO = 30
+TRANS_COLOR = (255, 255, 255, 0)
+
+class calc:
+    def __init__(self):
+        self.img = None
+        self.corner = None
+        self.size = None
+
+class mask(calc):
+    def __init__(self):
+        self.color = (0, 0, 0, MASK_OPACITY)
+
+    def bottomize_golden_ratio(self, upper_size):
+        self.corner = 0, int(upper_size[1]/PHI)
+        self.size = upper_size[0], upper_size[1] - self.corner[1]
+        self.img = Image.new('RGBA', upper_size, TRANS_COLOR)
+        draw = ImageDraw.Draw(self.img, 'RGBA')
+        draw.rectangle([self.corner, self.img.size], self.color)
+        
+class slogan(calc):
+    def __init__(self, mycalc, mytext):
+        self.text = None
+        self.font = None
+        self.color = (255,255,255)
+
+    def write_biggest(self, mytext, mycalc) :
+        self.text = mytext
+        self.img = Image.new('RGBA', mycalc.img.size, TRANS_COLOR)
+        # Positionnement du slogan
+        offset = max(mycalc.size[0], mycalc.size[1])/OFFSET_RATIO
+        self.corner = int(mycalc.corner[0] + offset), int(mycalc.corner[1] + offset)
+        max_size = int(mycalc.size[0] - offset*2), int(mycalc.size[1] - offset*2)
+        # Récupération du pinceau
+        draw = ImageDraw.Draw(self.img, 'RGBA')
+        # Détermination de la taille de fonte et instanciation de la fonte
+        fontsize = 0
+        test = True
+        while test:
+            fontsize += 1
+            self.font = ImageFont.truetype(FONT_PATH, fontsize)
+            stringsize = draw.textsize(self.text, self.font)
+            test = stringsize[0] < max_size[0] and stringsize[1] < max_size[1]
+            stringsize = draw.textsize(self.text, self.font)
+        # Centrage du texte
+        self.size = draw.textsize(self.text, self.font)
+        xcorn = mycalc.corner[0] + (mycalc.size[0] - self.size[0])/2
+        ycorn = mycalc.corner[1] + (mycalc.size[1] - self.size[1])/2
+        self.corner = int(xcorn), int(ycorn)
+        print(self.corner)
+        # Dessin du slogan
+        draw.text(self.corner, self.text, self.color, self.font)
+            
+class canvas:
+
+    def __init__(self):
+        self.img = None
+        self.onion = []
+        self.imask = -1
+        self.islogan = -1
+        
+    def set_img(self, path):
+        raw_img = Image.open(path)
+        self.img = raw_img.convert('RGBA')
+        size = self.img.size
+        while size[0] > IMG_MAX_WIDTH or size[1] > IMG_MAX_HEIGHT :
+            if size[0] > size[1] : size = IMG_MAX_WIDTH, size[1]
+            else : size = size[0], IMG_MAX_HEIGHT
+            self.main_img.thumbnail(size)
+            size = (self.main_img.width, self.main_img.height)
+
+    def set_slogan(self,mytext):
+        if self.islogan > -1 :
+            self.onion[self.islogan] = slogan(self.onion[self.imask], mytext)
+        else :
+            self.onion.append(slogan(self.onion[self.imask], mytext))
+            self.islogan = len(self.onion) - 1
+        self.onion[self.islogan] = slogan(self.onion[self.imask], mytext)
+        self.onion[self.islogan].write_biggest(mytext, self.onion[self.imask])
+
+    def set_mask(self):
+        self.onion.append(mask())
+        self.imask = len(self.onion) - 1
+        self.onion[self.imask].bottomize_golden_ratio(self.img.size)
+        if self.islogan > -1 :
+            set_slogan(self.onion[self.islogan].text)
+        
+    def merge_calcs(self) :
+        for calc in self.onion :
+            self.img = Image.alpha_composite(self.img, calc.img)
+        
+filename = sys.argv[1]
+text = sys.argv[2]
+im = canvas()
+im.set_img(filename)
+im.set_mask()
+im.set_slogan(text)
+im.merge_calcs()
+im.img.show()
+        
+    

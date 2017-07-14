@@ -1,0 +1,32 @@
+type 'a stack = Ptr of 'a list ref ;;
+
+let create () = Ptr(ref []);;
+let empty st = match st with | Ptr(l) -> (!l = []) ;;
+let pop st = match st with
+  | Ptr(l) -> match !l with
+	      | [] -> failwith "Liste vide"
+	      | a::p -> l.contents <- p ; a
+;;
+let peek st = match st with
+  | Ptr(l) -> match !l with
+	      | [] -> failwith "Liste vide"
+	      | a::p ->  a
+;;
+let push el st = match st with
+  | Ptr(l) -> l.contents <- el :: !l
+;;
+let is_equal st1 st2 = match (st1,st2) with
+  | (Ptr(l), Ptr(m)) -> List.for_all2 (fun x y -> x = y) !l !m
+;;
+let rec clone st = match st with
+  | Ptr(l) -> match !l with
+;;			     
+  
+let mysta = (Ptr(ref [1;2;3])) ;;
+  
+  pop mysta ;;
+    push 4 mysta ;;
+      mysta ;;
+	is_equal mysta mysta ;;
+				
+ 

@@ -1,0 +1,13 @@
+package protocol.command ;
+
+public class Deconnection extends Command {
+
+    public Deconnection(String myauthor) {
+        super(myauthor) ;
+    }
+    
+    public String toString() {
+        return CommandVals.DECONNECTION + CommandVals.EOF ;
+    }
+}
+        

@@ -1,0 +1,96 @@
+(* Liste des couleurs présentes dans un tableau, sans doublon et à *)
+(* l'exclusion de None *)
+let array_to_list a_colors =
+  let colors = ref [] in
+  for i = 0 to (length a_colors) - 1 do
+    match a_colors.(i) with
+    | Some c -> if not (List.mem c !colors) then colors := c::!colors;
+    | None -> ()
+  done; !colors
+
+(* Renvoie fnc avec un seul choix pour les régions pré-coloriées et avec *)
+(* tous les choix possibles pour les autres. *)    
+let rec existence_fnc i a_colors l_colors =
+  (* Associe toutes les couleurs à la seed i. *)
+  let rec make_exist_list i l_colors = match l_colors with
+    | [] -> []
+    | c::t -> (true, (i, c))::make_exist_list i t in
+  (* Stocke les régions pré-coloriées et génère les coloriages pour *)
+  (* les autres.*)
+  match i with
+  | a when (i = length a_colors) -> []
+  | a -> match a_colors.(i) with
+         | Some c -> [(true, (i, c))]::existence_fnc (i+1)
+                                                     a_colors
+                                                     l_colors
+         | None -> (make_exist_list i l_colors)::existence_fnc (i+1)
+                                                               a_colors
+                                                               l_colors
+
+let unicity_fnc a_colors l_colors = 
+  let rec make_unique_list_aux i cols1 cols2 = match cols1 with
+    | [c1] -> if i = 0 then [] else make_unique_list (i - 1) l_colors
+    | c1::c2::t1 ->
+       begin
+         match cols2 with
+         | [] -> make_unique_list_aux i (c2::t1) t1
+         | c3::t2 -> [(false, (i, c1));
+                      (false, (i, c3))]::make_unique_list_aux i cols1 t2
+       end
+    | _ -> failwith "make_unique_list_aux n'a pas ete appele correctement"
+  and make_unique_list i l_colors = match l_colors with
+    | [] -> []
+    | c::t -> make_unique_list_aux i l_colors t
+  in make_unique_list (length a_colors) l_colors
+
+(* Renvoie fnc interdisant aux régions adjacentes d'avoir la même *)
+(* couleur. *)
+let adjacence_fnc l_colors adj_mat =
+  (* Interdit aux seeds i et j d'avoir la même couleur. *)
+  let rec make_color_list cons_list i j l_colors = match l_colors with
+    | [] -> !cons_list
+    | c::t -> [(false, (i, c));
+               (false, (j, c))]::make_color_list cons_list i j t in
+  let cons_list = ref []
+  in for i = 0 to (length adj_mat) - 1 do
+       for j = i + 1 to (length adj_mat) - 1 do
+         if adj_mat.(i).(j) then
+           cons_list := make_color_list cons_list i j l_colors
+       done
+     done;
+     !cons_list
+
+(* Renvoie fnc obligeant l'existence, l'unicité et le respect des *)
+(* règles d'adjacence. *)
+let produce_constraints a_colors l_colors adj_mat =
+  (existence_fnc 0 a_colors l_colors)
+  @(unicity_fnc a_colors l_colors)
+  @(adjacence_fnc l_colors adj_mat)
+
+(* Extraction d'un coloriage à partir d'une affectation *)
+let affectation_to_vor solution vor =
+  let seed_arr = ref (make (length vor.seeds) { c=None; x=0; y=0 }) in
+  let rec affectation_to_vor_rec sol = match sol with
+    | [] -> seed_arr
+    | (b, (i, col))::tl ->
+       if b then
+         !seed_arr.(i) <- { c=Some col;
+                            x=vor.seeds.(i).x;
+                            y=vor.seeds.(i).y };
+       affectation_to_vor_rec tl in
+  { dim=vor.dim ; seeds = !(affectation_to_vor_rec solution)}
+
+(* Calcule et retourne l'affectation répondant aux contraintes. *)
+let get_result constraints = match (Sat.solve constraints) with
+  | Some a -> a
+  | None -> failwith "Il y a un probleme insoluble dans la liste"
+
+(* À partir d'un diagramme et de sa matrice d'adjacence, résoud le *)
+(* diagramme et renvoie le diagramme résolu. *)
+let compute vor adj_mat =
+  let array_col = extract_colors vor in
+  let constraints = produce_constraints array_col
+                                        (array_to_list array_col)
+                                        adj_mat in
+  let result = get_result constraints in
+  affectation_to_vor result vor

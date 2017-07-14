@@ -1,0 +1,12 @@
+package protocol.feedback ;
+
+public class Hello implements Feedback {
+    public String toString() {
+        return "HELLO+++" ;
+    }
+
+    public default boolean exec() {
+	System.out.println("[Connexion réussie.]");
+	return true;
+    }  
+}

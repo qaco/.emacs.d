@@ -1,0 +1,321 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/hugo/src/projets/fac/iportbook2/client/" . "src/")
+ ("/home/hugo/src/projets/fac/iportbook2/protocol/" . "field/")
+ ("/home/hugo/src/projets/fac/iportbook2/" . "main/")
+ ("/home/hugo/src/projets/fac/iportbook/client/" . "src/")
+ ("/home/hugo/src/projets/fac/iportbook/server/" . "tests/")
+ ("/home/hugo/src/projets/fac/iportbook/protocol/" . "flow/")
+ ("/home/hugo/src/projets/fac/iportbook/" . "service/")
+ ("/home/hugo/src/projets/fac/iportbook/exchange/protocol/" . "feedback/")
+ ("/home/hugo/src/projets/fac/iportbook/exchange/" . "tests/")
+ ("/home/hugo/src/projets/fac/ungoliant/" . "misc/")
+ ("/home/hugo/src/projets/" . "fac/")
+ ("/home/hugo/src/projets/fac/" . "iportbook/")
+ ("/home/hugo/Téléchargements/" . "mappagani-master/")
+ ("/home/hugo/src/projets/carte/" . "release/")
+ ("/home/hugo/src/exercices/Syst.c/TPC5/" . "myecho/")
+ ("/home/hugo/src/exercices/" . "Syst.c/")
+ ("/home/hugo/src/" . "projets/")
+ ("/home/hugo/Musique/00 Chansons/01 francophone/b/" . "Balavoine Daniel/")
+ ("/home/hugo/Musique/00 Chansons/01 francophone/a/" . "Amélie-les-crayons/")
+ ("/home/hugo/Musique/00 Chansons/01 francophone/" . "b/")
+ ("/home/hugo/Musique/00 Chansons/" . "01 francophone/")
+ ("/home/hugo/Musique/" . "00 Chansons/")
+ ("/home/hugo/src/exercices/Ocaml/" . "TP5/")
+ ("/home/hugo/src/exercices/Java/TP10/" . "liste chainee/")
+ ("/home/hugo/.emacs.d/elpa/" . "aggressive-indent-20161201.1001/")
+ ("/home/hugo/.emacs.d/" . "elpa/")
+ ("/home/hugo/src/exercices/Syst.c/TPC6/" . "miroir/")
+ ("/home/hugo/src/exercices/Syst.c/TPC9/" . "treedir/")
+ ("/home/hugo/src/projets/cluedo/ressources/" . "conf/")
+ ("/home/hugo/src/projets/cluedo/" . "ressources/")
+ ("/home/hugo/Bureau/exercices/Syst.c/TPC6/" . "miroir/")
+ ("/home/hugo/Bureau/exercices/" . "Syst.c/")
+ ("/home/hugo/Bureau/" . "exercices/")
+ ("/home/hugo/Bureau/cluedo/ressources/" . "conf/")
+ ("/home/hugo/Bureau/cluedo/" . "ressources/")
+ ("/home/hugo/Bureau/exercices/Java/" . "cartes/")
+ ("/home/hugo/Bureau/exercices/Syst.c/" . "TPC6/")
+ ("/home/hugo/src/exercices/Syst.c/" . "TPC5/")
+ ("/home/hugo/src/exercices/Java/" . "route/")
+ ("/home/hugo/" . "Téléchargements/")
+ ("/home/" . "hugo/")
+ ("/" . "home/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/hugo/src/projets/fac/iportbook/protocol/answer/"
+ "/home/hugo/src/projets/fac/iportbook/service/"
+ "/home/hugo/src/projets/fac/iportbook/protocol/flow/"
+ "/home/hugo/src/projets/fac/iportbook/protocol/command/"
+ "/home/hugo/src/projets/fac/iportbook/protocol/field/"
+ "/home/hugo/src/projets/fac/iportbook/protocol/"
+ "/home/hugo/src/projets/fac/iportbook/main/"
+ "/home/hugo/src/projets/fac/iportbook/protocol/feedback/"
+ "/home/hugo/src/projets/fac/iportbook/"
+ "/home/hugo/src/projets/fac/iportbook/client/src/"
+ "/home/hugo/src/projets/fac/iportbook2/protocol/field/"
+ "/home/hugo/src/projets/fac/iportbook2/main/"
+ "/home/hugo/src/projets/fac/iportbook2/service/"
+ "/home/hugo/src/projets/fac/iportbook2/"
+ "/home/hugo/src/projets/fac/iportbook2/client/src/"
+ "/home/hugo/src/projets/fac/iportbook2/exception/"
+ "/home/hugo/src/projets/fac/iportbook2/protocol/flow/"
+ "/home/hugo/src/projets/fac/iportbook2/protocol/command/"
+ "/home/hugo/src/projets/fac/iportbook2/protocol/knock/"
+ "/home/hugo/src/projets/fac/iportbook2/protocol/feedback/"
+ "/home/hugo/src/projets/fac/iportbook2/protocol/"
+ "/home/hugo/src/projets/fac/iportbook/protocol/knock/"
+ "/home/hugo/src/projets/fac/iportbook/protocol/tests/"
+ "/home/hugo/src/projets/fac/iportbook/exception/"
+ "/home/hugo/src/projets/fac/iportbook/protocol/notification/"
+ "/home/hugo/src/projets/fac/iportbook/server/"
+ "/home/hugo/src/projets/fac/iportbook/server/tests/"
+ "/home/hugo/src/projets/fac/iportbook/exchange/protocol/command/"
+ "/home/hugo/src/projets/fac/iportbook/exchange/protocol/feedback/"
+ "/home/hugo/src/projets/fac/iportbook/exchange/tests/"
+ "/home/hugo/src/projets/fac/iportbook/exchange/protocol/fromserver/"
+ "/home/hugo/src/projets/fac/iportbook/exchange/protocol/fromclient/"
+ "/home/hugo/src/projets/fac/iportbook/exchange/protocol/"
+ "/home/hugo/src/projets/fac/iportbook/exchange/"
+ "/home/hugo/src/projets/fac/ungoliant/"
+ "/home/hugo/src/projets/fac/ungoliant/misc/"
+ "/home/hugo/src/projets/fac/ungoliant/crawl/"
+ "/home/hugo/src/projets/fac/ungoliant/tests/"
+ "/home/hugo/src/projets/fac/ungoliant/db/"
+ "/home/hugo/src/exercices/Python/TP9/TP9/"
+ "/home/hugo/src/exercices/Python/TP9/"
+ "/home/hugo/src/projets/perso/CM/"
+ "/home/hugo/src/exercices/MV/Myrthe/"
+ "/home/hugo/src/exercices/MV/"
+ "/home/hugo/src/exercices/Python/TP7/"
+ "/home/hugo/src/exercices/Python/TP6/"
+ "/home/hugo/src/exercices/Python/TP4/"
+ "/home/hugo/src/exercices/Python/TP3/"
+ "/home/hugo/src/exercices/Python/TP2/"
+ "/home/hugo/src/exercices/Python/TP1/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "RefuseFriend.java"
+ "User.java"
+ "FriendshipOK.java"
+ "AskFriend.java"
+ "FirstMessage.java"
+ "Pub.java"
+ "FlooMessage.java"
+ "FieldVals.java"
+ "ProtocolVals.java"
+ "MainVals.java"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/hugo/src/projets/fac/iportbook/protocol/answer/" (22839 6890 232257 272000) "./" "../" "AcceptFriend.java" "AnswerFactory.java" "AnswerVals.java" "RefuseFriend.java" "Answer.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/service/" (22837 52803 653632 268000) "./" "../" "User.java" "tests/" "UserLife.java" "Server.java" "Contact.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/" (22837 52875 321633 417000) "./" "MainServer.java" "../" ".gitignore" "MainHacker.java" "testlog" "Makefile" "main/" "exception/" "README" "promoter/" "service/" "protocol/" "MainClient.java" "Tests.java" "client/" ".git/")
+
+ ("/home/hugo/src/projets/fac/iportbook/protocol/flow/" (22837 52803 653632 268000) "./" "FriendshipOK.java" "../" "FirstMessageFlow.java" "FlooMessageFlow.java" "NoFlow.java" "AskFriendFlow.java" "SomeMessageFlow.java" "Flow.java" "PubFlow.java" "FlowVals.java" "FriendshipNO.java" "FlowFactory.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/protocol/" (22837 52803 653632 268000) "./" "field/" "flow/" "ProtocolVals.java" "../" "feedback/" "Receiver.java" "knock/" "tests/" "BlockingReceiver.java" "answer/" "AbstractPub.java" "command/" "AbstractFirstMessage.java" "NonBlockingReceiver.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/protocol/command/" (22837 48263 521559 472000) "./" "../" "Registration.java" "AnonVals.class" "Pub.java" "SeeFriends.java" "SeeList.java" "SeeList.class" "AnonVals.java" "SomeMessage.class" "FirstMessage.java" "Connection.java" "Consultation.java" "Anon.class" "AskFriend.class" "Deconnection.class" "CommandVals.java" "Anon.java" "FlooMessage.java" "AnonFactory.class" "SomeMessage.java" "Deconnection.java" "Block.class" "UnBlock.class" "AskFriend.java" "UnBlock.java" "SeeFriends.class" "Consultation.class" "Command.class" "FlooMessage.class" "Registration.class" "Command.java" "FirstMessage.class" "DelFriend.class" "AnonFactory.java" "Block.java" "CommandFactory.java" "SomeMessageFactory.java" "Connection.class" "CommandFactory.class" "DelFriend.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/protocol/field/" (22837 47331 353544 526000) "FieldVals.java" "./" "MessField.java" "Field.java" "../" "NumItemField.class" "PassField.class" "NumMessField.class" "MessField.class" "IpDiffField.class" "PortField.class" "IpDiffField.java" "NumMessField.java" "PortField.java" "Field.class" "FieldVals.class" "IdField.java" "NumStringField.class" "NumItemField.java" "NumStringField.java" "IdField.class" "PassField.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/main/" (22837 47331 173544 523000) "./" "../" "MainVals.java" "MainVals.class")
+
+ ("/home/hugo/src/projets/fac/iportbook/client/src/" (22837 32064 201299 733000) "./" "Client.java" "../" "Abonnement.class" "ConnexionRequest.java" "Notifications.class" "Connexion.java" "Connexion.class" "ConnexionRequest.class" "ServerRequest.java" "Client.class" "ServerRequest.class" "Notifications.java" "Abonnement.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/protocol/feedback/" (22837 31925 989297 517000) "./" "MessageTransmitted.java" "../" "Feedback.java" "Feedback.class" "FirstList.java" "DelFriendOk.java" "Welcome.java" "Goodbye.java" "AskFriendOK.java" "BlockNO.java" "PubDone.java" "UnBlockNO.java" "FeedbackFactory.java" "Hello.java" "FlooDone.java" "UnBlockOK.java" "AskFriendNO.java" "BlockOK.java" "AckFriend.java" "SomeList.java" "MessageNotTransmitted.java" "FeedbackVals.java" "DelFriendNO.java")
+
+ ("/home/hugo/src/projets/fac/" (22836 18417 720198 2000) "./" "wordlist.c" "../" "voronoi/" "chat/" "iportbook/" "User.java" "voronoi.tar" "ungoliant/" "quorridor/" "ungoliant.tar.gz")
+
+ ("/home/hugo/src/projets/fac/iportbook2/protocol/field/" (22835 64676 579888 914000) "FieldVals.java" "./" "MessField.java" "Field.java" "ProtocolVals.java" "../" "NumItemField.class" "PassField.class" "NumMessField.class" "MessField.class" "PortField.class" "IpDiffField.java" "NumMessField.java" "PortField.java" "Field.class" "FieldVals.class" "IdField.java" "NumStringField.class" "NumItemField.java" "NumStringField.java" "IdField.class" "PassField.java")
+
+ ("/home/hugo/src/projets/fac/iportbook2/main/" (22835 63702 547873 297000) "./" "../" "MainVals.java" "MainVals.class")
+
+ ("/home/hugo/src/projets/fac/iportbook2/" (22835 63702 991873 304000) "./" "MainServer.java" "MainServer.class" "../" ".gitignore" "testlog" "Makefile" "projet-reseaux-2017.pdf" "main/" "exception/" "README" "promoter/" "service/" "protocol/" "MainClient.class" "MainClient.java" "Tests.java" "client/" ".git/")
+
+ ("/home/hugo/src/projets/fac/iportbook2/service/" (22835 60754 603826 29000) "./" "../" "User.java" "tests/" "UserLife.class" "Contact.class" "User.class" "Server.class" "UserLife.java" "Server.java" "Contact.java")
+
+ ("/home/hugo/src/projets/fac/iportbook2/exception/" (22835 60754 663826 30000) "./" "TooFewArgsException.java" "../" "ConnectionLostException.java" "NotExecutableException.java" "NotExecutableException.class" "UnknownCommandException.java" "UnknownCommandException.class" "RuleBrokenException.java" "UnknownResultException.java" "UnknownResultException.class" "TooFewArgsException.class" "RuleBrokenException.class" "WrongTypeException.java" "WrongTypeException.class" "BadSuffixException.java")
+
+ ("/home/hugo/src/projets/fac/iportbook2/client/src/" (22835 60754 991826 36000) "./" "Client.java" "../" "Abonnement.class" "ConnexionRequest.java" "Notifications.class" "Connexion.java" "Connexion.class" "ConnexionRequest.class" "ServerRequest.java" "Client.class" "ServerRequest.class" "Notifications.java" "Abonnement.java")
+
+ ("/home/hugo/src/projets/fac/iportbook2/protocol/" (22835 60754 655826 30000) "./" "field/" "flow/" "../" "feedback/" "Receiver.java" "knock/" "BlockingReceiver.class" "tests/" "AbstractFirstMessage.class" "BlockingReceiver.java" "answer/" "AbstractPub.java" "NonBlockingReceiver.class" "command/" "AbstractPub.class" "Receiver.class" "AbstractFirstMessage.java" "NonBlockingReceiver.java")
+
+ ("/home/hugo/src/projets/fac/iportbook2/protocol/flow/" (22835 56585 819879 63000) "./" "FriendshipOK.java" "AskFriendFlow.class" "../" "FirstMessageFlow.class" "FirstMessageFlow.java" "PubFlow.class" "FlooMessageFlow.java" "NoFlow.java" "AskFriendFlow.java" "SomeMessageFlow.java" "FlowVals.class" "Flow.java" "PubFlow.java" "FriendshipOK.class" "Flow.class" "FlowFactory.class" "FlooMessageFlow.class" "FlowVals.java" "FriendshipNO.java" "FriendshipNO.class" "NoFlow.class" "FlowFactory.java" "SomeMessageFlow.class")
+
+ ("/home/hugo/src/projets/fac/iportbook2/protocol/command/" (22835 55758 995859 342000) "./" "../" "Registration.java" "AnonVals.class" "Pub.java" "SeeList.java" "SeeList.class" "AnonVals.java" "SomeMessage.class" "Pub.class" "FirstMessage.java" "Connection.java" "Consultation.java" "Anon.class" "AskFriend.class" "Deconnection.class" "CommandVals.java" "Anon.java" "FlooMessage.java" "AnonFactory.class" "SomeMessage.java" "Deconnection.java" "SomeMessageFactory.class" "CommandVals.class" "AskFriend.java" "Consultation.class" "Command.class" "FlooMessage.class" "Registration.class" "Command.java" "FirstMessage.class" "AnonFactory.java" "CommandFactory.java" "SomeMessageFactory.java" "Connection.class" "CommandFactory.class")
+
+ ("/home/hugo/src/projets/fac/iportbook2/protocol/knock/" (22835 53748 323811 382000) "./" "../" "PublicityKnock.class" "FlooKnock.java" "PublicityKnock.java" "FlooKnock.class" "KnockVals.java" "KnockFactory.class" "KnockVals.class" "Knock.java" "NoFriendKnock.class" "OkFriendKnock.java" "MessageKnock.class" "MessageKnock.java" "FriendshipKnock.class" "NoFriendKnock.java" "Knock.class" "FriendshipKnock.java" "OkFriendKnock.class" "KnockFactory.java")
+
+ ("/home/hugo/src/projets/fac/iportbook2/protocol/feedback/" (22835 51739 455614 952000) "./" "MessageTransmitted.java" "FirstList.class" "../" "Feedback.java" "Feedback.class" "AskFriendOK.class" "MessageNotTransmitted.class" "FirstList.java" "AckFriend.class" "Welcome.java" "Goodbye.class" "SomeList.class" "Goodbye.java" "AskFriendNO.class" "AskFriendOK.java" "PubDone.java" "FeedbackFactory.java" "Hello.java" "PubDone.class" "MessageTransmitted.class" "FlooDone.java" "Welcome.class" "FeedbackFactory.class" "AskFriendNO.java" "FlooDone.class" "Hello.class" "AckFriend.java" "SomeList.java" "MessageNotTransmitted.java" "FeedbackVals.java" "FeedbackVals.class")
+
+ ("/home/hugo/src/projets/fac/iportbook2/client/" (22835 8530 64433 724000) "./" "../" "Makefile" "tests/" "src/")
+
+ ("/home/hugo/src/projets/fac/iportbook/protocol/knock/" (22834 57589 352211 705000) "./" "../" "FlooKnock.java" "PublicityKnock.java" "KnockVals.java" "Knock.java" "OkFriendKnock.java" "MessageKnock.java" "NoFriendKnock.java" "FriendshipKnock.java" "KnockFactory.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/protocol/tests/" (22834 55220 484179 785000) "./" "AnonFactoryTest.java" "FieldBuildTest.class" "../" "Makefile" "FeedbackFactoryTest.java" "FieldBuildTest.java" "ProtocolTestRunner.class" "CommandFactoryTest.class" "FlowFactoryTest.java" "CommandFactoryTest.java" "ProtocolTestRunner.java" "KnockFactoryTest.java")
+
+ ("/home/hugo/" (22833 12771 416094 33000) "./" ".gitconfig" ".gconf/" "../" ".themes/" ".mozilla/" ".gdbinit" ".emacs" ".kivy/" "current.html" ".scribus/" ".bashrc" ".profile" "Téléchargements/" "Modèles/" ".gnome/" ".scripts/" ".bash_logout" ".Xauthority" ".python_history" "Documents/" "Images/" ".local/" ".pki/" ".xsession-errors" ".dbus/" ".gksu.lock" ".dmrc" ".gtk-bookmarks" ".bash_history" "Musique/" ".gstreamer-0.10/" ".emacs.d/" "truc" ".gimp-2.8/" "untitled_1odt" ".thumbnails/" "Bureau/" ".config/" ".purple/" ".ICEauthority" ".icons/" ".java/" "src/" ".nv/" ".cache/" ".xsession-errors.old" "Public/" "Vidéos/" ".ssh/")
+
+ ("/home/hugo/src/projets/fac/iportbook/exception/" (22833 23997 240099 358000) "./" "TooFewArgsException.java" "../" "NotExecutableException.java" "UnknownCommandException.java" "RuleBrokenException.java" "UnknownResultException.java" "WrongTypeException.java" "BadSuffixException.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/client/" (22832 27295 728380 565000) "./" "../" "Makefile" "tests/" "src/")
+
+ ("/home/hugo/src/projets/fac/iportbook/protocol/notification/" (22829 55226 112457 19000) "./" "../" ".#KnockFactory.java" "KnockVals.java" "FriendshipKnock.java" "Notification.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/server/" (22827 15308 592129 198000) "./" "../" "User.java" "tests/" "UserLife.java" "Server.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/server/tests/" (22827 15320 320129 387000) "./" "../" "ServerTestRunner.java" "Makefile" "UserAccessorsTest.java" "UserCommunicationTest.java" ".#UserAccessorsTest.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/exchange/protocol/command/" (22823 65300 84173 705000) "./" "../" "Registration.java" "SeeList.java" "FirstMessage.java" "Connection.java" "CommandVals.java" "FlooMessage.java" "SomeMessage.java" "Deconnection.java" "AskFriend.java" "Command.java" "CommandFactory.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/exchange/protocol/feedback/" (22823 63537 824145 449000) "./" "MessageTransmitted.java" "../" "Feedback.java" "FirstList.java" "Welcome.java" "FromServerFactory.java" "Goodbye.java" "AskFriendOK.java" "FeedbackFactory.java" "Hello.java" "FlooDone.java" "AskFriendNO.java" "MessageNotTransmitted.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/exchange/tests/" (22823 63181 992139 744000) "./" "../" "FeedbackFactoryTest.java" "CommandFactoryTest.java" "TestRunner.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/exchange/protocol/" (22823 60476 732096 368000) "./" "Protocol.java" "../" "stream/" "feedback/" "Useless.java" "command/")
+
+ ("/home/hugo/src/projets/fac/iportbook/exchange/" (22823 61865 824118 641000) "./" "../" "Makefile" "tests/" "protocol/" "class/")
+
+ ("/home/hugo/src/projets/fac/iportbook/exchange/protocol/fromserver/" (22823 9257 372479 106000) "./" "MessageTransmitted.java" "../" "Welcome.java" "FromServerFactory.java" "Goodbye.java" "AskFriendOK.java" "FromServer.java" "Hello.java" "FlooDone.java" "AskFriendNO.java" "MessageNotTransmitted.java")
+
+ ("/home/hugo/src/projets/fac/iportbook/exchange/protocol/fromclient/" (22823 6419 16433 597000) "./" "../" "Registration.java" "FirstMessage.java" "Connection.java" "FlooMessage.java" "SomeMessage.java" "AskFriend.java" "FromClientFactory.java" "FromClient.java")
+
+ ("/home/hugo/src/projets/fac/ungoliant/" (22802 9421 761236 35000) "./" ".gdb_history" "../" "parse/" "architecture.txt" ".gitignore" "ungoliant.c" "netgraph.dot" "ungoliant.o" "current.html" "Makefile" "misc/" "tests/" "journal.txt" "database/" "dataprocess/" "ungoliant" "query/" "README" "cmds.h" "crawl/" "cmds.o" "db/" ".git/" "cmds.c")
+
+ ("/home/hugo/src/projets/fac/ungoliant/tests/" (22802 10108 149222 120000) "./" ".gdb_history" "parser_parse_case.c" "crawler_crawl_case.h" "wordlist_comparison_case.o" "../" "worddict_dot_case.o" "word_comparison_case.o" "#acceptance_case.c#" "crawler_graphdot_case.o" "wordlist_split_case.h" "acceptance_case.h" "current.html" "Makefile" "worddict_dot_case.h" "wordlist_split_case.c" "crawler_crawl_case.c" "word_subword_case.c" "all_tests.o" "word_construction_case.h" "word_construction_case.c" "word_subword_case.o" "worddict_accessor_case.c" "word_add_case.c" "word_subword_case.h" "wordlist_comparison_case.c" ".#acceptance_case.c" "all_tests.c" "wordlist_accessor_case.o" "wordlist_accessor_case.h" "parser_parse_case.o" "parser_parse_case.h" "word_construction_case.o" "wordlist_split_case.o" "wordlist_accessor_case.c" "crawler_graphdot_case.h" "tests_exe" "crawler_graphdot_case.c" "word_comparison_case.c" "worddict_accessor_case.h" "wordlist_comparison_case.h" "word_add_case.h" "worddict_accessor_case.o" "acceptance_case.c" "worddict_dot_case.c" "word_add_case.o" "acceptance_case.o" "crawler_crawl_case.o" "word_comparison_case.h")
+
+ ("/home/hugo/src/projets/fac/ungoliant/misc/" (22800 50169 821754 913000) "./" "wordlist.c" "../" "data_container.o" "worddict.o" "wordlist.o" "word.o" "Makefile" "word.h" "worddict.h" "worddict.c" "data_container.h" "word.c" "wordlist.h" "data_container.c")
+
+ ("/home/hugo/src/projets/fac/ungoliant/crawl/" (22801 51481 969711 961000) "./" "crawler.h" ".#crawler.c" "../" "crawler.o" "Makefile" "crawler.c")
+
+ ("/home/hugo/src/projets/fac/ungoliant/db/" (22794 60484 766005 692000) "./" "../" "Makefile" "db_manager.c" "db_manager.h" "db_manager.o")
+
+ ("/home/hugo/src/exercices/Python/TP9/TP9/" (22766 22304 142587 300000) "./" "../" "indexation.py" "chmod_downtop.py" "findfile.py" "du.py" "arg" "#chmod_downtop.py#" ".#chmod_downtop.py" "tp9.pdf")
+
+ ("/home/hugo/src/exercices/Python/TP9/" (22766 14880 570468 271000) "./" "../" "#tp9.py#" "arbo.tgz" "tp9.py" "Arbo/" ".#tp9.py" "tp9.pdf")
+
+ ("/home/hugo/src/projets/perso/CM/" (22765 50861 917994 394000) "./" ".gdb_history" "../" "Root.py" "Shutter.py" "Control.py" "Make.py" "__pycache__/" "Slogan.py" "images/" "Main.py" "Paint.py" "fonts/" "Slogan2.py" "Slogan (copie).py" "View.py" "Shutter (copie).py")
+
+ ("/home/hugo/src/exercices/MV/Myrthe/" (22748 37767 783191 465000) "./" "myrtheAST.ml" "../" "Makefile" "compil.ml" "tp1.pdf" "tp2.pdf" "test.ml" "mv.ml" "myrthe.ml")
+
+ ("/home/hugo/src/exercices/MV/" (22748 1790 389998 522000) "./" "myrtheAST.ml" "../" "compil.cmo" "mv.cmi" "mvCORREC.ml" "Makefile" "myrthe.cmo" "myrtheAST.cmi" "myrtheAST.cmo" "compil.ml" "tp1.pdf" "compil.cmi" "test" "myrthe.cmi" "tp2.pdf" "test.ml" "test.cmi" "test.cmo" "mv.ml" "mv.cmo" "myrthe.ml")
+
+ ("/home/" (22659 44118 122289 86000) "./" "../" "lost+found/" "hugo/")
+
+ ("/home/hugo/src/exercices/Python/TP7/" (22724 10837 141595 428000) "./" "../" "__pycache__/" "tp7.pdf" "monographe.png" "mess.py" "monographe.dot" "touch.py")
+
+ ("/home/hugo/src/exercices/Python/TP6/" (22719 56251 998668 496000) "./" "../" "accueil.html" "tp6.pdf" "accueilfull.html" "tp6.py" "educ.txt")
+
+ ("/home/hugo/src/exercices/Python/TP4/" (22706 42245 177869 596000) "./" "../" "__pycache__/" "dico2.txt" "tp4.py" "tp4.pdf" "dicosimple.txt" "testtraduction.txt")
+
+ ("/home/hugo/src/exercices/Python/TP3/" (22705 46055 854351 642000) "./" "../" "tp3.pdf" "tp3.py")
+
+ ("/home/hugo/src/exercices/Python/TP2/" (22704 15680 729662 886000) "./" "vers-queneau.txt" "../" "inscrits.csv" "tp2.py" "__pycache__/" "tp2.pdf")
+
+ ("/home/hugo/src/exercices/Python/TP1/" (22703 60478 226109 858000) "./" "Clock.py" "../" "tp1.pdf" "tp1bis.pdf" "hello.py" "ClockFace.py" "my_time.py")
+
+ ("/home/hugo/src/projets/fac/voronoi/" (22647 17996 0 0) "./" "../" "sujet.pdf" "sat_solver.ml" "Makefile" "sat_solver.mli" "README" "interaction.ml" "voronoi.mli" "examples.ml" "rapport.pdf" "view.ml" "voronoi.ml" "view.mli" "interaction.mli" "main.ml")
+
+ ("/home/hugo/src/projets/" (22641 9028 0 0) "./" "../" "perso/" "fac/")
+
+ ("/home/hugo/src/" (22682 3397 141740 211000) "./" "../" "projets/" "howto_gitlab.png" "exercices/")
+
+ ("/home/hugo/src/exercices/" (22695 2099 225677 305000) "./" "../" "Java/" "MV/" "Python/" "Ocaml/" "Syst.c/")
+
+ ("/home/hugo/src/projets/fac/chat/" (22647 17178 0 0) "./" "doxyconfig" "../" "hello.txt" "Makefile" "build.h" "divers_serveur.h" "array_list.c" "array_list.h" "build.c" "traitement_serveur.c" "interact.c" "projet6C.pdf" "divers_serveur.c" "readme.txt" "tchatche_serveur.c" "doc/" "client.c" "fichiers/" "traitement_serveur.h" "tubing.c" "tubing.h" "interact.h")
+
+ ("/media/hugo/42F3-7607/fences/" (22660 33696 0 0) "../" "./")
+
+ ("/home/hugo/src/projets/fac/chat/tchat0.9/" (22645 28449 506013 537000) "./" "../" "traitement_serveur.c" "projet6C.pdf" "whatlol.txt" "divers_serveur.c" "client.c" "doxyconfig" "build.c" "tubing.h" "hello.txt" "build.h" "divers_serveur.h" "interact.c" "tubing.c" "readme.txt" "tchatche_serveur.c" "array_list.c" "array_list.h" "Makefile" "interact.h" ".gdb_history" "traitement_serveur.h" "test.txt")
+
+ ("/home/hugo/src/projets/fac/chat/tchat0.8 (3)/" (22645 28449 506013 537000) "./" "../" "traitement_serveur.c" "projet6C.pdf" "whatlol.txt" "divers_serveur.c" "client.c" "doxyconfig" "build.c" "tubing.h" "hello.txt" "build.h" "divers_serveur.h" "interact.c" "tubing.c" "readme.txt" "tchatche_serveur.c" "array_list.c" "array_list.h" "Makefile" "interact.h" ".gdb_history" "traitement_serveur.h" "test.txt")
+
+ ("/home/hugo/src/projets/fac/chat/tchat0.6d/" (22644 12897 693933 61000) "./" "../" "traitement_serveur.c" "client.o" "projet6C.pdf" "divers_serveur.c" "client.c" "doxyconfig" "client" "build.c" "fromuser." "tubing.h" "hello.txt" "build.o" "build.h" "doc/" "divers_serveur.h" "interact.c" "tubing.c" "readme.txt" "tchatche_serveur.c" "server" "array_list.c" "array_list.h" "Makefile" "interact.o" "divers_serveur.o" "traitement_serveur.o" "tubing.o" "interact.h" ".gdb_history" "tchatche_serveur.o" "traitement_serveur.h" "array_list.o" "test.txt")
+
+ ("/home/hugo/src/projets/fac/chat/tchat0.7/" (22644 678 917735 442000) "./" "../" "traitement_serveur.c" "client.o" "projet6C.pdf" "divers_serveur.c" "client.c" "doxyconfig" "PipeServer" "client" "build.c" "fromuser.hello.txt" "tubing.h" "hello.txt" "build.o" "build.h" "lolo" "doc/" "divers_serveur.h" "interact.c" "tubing.c" "readme.txt" "tchatche_serveur.c" "hugo" "server" "array_list.c" "array_list.h" "Makefile" "interact.o" "divers_serveur.o" "traitement_serveur.o" "tubing.o" "interact.h" ".gdb_history" "tchatche_serveur.o" "traitement_serveur.h" "array_list.o" "test.txt")
+
+ ("/home/hugo/src/projets/fac/chat/tchat0.6c/" (22642 36189 795237 965000) "./" "../" "traitement_serveur.c" "client.o" "projet6C.pdf" "divers_serveur.c" "client.c" "doxyconfig" "PipeServer" "client" "build.c" "fromuser.hello.txt" "tubing.h" "hello.txt" "build.o" "build.h" "lolo" "doc/" "divers_serveur.h" "interact.c" "tubing.c" "readme.txt" "tchatche_serveur.c" "hugo" "server" "array_list.c" "array_list.h" "Makefile" "interact.o" "divers_serveur.o" "traitement_serveur.o" "tubing.o" "interact.h" ".gdb_history" "tchatche_serveur.o" "traitement_serveur.h" "array_list.o")
+
+ ("/home/hugo/src/projets/perso/editeur (copie)/" (22642 19911 178974 684000) "./" "../" "main.cmi" "fieldtext.cmi" "fieldtext.ml" "geom.cmi" "layman.cmo" "editeur" "geom.cmo" "layman.ml" "layman.cmi" "main.cmo" "Makefile" "fieldtext.mli" "geom.ml" "fieldtext.cmo" "layman.mli" "main.ml" "geom.mli")
+
+ ("/home/hugo/src/projets/perso/editeur/" (22642 7791 730778 671000) "./" "../" "main.cmi" "fieldtext.cmi" "fieldtext.ml" "geom.cmi" "layman.cmo" "editeur" "geom.cmo" "layman.ml" "layman.cmi" "main.cmo" "Makefile" "fieldtext.mli" "geom.ml" "fieldtext.cmo" "layman.mli" "#layman.ml#" "main.ml" "geom.mli" ".#layman.ml")
+
+ ("/home/hugo/.config/caja/scripts/" (22640 4403 58325 256000) "./" "../" "emacs.sh" "mv_up_all.sh")
+
+ ("/home/hugo/src/projets/voronoi/" (22639 62601 846206 588000) "./" "../" "main.cmi" "interaction.cmo" "interaction.mli" "interaction.ml" "sat_solver.ml" "sat_solver.mli" "voronoi.ml" "puzzle" "voronoi.mli" "examples.cmo" "view.cmi" "examples.cmi" "voronoi.cmi" "main.cmo" "examples.ml" "Makefile" "rapport.pdf" "view.ml" "README" "sat_solver.cmo" "view.mli" "sujet.pdf" "view.cmo" "voronoi.cmo" "main.ml" "interaction.cmi" "sat_solver.cmi")
+
+ ("/home/hugo/Téléchargements/mappagani-master/" (22639 36525 81784 838000) "./" "../" "pf5_eng_chardonnet_mappagani_rapport.pdf" ".gitignore" "color_solver.ml" "sat_solver.ml" "sat_solver.mli" "voronoi.ml" "voronoi.mli" "display.mli" "examples.ml" "README.txt" "display.ml" "Makefile" "graphics_plus.mli" "graphics_plus.ml" "mappagani.ml" "color_solver.mli" "images/" "README.md" "style.ml")
+
+ ("/home/hugo/Téléchargements/" (22639 36525 93784 838000) "serveimage.jpg" "logo_de_la_republique_francaise_0_0.png" "Etudiants100.txt" "flexslider/" "14699577_10210275319094593_257458014_o.jpg" "336710207d939a0d532ce6112e2cbbe1.jpg" "mes commentaires à vif 27 09 2016.docx" "ALERTE-SEXISTE-RAGEUSE.doc" "Article Laicité et droit des femmes.doc" "01.09.2016 - Lettre Laureen GENTHON - r�sidence Logis  Transport.pdf" "cours5.pdf" "15311367_1174143009348866_1438904063_o.png" "librairies drupal/" "listen.m3u" "tri.c" "LP SIL.pdf" "15321627_1174012902695210_137757281_o.png" "Game.of.Thrones.S06.VOSTFR.HDTV.x264-ARK01.torrent" "Le Journal de Bridget Jones (2001) [1080p] MULTI (VFF-VOA) Bluray x264 AC3 KillerJOE.mkv.torrent" "westworld-s01e03-vostfr-hdtv.torrent" "Circuit-vélo-Normandie.doc" "Lettre-Ouverte-FDB-1.pdf" "Scream.Queens.2015.S02E01.FASTSUB.VOSTFR.HDTV.x264-ARK01.mp4" "voronoi.zip" "Cours CPOO5.pdf" "SCREAM.QUEENS.2015.COMPLETE S01.FASTSUB.VOSTFR.HDTV.XviD/" "web-pma-affiche-pcf-dugudus-lgbt.jpg" "Game.Of.Thrones.S04.VOSTFR.DvDRiP.XviD-GKS.torrent" "woothemes-FlexSlider-622f7fd/" "simplevoronoi/" "pilaud.pdf" "themes drupal/" "Star.Wars.Episode.I.The.Phantom.Menace.1999.1080p.BluRay.DTS-ES.x264.D-Z0N3.srt" "SCREAM.QUEENS.2015.COMPLETE S01.FASTSUB.VOSTFR.HDTV.XviD.torrent" "lettre.docx" "2016.10.18. LC. Proposition 15 concernant ratification de la CEDEF-1.docx" "2014_Iraq_DisplacedYezidi.jpg" "debian-8.6.0-i386-netinst.iso" "Formation-SPM-Révolution.docx" "15137562_1172340489526363_5123297017463643174_o.jpg" "13043423_10209408639476448_6622849397229630933_n.jpg" "intro ag vote (1).odt" "31929639881_05a32ede3c_o.jpg" "o-ABDULLAH-OCALAN-facebook.jpg" "fr-refcard.pdf" "13557834_10153780474372613_5928260608453012952_n.jpg" "cours4.pdf" "téléchargement" "attentatistanbul.jpg" "2016.10.16 Feuille de route féminisme. LC et HB.doc" "forum-de-la-mixite-142254_w1000.jpg" "android-sdk_r24.4.1-linux.tgz" "CR législatives du 5 octobre corrigée par Rodolphe.doc" "[FLAC] Angus & Julia Stone - Down The Way + Red Berries (Bonus Disc)/" "511170-monseigneur-georges-pontier-a-lourdes-le-4-novembre-2007.jpg" "parité HB.doc" "mappagani-master/" "14647303_10210275319734609_1114091716_o.jpg" "Che-Guevara.jpg" "appel.txt" "des-manifestants-defilent-pour-defendre-la-loi-sur-l-ivg-a-paris-le-17-janvier-2015_5215615.jpg" "Game.Of.Thrones.S04.VOSTFR.DvDRiP.XviD-GKS/" "Angus & Julia Stone - A Book Like This.torrent" "ob_e3a46f_don-quijote-de-la-mancha.jpg" "ivgslide.jpg" "DSC01781.JPG" "Juana azurduy.jpg" "slides001-072.pdf" "linuxmint-18-mate-64bit.iso.part" "appel reunion du 9 novembre (2).doc" "Game Of Thrones S02 VOSTFR DVDRIP/" "Scream.Queens.2015.S02E01.FASTSUB.VOSTFR.HDTV.x264-ARK01.mp4.torrent" "communique legislatives.doc" "Angus & Julia Stone - Angus & Julia Stone (2014) [FLAC 24]/" "linuxmint-18-mate-32bit.iso" "GENTHON-Laureen.pdf" "rlvcollectif.doc" "13920907_10210401903868102_5789946096780199012_n (1).jpg" "linuxmint-18-mate-64bit.iso.torrent" "PCF Nanterre communiqué 15 décembre 2016.png" "778941.jpg" "pma.png" "Une votation citoyenne à Nanterre pour les législatives de 2017.ppt" "u25_crea202_1.jpg" "images.bmp" "2016.10.25. Propositions Féminisme-1.doc" "startupgrowth-lite-master.zip" "10481987_10205199654928129_4856673079034160097_o.jpg" "AL5.tar.gz" "YazidiSoldier.jpg" "cours1.pdf" "drupal8/" "MAJ-Sélection-en-master-accord.docx" "laïcité.jpg" "rogueone_onesheeta_1000_309ed8f6.jpeg" "14590377_1832375193642613_5729529587102262239_n.jpg" "exe_4p_grande_consultation_stc.pdf" "lettre.pdf" "_RbvqbLOO6qS0dWBjDYov4J7E0ztveOCahwF1O6ztlk.jpg" "nouvel appel (1).doc" "laurence.jpg" "femme-cafe.jpg" "15369793_1174072579355909_771957808_o (1).png" "Tract VFF 26.11.2016.doc" "logofs.png" "14358869_952991148139868_5740970227108706658_n.jpg" "15321515_1174082246021609_1103536399_o (1).png" "modules drupal/" "01.08.2016 - Trad femmes Yezidi.odt" "groult.png" "MarxismFeminism-Conference_Preliminary Programme .rtf" "logoFS.odt" "web-pma-affiche-pcf-dugudus-lgbt (1).jpg" "tri" "appel reunion du 9 novembre (1).doc" "Introduction pour les AG CN 24 sept 2016.docx" "femmes.pdf" "Star.Wars.Episode.I.The.Phantom.Menace.1999.Z2.DZ0N3.zip" "appelcollectif.doc" "nouvel appel (2).doc" "13528527_1043860719035161_5703929648659889003_o.jpg" "work_img.jpg" "Intro SPM Révolution.docx" "réunion Ile 25 oct.doc" "FR-Petit-cours-de-démocratie-numérique-à-lintention-dun-archévêque.docx" "proposition bulletin mars.doc" "azurduy2.jpg" "ocaml-prog3.pdf" "appelcollectif (2).doc" "images.jpg" "mountains_northcascade.jpg" "intro ag vote (2).odt" "Introduction pour les AG CN 24 sept 2016 (1).docx" "drupal-7.44.tar.gz" "AL5/" "eveque.jpg" "southco128" "resultats-preocupations.png" "14202579_747952415387555_7803118219585205993_n.png" "woothemes-FlexSlider-2.6.1-0-g622f7fd.zip" "leproblemecestleprogramme-rev_1.pdf" "journalGC_15_novembre2016.pdf" "Feuille de route PCF sur féminisme Cabinet HB.doc" "Rapport CN 24 sept 2016.docx" "proporlv.odt" "init6mars.png" "Haute Tension (High Tension) [Uncut].2003.BRRip.XviD-VLiS.avi.torrent" "15578827_743454539137075_6470675191724077926_n.jpg" "linuxmint-18-mate-32bit.iso.torrent" "work_slide.png" "Familles Apocalypse Package S01-12.12 [Greenthumb].torrent" "How I Met Your Mother Saison 4 VOSTFR.torrent" "meluchfini.png" "nouvel appel.doc" "lettre cocos.odt" "How I Met Your Mother Saison 4 VOSTFR/" "nouvel appel (4).doc" "appel reunion du 9 novembre (3).doc" "vote_presidentielle_2017__1_.pdf" "rlvdecisions (1).doc" "o-FEMME-LIBERTE-MAROC-facebook.jpg" "release/" "Logo ASTI.JPG" "CR Rencontre 160411.docx" "release.tar" "tp3_2016 (1).pdf" "tp3_2016.pdf" "[ Torrent9.ws ] Westworld.S01E04.FASTSUB.VOSTFR.HDTV.XviD-ZT.avi" "mappagani-master.zip" "420323_3117965660958_1144446137_n.jpg" "cours3.pdf" "bulletin novembre.doc" "2016-LISTE-DE-CADEAUX-NOËL.doc" "Note à la Fédé 92.doc" "proposition appel.doc" "Game.of.Thrones.S06.VOSTFR.HDTV.x264-ARK01/" "cours6.pdf" "REUNION DE CELLULE CENTRE  ET HOTEL DE VILLE (1).docx" "thumb_640.jpg" "Game of Thrones S03 VOSTFR DVDRIP/" "proposition appel (1).doc" "14646632_10210275317934564_1837323980_o.jpg" "o-YEZIDI-facebook.jpg" "01.08.2016 - Trad femmes Yezidi (1).odt" "13920907_10210401903868102_5789946096780199012_n.jpg" "TPC2.tar" "14508697_10210471146325642_513889178_n.jpg" "homena1.jpg" "hommefemme_0.jpg" "appel (1).xls" "appel réunion publique - législatives.pdf" "DocumentSupport.pdf" "Norman sur scène.mp4" "CR Coord 021116.docx" "CR v.doc" "8968258-0-Manuel-decriture-inc.pdf" "une.jpg" "1ccd0h.jpg" "batman.png" "15540724_10154841923513545_7726250963663123821_o.jpg" "15369685_10211629733483075_905808972_o.jpg" "cours8.pdf" "Craig-Drake-Buffy.jpg" "tp2.pdf" "PCF Nanterre communiqué 15 décembre 2016.pdf" "relevé de décisions (1).doc" "wrzhyyyikh7y.jpg" "[FLAC] Angus & Julia Stone - Down The Way + Red Berries (Bonus Disc).torrent" "Angus & Julia Stone - A Book Like This/" "bull_vote-1.pdf" "drupal-7.44.fr.po" "Star Wars, episode VII - Le Reveil de la force (2015) MULTi (VFF-VO-VFQ) [1080p] BluRay x264-PopHD (Star Wars - The Force Awakens).mkv" "e448e61f708d0feab5861bb4c6ec2604.jpg" "Game.of.Thrones.S05.VOSTFR.WEB-DL.XviD-DESTiNY/" "CR-Rencontre-Anissa.docx" "Formation-SPM-Révolution (2).docx" "2016.10.26. HB.LC.Feuille de route féminisme..doc" "relevé de décisions.doc" "HIMYM-Saison 5/" "release.tar.gz" "21446138934_7a61a62a1e_b.jpg" "Sans nom 1 (1).odt" "Logique.odt" "compte rendu (1).odt" "intro ag vote.odt" "debian-8.5.0-amd64-netinst.iso.torrent" "odjconvention.doc" "debian-8.5.0-amd64-netinst.iso" "Le Journal de Bridget Jones (2001) [1080p] MULTI (VFF-VOA) Bluray x264 AC3 KillerJOE.mkv" "14291827_1161130513930484_2470768643733912272_n.jpg" "#appel.txt#" "14721535_10210871565324346_3707975311522567628_n.jpg" "HIMYM-Saison 5.torrent" "compte rendu.odt" "writing.jpg" "sujet_tp7.pdf" "FR-Petit-cours-de-démocratie-numérique-à-lintention-dun-archévêque (1).docx" "tdtp4.pdf" "Sans nom 1.odt" "2016.10.17. LC et HB. Feuille de route du PCF sur féminisme .docx" "2016.08.23.LC.EDITO WEB Magazine.docx" "note république.doc" "15321515_1174082246021609_1103536399_o.png" "cours7.pdf" "logofemmesegalite.png" "Evil.Dead.2013.VOSTFR.BDRiP.720p.XviD.AC3-Slim.avi" "bulletin fetes.doc" "compte rendu à remonter.doc" "pdf_cours_graphes.pdf" "14963173_1304781379561786_116785693554719329_n.jpg" "15271512_10211677867041705_1380982672_o.png" "Logo_de_la_République_française_(1999).svg" "Cours CPOO5 (1).pdf" "giphy.gif" "Mode d'emploi Congrès PGE déc. 2016.odt" "15078577_217585845345088_3076886706012001844_n.jpg" "Evil.Dead.2013.VOSTFR.BDRiP.720p.XviD.AC3-Slim.avi.torrent" "Planning semaine de rentrée 2016 V7.pdf" "téléchargement.jpg" "female-fighters-of-the-kurdish-people-s-protection-units-carry-their-weapons-as-they-talk-along-a-road-in-qamishli_5134009.jpg" "nouvel appel (3).doc" "linux-firmware/" "The Social Network VOSTFR/" "2017 c'est notre affaire.pdf" "15310960_1174077509355416_888563798_o.png" "appelcollectif (1).doc" "writing2.jpg" "15369793_1174072579355909_771957808_o.png" "Star Wars Episode I The Phantom Menace (1999) [1080p]/" "lz4-r131.zip" "introag (1).doc" "introag.odt" "appel réunion publique - législatives (1).pdf" "Firefly.jpg" "Star Wars, episode VII - Le Reveil de la force (2015) MULTi (VFF-VO-VFQ) [1080p] BluRay x264-PopHD (Star Wars - The Force Awakens).mkv.torrent" "bootia32.efi" "Relevé de décisions CN 24 25 sept 2016.doc" "Game of Thrones S03 VOSTFR DVDRIP.torrent" "4nvICeP (1).jpg" "Article-progressistes-2016.odt" "images site/" "Caussarieu Morgane - Dans les veines.epub" "Angus & Julia Stone - Angus & Julia Stone (2014) [FLAC 24].torrent" "14689053_10210275318014566_1892217049_o.jpg" "Familles Apocalypse Package S01-12.12 [Greenthumb]/" "lettre cocos (1).odt" "trumpslide.jpg" "03 Compte rendu de la discussion portant sur les élections présidentielles lors de la réunion du 20 octobre 2016.docx" "Sommes (1).docx" "trump.jpg" "index.html" "Game.of.Thrones.S05.VOSTFR.WEB-DL.XviD-DESTiNY.torrent" "Norman sur scène.mp4.torrent" "westworld-s01e04-vostfr-hdtv.torrent" "startupgrowth-lite-master/" "[ Torrent9.ws ] Westworld.S01E03.VOSTFR.HDTV.XviD-ZT.avi" "REUNION DE CELLULE CENTRE  ET HOTEL DE VILLE.docx" "14694753_10154059742292756_315235104_n.jpg" "Main.pdf" "inégalités professionnelles.doc" "appel.xls" "FlexSlider-master.zip" "listen.pls" "appel reunion du 9 novembre.doc" "rlvdecisions.doc" "The Social Network VOSTFR.torrent" "Relevé de décisions CN 24 25 sept 2016 (1).doc" "Haute tension 2003 MULTI 1080p BluRay x264-ONLY.mkv.torrent" "compte rendu à remonter.odt" "14264106_1085732921480080_216503213102067985_n.png" "slides352-456.pdf" "introag.doc" "2016.11.29. LC. Motion PGE.doc" "article genre et espace public.doc" "drupal-7.44/" "Game Of Thrones S02 VOSTFR DVDRIP.torrent" "drupal-8.1.3.tar.gz" "../" "./")
+
+ ("/home/hugo/src/projets/carte/release 2/" (22638 43075 10436 233000) "#voronoi.ml#" "./" "../" "interaction.mli" "interaction.ml" "sat_solver.ml" "sat_solver.mli" "voronoi.ml" "voronoi.mli" "examples.ml" "Makefile" "sujet.pdf" "main.ml" ".#voronoi.ml")
+
+ ("/home/hugo/src/projets/carte/release/" (22638 40808 362456 781000) "#voronoi.ml#" "./" "../" "main.cmi" "interaction.cmo" "interaction.mli" "interaction.ml" "sat_solver.ml" "sat_solver.mli" "voronoi.ml" "voronoi.mli" "examples.cmo" "examples.cmi" "voronoi.cmi" "main.cmo" "examples.ml" "Makefile" "coloriage" "sat_solver.cmo" "sujet.pdf" "voronoi.cmo" "main.ml" "interaction.cmi" ".#voronoi.ml" "sat_solver.cmi")
+
+ ("/home/hugo/src/projets/carte/release (copie)/" (22637 19747 34299 397000) "./" "../" "interaction.mli" "interaction.ml" "sat_solver.ml" "computer.mli" "sat_solver.mli" "voronoi.ml" "voronoi.mli" "examples.ml" "Makefile" "sujet.pdf" "computer.ml" "main.ml")
+
+ ("/home/hugo/Téléchargements/release/" (22636 48691 345707 585000) "./" "../" "interaction.ml" "sat_solver.ml" "sat_solver.mli" "voronoi.ml" "voronoi.mli" "examples.cmo" "examples.cmi" "voronoi.cmi" "examples.ml" "Makefile" "sat_solver.cmo" "sujet.pdf" "voronoi.cmo" "sat_solver.cmi")
+
+ ("/home/hugo/src/projets/carte/projet/" (22633 8249 641358 727000) "./" "../" "sat_solver.ml" "sat_solver.mli" "examples.ml" "carte.ml" "sujet.pdf" ".merlin")
+
+ ("/home/hugo/src/projets/carte/" (22633 4616 125299 960000) "./" "../" "projet.tar.gz" "release/" "carte.ml" "sujet.pdf" "projet/")
+
+ ("/home/hugo/src/exercices/Ocaml/TP1/" (22587 20130 983103 334000) "./" "../" "tp1.pdf" "tp1.ml")
+
+ ("/home/hugo/src/projets/Pre_Alpha/" (22621 1721 835188 447000) "./" "../" "client.o" "client.c" "PipeServer" "client" "build.c" "build.o" "build.h" "lolo" "roro" "tchatche_serveur.c" "hugo" "inout.h" "server" "array_list.c" "array_list.h" "Makefile" "inout.c" "lala" "inout.o" "tchatche_serveur.o" "array_list.o")
+
+ ("/home/hugo/bin/scripts/" (22618 35589 166667 16000) "./" "../" "speakers.sh" "wallpaper_changer.sh")
+
+ ("/home/hugo/src/projets/chat/" (22617 48688 276308 948000) "./" "../" "projet6C.pdf" "client.c" "build.c" "build.h" "inout.h" "Makefile" "inout.c" "server.c")
+
+ ("/home/hugo/src/exercices/Syst.c/TPC5/myecho/" (22540 22962 0 0) "./" "../" "strlib.c" "myecho.c" "Makefile" "strlib.h")
+
+ ("/home/hugo/src/exercices/Syst.c/TPC5/" (22540 23062 0 0) "./" "../" "myecho/" "pile_amortie/" "liste_entier.c" "stack.c" "heap.c")
+
+ ("/home/hugo/.emacs.d/" (22613 10265 942050 210000) "./" "../" "session.104928be86dd319d61147422010836557000000017480033" "session.1093e854b07d23b13014777796411092800000016160057" "newsticker/" "session.1085185a68a2c4dd6a147426483328988800000017970023" "auto-save-list/" "session.10b1eb09b84207aaa147548631452448500000017690030" "session.10db318a9f5762c9e4148084233973665200000017780047" "session.10560683f4d049112a148012091221361700000017550056" "#ido.last#" "session.10b3d525c6500f7a6e147194828643099300000017800026" "smex-items" "session.1081b49dc639955b9147518438843144700000017460029" "session.10560683f4d049112a148012086144778900000017550055" "elpa/" "backups/" "session.109ab6ef9441c93aa514754240467475600000017350058" "session.10b68f3f829bd63561148036400723083100000017450023" "ido.last" "session.10560683f4d049112a148011955133774000000017550049" "session.10886734e1597d7aae147531496625458700000017570026" "session.104428af62d6ff4585148126531446269400000017480026" "url/")
+
+ ("/home/hugo/.emacs.d/elpa/aggressive-indent-20161201.1001/" (22612 32783 39232 965000) "./" "../" "aggressive-indent.elc" "aggressive-indent-autoloads.el" "aggressive-indent-pkg.el" "aggressive-indent.el")
+
+ ("/home/hugo/.emacs.d/elpa/" (22612 32782 723232 960000) "./" "../" "epl-20150517.433/" "0blayout-readme.txt" "let-alist-1.0.4/" "websocket-20161113.1736/" "sbt-mode-20161202.227/" "javadoc-lookup-20160213.1631/" "smart-yank-readme.txt" "kotlin-mode-20160720.1339/" "let-alist-1.0.4.signed" "flycheck-20161117.144/" "seq-2.19/" "archives/" "smart-shift-readme.txt" "seq-2.19.signed" "yasnippet-20161211.1918/" "zop-to-char-readme.txt" "expand-region-20161122.50/" "gruvbox-theme-20161019.1949/" "fill-column-indicator-20151030.1233/" "pkg-info-20150517.443/" "ido-vertical-mode-20160429.1037/" "scala-mode-20161122.2325/" "smart-dash-readme.txt" "smart-cursor-color-readme.txt" "smex-20151212.1409/" "gnupg/" "smartparens-readme.txt" "smart-forward-readme.txt" "dash-20161121.55/" "s-20160928.636/" "company-20161211.1850/" "smart-newline-readme.txt" "aggressive-indent-20161201.1001/" "smart-compile-readme.txt" "buffer-move-20160615.1103/" "smart-window-readme.txt" "writegood-mode-readme.txt" "popup-20160709.729/")
+
+ ("/home/hugo/src/exercices/Java/streams/" (22609 20828 942860 421000) "./" "../" "tdtp8.pdf" "MyStream.class" "Main.class" "MyStream$1.class" "Main.java" "MyStream.java")
+
+ ("/home/hugo/src/exercices/Java/" (22609 11612 950711 367000) "deuxFenetres/" "./" "../" "file.tar" "TP9/" "deuxFenetres.tar" "monoid.tar" "TP4/" "file/" "monoide/" "route/" "TP10/" "TP9.tar" "cartes.tar" "streams/" "presentation/" "cartes/" "presentation.tar")
+
+ ("/home/hugo/src/exercices/Syst.c/TPC10/" (22609 953 702538 970000) "./" "../" "#misc.c#" "nim.c" "Makefile" "misc.h" "misc.c")
+
+ ("/home/hugo/src/exercices/Syst.c/" (22604 51351 314548 630000) "TPC4/" "./" "../" "TPC10.tar" "TPC2/" "TPC9.tar" "TPC6/" "TPC6.tar" "TPC5.tar" "Gtk/" "TPC10/" "TPC1.tar" "arguments_commande.c" "TPC5/" "IOI/" "TPC2.tar" "TPC3/" "TPC1/" "TP6.tar" "TPC4.tar" "TPC8/" "TPC3.tar" "TPC9/")
+
+ ("/home/hugo/Bureau/" (22604 46902 402476 676000) "./" "../")
+
+ ("/home/hugo/Musique/00 Chansons/01 francophone/b/Balavoine Daniel/" (20473 24190 837008 0) "./" "../" "Daniel Balavoine - L'intégrale/")
+
+ ("/home/hugo/Musique/00 Chansons/01 francophone/b/" (20473 24186 999 0) "./" "../" "Bran Barr/" "Béart Guy/" "Beaucarne Julos/" "Brigitte/" "Bashung Alain/" "Bourvil/" "Brassens Georges/" "Birkin Jane/" "Balavoine Daniel/" "Bénabar/" "Barbara/" "Brel Jacques/")
+
+ ("/home/hugo/Musique/00 Chansons/01 francophone/a/Amélie-les-crayons/" (19965 49369 234375 0) "./" "../" "amélie-chant des coquelicots/" "Et pourquoi les crayons-/")
+
+ ("/home/hugo/Musique/00 Chansons/01 francophone/a/" (22069 21680 684779 0) "Aznavour Charles/" "./" "../" "Aufray Hugues/" "Allright Graeme/" "Amélie-les-crayons/" "Aldebert/" "Aleveque Christophe/" "Atoll/" "Alexis HK/" "Anorexia Nervosa/" "Arno/")
+
+ ("/home/hugo/Musique/00 Chansons/01 francophone/" (22069 28864 260895 0) "./" "../" "z/" "00divers/" "u/" "m/" "compilfr" "k/" "g/" "q/" "l/" "b/" "w/" "t/" "f/" "i/" "v/" "n/" "o/" "h/" "c/" "s/" "p/" "j/" "a/" "e/" "d/" "y/" "r/" "x/")
+
+ ("/home/hugo/Musique/00 Chansons/" (22069 40953 29090 0) "./" "../" "01 francophone/" "02 anglophone/" "04 autres_pays/" "03 espagnophone/")
+
+ ("/home/hugo/Musique/" (22389 59192 966540 975000) "05 Traditionnels/" "./" "../" "06 Divers/" "00 Chansons/" "02 Bo films/" "2013_02_26_11_59_0678885117_Out.3gp" "Amy Schumer - Live from the Apollo VOSTFR.mp4" "04 Instrumentaux/" "01 Classique/" "Byther Smith/")
+
+ ("/home/hugo/.emacs.d/elpa/bongo-20160623.1058/" (22604 44918 910444 596000) "./" "../" "bongo-autoloads.el" "bongo-pkg.el" "dir" "tree-from-tags.rb" "bongo.elc" "bongo.el" "lastfm-submit.el" "lastfm-submit.elc" "images/" "bongo.info")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

@@ -1,0 +1,2 @@
+val play_one : Voronoi.voronoi -> unit
+val play_all : Voronoi.voronoi list -> unit

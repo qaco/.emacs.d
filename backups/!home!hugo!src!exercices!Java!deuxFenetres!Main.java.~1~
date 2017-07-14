@@ -1,0 +1,19 @@
+public class Main {
+
+    public static void main(String[] args) {
+	WindowAffichage af ;
+	WindowBouton bo ;
+	EventQueue.invokeLater(new Runnable() {
+		@Override
+		public void run() {
+		    af = new WindowAffichage() ;
+		}
+	    }) ;
+	EventQueue.invokeLater(new Runnable() {
+		@Override
+		public void run() {
+		    bo = new WindowBouton(bo) ;
+		}
+	    }) ;
+    }
+}

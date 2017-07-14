@@ -1,0 +1,38 @@
+package protocol.flow ;
+
+import main.MainVals ;
+import client.src.ServerRequest;
+import java.io.IOException ;
+
+public class SomeMessageFlow implements Flow {
+
+    private int num ;
+    private String mess ;
+
+    public SomeMessageFlow (int mynum, String mymess) {
+        this.num = mynum ;
+        if (mymess.length() <= 200)
+            this.mess = mymess ;
+        else
+            this.mess = mymess.substring(0, 200) ;
+    }
+
+    public SomeMessageFlow (String mynum, String mymess) {
+        this.num = Integer.parseInt(mynum) ;
+        if (mymess.length() <= 200)
+            this.mess = mymess ;
+        else
+            this.mess = mymess.substring(0, 200) ;
+    }
+
+    public void exec(ServerRequest c) throws IOException { 
+	System.out.println(this.num+"- "+this.mess);
+    }
+
+    public String toString() {
+        String mynum = String.valueOf(this.num) ;
+        return
+            FlowVals.SOME_MESSAGE + " " +
+            mynum + " " + this.mess + MainVals.EOF  ;
+    }
+}

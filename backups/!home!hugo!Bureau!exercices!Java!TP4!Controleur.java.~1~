@@ -1,0 +1,35 @@
+public class Controleur {
+    private EmploiDuTemps monEDT ;
+
+    public Controleur(EmploiDuTemps e) {
+	this.monEDT = e ;
+    }
+
+    public String saisie() {
+	String s ;
+	Scanner sc = new Scanner(System.in) ;
+	s = sc.nextLine() ;
+    }
+
+    public void commande(String s) {
+	boolean test = false ;
+	if (s.compareTo("affiche") == 0)
+	    System.out.println(this.monEDT.toString()) ;
+	else if (s.split(' ').length == 2) {
+	    String[] tmp = s.split(' ') ;
+	    for (Jour j : Jour.values())
+		if (tmp[0].toString().compareTo(j.toString()) == 0)
+		    test = true ;
+	    if (test) {
+		if (tmp[1].compareTo("?") == 0)
+		    monEDT.interroger(Jour.valueOf(tmp[0])) ;
+		else
+		    monEDT.inscrire(Jour.ValueOf(tmp[0]), tmp[1]) ;
+	    }
+	    else
+		throw new CommandeIllegaleException() ;
+	}
+	else
+	    throw new CommandeIllegaleException() ;
+    }
+

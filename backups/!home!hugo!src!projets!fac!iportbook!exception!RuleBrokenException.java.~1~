@@ -1,0 +1,8 @@
+package exception ;
+
+public class RuleBrokenException extends UnknownResultException {
+
+    public RuleBrokenException() {
+        super(ExceptionVals.RULE_BROKEN);
+    }
+}

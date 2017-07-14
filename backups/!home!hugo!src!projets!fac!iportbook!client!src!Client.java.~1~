@@ -1,0 +1,283 @@
+package client.src;
+
+import exception.UnknownResultException ;
+import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+import protocol.feedback.Feedback;
+import protocol.feedback.FeedbackFactory;
+import protocol.command.Connection;
+import protocol.command.Deconnection;
+import protocol.command.Registration;
+import protocol.command.FirstMessage;
+import protocol.command.SomeMessage;
+import protocol.command.FlooMessage;
+import protocol.command.SeeList;
+import protocol.command.AskFriend;
+
+public class Client {
+
+    private String id, udp;
+    private byte[] mdp;
+    private int serverSocket = 4242;
+    private Socket so;
+    private Scanner sc;
+    private InputStream is;
+    private PrintWriter pw;
+    private boolean status;
+    
+    private Client() {
+	this.status = true;
+	this.sc = new Scanner(System.in);
+	try {
+	    this.so = new Socket("localhost", serverSocket);
+	    this.pw = new PrintWriter(so.getOutputStream(), true);
+	    this.is = so.getInputStream();
+	} catch (Exception e) { 
+	    System.out.println("[Problème à la connexion au serveur.]");
+	}
+    }
+
+    private String byteToString(byte[] mdp) {
+	String mdp_;
+	for (int i = 0; i < mdp.length; i++) {
+	    Byte b = mdp[i];
+	    mdp_ += b.toString();
+	}
+	return mdp_;
+    }
+    
+    private String client_input() {
+	String input = "";
+	try {
+	    System.out.print("> ");
+	    input = this.sc.nextLine();
+	} catch (Exception e) {
+	    System.out.println("[Entrée non reconue.]");
+	}
+	return input;
+    }
+    
+    public void client_deconnected() {
+	String input = "";
+	System.out.println("[Entrez 'connexion' ou 'register']");
+	try {
+	    System.out.print(":");
+	    input = this.sc.nextLine();
+	} catch (Exception e) {
+	    System.out.println("[Entrée non reconue.]");
+	}
+	if (input.equals("connexion")) { 
+	    client_connexion();
+	} else { 
+	    client_deconnected();
+	}
+    }
+    
+    private void client_register() {
+	try {
+	    Connexion con = new Connexion();
+	    if(con.register()) {
+		this.id = con.getId();
+		this.udp = con.getUdp();
+		this.mdp = con.getMdp();
+		
+		Registration reg = new Registration(id, udp, byteToString(mdp));
+		pw.print(reg.toString());
+		
+		FeedbackFactory fbackfactory = new FeedbackFactory();
+		Feedback fback = fbackfactory.create(this.is);
+		fback.exec(this);
+	    }
+	    else {
+		System.out.println("[Veuillez recommencer.]");
+	    }
+	} catch (UnknownResultException e) {
+	    System.out.println("[Requête inconnue du serveur.]");
+	}	
+    }
+
+    private void client_connexion() {
+	try {
+	    Connexion con = new Connexion();
+	    if (con.connexion()) {
+		
+		String id_ = con.getId();
+		String mdp_ = byteToString(con.getMdp());
+		Connection connect = new Connection(id_, mdp_);
+		
+		this.pw.print(connect.toString());
+		
+		FeedbackFactory fbackfactory = new FeedbackFactory();
+		Feedback fback = fbackfactory.create(this.is);
+		fback.exec(this);
+	    } else {
+		System.out.println("[Impossible de vous reconnecter.]");
+		client_deconnected();
+	    }
+	} catch (UnknownResultException e) {
+	    System.out.println("[Requête inconnue du serveur.]");
+	}	
+    }
+    
+    private void client_deconnexion() {
+	try {
+	    Deconnection deco = new Deconnection();
+	    this.pw.print(deco.toString());
+	
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback = fbackfactory.create(this.is);
+	    fback.exec(this);	    
+	} catch (UnknownResultException e) {
+	    System.out.println("[Requête inconnue du serveur.]");
+	}
+    }
+
+    private void client_frrequest() {
+	try {
+	    System.out.print("-- id ami : ");
+	    String friend_id = this.sc.nextLine();
+
+	    AskFriend ask = new AskFriend(friend_id);
+	    this.pw.print(ask.toString());
+
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback = fbackfactory.create(this.is);
+	    fback.exec(this);   
+	} catch (UnknownResultException e) {
+	    System.out.println("[Requête inconnue du serveur.]");
+	} catch (Exception e) {
+	    System.out.println("[Problème lors de la requête.]");
+	}
+    }
+    
+    private void client_messageto() {
+	try {
+	    String friend_id;
+	    String input;
+	    int num_mess;
+	    
+	    System.out.print("-- id ami : ");
+	    friend_id = this.sc.nextLine();	
+	    System.out.println("-- entrez votre message : ");
+	    input = this.sc.nextLine();
+	    num_mess = (input.length() / 200) + 1;	    
+	    
+	    if (num_mess > 0) {
+		FirstMessage fmess = new FirstMessage(friend_id, num_mess);
+		this.pw.print(fmess.toString());
+
+	    	for (int i = 0; i < num_mess; i++) {
+		    SomeMessage smess;
+		    if (i+1 == num_mess) {
+			smess = new SomeMessage(i, input);
+			pw.print(smess.toString());
+		    } else {
+			smess = new SomeMessage(i, input.substring(0, 200));
+			pw.print(smess.toString());
+			input = input.substring(200, input.length());
+		    }
+		}
+	    } else {
+		System.out.println("[Aucun message à envoyer.]");
+		return;
+	    }	    
+
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback = fbackfactory.create(this.is);
+	    fback.exec(this);
+	    
+	} catch (UnknownResultException e) {
+	    System.out.println("[Requête inconnue du serveur.]");
+	} catch (Exception e) {
+	    System.out.println("[Problème lors de la requête.]");
+	}
+    }
+
+    private void client_flood() {
+	try {
+	    System.out.println("-- message d'inondation : ");
+	    String input = this.sc.nextLine();
+	    
+	    if (input.length() > 200) {
+		System.out.println("[Message trop long.]");
+	    } else {
+		FlooMessage floo = new FlooMessage(input);
+		pw.print(floo.toString());
+		
+		FeedbackFactory fbackfactory = new FeedbackFactory();
+		Feedback fback = fbackfactory.create(this.is);
+		fback.exec(this);
+	    }
+	} catch (UnknownResultException e) {
+	    System.out.println("[Requête inconnue du serveur.]");
+	} catch (Exception e) {
+	    System.out.println("[Problème lors de la requête.]");
+	}
+    }
+
+    private void client_list() {
+	try {
+	    SeeList sl = new SeeList();
+	    pw.print(sl.toString());
+
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback_num = fbackfactory.create(this.is);
+	    int num_item = fback_num.exec(this); 
+	    if(num_item > 0) {
+		for (int i = 0; i < num_item - 1; i++) {
+		    Feedback fback_list = fbackfactory.create(this.is);
+		    fback_list.exec(this); 
+		}
+	    } else {
+		System.out.println("[La solitude est un art - Vilhelm Ekelund]");
+	    }
+	} catch (UnknownResultException e) {
+	    System.out.println("[Requête inconnue du serveur.]");
+	} catch (Exception e) {
+	    System.out.println("[Problème lors de la requête.]");
+	}	
+    }
+
+    private void client_consu() {
+
+    }
+
+    public void setStatus(boolean b) {
+	this.status = b;
+    }
+
+    public void client_hub() {
+	boolean breaker = true;
+	while(breaker) {
+	    if (status) {
+		switch(client_input()) {
+		case "deconnexion" : client_deconnexion(); break;
+		case "friend request" : client_frrequest(); break;
+		case "messageto" : client_messageto(); break;
+		case "flood" : client_flood(); break;
+		case "list" : client_list(); break;
+		case "consultation" : client_consu(); break;
+		case "logoff" : breaker = false; break;
+		default : break ;
+		}
+	    } else {
+		client_deconnected();
+	    }
+	}
+	System.out.println("[Vous quittez iPortbook.]");
+	try {
+	    this.so.close();
+	} catch (IOException e) {
+	    System.out.println("[Problème de fermeture de la socket.]");
+	}
+    }
+
+    public static void main(String[] args) {
+	new Client().client_register();
+    }
+}

@@ -1,0 +1,30 @@
+
+package protocol ;
+
+import main.MainVals ;
+import java.io.Reader ;
+import java.io.IOException ;
+
+public abstract class ProtocolFactory {
+
+    public static String readStream(Reader in) throws IOException {
+        StringBuffer sb = new StringBuffer() ;
+        while(!sb.toString().contains(MainVals.EOF)) {
+            char c = (char) in.read() ;
+            sb.append(c) ;
+        }
+        return sb.toString() ;
+    }
+    
+    protected boolean isSuffixRight(String text) {
+        int isuffix = text.length() - MainVals.EOF.length() ;
+        String suffix = text.substring(isuffix, text.length()) ;
+        return suffix.equals(MainVals.EOF) ;
+    }
+
+    protected String[] getCmds(String text) {
+        int suf_size = MainVals.EOF.length() ;
+        String signifiant = text.substring(0, text.length() - suf_size) ;
+        return signifiant.split(MainVals.SEP) ;
+    }
+}

@@ -1,0 +1,20 @@
+package knock ;
+
+public class FriendshipKnock extends Knock {
+    
+    public FriendshipKnock(int flows) {
+        super(flows) ;
+    }
+
+    public FriendshipKnock(byte mylow, byte myhigh) {
+        super(mylow, myhigh) ;
+    }
+
+    public byte getCode() {
+        return KnockVals.FRIENDSHIP_CODE ;
+    }
+
+    public String popUp() {
+        return KnockVals.FIRENDSHIP_MESS;
+    }
+}

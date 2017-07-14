@@ -1,0 +1,51 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.* ;
+import service.User ;
+import protocol.feedback.* ;
+import protocol.field.* ;
+import java.io.IOException ;
+
+public class AskFriend implements Command {
+    private IdField id ;
+
+    public AskFriend (byte[] myid) throws UnknownResultException {
+        this.id = new IdField(myid) ;
+    }
+    
+    public AskFriend (String myid) {
+        this.id = new IdField(myid) ;
+    }
+
+    public void exec(User one, List<User> all) throws UnknownResultException,
+                                                      IOException {
+        synchronized(all) {
+            if (one.isAFriend(this.id.toString())) {
+                one.removeFriend(this.id.toString()) ;
+                one.sendTCP(new DelFriendOK()) ;
+            }
+            else {
+                one.sendTCP(new DelFriendNO()) ;
+                throw new NotExecutableException("DelFriend",
+                                                 this.id.toString() +
+                                                 " is not friend");
+            }
+        }
+    }
+
+    public byte[] toBytes() {
+        Field[] fields = { this.id } ;
+        return Field.makeSentence(CommandVals.DEL_FRIEND, fields) ;
+    }
+    
+    public String toString() {
+        return
+            CommandVals.DEL_FRIEND + " " + this.id.toString() +
+            MainVals.EOF ;
+    }
+
+    private void describeDelDone(String whoasks) {
+        MainVals.describe(whoasks + " has unfriended " + this.id.toString()) ;
+    }
+}

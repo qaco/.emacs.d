@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int compterCaracteres() {
+  int compteur = 0;
+  int tmp = 0 ;
+  while (tmp != EOF) {
+      tmp = getchar();
+      compteur++ ;
+    }
+  return compteur ;
+}
+
+int main() {
+  printf("%d\n", compterCaracteres()) ;
+}

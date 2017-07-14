@@ -1,0 +1,24 @@
+#ifndef GAME
+#define GAME
+
+typedef enum {
+  MOUTARDE,
+  OLIVE,
+  VIOLET,
+  PERVENCHE,
+  ROSE,
+  LEBLANC
+} Perso ;
+
+typedef struct {
+  Perso mon_perso ;
+  GtkWidget* pion ;
+} Joueur ;
+
+Joueur* construct_joueur(Perso perso, GtkWidget* image) ;
+void destruct_joueur(Joueur* j) ;
+
+int can_move_joueur(Joueur* j, GtkWidget* event_box) ;
+void move_joueur(Joueur* j, GtkWidget* event_box) ;
+
+#endif

@@ -1,0 +1,15 @@
+package protocol.tests ;
+
+import java.util.List ;
+import java.util.LinkedList ;
+
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+
+public class ServerTestRunner {
+    public static List<Result> run() {
+        List<Result> r = new LinkedList<Result>() ;
+        r.add(JUnitCore.runClasses(UserTest.class));
+        return r ;
+    }
+}

@@ -1,0 +1,22 @@
+public class SomeMessage {
+
+    private int num ;
+    private String mess ;
+
+    public SomeMessage (String mynum, String mymess) {
+        try {
+            this.mdp = Integer.parseInt(mymdp) ;
+        } catch (NumberException e) {
+            this.mdp = -1 ;
+        }
+        if (mymess.length() <= 200)
+            this.mess = mymess ;
+        else
+            this.mess = mymess.substring(0, 200) ;
+    }
+
+    public String toString() {
+        String mynum = String.valueOf(this.num) ;
+        return "MENUM " + mynum + " " + this.mess + "+++" ;
+    }
+}

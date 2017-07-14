@@ -1,0 +1,19 @@
+val fieldtext_build : 'a -> 'b -> 'c -> ('a * ('b * int)) * int * string * 'c
+val get_origin : ('a * 'b) * 'c * 'd * 'e -> 'a
+val coord_matches_fieldtext :
+  int * int -> ((int * int) * (int * int)) * 'a * 'b * 'c -> bool
+val get_text_orig : ((int * int) * 'a) * 'b * 'c * 'd -> int * int
+val get_title_orig : (('a * int) * ('b * int)) * 'c * 'd * 'e -> 'a * int
+val fieldtext_back : 'a * int * 'b * 'c -> 'a * int * 'b * 'c
+val fieldtext_forward : 'a * int * string * 'b -> 'a * int * string * 'b
+val fieldtext_tail : 'a * 'b * string * 'c -> 'a * int * string * 'c
+val match_fieldtext_with_coord :
+  ((int * int) * (int * int)) * 'a * string * 'b ->
+  int * int -> ((int * int) * (int * int)) * int * string * 'b
+val fieldtext_type : 'a * int * string * 'b -> char -> 'a * int * string * 'b
+val fieldtext_del : 'a * int * string * 'b -> 'a * int * string * 'b
+val fieldtext_draw :
+  ((int * int) * (int * int)) * int * string * string -> bool -> unit
+val fieldtext_interaction :
+  ((int * int) * (int * int)) * int * string * string ->
+  (((int * int) * (int * int)) * int * string * string) * (int * int)

@@ -1,0 +1,325 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <gtk/gtk.h>
+#include <glib-object.h>
+#include "game.h"
+#include "stuff.h"
+
+#define TEXTCHARAC_PATH "../ressources/conf/charac.cluedo"
+#define TEXTMAP_PATH "../ressources/conf/map.cluedo"
+
+#define TILEMAP_PATH "../ressources/images/allmap.jpg"
+
+#define P_MOUTARDE_PATH "../ressources/images/pions/moutarde.png"
+#define P_OLIVE_PATH "../ressources/images/pions/olive.png"
+#define P_VIOLET_PATH "../ressources/images/pions/violet.png"
+#define P_PERVENCHE_PATH "../ressources/images/pions/pervenche.png"
+#define P_ROSE_PATH "../ressources/images/pions/rose.png"
+#define P_LEBLANC_PATH "../ressources/images/pions/leblanc.png"
+
+#define C_MOUTARDE_PATH "../ressources/images/cartes/moutarde.png"
+#define C_OLIVE_PATH "../ressources/images/cartes/olive.png"
+#define C_VIOLET_PATH "../ressources/images/cartes/violet.png"
+#define C_PERVENCHE_PATH "../ressources/images/cartes/pervenche.png"
+#define C_ROSE_PATH "../ressources/images/cartes/rose.png"
+#define C_LEBLANC_PATH "../ressources/images/cartes/leblanc.png"
+
+#define C_CHANDELIER_PATH "../ressources/images/cartes/chandelier.jpg"
+#define C_CLE_PATH "../ressources/images/cartes/cle.jpg"
+#define C_CORDE_PATH "../ressources/images/cartes/corde.jpg"
+#define C_MATRAQUE_PATH "../ressources/images/cartes/matraque.jpg"
+#define C_POIGNARD_PATH "../ressources/images/cartes/poignard.jpg"
+#define C_REVOLVER_PATH "../ressources/images/cartes/revolver.jpg"
+
+#define C_CUISINE_PATH "../ressources/images/cartes/cuisine.jpg"
+#define C_BAL_PATH "../ressources/images/cartes/bal.jpg"
+#define C_VERANDA_PATH "../ressources/images/cartes/veranda.jpg"
+#define C_MANGER_PATH "../ressources/images/cartes/manger.jpg"
+#define C_BILLARD_PATH "../ressources/images/cartes/billard.jpg"
+#define C_BIBLIOTHEQUE_PATH "../ressources/images/cartes/bibliotheque.jpg"
+#define C_SALON_PATH "../ressources/images/cartes/salon.jpg"
+#define C_HALL_PATH "../ressources/images/cartes/hall.jpg"
+#define C_BUREAU_PATH "../ressources/images/cartes/bureau.jpg"
+
+#define NUM_T 3
+#define NUM_J 6
+#define NUM_A 6
+#define NUM_P 9
+#define NUM_C 21
+#define DEST_SIZE 20
+#define SRC_SIZE 37
+#define C_HEIGHT 60
+#define C_WIDTH 20
+#define V_TILES  26
+#define H_TILES  24
+
+
+static Piece char_to_room(char code) {
+  Piece res ;
+  switch(code) {
+  case 'o' : res = COULOIR ; break ;
+  case 'c' : res = CUISINE ; break ;
+  case 'd' : res = BAL ; break ;
+  case 'v' : res = VERANDA ; break ;
+  case 'm' : res = MANGER ; break ;
+  case 'b' : res = BILLARD ; break ;
+  case 'l' : res = BIBLIOTHEQUE ; break ;
+  case 's' : res = SALON ; break ;
+  case 'e' : res = HALL ; break ;
+  case 't' : res = BUREAU ; break ;
+  default : res = MUR ; break ;
+  }
+  return res ;
+}
+
+static const char* path_sprite_alibi(Alibi alibi, Alibi_type alibi_type) {
+  switch (alibi_type) {
+  case PERSO :
+    switch (alibi.perso) {
+    case MOUTARDE : return C_MOUTARDE_PATH ; break ;
+    case OLIVE : return C_OLIVE_PATH ; break ;
+    case VIOLET : return C_VIOLET_PATH ; break ;
+    case PERVENCHE : return C_PERVENCHE_PATH ; break ;
+    case ROSE : return C_ROSE_PATH ; break ;
+    case LEBLANC : return C_LEBLANC_PATH ; break ;
+    default :
+      fprintf(stderr, "%d : param error\n", __LINE__) ;
+      exit(1) ;
+    break ;
+    }
+  case ARME :
+    switch (alibi.arme) {
+    case CHANDELIER : return C_CHANDELIER_PATH ; break ;
+    case CLE : return C_CLE_PATH ; break ;
+    case CORDE : return C_CORDE_PATH ; break ;
+    case MATRAQUE : return C_MATRAQUE_PATH ; break ;
+    case POIGNARD : return C_POIGNARD_PATH ; break ;
+    case REVOLVER : return C_REVOLVER_PATH ; break ;
+    default :
+      fprintf(stderr, "%d : param error\n", __LINE__) ;
+      exit(1) ;
+    break ;
+    }
+  case PIECE :
+    switch (alibi.piece) {
+    case CUISINE : return C_CUISINE_PATH ; break ;
+    case BAL : return C_BAL_PATH ; break ;
+    case VERANDA : return C_VERANDA_PATH ; break ;
+    case MANGER : return C_MANGER_PATH ; break ;
+    case BILLARD : return C_BILLARD_PATH ; break ;
+    case BIBLIOTHEQUE : return C_BIBLIOTHEQUE_PATH ; break ;
+    case SALON : return C_SALON_PATH ; break ;
+    case HALL : return C_HALL_PATH ; break ;
+    case BUREAU : return C_BUREAU_PATH ; break ;
+    default :
+      fprintf(stderr, "%d : param error\n", __LINE__) ;
+      exit(1) ;
+    break ;
+    }
+  default :
+    fprintf(stderr, "%d : param error\n", __LINE__) ;
+    exit(1) ;
+    break ;
+  }
+}
+    
+static const char* path_sprite_perso(Perso perso) {
+  switch(perso) {
+  case MOUTARDE : return P_MOUTARDE_PATH ; break ;
+  case OLIVE : return P_OLIVE_PATH ; break ;
+  case VIOLET : return P_VIOLET_PATH ; break ;
+  case PERVENCHE : return P_PERVENCHE_PATH ; break ;
+  case ROSE : return P_ROSE_PATH ; break ;
+  case LEBLANC : return P_LEBLANC_PATH ; break ;
+  default :
+    fprintf(stderr, "%d : param error\n", __LINE__) ;
+    exit(1) ;
+    break ;
+  }
+}
+
+static Carte** gen_pioche() {
+  Carte** pioche = malloc(sizeof(Carte*)*NUM_C) ;
+  Perso persos[NUM_J] = { MOUTARDE, OLIVE, VIOLET, PERVENCHE, ROSE, LEBLANC } ;
+  Arme armes[NUM_A] = { CHANDELIER, CLE, CORDE, MATRAQUE, POIGNARD, REVOLVER } ;
+  Piece pieces[NUM_P] = { CUISINE, BAL, VERANDA, MANGER, BILLARD,
+			  BIBLIOTHEQUE, SALON, HALL, BUREAU } ;
+  Alibi_type types[NUM_T] = { PERSO, ARME, PIECE } ;
+  int num_int_type[NUM_T] = { NUM_J, NUM_A, NUM_P} ;
+  Alibi tmp_alibi ;
+  GdkPixbuf* tmp_pixbuf ;
+  GtkWidget* tmp_widget ;
+  GError* err ;
+  int c = 0 ;
+
+  for (int i = 0 ; i < NUM_T ; i++) {
+    for (int j = 0 ; j < num_int_type[i] ; j++, c++) {
+      switch(types[i]) {
+      case PERSO : tmp_alibi.perso = persos[j] ; break ;
+      case ARME : tmp_alibi.arme = armes[j] ; break ;
+      case PIECE : tmp_alibi.piece = pieces[j] ; break ;
+      }
+      tmp_pixbuf =
+	gdk_pixbuf_new_from_file_at_scale (path_sprite_alibi(tmp_alibi, types[i]),
+					   C_WIDTH, _HEIGHT, FALSE, &err);
+      if(!tmp_pixbuf) {
+	fprintf(stderr,"%d : %s\n", __LINE__, gerror->message);
+	exit(1);
+      }
+      tmp_widget = gtk_image_new_from_pixbuf(tmp_pixbuf) ;
+
+      *(pioche + c) = construc_carte(tmp_alibi, types[i], tmp_widget) ; 
+    }
+  }
+  return pioche ;
+}
+  
+
+static void gen_joueur_coordinates(Perso personnage, int* x, int* y) {
+  FILE* file = fopen(TEXTCHARAC_PATH, "r") ;
+  char temoin ;
+  
+  switch(personnage) {
+  case MOUTARDE : temoin = 'M' ; break ;
+  case OLIVE : temoin = 'O' ; break ;
+  case VIOLET : temoin = 'V' ; break ;
+  case PERVENCHE : temoin = 'P' ; break ;
+  case ROSE : temoin = 'R' ; break ;
+  case LEBLANC : temoin = 'L' ; break ;
+  default :
+    fprintf(stderr, "%d : param error\n", __LINE__) ;
+    exit(1) ;
+    break ;
+  }
+
+  for (int i = 0 ; i < V_TILES ; i++) {
+    for (int j = 0 ; j < H_TILES + 1 ; j++) {
+      if (fgetc(file) == temoin) {
+	*x = j ;
+	*y = i ;
+      }
+    }
+  }
+  fclose(file) ;
+}
+
+
+Piece** gen_text_map() {
+  char tmp ;
+  FILE* file = fopen(TEXTMAP_PATH, "r") ;
+  Piece** res = malloc(V_TILES*sizeof(Piece*)) ;
+  for (int i = 0 ; i < V_TILES ; i++)
+    *(res+i) = malloc(H_TILES*sizeof(Piece)+1) ;
+  int i = 0, j = 0 ;
+  do {
+    tmp = fgetc(file) ;
+    if (tmp == '\n') {
+      *(*(res + i) + j) = '\0' ;
+      i++ ;
+      j = 0 ;
+    }
+    else {
+      *(*(res + i) + j) = char_to_room(tmp) ;
+      j++ ;
+    }
+  } while (i < V_TILES - 1 || j < H_TILES) ;
+  fclose(file) ;
+  
+  return res ;
+}
+
+GtkWidget* gen_tile_map(Piece*** data) {
+  GtkWidget
+    *grid = gtk_grid_new (),
+    *overlay, *event_box, *image ;
+  GError* gerror = NULL ;
+  GdkPixbuf
+    *all_tiles = gdk_pixbuf_new_from_file (TILEMAP_PATH, &gerror),
+    *tmp, *done ;
+
+  // On vérifie que le chargement du pixbuf s'est passé sans problème
+  if(!all_tiles) {
+    fprintf(stderr,"%d : %s\n", __LINE__, gerror->message);
+    exit(1);
+  }
+  
+  for (int i = 0 ; i < V_TILES ; i++) {
+    for (int j = 0 ; j < H_TILES ; j++) {
+      /* On récupère, redimensionne et convertit en image chaque tile
+	 de la map */
+      tmp = gdk_pixbuf_new_subpixbuf (all_tiles,
+				      j*SRC_SIZE,
+				      i*SRC_SIZE,
+				      SRC_SIZE,
+				      SRC_SIZE);
+      done = gdk_pixbuf_scale_simple (tmp,
+				      DEST_SIZE,
+				      DEST_SIZE,
+				      GDK_INTERP_BILINEAR) ;
+      image = gtk_image_new_from_pixbuf(done) ;
+
+      /* On stocke l'image dans une eventbox, configurée pour appeler
+	 cb_click_on_tile au clic, en lui passant le caractère
+	 descripteur du tile */
+      event_box = gtk_event_box_new() ;
+      gtk_container_add (GTK_CONTAINER (event_box), image);
+      gtk_widget_set_events (event_box, GDK_BUTTON_PRESS_MASK);
+      g_signal_connect (event_box,
+			"button_press_event",
+			G_CALLBACK (cb_click_on_tile),
+			*(*data + i) + j);
+      
+      // On stocke l'eventbox dans un overlay, que l'on ajoute au grid
+      overlay = gtk_overlay_new() ;
+      gtk_container_add (GTK_CONTAINER (overlay), event_box);
+      gtk_grid_attach ((GtkGrid*)grid, overlay,
+		       j, i, 1, 1);
+      
+
+    }
+  }
+  return grid ;
+}
+
+Joueur** gen_joueurs(Perso humain, GtkWidget* grid) {
+  int x, y ;
+  Perso perso_tmp ;
+  Perso  persos_array[NUM_J] = { MOUTARDE,
+				 OLIVE,
+				 VIOLET,
+				 PERVENCHE,
+				 ROSE,
+				 LEBLANC } ;
+  GError* gerror = NULL ;
+  GdkPixbuf *raw, *ebauche ;
+  GtkWidget *pion, *stack ;
+  Joueur** liste = malloc(sizeof(Joueur*)*NUM_J) ;
+
+  
+  for (int i = 0 ; i < NUM_J ; i++) {
+    perso_tmp = persos_array[i] ;
+    // On génère l'image représentant le pion et le joueur tout entier
+    raw = gdk_pixbuf_new_from_file (path_sprite_perso(perso_tmp),
+				    &gerror) ;
+    ebauche =  gdk_pixbuf_scale_simple (raw,
+					DEST_SIZE,
+					DEST_SIZE,
+					GDK_INTERP_BILINEAR) ;
+    pion = gtk_image_new_from_pixbuf(ebauche) ;
+    /*
+      ici il faut distribuer des cartes
+    */
+    // on génère le joueur
+    *(liste + i) = construct_joueur(perso_tmp, pion) ;
+
+    // On place le joueur sur la map
+    gen_joueur_coordinates(perso_tmp, &x, &y) ;
+    stack = gtk_grid_get_child_at ((GtkGrid*)grid, x, y);
+    gtk_overlay_add_overlay ((GtkOverlay*)stack, pion);
+    if (perso_tmp == humain)
+      // + il faut afficher les cartes de l'humain
+      he_is_the_human(*(liste + i)) ;
+  }
+  return liste ;
+
+}

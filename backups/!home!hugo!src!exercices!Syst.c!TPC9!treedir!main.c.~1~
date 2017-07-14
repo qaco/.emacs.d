@@ -1,0 +1,7 @@
+#include "treedir.h"
+
+int main () {
+  node* racine = build_from_current_file() ;
+  print_tree(racine) ;
+  return 0 ;
+}

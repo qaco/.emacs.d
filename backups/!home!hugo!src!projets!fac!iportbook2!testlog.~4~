@@ -1,0 +1,86 @@
+EN FONCTION DU PROTOCOLE
+
+que se passe t'il si le serveur ne respecte pas le protocole ?
+que se passe t'il si le client ne respecte pas le protocole ?
+
+EN FONCTION DE LA SAISIE UTILISATEUR
+
+register
+========
+
+V id <= 8 cars && port <= 9999 && mdp <= 65XXX
+  reponse positive
+
+V id > 8 cars
+  nouveau prompt
+
+X problème : le client ne ferme pas la socket utilisée pour register
+  et il en utilise une autre pour la connexion
+
+? port > 9999
+
+? port non-numeric
+
+? mdp > 65XXX
+
+? mdp non-numeric
+
+connexion
+=========
+
+id <= 8 cars && mdp < 65XXX && match
+
+? !match
+
+? id > 8 cars
+
+? mdp > 65XXX
+
+? mdp non-numeric
+
+messages
+========
+
+V id <= 8 cars && mess <= 200 cars && friend
+  reponse positive
+
+V !friend
+  reponse negative
+
+? id > 8 cars
+
+? mess > 200
+
+demande d'amitié
+================
+
+V id <= 8 cars && exists
+  reponse positive
+
+V !exists
+reponse negative
+
+X id > 8 cars
+  RuntimeException coté client
+
+consultation
+============
+
+V hasflows
+
+V hasnoflows
+
+list
+====
+
+V alone
+
+V others
+
+flood
+=====
+
+V mess <= 200 cars
+
+? mess > 200 cars
+

@@ -1,0 +1,20 @@
+JC = javac
+JUNIT_PATH = /usr/share/java/junit4.jar
+
+ROOT_DIR = $(shell pwd)/../..
+
+CASES_SRC = CommandFactoryTest.java FeedbackFactoryTest.java FlowFactoryTest.java AnonFactoryTest.java KnockFactoryTest.java
+RUN_SRC = ProtocolTestRunner.java
+
+CASES_CLASS = $(CASES_SRC:%.java=%.class)
+RUN_CLASS = $(RUN_SRC:%.java=%.class)
+
+all: $(RUN_CLASS)
+
+$(RUN_CLASS): $(RUN_SRC) $(CASES_CLASS) 
+
+%.class: %.java
+	$(JC) -cp $(JUNIT_PATH):$(ROOT_DIR) $<
+
+clean :
+	@rm *.class 2>/dev/null || true

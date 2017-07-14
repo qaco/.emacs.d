@@ -1,0 +1,91 @@
+package protocol.tests ;
+
+import exception.UnkknownResultException ;
+import protocol.command.* ;
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+public class CommandFactoryTest {
+
+    private CommandFactory pf ;
+
+    @Before
+    public final void setCommandFactoryUp() {
+        this.pf = new  CommandFactory() ;
+    }
+
+    @Test
+    public final void testAskFriendBuild() {
+        String tmp = "FRIE? toto+++" ;
+        try {
+            Command p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testFirstMessageBuild() {
+        String tmp = "MESS? toto 12+++" ;
+        try {
+            Command p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testSomeMessageBuild() {
+        String tmp = "MENUM 2 hello how are you+++" ;
+        int num = SomeMessage.extractNum(tmp) ;
+        String mess = SomeMessage.extractMess(tmp) ;
+        SomeMessage m = new SomeMessage(num, mess) ;
+        assertEquals(tmp, m.toString()) ;
+    }
+
+    @Test
+    public final void testFlooMessageBuild() {
+        String tmp = "FLOO? hello how are you+++" ;
+        try {
+            Command p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testSeeListBuild() {
+        String tmp = "LIST?+++" ;
+        try {
+            Command p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testConsultationBuild() {
+        String tmp = "CONSU+++" ;
+        try {
+            Command p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+    
+    @Test
+    public final void testDeconnectionBuild() {
+        try {
+            Command p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+}

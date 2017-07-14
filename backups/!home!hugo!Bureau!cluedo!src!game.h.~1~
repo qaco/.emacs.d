@@ -1,0 +1,15 @@
+typedef struct {
+  int personnage ;
+  GtkWidget* pion ;
+} joueur ;
+
+typedef enum {
+  MOUTARDE,
+  OLIVE,
+  VIOLET,
+  PERVENCHE,
+  ROSE,
+  LEBLANC
+} personnage ;
+
+

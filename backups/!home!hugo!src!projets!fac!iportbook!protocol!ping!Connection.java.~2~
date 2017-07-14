@@ -1,0 +1,25 @@
+package protocol.ping ;
+
+public class Connection {
+
+    private String id ;
+    private int mdp ;
+
+    public Connection (String author, String myid, String mymdp) {
+        this.id = myid ;
+        this.mdp = Integer.parseInt(mymdp) ;
+    }
+
+    public Connection (String author, String myid, int mymdp) {
+        this.id = myid ;
+        this.mdp = mymdp ;
+    }
+
+    public String toString() {
+        String mymdp = String.valueOf(this.mdp) ;
+        return
+            CommandVals.CONNECTION + " " +
+            this.id + " " + mymdp + CommandVals.EOF ;
+    }
+}
+        

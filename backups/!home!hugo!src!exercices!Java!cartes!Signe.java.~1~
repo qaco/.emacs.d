@@ -1,0 +1,16 @@
+public enum Signe {
+    PIQUE("noir"),
+    TREFLE("noir"),
+    COEUR("rouge"),
+    CARREAU("rouge") ;
+
+    private String couleur ;
+
+    private Signe(String c) {
+	this.couleur = editor ;
+    }
+
+    public String getCouleur() {
+	return this.couleur ;
+    }
+}

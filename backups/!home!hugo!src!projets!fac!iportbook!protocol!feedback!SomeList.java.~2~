@@ -1,0 +1,18 @@
+package protocol.feedback ;
+import client.src.ServerRequest;
+
+public class SomeList implements Feedback {
+    String id ;
+
+    public SomeList(String myid) {
+        this.id = myid ;
+    }
+    
+    public String toString() {
+        return FeedbackVals.SOME_LIST + this.id + FeedbackVals.EOF ;
+    }
+
+    public void exec(ServerRequest c) {
+	System.out.println("[- "+this.id+"]");
+    }  
+}

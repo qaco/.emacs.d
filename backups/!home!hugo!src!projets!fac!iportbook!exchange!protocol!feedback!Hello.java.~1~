@@ -1,0 +1,7 @@
+package protocol.feedback ;
+import protocol.* ;
+public class Hello implements feedback {
+    public String toString() {
+        return "HELLO+++" ;
+    }
+}

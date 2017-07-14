@@ -1,0 +1,20 @@
+package protocol ;
+
+public class AbstractPub {
+    protected byte ip[] = new byte[4] ;
+    protected int port ;
+    protected String message ;
+
+    public AbstractPub(byte[] myip, int myport, String mymess) {
+        this.ip = myip ;
+        this.port = myport ;
+        this.message = mymess ;
+    }
+
+    public AbstractPub(String myip, String myport, String mymess) {
+        this.ip = myip.getBytes() ;
+        this.port = Integer.parseInt(myport) ;
+        this.message = mymess ;
+    }
+}
+            

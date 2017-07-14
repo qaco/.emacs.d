@@ -1,0 +1,54 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.* ;
+import service.User ;
+import protocol.feedback.* ;
+import protocol.flow.AskFriendFlow ;
+import protocol.knock.FriendshipKnock ;
+import java.util.List ;
+import java.io.IOException ;
+
+public class AskFriend implements Command {
+    private IdField id ;
+
+    public AskFriend (String myid) throws UnknownResultException {
+        this.id = new IdField(myid) ;
+    }
+
+    public void exec(User one, List<User> all) throws UnknownResultException,
+                                                      IOException {
+        String myid = this.id.toString() ;
+        if (!one.isAFriend(myid)) {
+            User target = null ;
+            Feedback confirm ;
+            for (User guy : all)
+                if (guy.getId().equals(myid))
+                    target = guy ;
+            if (target == null) {
+                one.sendTCP(new AskFriendNO()) ;
+                throw new NotExecutableException("AskFriend",
+                                                 myid + " does not exist");
+            }
+            else {
+                one.sendTCP(new AskFriendOK()) ;
+                target.pushFlow(new AskFriendFlow(one.getId())) ;
+                target.sendUDP(new FriendshipKnock(target.howManyFlows())) ;
+                this.describeAskTransmitted() ;
+            }
+        }
+        else {
+            one.sendTCP(new AskFriendNO()) ;
+            throw new NotExecutableException("AskFriend",
+                                             myid + " is a friend yet");
+        }
+    }
+
+    public String toString() {
+        return CommandVals.ASK_FRIEND + " " + this.id.toString() + MainVals.EOF ;
+    }
+
+    private void describeAskTransmitted() {
+        MainVals.describe(this.id.toString() + " asked for friend") ;
+    }
+}

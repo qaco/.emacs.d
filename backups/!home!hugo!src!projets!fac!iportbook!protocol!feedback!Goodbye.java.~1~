@@ -1,0 +1,12 @@
+package protocol.feedback ;
+
+public class Goodbye implements Feedback {
+    public String toString() {
+        return "GOBYE+++" ;
+    }
+    
+    public default boolean exec() {
+	System.out.println("[Goodbye.]");
+	return false;
+    }  
+}

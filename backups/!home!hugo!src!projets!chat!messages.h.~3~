@@ -1,0 +1,15 @@
+#ifndef MESSAGES
+
+#define MESSAGES
+
+/* Construit un message respectant le protocole suivant le paramètre fixe
+   désignant le type et les paramètres variables. */
+char* build_msg(char* typem, ...) ;
+/* Reçoit et traite un message. */
+void receive_msg (char* mypseudo, int fd_read) ;
+/* Ping le serveur et renvoie l'id attribuée. */
+int connexion(int fd_write, int fd_read, char* pseudo, char* tube) ;
+/* Saisit, encode et envoie les commandes. */
+void send_msg(char* pseudo, int id, int fd_write) ;
+
+#endif 

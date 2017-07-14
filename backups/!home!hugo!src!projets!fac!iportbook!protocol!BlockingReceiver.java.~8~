@@ -1,0 +1,36 @@
+package protocol ;
+
+import main.MainVals ;
+import exception.* ;
+import java.io.InputStream ;
+import java.io.IOException ;
+import java.nio.charset.Charset ;
+
+public class BlockingReceiver extends Receiver {
+
+    private InputStream in ;
+
+    public BlockingReceiver(InputStream myin) {
+        super() ;
+        this.in = myin ;
+    }
+
+    public void receive() throws UnknownResultException, IOException {
+        byte tmp[] = new byte[ProtocolVals.COM_SIZE_MAX] ;
+        int n = this.in.read(tmp) ;
+
+        if (n == -1)
+            throw new IOException() ;
+
+        MainVals.describe("Rec: "+new String(tmp, Charset.forName("US-ASCII")));
+        
+        for (int i = 0 ; i < this.suffix.length ; i++)
+            if (tmp[n-this.suffix.length+i] != this.suffix[i])
+                throw new UnknownResultException("illegal suffix") ;
+                
+        this.raw = new byte[n-this.suffix.length] ;
+
+        for (int i = 0 ; i < this.raw.length ; i++)
+            this.raw[i] = tmp[i] ;
+    }
+}

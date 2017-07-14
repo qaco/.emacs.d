@@ -1,0 +1,14 @@
+package protocol.feedback ;
+import client.src.ConnexionRequest;
+
+public class Welcome implements Feedback {
+    public String toString() {
+        return FeedbackVals.WELCOME + MainVals.EOF ;
+    }
+ 
+    public void exec(ConnexionRequest cr) {
+	System.out.println("[Bienvenue !]");
+	cr.setStatus(true);
+    }  
+
+}

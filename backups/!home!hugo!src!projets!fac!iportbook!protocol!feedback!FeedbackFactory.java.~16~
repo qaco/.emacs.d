@@ -1,0 +1,66 @@
+package protocol.feedback ;
+
+import main.MainVals ;
+import exception.* ;
+import protocol.ProtocolFactory ;
+import java.io.InputStream ;
+import java.io.IOException ;
+import java.util.Arrays ;
+
+public class FeedbackFactory extends ProtocolFactory {
+
+    public Feedback create(SocketChannel so) throws UnknownResultException,
+                                             IOException {
+        Receiver r = new BlockingReceiver(so) ;
+        r.receive() ;
+        return this.create(r.getData()) ;
+    }
+
+    public Feedback create(InputStream in) throws UnknownResultException,
+                                             IOException {
+        Receiver r = new BlockingReceiver(in) ;
+        r.receive() ;
+        return this.create(r.getData()) ;
+    }
+    
+    private Feedback create(byte[] raw_arr) throws UnknownResultException {
+        Receiver r = new Receiver(raw_arr) ;
+        String code = r.extractCode(raw_arr) ;
+        byte[][] params = r.splitInput() ;
+        byte[] mess ;
+
+        try {
+            switch (code) {
+            case FeedbackVals.ASK_OK :
+                return new AskFriendOK() ;
+            case FeedbackVals.ASK_NO :
+                return new AskFriendNO() ;
+            case FeedbackVals.ACK_FR :
+                return new AckFriend() ;
+            case FeedbackVals.FLOO_DONE :
+                return new FlooDone() ;
+            case FeedbackVals.GOODBYE :
+                return new Goodbye() ;
+            case FeedbackVals.HELLO :
+                return new Hello() ;
+            case FeedbackVals.MESS_TRANSMIT :
+                return new MessageTransmitted() ;
+            case FeedbackVals.MESS_NOT_TRANSMIT :
+                return new MessageNotTransmitted() ;
+            case FeedbackVals.WELCOME :
+                return new Welcome() ;
+            case FeedbackVals.FIRST_LIST :
+                return new FirstList(params[1]) ;
+            case FeedbackVals.SOME_LIST :
+                return new SomeList(params[1]) ;
+            case FeedbackVals.PUB_DONE :
+                return new PubDone() ;
+            default :
+                throw new UnknownCommandException(code, "feedback") ;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new TooFewArgsException(code,
+                                          String.valueOf(params.length)) ;
+        }
+    }
+}

@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include "aux.h"
+
+int main(int argc, char* argv[]) {
+  char* pseudo = malloc(sizeof(char)*1000) ;
+  mkfifo("patron", S_IRWXU | S_IRWXG | S_IRWXO) ;
+  
+  int server = open("patron", O_RDONLY) ;
+
+  int client = open("hugo", O_WRONLY) ;
+  char *input ;
+  
+  read(server, pseudo, 4) ;
+  *(pseudo + 4) = '\0' ;
+  printf("%s\n", pseudo) ;
+
+  write(client, "0012OKOK0003",12) ;
+  while(1)
+    {
+      close(client) ;
+      input = get_input("# ") ;
+      client = open("hugo", O_WRONLY) ;
+      write(client, input, strlen(input) + 1) ;
+    }
+  /* 
+     0031PRVT0008lolo0015hello ca va
+     0020LIST00090008lolo
+     0035BCST0008lolo0019salut everybody
+ */
+  
+  close(client) ;
+  client = open("hugo", O_WRONLY) ;
+  write(client, "0032PRVT0008lolo0016moi pas trop",32) ;
+  close(client) ;
+}

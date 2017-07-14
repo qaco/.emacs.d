@@ -1,0 +1,83 @@
+import java.util.ArrayList ;
+import java.util.Scanner ;
+
+public class Joueur {
+    private static int numJoueur = 0 ;
+    private int id ;
+    private Plateau plateau ;
+    private ArrayList<Case> main ;
+
+    public Joueur(Plateau p) {
+	this.id = numJoueur++ ;
+	this.plateau = p ;
+	main = new ArrayList<Case>() ;
+	for (int i = 0 ; i < 8 ; i++)
+	    main.add(plateau.piocher()) ;
+    }
+
+    public void tour() throws VictoireException {
+	boolean test ;
+	Carte c ;
+	do {
+	    if (main.isEmpty())
+		main.add(plateau.piocher()) ;
+	    test = true ;
+	    c = saisie() ;
+	    try {
+		plateau.coup(c) ;
+	    } catch (CoupInterditException e) {
+		System.out.println(e.getMessage()) ;
+		test = false ;
+	    } catch (RejouerException e) {
+		System.out.println(e.getMessage()) ;
+		main.remove(c) ;
+		test = false ;
+	    }
+	} while (!test) ;
+	main.remove(c) ;
+	if (main.isEmpty())
+	    throw new VictoireException("Joueur " + String.valueOf(id)
+					+ " a gagné !") ;
+    }
+
+    private Carte saisie() {
+	Carte res = null ;
+	boolean test ;
+	String s ;
+	Scanner sc = new Scanner() ;
+	do {
+	    System.out.println("Joueur " + this.id + " : \n"
+			       + "Sélectionnez une carte.Commande de la "
+			       + "forme VALEUR/SIGNE. La valeur est "
+			       + "2,..,10 pour les cartes simples et AS, "
+			       + "VALET, DAME, ROI pour les figures. Le "
+			       + "signe est PIQUE, TREFLE, CARREAU ou "
+			       + "COEUR.");
+	    test = false ;
+	    s = sc.nextLine() ;
+	    if (s.split("/").length == 2) {
+		for (Case tmp : main) {
+		    if (tmp.testCode(s)) {
+			res = tmp ;
+			test = true ;
+		    }
+		}
+		if (!test)
+		    System.out.println("Vous n'avez pas une telle carte "
+				       + "dans votre main.") ;
+	    }
+	    else
+		System.out.println("Mauvaise syntaxe de la commande.") ;
+	} while(!test) ;
+	return res ;
+    }
+
+    public String toString() {
+	String s = "Joueur " + String.valueOf(id) + "\n" ;
+	for (Case tmp : main)
+	    s += " " + tmp.toString() + "," ;
+	s += "\n" ;
+	return s ;
+    }
+}
+	

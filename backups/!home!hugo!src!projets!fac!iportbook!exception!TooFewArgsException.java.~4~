@@ -1,0 +1,8 @@
+package exception ;
+
+public class TooFewArgsException extends UnknownResultException {
+
+    public TooFewArgsException(String cmd, String num) {
+        super(c + " has " + num + " args : too few") ;
+    }
+}

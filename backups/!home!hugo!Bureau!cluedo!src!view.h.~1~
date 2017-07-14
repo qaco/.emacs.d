@@ -1,0 +1,2 @@
+void launch_window(int* argc,char ***argv,
+		   const int num_cells) ;

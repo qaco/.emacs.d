@@ -1,0 +1,56 @@
+#include <stdlib.h>
+#include <gtk/gtk.h>
+#include "load_media.h"
+
+#define C_SIZE 20
+#define FLOOR_PATH "../ressources/images/floor.jpg"
+#define BLANK_PATH "../ressources/images/blank.jpg"
+
+gboolean on_click (GtkWidget *widget,
+	      GdkEvent  *event,
+	      gpointer   user_data) {
+  printf("test\n") ;
+  return TRUE ;
+}
+
+void OnDestroy(GtkWidget *pWidget, gpointer pData) {
+    gtk_main_quit();
+}
+
+GtkWidget* fill_window(GtkWidget* window, const int num_cells, char** map) {
+  GtkWidget* event_box ;
+  GtkWidget* table = gtk_table_new (num_cells, num_cells, TRUE) ;
+  GtkWidget* tile ;
+  for (int i = 0 ; i < num_cells ; i++) {
+    for (int j = 0 ; j < num_cells ; j++) {
+      if (map[i][j] == 'o') 
+	tile = get_tile_img(FLOOR_PATH, C_SIZE) ;
+      else 
+	tile = get_tile_img(BLANK_PATH, C_SIZE) ;
+      event_box = gtk_event_box_new() ;
+      gtk_container_add (GTK_CONTAINER (event_box), tile);
+      gtk_table_attach_defaults((GtkTable*)table, event_box, j, j+1, i, i+1) ;
+      gtk_widget_set_events (event_box, GDK_BUTTON_PRESS_MASK);
+      gtk_signal_connect (GTK_OBJECT(event_box), "button_press_event",
+			  GTK_SIGNAL_FUNC (on_click), NULL);
+    }
+  }
+  gtk_container_add (GTK_CONTAINER (window), table);
+  return table ;
+}
+
+GtkWidget* conf_window(const int num_cells) {
+  GtkWidget *window;
+  int width = num_cells * C_SIZE ;
+  int height = width ;
+
+  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+  gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+  gtk_window_set_default_size(GTK_WINDOW(window), height, width);
+  g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(OnDestroy), NULL);
+  return window ;
+}
+
+
+

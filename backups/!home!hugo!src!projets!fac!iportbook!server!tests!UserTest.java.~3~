@@ -1,0 +1,76 @@
+import java.net.Socket ;
+import java.util.List ;
+import server.User ;
+import protocol.flow.* ;
+
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+
+public class UserTest {
+
+    private User myuser ;
+    private String errmess ;
+
+    @Before
+    public final void setUserUp() {
+        this.myuser = new User(new Socket(), "hugo", "pass") ;
+        this.errmess = "Not implemented yet !" ;
+    }
+
+    @Test
+    public final void testSocketNotConnected() {
+        assertFalse(this.myuser.isConnected()) ;
+    }
+
+    @Test
+    public final void testSocketConnected() {
+        fail(this.errmess) ;
+    }
+
+    @Test
+    public final void testSendTCP() {
+        fail(this.errmess) ;
+    }
+
+    @Test
+    public final void testIsNotAFriend() {
+        assertFalse(this.myuser.isAFriend("jojo")) ;
+    }
+
+    @Test
+    public final void testIsAFriend() {
+        this.myuser.addFriend("jojo") ;
+        assertTrue(this.myuser.isAFriend("jojo")) ;
+    }
+
+    @Test
+    public final void testAddTwiceAFriend() {
+        boolean b ;
+        this.myuser.addFriend("jojo") ;
+        b = this.myuser.addFriend("jojo") ;
+        assertFalse(b) ;
+        assertEquals(this.myuser.howManyFriends(), 1) ;
+    }
+
+    @Test
+    public final void testPopFlowWhenEmpty() {
+        String cobaye = FlowVals.NO_FLOW ;
+        Flow res = this.myuser.popFlow() ;
+        assertTrue(cobaye.equals(res.toString())) ;
+    }
+
+    @Test
+    public final void testPopFlow() {
+        Flow ask = new AskFriendFlow("jojo") ;
+        Flow friendok = new FriendshipOk("jojo") ;
+        Flow cobaye ;
+        this.myuser.pushFlow(ask) ;
+        this.myuser.pushFlow(friendok) ;
+        cobaye = this.myuser.popFlow() ;
+        assertTrue(cobaye == friendok) ;
+    }
+}
+        
+    

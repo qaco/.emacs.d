@@ -1,0 +1,27 @@
+CC=gcc
+CFLAGS=-std=gnu99 -Wall -Werror -g
+CLINKS=-lcurl
+EXEC=ungoliant
+
+all: ungoliant
+
+ungoliant: word.o wordlist.o crawler.o ungoliant.o
+	$(CC) -o $@ $^ $(CLINKS)
+
+word.o: word.c word.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+wordlist.o: wordlist.c wordlist.h word.o
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+crawler.o: crawler.c crawler.h word.o wordlist.o
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+ungoliant.o: ungoliant.c crawler.h crawler.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+clean :
+	rm -rf *.o
+
+mrproper : clean
+	rm -rf ungoliant

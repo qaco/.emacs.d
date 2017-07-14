@@ -1,0 +1,8 @@
+#ifndef WORD_CASES
+#define WORD_CASES
+
+#include <check.h>
+
+TCase* word_comparison_case(void) ;
+
+#endif

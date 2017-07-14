@@ -1,0 +1,83 @@
+import misc
+from PIL import Image, ImageDraw, ImageFont
+
+class frame:
+    def __init__(self, upper_size=None,corner=None, size=None):
+        self.upper_size = upper_size
+        self.corner = corner
+        self.size = size
+        
+class calc(frame):
+    def __init__(self):
+        super().__init__()
+        self.img = None
+
+    def set_in_space(self):
+        raise NotImplementedError()
+    
+    def process_img(self):
+        raise NotImplementedError()
+
+class mobile(calc):
+    def __init__(self, myframe, offset_ratio):
+        super().__init__()
+        self.frame = myframe
+        self.offset_ratio = offset_ratio
+        self.process_offset()
+
+    def process_offset(self):
+        offset = max(self.frame.size[0], self.frame.size[1])/self.offset_ratio
+        self.corner = int(self.frame.corner[0] + offset), int(self.frame.corner[1] + offset)
+        self.size = int(self.frame.size[0] - offset*2), int(self.frame.size[1] - offset*2)
+        
+    def center(self):
+        xcorn = self.frame.corner[0] + (self.frame.size[0] - self.size[0])/2
+        ycorn = self.frame.corner[1] + (self.frame.size[1] - self.size[1])/2
+        self.corner = int(xcorn), int(ycorn)
+        
+class shutter(calc):
+    def __init__(self, upper_size):
+        self.upper_size = upper_size
+        self.color = misc.OPACITY
+        self.has_logo = False
+        self.logo_place = None
+        self.writeable = None
+
+    def switch_logo(self):
+        if self.has_logo:
+            self.has_logo = False
+            self.writeable = frame(self.upper_size, self.corner, self.size)
+        else:
+            self.has_logo = True
+            corner = int(self.size[0]/misc.PHI), self.corner[1]
+            size = self.size[0] - corner[0], self.size[1]
+            self.logo_place = frame(self.upper_size, corner, size)
+            self.writeable = frame(self.upper_size, self.corner, (self.logo_place.corner[0], self.size[1]))
+    
+    def process_img(self):
+        upper_size = self.size[0] + self.corner[0], self.size[1] + self.corner[1]
+        self.img = Image.new('RGBA', upper_size, misc.TRANSPARENCY)
+        draw = ImageDraw.Draw(self.img, 'RGBA')
+        draw.rectangle([self.corner, self.img.size], self.color)
+
+class slogan(mobile):
+    def __init__(self, myframe):
+        super().__init__(myframe, misc.TEXT_RATIO)
+        self.text = misc.INIT_TEXT
+        self.sfont = misc.FONT_PATH
+        self.fontsize = misc.INIT_FONTSIZE
+        self.color = (255,255,255)
+
+    def set_text(self, mytext):
+        self.text = mytext
+        self.set_in_space()
+
+    def set_font(self, myfont):
+        self.sfont = myfont
+        self.set_in_space()
+
+    def process_img(self):
+        font = ImageFont.truetype(self.sfont, self.fontsize)
+        self.img = Image.new('RGBA', self.frame.upper_size, misc.TRANSPARENCY)
+        draw = ImageDraw.Draw(self.img, 'RGBA')
+        draw.text(self.corner, self.text, self.color, font)

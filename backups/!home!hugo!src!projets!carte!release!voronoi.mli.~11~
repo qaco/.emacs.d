@@ -1,0 +1,75 @@
+type seed = { c : Graphics.color option; x : int; y : int; }
+type voronoi = { dim : int * int; seeds : seed array; }
+
+(* ======================================================================== *)
+(* GETTERS D'UN VORONOI =================================================== *)
+(* ======================================================================== *)
+
+(* Vérifie s'il est légal de colorier dans la couleur donnée la seed *)
+(* désignée par son indice. *)
+val is_coloriage_legal :
+  int -> bool array array -> voronoi -> Graphics.color option -> bool
+
+(* Vérifie si toutes les seeds du voronoi sont coloriées. *)
+val is_complete : voronoi -> bool
+
+(* Extraction des couleurs d'un voronoi sous la forme d'un tableau. *)
+val extract_colors :
+  voronoi -> Graphics.color option array
+             
+(* ======================================================================== *)
+(* TRAITEMENT D'UN VORONOI ================================================ *)
+(* ======================================================================== *)
+  
+(* Fonction calculant la distance euclidienne entre deux points. *)
+val euclide : int -> int -> int -> int -> int
+
+(* Fonction calculant la distance taxicab entre deux points. *)
+val taxicab : int -> int -> int -> int -> int
+
+(* À partir d'une fonction calculant la distance et d'un diagramme, *)
+(* calcule une matrice des régions indiquant, pour chaque pixel, le *)
+(* germe (représenté par son indice dans le tableau diagramme.seeds) *)
+(* dont il est le plus proche. *)
+val regions_voronoi :
+  (int -> int -> int -> int -> int) -> voronoi -> int array array
+  
+(* À partir de la matrice des régions (ie matrice de pixels) et du *)
+(* diagramme, affiche à l'écran le diagramme colorié. La fenêtre *)
+(* graphique doit être lancée avant. *)
+val draw_voronoi : int array array -> voronoi -> unit
+
+(* À partir d'un diagramme et de sa matrice des régions, calcule sa matrice *)
+(* d'adjacence, c'est à dire une matrice indiquant, pour les seeds *)
+(* numérotés i et j, s'ils sont adjacents. *)
+val adjacences_voronoi : voronoi -> int array array -> bool array array
+  
+(* ======================================================================== *)
+(* RÉSOLUTION D'UN VORONOI ================================================ *)
+(* ======================================================================== *)
+
+(* À partir d'un diagramme et de sa matrice d'adjacence, résoud le *)
+(* diagramme et renvoie le diagramme résolu. *)
+val compute : voronoi -> bool array array -> voronoi
+  
+(* ======================================================================== *)
+(* GÉNÉRATION D'UN VORONOI ALÉATOIRE ====================================== *)
+(* ======================================================================== *)
+
+(* Génère un voronoi résoluble de nb_seeds bornées sur x par xborne et sur *)
+(* y par yborne. *)
+val gen_correct_voronoi : int -> int -> int -> voronoi
+
+val regen_correct_voronoi : voronoi -> voronoi
+
+
+
+
+
+
+
+
+
+
+
+  

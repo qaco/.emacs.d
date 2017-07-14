@@ -1,0 +1,51 @@
+#include <check.h>
+#include <stdlib.h>
+#include "../crawl/crawler.h"
+
+Word *valid_url ;
+Word *invalid_url ;
+Word *dest ;
+
+void crawler_crawl_setup(void) {
+  valid_url = construct_word(strlen("http://www.example.com"),
+                             "http://www.example.com") ;
+  invalid_url = construct_word(strlen("haha"), "haha") ;
+  dest = construct_word(0, NULL) ;
+
+}
+
+void crawler_crawl_teardown(void) {
+  destruct_word(valid_url) ;
+  destruct_word(invalid_url) ;
+  destruct_word(dest) ;
+}
+
+START_TEST(test_crawl_valid) {
+  int ret ;
+
+  ret = crawl_to_ram(valid_url, dest) ;
+  ck_assert_int_eq(ret, EXIT_SUCCESS) ;
+}
+END_TEST
+
+START_TEST(test_crawl_invalid) {
+  int ret, size ;
+
+  ret = crawl_to_ram(invalid_url, dest) ;
+  size = get_size_word(dest) ;
+  ck_assert_int_eq(ret, EXIT_FAILURE) ;
+  ck_assert_int_eq(size, 0) ;
+}
+END_TEST
+
+TCase* crawler_crawl_case(void) {
+  TCase* tc_crawl ;
+
+  tc_crawl = tcase_create("Crawler crawl") ;
+  tcase_add_checked_fixture(tc_crawl,
+                            crawler_crawl_setup,
+                            crawler_crawl_teardown) ;
+  tcase_add_test(tc_crawl, test_crawl_valid) ;
+  tcase_add_test(tc_crawl, test_crawl_invalid) ;
+  return tc_crawl ;
+}

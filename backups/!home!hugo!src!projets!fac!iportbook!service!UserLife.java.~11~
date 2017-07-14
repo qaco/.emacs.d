@@ -1,0 +1,89 @@
+package service ;
+
+import java.io.InputStream ;
+import java.io.IOException ;
+import java.net.Socket ;
+import java.net.InetAddress ;
+import java.io.InputStream ;
+import java.lang.Runnable ;
+import java.util.List ;
+
+import main.MainVals ;
+import exception.UnknownResultException ;
+import protocol.command.AnonFactory ;
+import protocol.command.Anon ;
+import protocol.command.CommandFactory ;
+import protocol.command.Command ;
+
+class UserLife implements Runnable {
+
+    private static int idc = 1 ;
+    private Socket so ;
+    private List<User> allusers ;
+    private int id ;
+
+    public UserLife(Socket s, List<User> all) {
+        this.so = s ;
+        this.allusers = all ;
+    }
+        
+    public void run() {
+        try {
+            User user = this.connectionLoop() ;
+            this.interactionLoop(user) ;
+        } catch (IOException e) {
+            InetAddress addr = this.so.getInetAddress() ;
+            this.describeAbort(addr.toString()) ;
+        }
+    }
+
+    private User connectionLoop() throws IOException {
+        boolean firststep = true ;
+        AnonFactory af = new AnonFactory() ;
+        Anon a = null ;
+        while (firststep) {
+            boolean badcommand = true ;
+            while (badcommand) {
+                try {
+                    a = af.create(this.so.getInputStream()) ;
+                    synchronized(allusers) {
+                        a.exec(this.so, allusers) ;
+                        badcommand = false ;
+                    }
+                } catch (UnknownResultException e) {
+                    InetAddress addr = this.so.getInetAddress() ;
+                    this.describeErr(addr.toString(), e.getMessage()) ;
+                }
+            }
+            if (User.ListContainsUser(allusers, a.getId()))
+                firststep = false ;
+        }
+        return User.getUserFromList(a.getId(), allusers) ;
+    }
+
+    private void interactionLoop(User user) throws IOException {
+        boolean userhere = true ;
+        InputStream in = user.getInputStream() ;
+
+        while (userhere) {
+            CommandFactory cf = new CommandFactory() ;
+            try {
+                Command cmd = cf.create(in) ;
+                synchronized(allusers) {
+                    cmd.exec(user, allusers) ;
+                    userhere = user.isConnected() ;
+                }
+            } catch (UnknownResultException e) {
+                this.describeErr(user.getId(), e.getMessage()) ;
+            }
+        }
+    }
+
+    private void describeAbort(String ip) {
+        MainVals.describe("Com with " + ip + " aborted") ;
+    }
+
+    private void describeErr(String mess, String id) {
+        MainVals.describe("Err from " + id + " - " + mess) ;
+    }
+}

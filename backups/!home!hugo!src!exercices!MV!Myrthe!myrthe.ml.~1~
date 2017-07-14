@@ -1,0 +1,56 @@
+open MyrtheAST
+
+let udecode (o : unop) (v: value) : value =
+  match o,v with
+  | Not, Bool x -> Bool (not x)
+  | Succ, Int x -> Int (x+1)
+  | _, _ -> failwith "Erreur de typage"
+
+let bdecode o (v1:value) (v2:value) =
+ match o,v1,v2 with    
+ | Plus, Int x, Int y -> Int (x+y)
+  | Times, Int x, Int y -> Int (x*y)	       
+  | Et, Bool x, Bool y -> Bool (x && y)
+  | Or, Bool x, Bool y -> Bool (x || y)
+  | Eq, Int x, Int y -> Bool (x = y)
+  | Leq, Int x, Int y -> Bool (x <= y)
+  | Minus, Int x, Int y -> Int (x-y)
+  | _, _, _ -> failwith "Erreur de typage"
+
+let interpr (e : expression) : value =
+  let rec aux e (env : (var_id*value) list) = match e with
+    | Const v -> v		   
+    | Unop (o,e1) ->
+       let v = aux e1 env
+       in udecode o v
+    | Binop (o,e1,e2) ->
+       let v1 = aux e1 env and v2 = aux e2 env
+       in bdecode o v1 v2
+    | If (e1,e2,e3) ->
+       begin
+	 match (aux e1 env) with
+	   Bool b -> if b then aux e2 env else aux e3 env
+	 | Int _ -> failwith "Erreur de typage"			   
+       end
+    | Var x ->
+       begin
+	 try (List.assoc x env) with
+	   Not_found -> failwith "Variable non definie"
+       end
+    | Let (x,e1,e2) ->
+       let v = aux e1 env in
+       let env = (x,v)::env in
+       aux e2 env
+    | Caseof (e1, l, e2) ->
+       let resolve_key couple =
+         (aux (fst couple) env, snd couple)
+       and v1 = aux e1 env in
+       let newl = List.map resolve_key l in
+       let value =
+         begin
+           try List.assoc v1 newl with
+             Not_found -> e2
+         end in
+       aux value env
+  in aux e []  
+

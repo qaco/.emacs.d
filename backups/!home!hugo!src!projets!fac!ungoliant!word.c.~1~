@@ -1,0 +1,102 @@
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Word {
+  char *memory;
+  size_t size;
+  size_t allocated ;
+} Word ;
+
+Word construct_word(const char *src, size_t n)
+{
+  Word res ;
+
+  res.memory = malloc(sizeof(char)*n) ;
+  memcpy(res.memory, src, n) ;
+  res.size = n ;
+  res.allocated = n ;
+
+  return res ;
+}
+
+Word construct_empty_word()
+{
+  Word res ;
+
+  res.memory = malloc(sizeof(char)) ;
+  res.size = 0 ;
+  res.allocated = 1 ;
+
+  return res ;
+}
+
+int destruct_word(Word* myword)
+{
+  free(res->memory) ;
+  res->size = 0 ;
+  res->allocated = 0 ;
+
+  return 0 ;
+}
+
+int add_char_word(Word* myword, const char mychar)
+{
+  if (myword->size >= myword->allocated) {
+    realloc(myword->memory, myword->allocated*2) ;
+    myword->allocated *= 2 ;
+  }
+  *(myword->memory + myword->size) = mychar ;
+  myword->size++ ;
+
+  return 0 ;
+}
+
+int insert_char_word(Word* myword, const char mychar, const int index)
+{
+  char *tmp ;
+
+  if (myword->size >= myword->allocated) {
+    tmp = malloc(myword->allocated*2) ;
+    myword->allocated *= 2 ;
+  }
+  else
+    tmp = malloc(myword->allocated) ;
+
+  memcpy(tmp, myword->memory, sizeof(char)*(index-1)) ;
+  *(tmp + index) = mychar ;
+  memcpy(tmp + index + 1,
+         myword->memory + index,
+         myword->size - sizeof(char)*(index-1)) ;
+  free(myword->memory) ;
+  myword->memory = tmp ;
+  myword->size++ ;
+
+  return 0 ;
+}
+
+int remove_char_word(Word* myword, const int index)
+{
+  char* tmp ;
+
+  if (myword->size <= myword->allocated/4) {
+    tmp = malloc(myword->allocated/2) ;
+    myword->allocated /= 2 ;
+  }
+  else
+    tmp = malloc(myword->allocated) ;
+
+  memcpy(tmp, myword->memory, sizeof(char)*index) ;
+  memcpy(tmp + index,
+         myword->memory + index + 1,
+         myword->size - sizeof(char)*(index + 1)) ;
+  free(myword->memory) ;
+  myword->memory = tmp ;
+  myword->size-- ;
+
+  return 0 ;
+}
+
+char get_char_word(const Word myword, const int index)
+{
+  return myword.memory + index ; // dépassement d'index ?
+}

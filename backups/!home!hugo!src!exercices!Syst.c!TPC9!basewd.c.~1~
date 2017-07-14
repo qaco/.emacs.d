@@ -1,0 +1,29 @@
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+
+#define SIZE_PATH 1024
+
+
+int main(int argc, char* argv[]) {
+  char* path = malloc(sizeof(char)*SIZE_PATH) ;
+  struct stat buf ;
+  ino_t inoeud ;
+  DIR* parentdir ;
+  struct dirent* tmp ;
+  
+  getcwd(path, SIZE_PATH) ;
+  stat(path, &buf) ;
+  inoeud = buf.st_ino ;
+  chdir("../") ;
+  getcwd(path, SIZE_PATH) ;
+  parentdir = opendir(path) ;
+  do {
+    tmp = readdir(parentdir) ;
+    if (tmp->d_ino == inoeud)
+      printf("%s\n", tmp->d_name) ;
+  } while (tmp != null) ;
+  return 0 ;
+}

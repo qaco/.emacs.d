@@ -1,0 +1,166 @@
+#include <db.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <string.h>
+#include "../db/db_manager.h"
+#include "../misc/word.h"
+#include "../misc/wordlist.h"
+#include "../misc/data_container.h"
+#include "../pagerank/pagerank.h"
+#include "query_misc.h"
+#include "query_engine.h"
+
+WordList* tokens_andor
+(char *input_tokens[], int input_size, int index, WordList* (*f)(WordList*, WordList*)) {
+    WordList *arg1, *arg2 ;
+    arg1 = db_request(input_tokens[index]);
+    arg2 = db_request(input_tokens[index + 1]);
+    return (*f)(arg1, arg2) ;
+}
+
+WordList* tokens_handling(char *input_tokens[], int input_size, int index) {
+    if (input_size == 1) {
+        if (strcmp(input_tokens[index], TRAIN) == 0 ) {
+            query_misc_hub(input_tokens, EASTER_TRAIN);
+            return construct_empty_wordlist();
+        }
+        else
+            return db_request(input_tokens[index]);
+    }
+    else if (input_size == 2
+             && (strcmp(input_tokens[index], TO_LETTERS) == 0 )) {
+        query_misc_hub(input_tokens, EASTER_TOLETTERS);
+        return construct_empty_wordlist();
+    }
+    else if (input_size == 4
+             && (strcmp(input_tokens[index], EQUALS) == 0 )) {
+        query_misc_hub(input_tokens, EASTER_CALCULATOR);
+        return construct_empty_wordlist();
+    }
+    else {
+        if (input_size == 3) {
+            if( strcmp(input_tokens[index], AND_TOKEN) == 0 ) {
+                return tokens_andor(input_tokens, input_size, index + 1, intersect);
+            }
+            else if( strcmp(input_tokens[index], OR_TOKEN) == 0 ) {
+                return tokens_andor(input_tokens, input_size, index + 1, union_);
+            }
+        }
+        else {
+            WordList *res = construct_empty_wordlist();
+            for (int i = 0; i < input_size-1; i++) {
+                WordList *l1 = db_request(input_tokens[i]) ;
+                WordList *l2 = db_request(input_tokens[i+1]) ;
+                if (i == 0) res = intersect(l1, l2);
+                else res = intersect(res, l2);
+            }
+            return res;
+        }
+    }
+    return construct_empty_wordlist();
+}
+
+int query_word(DbId *id, Word *word, WordList *url_list) {
+    int ret;
+    if ((ret = get_pair(id, word, url_list)) != EXIT_SUCCESS) {
+        printf("'");
+        print_word(word, stdout);
+        printf("' not found.\n");
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
+
+WordList* query_word_failure(DbId *id, Word *search, WordList *list) {
+    struct word_data_list *wdata_list;
+    struct word_data_list *next;
+    int ret;
+    float normalized, limit;
+    Word *w;
+    size_t si;
+
+    limit = (float)2/5;
+    create_word_data_list(&wdata_list);
+    ret = get_all_words(id, wdata_list);
+    if (ret == EXIT_SUCCESS) {
+        for (; wdata_list != NULL; wdata_list = next) {
+            next = wdata_list->next_word_data_list;
+            si = wdata_list->wdata_size - sizeof(struct word_data) + 1;
+            if((char *)wdata_list->wdata->word != NULL) {
+                w = construct_word((char *)wdata_list->wdata->word, si);
+                ret = levenshtein(w, search);
+                normalized = (float)ret/(float)get_size_word(search);
+                if (normalized <= limit) {
+                    printf("'");
+                    print_word(w, stdout);
+                    printf("' was used instead.\n______________\n\n");
+                    return (query_word(id, w, list) == EXIT_SUCCESS) ?
+                        list : construct_empty_wordlist();
+                }
+            }
+        }
+    }
+    else {
+        fprintf(stderr, "No words found.\n");
+    }
+    return construct_empty_wordlist();
+}
+
+WordList* db_request(char *search) {
+    DbId id;
+    int ret;
+    WordList *list;
+    Word *word;
+    if ((ret = opendb(&id)) != EXIT_SUCCESS) {
+        fprintf(stderr, "Ouverture de la base plantee\n");
+        return construct_empty_wordlist();
+    }
+    list = construct_empty_wordlist();
+    word = construct_word(search, strlen(search));
+    if ((ret = query_word(&id, word, list)) != EXIT_SUCCESS) {
+        query_word_failure(&id, word, list);
+    }
+    closedb(&id);
+    return list;
+}
+
+int queries_input(char *search)
+{
+    char *search_tokens[MAX_TOKENS];
+    int search_size = 0;
+    char *token;
+    token = strtok(search, " ") ;
+    while (token != NULL) {
+        search_tokens[search_size] = token;
+        token = strtok(NULL, " ") ;
+        search_size++;
+    }
+    WordList* list = tokens_handling(search_tokens, search_size, 0);
+    if(get_length_wordlist(list) != 0) {
+        printf("Page(s) found:\n");
+        print_wordlist(list, stdout);
+    }
+    return EXIT_SUCCESS;
+}
+
+int display_all_url(DbId *id, WordList *word_list) {
+    struct url_data_list *udata_list;
+    int ret;
+    Word *word;
+    size_t word_size;
+    ret = get_all_urls(id, udata_list);
+    if (ret != EXIT_SUCCESS) {
+        return EXIT_FAILURE;
+    }
+
+    for (; udata_list != NULL; udata_list->next_url_data_list) {
+        word_size = wdata_list->wdata_size - sizeof(struct word_data) + 1;
+        word = construct_word(word_size, udata_list->udata);
+        add_word_wordlist(word_list, word);
+        destruct_word(word);
+    }
+    return EXIT_SUCCESS;
+}

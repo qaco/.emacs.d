@@ -1,0 +1,13 @@
+package protocol.fromclient ;
+import protocol.* ;
+public class AskFriend implements Protocol {
+    private String id ;
+
+    public AskFriend (String myid) {
+        this.id = myid ;
+    }
+
+    public String toString() {
+        return "FRIE? " + this.id + "+++" ;
+    }
+}

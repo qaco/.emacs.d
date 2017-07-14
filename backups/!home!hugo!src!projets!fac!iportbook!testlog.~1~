@@ -1,0 +1,22 @@
+register / connexion -> ok
+deconnexion / quitter programme -> ok
+
+message de a vers b (a et b non amis) -> ok
+message de a vers b (b n'existe pas) -> ok
+
+demande amitié mauvais id -> ok
+demande amitié bon id -> ok
+
+réception par le client des messages udp -> ok
+penser à traiter les udp sans besoin de la conversion ascii
+
+list -> ne fonctionne pas même avec un client après plusieurs appels successifs (sleep ?)
+list -> ne fonctionne pas avec plusieurs clients après plusieurs appels successifs (sleep ?)
+
+problème : printstacktrace qd bad command
+
+floo -> le serveur indique floodone mais impossible de reprendre la main
+
+friend request -> lance une exception dans un thread
+
+ad de promoteur -> lance une exception dans un thread

@@ -1,0 +1,9 @@
+package protocol.command ;
+
+public class Deconnection implements Command {
+
+    public String toString() {
+        return "IQUIT+++" ;
+    }
+}
+        

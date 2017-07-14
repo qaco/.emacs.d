@@ -1,0 +1,137 @@
+package server ;
+
+import java.util.List ;
+import java.util.LinkedList ;
+import java.net.Socket ;
+import java.io.Writer ;
+import java.io.OutputStreamWriter ;
+import java.io.IOException ;
+import protocol.feedback.Feedback ;
+import protocol.flow.Flow ;
+import protocol.flow.NoFlow ;
+
+public class User {
+    private Socket socket ;
+    private String id ;
+    private String password ;
+    private List<User> friends ;
+    private List<Flow> flows ;
+
+    public User(Socket so, String myid, String pass) {
+        this.socket = so ;
+        this.id = myid ;
+        this.password = pass ;
+        this.friends = new LinkedList<User>() ;
+        this.flows = new LinkedList<Flow>() ;
+    }
+
+    public boolean isConnected() {
+        return this.socket.isConnected() ;
+    }
+
+    public void disconnect() {
+        try {
+            this.socket.close() ;
+        } catch (IOException e) {
+            e.printStackTrace() ;
+        }
+    }
+
+    public void setSocket(Socket so) {
+        this.socket = so ;
+    }
+
+    private void sendTCP(Feedback fb) {
+        this.sendTCP(fb.toString()) ;
+    }
+    
+    private void sendTCP(String mess) {
+        try {
+            Writer w = new OutputStreamWriter(this.socket.getOutputStream()) ;
+            w.write(mess) ;
+            w.flush() ;
+        } catch (IOException e) {
+            e.printStackTrace() ;
+        }
+    }
+
+    public String getId() {
+        return this.id ;
+    }
+
+    public String getPassword() {
+        return this.password ;
+    }
+
+    public List<User> getFriends() {
+        return this.friends ;
+    }
+
+    public User getFriend(String name) {
+        for (User guy : this.friends)
+            if (guy.getId().equals(name))
+                return guy ;
+        throw new IllegalArgumentException() ;
+    }
+
+    public int howManyFriends() {
+        return this.friends.size() ;
+    }
+
+    public boolean isAFriend(User us) {
+        return this.friends.contains(us) ;
+    }
+
+    public boolean isAFriend(String name) {
+        for (User guy : this.friends)
+            if (guy.getId().equals(name))
+                return true ;
+        return false ;
+    }
+    
+    public boolean addFriend(User fri) {
+        if (this.friends.contains(fri))
+            return false ;
+        else {
+            this.friends.add(fri) ;
+            return true ;
+        }
+    }
+
+    public void removeFriend(User fri) {
+        this.friends.remove(fri) ;
+    }
+
+    public boolean hasFlows() {
+        return !this.flows.isEmpty() ;
+    }
+    
+    public void pushFlow(Flow f) {
+        this.flows.add(f) ;
+    }
+
+    public void popFlow() {
+        Flow res ;
+        if (this.flows.isEmpty())
+            res = new NoFlow() ;
+        else {
+            res = this.flows.get(this.flows.size() - 1) ;
+            this.flows.remove(this.flows.size() - 1) ;
+        }
+        this.sendTCP(res.toString()) ;
+    }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof User)
+            return this.getId().equals(((User)obj).getId()) ;
+        else
+            return false ;
+    }
+}
+        
+    
+    
+    
+
+
+    

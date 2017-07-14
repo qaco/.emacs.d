@@ -1,0 +1,24 @@
+def inversion (str):
+    l = str.split(" ")
+    l.reverse()
+    return " ".join(l)
+
+def inclus (l1, l2):
+    prec = -1
+    for elt in l1 :
+        try :
+            act = l2.index(elt)
+        except ValueError:
+            return False
+        if act > prec :
+            prec = act
+        else :
+            return False
+    return True
+
+def diviseurs (n):
+    return [x for x in range(1,n+1) if n%x == 0]
+
+def premiers (n):
+    return [x for x in range(1,n+1) if len(diviseurs(x)) <= 2]
+    

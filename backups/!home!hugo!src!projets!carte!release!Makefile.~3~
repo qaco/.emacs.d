@@ -1,0 +1,23 @@
+OC=ocamlc
+EXEC=coloriage
+SRC=Builder.ml Computer.ml
+OBJ=$(SRC:.ml=.cmo)
+
+all: $(EXEC)
+
+$(EXEC) : $(OBJ)
+	$(OC) -o $@ $^
+
+%.cmo: %.ml
+	$(OC) -o $@ -c $<
+
+%.ml: %.cmi
+
+%.cmi: %.mli
+	$(OC) -o $@ -c $<
+
+clean :
+	rm -rf *.cmo *.cmi
+
+mrproper : clean
+	rm -rf $(EXEC)

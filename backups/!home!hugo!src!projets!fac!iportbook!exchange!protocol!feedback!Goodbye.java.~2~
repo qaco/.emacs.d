@@ -1,0 +1,7 @@
+package protocol.feedback ;
+
+public class GoodBye implements Feedback {
+    public String toString() {
+        return "GOBYE+++" ;
+    }
+}

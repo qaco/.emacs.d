@@ -1,0 +1,12 @@
+package exception ;
+
+public class UnknownResultException extends Exception {
+
+  public UnknownResultException() {
+    super();
+  }
+
+  public UnknownResultException(String s) {
+    super(s);
+  }
+}

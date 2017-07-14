@@ -1,0 +1,194 @@
+/**
+ * \file htmlparser.c
+ * \brief Le parser d'Ungoliant.
+ */
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <libxml/HTMLparser.h>
+#include <libxml/uri.h>
+#include "word.h"
+#include "wordlist.h"
+
+/**
+ * \fn char *get_substring(const char *string, const int beginIndex, const int endIndex)
+ * \brief Retourne la sous chaîne d'une chaîne delimitee par 2 indices.
+ * \param string La chaîne dont on veut extraire une sous-chaîne.
+ * \param beginIndex L'indice de début de la sous-chaîne.
+ * \param endIndex L'indice de fin de la sous-chaîne.
+ * \return La sous-chaîne résultant de l'opération.
+ */
+char *get_substring(const char *string, const int beginIndex, const int endIndex)
+{
+  int len = endIndex-beginIndex ;
+  char *buffer = malloc((len+1)*sizeof(char)) ;
+
+  strncpy(buffer, &string[beginIndex], len) ;
+  buffer[len] = '\0' ;
+
+  return buffer ;
+}
+
+/**
+ * \fn cut(char* text, WordList* words)
+ * \brief Extrait les mots d'une chaine parsée et les ajoute 
+ * dans la WordList words retournée au crawler
+ * \param text La chaine qui vient d'être parsée
+ * \param words La WordList des mots que le parser doit remplir avant 
+ * de la renvoyer au crawler
+ */
+void cut(char *text, WordList *words)
+{
+  int i, beg = 0;
+  char *auxStr = malloc(sizeof(char*)*strlen(text));
+  for(i=0; i<=strlen(text); i++) {
+    if(text[i]==10 || text[i]=='\n'){
+      beg = beg+2;
+      break;
+    }
+    if (text[i]==' ' || text[i]=='\0') {
+      auxStr = malloc(sizeof(char)*i);
+      if(beg!=0) beg = beg+1;
+      strcpy(auxStr, get_substring(text, beg, i));
+      if(strlen(auxStr)>1) {
+	Word auxWord = construct_word(auxStr, strlen(auxStr));
+	WordList auxWordList = build_wordlist(auxWord);
+	append_wordlist(words, &auxWordList);	
+      }
+      beg = i;
+      free(auxStr);
+    }
+  }
+}
+
+/**
+ * \fn void parse_loop 
+ * (xmlNode *a_node, WordList *words, WordList *url, char *pathurl)
+ * \brief Parcours l'arbre du fichier html depuis la racine.
+ * \param a_node Un noeud de l'arbre du fichier à explorer.
+ * \param words La WordList des mots que le parser doit remplir avant 
+ * de la renvoyer au crawler
+ * \param url La WordList des url que le parser doit remplir avant 
+ * de la renvoyer au crawler
+ * \param pathurl L'url du site qui est en train d'être parsé.
+ */
+void parse_loop
+(xmlNode *a_node, Word pathurl, WordList *words, WordList *url)
+{
+  xmlNode *cur_node = NULL ;
+  if(a_node == NULL) {
+    return ;
+  }
+
+  for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
+    if (cur_node->type == XML_ELEMENT_NODE) {
+      xmlAttr *attribute = cur_node->properties ;
+      while(attribute) {
+    	if(strcmp((char*)attribute->name, "href")==0) {
+    	  char *new  =
+    	    (char *)xmlBuildURI(
+    				(xmlChar *)attribute->children->content, (xmlChar *)pathurl.memory);
+	  Word from_new = construct_word(new, strlen(new));
+    	  WordList url_aux = build_wordlist(from_new) ;
+    	  append_wordlist(url, &url_aux) ;
+    	}
+    	attribute = attribute->next ;
+      }
+    }
+    else if(cur_node->type == XML_TEXT_NODE) {
+      char *text = (char *)cur_node->content ;
+      cut(text, words) ;
+    }
+
+    parse_loop(cur_node->children, pathurl, words, url) ;
+  }
+}
+
+/**
+ * \fn getHtmlDocPtr(htmlDocPtr *docPtr, char *path)
+ * \brief Récupère le htmlDocPtr du fichier courant.
+ * \param docPtr Un pointeur sur le htmlDocPtr utilisé pour parser.
+ * \param path Le nom du fichier html en train d'être parsé.
+ */
+int getHtmlDocPtr(htmlDocPtr *docPtr, char* file)
+{
+  *docPtr = htmlReadFile(file, NULL, HTML_PARSE_NOBLANKS | HTML_PARSE_NOERROR
+			 | HTML_PARSE_NOWARNING | HTML_PARSE_NONET) ;
+
+  if (*docPtr == NULL) {
+    fprintf(stderr, "Incompatible document tree.\n") ;
+    return 0 ;
+  }
+  else {
+    return 1 ;
+  }
+}
+
+/**
+ * \fn getRootElement(xmlNode **roo_element, htmlDocPtr doc)
+ * \brief Récupère la racine de l'arbre qui va être utilisé pour 
+ * parser le fichier html.
+ * \param roo_element Un pointeur sur la racine de l'arbre 
+ * qui va être utilisé pour parser le fichier html.
+ * \param doc Le htmlDocPtr utilisé pour parser.
+ * \return 0 en cas d'échec, 1 sinon.
+ */
+int getRootElement(xmlNode **roo_element, htmlDocPtr doc)
+{
+  *roo_element = xmlDocGetRootElement(doc) ;
+
+  if (*roo_element == NULL) {
+    fprintf(stderr, "Incompatible pointer for the root.\n") ;
+    xmlFreeDoc(doc) ;
+    return 0 ;
+  }
+  else {
+    return 1 ;
+  }
+}
+
+
+void write_in_html (Word myhtml)
+{
+  FILE* fp = fopen("current.html", "w");
+  for(int i = 0; i <= myhtml.size-1; i++)
+    if(myhtml.memory[i] != '\0')
+      fprintf(fp, "%c", myhtml.memory[i]);
+    else
+      fprintf(fp, "%c", 'a');
+  fclose(fp);
+}
+
+/**
+ * \fn void parse 
+ * (char *path, char *pathurl, WordList *words, WordList *url)
+ * \brief La fonction appelée de l'extérieur pour lancer le parser.
+ * \param mythml Le nom du fichier html en train d'être parsé.
+ * \param myurl L'url du site qui est en train d'être parsé.
+ * \param text La WordList des mots que le parser doit remplir avant 
+ * de la renvoyer au crawler
+ * \param url La WordList des url que le parser doit remplir avant 
+ * de la renvoyer au crawler
+ */
+int parse (Word myhtml, Word myurl, WordList* text, WordList* url)
+{
+  htmlDocPtr doc ;
+  htmlDocPtr *docPtr = &doc ;
+
+  xmlNode *roo_element = NULL ;
+  xmlNode **roo_elementPtr = &roo_element ;
+
+  write_in_html(myhtml);
+
+  LIBXML_TEST_VERSION
+    
+    if(getHtmlDocPtr(docPtr, "current.html") && getRootElement(roo_elementPtr, doc))
+      parse_loop(roo_element, myurl, text, url) ;
+    else
+      printf("Parsing error\n");
+  
+  xmlFreeDoc(doc) ;
+  xmlCleanupParser() ;
+  
+  return 0 ;
+}

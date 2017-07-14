@@ -1,0 +1,9 @@
+#! /usr/bin/env python3
+
+import sys
+
+myword = sys.argv[1]
+myfile = open("vers-queneau.txt", "r") ;
+li = myfile.readlines()
+li = [ line for line in li if myword in line ]
+print(li)

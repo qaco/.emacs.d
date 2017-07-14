@@ -1,0 +1,15 @@
+interface Chainable {
+    val suivant: Chainable? ;
+
+    fun longueur(): Int {
+    	var it: Chainable? ;
+    	it = this ;
+    	var compteur = 1 ;
+    	while (it?.suivant != null) {
+    	    it = it?.suivant ;
+    	    compteur++ ;
+    	}
+    	return compteur ;
+    }
+
+}

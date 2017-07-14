@@ -1,0 +1,20 @@
+package protocol.knock ;
+
+public class PublicityKnock extends Knock {
+    
+    public PublicityKnock(int flows) {
+        super(flows) ;
+    }
+
+    public PublicityKnock(byte mylow, byte myhigh) {
+        super(mylow, myhigh) ;
+    }
+
+    public byte getCode() {
+        return KnockVals.PUBLICITY_CODE ;
+    }
+
+    public String popUp() {
+        return KnockVals.PUBLICITY_MESS;
+    }
+}

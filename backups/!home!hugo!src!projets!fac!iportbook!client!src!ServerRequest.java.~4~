@@ -1,0 +1,298 @@
+package client.src;
+
+import exception.UnknownResultException ;
+import java.util.Scanner;
+import java.util.Iterator;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+
+import java.nio.*;
+import java.nio.channels.*;
+
+import protocol.feedback.Feedback;
+import protocol.feedback.FeedbackFactory;
+import protocol.flow.Flow;
+import protocol.flow.FlowFactory;
+import protocol.command.Deconnection;
+import protocol.command.FirstMessage;
+import protocol.command.SomeMessage;
+import protocol.command.FlooMessage;
+import protocol.command.SeeList;
+import protocol.command.AskFriend;
+import protocol.command.Consultation;
+import protocol.answer.* ;
+
+public class ServerRequest {
+
+    private String id, udp;
+    private Scanner sc;
+    private SocketChannel so;
+
+    private boolean status;
+    private Thread abt;
+    private Abonnement ab;
+    private Notifications notif;
+    
+    public ServerRequest(String id, String udp, SocketChannel so) 
+	throws IOException {
+	this.status = true;
+	this.sc = new Scanner(System.in);
+	this.id = id;
+	this.udp = udp;
+	this.so = so;
+	this.abt = null;
+	this.ab = null;
+	this.notif = null;
+    }
+    
+    private String client_input() throws IOException {
+	String input = "";
+	try {
+	    System.out.print("> ");
+	    input = this.sc.nextLine();
+	} catch (Exception e) {
+	    System.out.println("[Entrée non reconue.]");
+	}
+	return input;
+    }
+
+    private void client_frrequest() throws IOException {
+	try {
+	    System.out.print("-- id ami : ");
+	    String friend_id = this.sc.nextLine();
+
+	    AskFriend ask = new AskFriend(friend_id);
+	    byte [] message = ask.toBytes();
+	    ByteBuffer buffer = ByteBuffer.wrap(message);
+	    this.so.write(buffer) ;
+	    
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback = fbackfactory.create(this.so);
+	    fback.exec(this);
+	} catch (UnknownResultException e) {
+	    System.out.println("[Erreur client : "+e.getMessage()+".]");
+	}
+    }
+    
+    private String formated_mess_size(int size) {	
+	try {
+	    return String.format("%04d", size);
+	} catch (Exception e) {
+	    System.out.println("[Problème au formatage.]");
+	}
+	return "";
+    }
+
+    private boolean input_verification(String input) {
+	if(input.length() >= 3) {
+	    for (int i = 0; i < input.length()-2; i++) {
+		char fst = input.charAt(i);
+		char snd = input.charAt(i+1); 
+		char thd = input.charAt(i+2); 
+		if ((fst == '+') && (snd == '+') && (thd == '+'))
+		    return false;
+	    } 
+	}
+	return true;
+    }
+
+    private void client_messageto() throws IOException {
+	try {
+	    String friend_id;
+	    String input;
+	    int num_mess;
+	    
+	    System.out.print("-- id ami : ");
+	    friend_id = this.sc.nextLine();	
+	    System.out.print("-- entrez votre message : ");
+	    input = this.sc.nextLine();
+	    num_mess = (input.length() / 200) + 1;	    
+	    String num_mess_ = formated_mess_size(num_mess);
+
+	    if (num_mess_.length() > 0 && input_verification(input)) {
+		FirstMessage fmess = new FirstMessage(friend_id, num_mess_);
+		byte [] message = fmess.toBytes();
+		ByteBuffer buffer = ByteBuffer.wrap(message);
+		this.so.write(buffer) ;
+		
+	    	for (int i = 0; i < num_mess; i++) {
+		    SomeMessage smess;
+		    if (i+1 == num_mess) {
+			smess = new SomeMessage(i, input);
+			byte [] message2 = smess.toBytes();
+			ByteBuffer buffer2 = ByteBuffer.wrap(message);
+			this.so.write(buffer2) ;
+			
+		    } else {
+			smess = new SomeMessage(i, input.substring(0, 200));
+			byte [] message3 = smess.toBytes();
+			ByteBuffer buffer3 = ByteBuffer.wrap(message);
+			this.so.write(buffer3) ;
+			input = input.substring(200, input.length());
+		    }
+		}
+	    } else {
+		System.out.println("[Aucun message à envoyer.]");
+		return;
+	    }	    
+
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback = fbackfactory.create(this.so);
+	    fback.exec(this);
+	    
+	} catch (UnknownResultException e) {
+	    System.out.println("[Erreur client : "+e.getMessage()+".]");
+
+	}
+    }
+
+    private void client_flood() throws IOException {
+	try {
+	    System.out.print("-- message d'inondation : ");
+	    String input = this.sc.nextLine();
+	    
+	    if (input.length() > 200) {
+		System.out.println("[Message trop long.]");
+	    } else {
+		FlooMessage floo = new FlooMessage(input);
+		byte [] message = floo.toBytes();
+		ByteBuffer buffer = ByteBuffer.wrap(message);
+		this.so.write(buffer) ;
+		
+		FeedbackFactory fbackfactory = new FeedbackFactory();
+		Feedback fback = fbackfactory.create(this.so);
+		fback.exec(this);
+	    }
+	} catch (UnknownResultException e) {
+	    System.out.println("[Erreur client : "+e.getMessage()+".]");
+	}
+    }
+
+    private void client_list() throws IOException {
+	try {
+	    SeeList sl = new SeeList();		
+	    byte [] message = sl.toBytes();
+	    ByteBuffer buffer = ByteBuffer.wrap(message);
+	    this.so.write(buffer) ;
+	    
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback = fbackfactory.create(this.so);
+	    fback.exec(this);
+
+	} catch (UnknownResultException e) {
+	    System.out.println("[Erreur client : "+e.getMessage()+".]");
+	}	
+    }
+
+    private void client_consu() throws IOException {
+	try {
+	    Consultation consu = new Consultation();
+	    byte [] message = consu.toBytes();
+	    ByteBuffer buffer = ByteBuffer.wrap(message);
+	    this.so.write(buffer) ;
+	    
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback = fbackfactory.create(this.so);
+	    fback.exec(this);
+	    
+	} catch (UnknownResultException e) {
+	    System.out.println("[Erreur client : "+e.getMessage()+".]");
+	}
+    }
+
+    public void client_reponse_fr(String id) throws IOException {
+	try {
+	    System.out.print("Ajouter "+id+" à vos amis ? [oui/non] ");
+	    String input = this.sc.nextLine();
+	    byte[] message;
+	    ByteBuffer buffer;
+	    switch (input) {
+	    case "oui" : 
+		AcceptFriend acc = new AcceptFriend();
+		message =acc.toBytes();
+		buffer = ByteBuffer.wrap(message);
+		this.so.write(buffer) ;
+		break;
+	    case "non" : 
+		RefuseFriend ref = new RefuseFriend();
+		message = ref.toBytes();
+		buffer = ByteBuffer.wrap(message);
+		this.so.write(buffer) ;
+		break; 
+	    default : 
+		client_reponse_fr(id); 
+		break;
+	    }
+
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback = fbackfactory.create(this.so);
+	    fback.exec(this);
+    
+	} catch (UnknownResultException e) {
+	    System.out.println("[Erreur client : "+e.getMessage()+".]");
+	}
+    }
+
+    private void start_subscribe(String ip_diff, String port) throws IOException {
+	this.ab = new Abonnement(this, ip_diff, port);
+	this.abt = new Thread(ab);
+	this.abt.start();
+    }
+
+    public void client_subscribe(String ip_diff, String port) throws IOException {
+	System.out.print("Voulez-vous vous abonner ? [oui/non] ");
+	String input = this.sc.nextLine();
+	switch (input) {
+	case "oui" :
+	    start_subscribe(ip_diff, port);
+	    break;
+	default : break;
+	}
+    }
+
+    private void client_deconnexion() throws IOException {
+	try {
+	    Deconnection deco = new Deconnection();
+	    byte [] message = deco.toBytes();
+	    ByteBuffer buffer = ByteBuffer.wrap(message);
+	    this.so.write(buffer) ;
+	    
+	    FeedbackFactory fbackfactory = new FeedbackFactory();
+	    Feedback fback = fbackfactory.create(this.so);
+	    fback.exec(this);
+	    if(this.status == false) {
+		abt.interrupt();
+	    }
+	} catch (UnknownResultException e) {
+	    System.out.println("[Erreur client : "+e.getMessage()+".]");
+	}
+    }
+
+    public void setStatus(boolean b) {
+	this.status = b;
+    }
+
+    public boolean getStatus() {
+	return this.status;
+    }
+    public String getUdp() {
+	return this.udp;
+    }
+    public SocketChannel getSo() {
+	return this.so;
+    }
+
+    public void client_hub() throws IOException {
+	if (status) {
+	    switch(client_input()) {
+	    case "deconnexion" : client_deconnexion(); break;
+	    case "friend request" : client_frrequest(); break;
+	    case "messageto" : client_messageto(); break;
+	    case "flood" : client_flood(); break;
+	    case "list" : client_list(); break;
+	    case "consultation" : client_consu(); break;
+	    default : break ;
+	    }	
+	}
+    }
+}

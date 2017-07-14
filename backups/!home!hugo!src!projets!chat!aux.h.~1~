@@ -1,0 +1,10 @@
+#ifndef AUX
+
+#define AUX
+
+char* int_to_string(int nb) ;
+char* add_a_string (char** init, char *toadd) ;
+char* get_input () ;
+char* build_msg(char* typem, ...)
+
+#endif AUX

@@ -1,0 +1,20 @@
+import protocol.feedback.* ;
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+public class FeedbackFactoryTest {
+
+    private FlowFactory pf ;
+
+    @Before
+    public final void setFlowFactoryUp() {
+        this.pf = new FlowFactory() ;
+    }
+
+    @Test
+    public final void testAskFriendFlowBuild() {
+        String tmp = "EIRF> hugo+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }

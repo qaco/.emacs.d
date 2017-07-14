@@ -1,0 +1,388 @@
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <stdio.h>
+
+#include "traitement_serveur.h"
+#include "divers_serveur.h"
+#include "array_list.h"
+#include "build.h"
+
+#define TRANSFERS_NB 10
+
+static char types_array[][10] = {T_IN, T_OK, T_NO, T_PUB, T_PRIV, T_LIST, T_SHUT, T_DBG, T_FILE, T_BYE};
+static int transfers_array[TRANSFERS_NB] = {0};
+
+void interpret_message(char *client_message) {
+  char *message_type, *sub_message;
+  int i, n = -1;
+
+  printf("Trying to compute: %s\n", client_message);
+
+  message_type = get_substring(client_message, 0, TYPE_SIZE);
+
+  for (i = 0; i < 10; i++)
+    if (!strcmp(types_array[i], message_type)) {
+      n = i;
+      break;
+    }
+  free(message_type);
+
+  if (n == -1) {
+    printf("PROTOCOL_ERROR <|-|-|> Unknown message type\n");
+    return;
+  }
+
+  sub_message = get_substring(client_message, TYPE_SIZE, strlen(client_message));
+
+  switch (n) {
+  case 0:
+    handle_HELO(sub_message);
+    break;
+  case 3:
+    handle_BCST(sub_message);
+    break;
+  case 4:
+    handle_PRVT(sub_message);
+    break;
+  case 5:
+    handle_LIST(sub_message);
+    break;
+  case 6:
+    handle_SHUT(sub_message);
+    break;
+  case 7:
+    handle_DEBG();
+    break;
+  case 8:
+    handle_FILE(sub_message);
+    break;
+  case 9:
+    handle_BYEE(sub_message);
+    break;
+  default:
+    printf("PROTOCOL_ERROR <|-|-|> Server cannot send a %s message type\n", types_array[n]);
+  }
+  free(sub_message);
+}
+
+void handle_HELO(char *sub_message) {
+  Str *user_name, *pipe_name;
+  int i, fd, new_id;
+  printf("HELO : %s\n", sub_message);
+
+  if (!(handle_string(sub_message, &user_name, 0)))
+    return;
+
+  sub_message = &sub_message[NB_SIZE+user_name->len];
+
+  if (!(handle_string(sub_message, &pipe_name, 1)))
+    return;
+
+  fd = open(pipe_name->str, O_WRONLY);
+  for (i = 0; i < get_size(); i++) {
+    if (!strcmp(get_element(i)->user_name, user_name->str)) {
+      write(fd, "0008" T_NO, NB_SIZE+TYPE_SIZE); // Message BADD d'echec a l'envoyeur
+      close(fd);
+
+      printf("FAILURE: User_name unavailable - '%s'\n", user_name->str);
+      free_Str(user_name);
+      free_Str(pipe_name);
+      return;
+    }
+  }
+
+  new_id = get_new_client_id();
+  write(fd, build_msg(0, NB_SIZE, T_OK, new_id), 12); // Message OKOK de confirmation a l'envoyeur
+  close(fd);
+
+  connect_new_client(new_id, user_name->str, pipe_name->str);
+
+  printf("SUCCESS: New client connected - (ID)%d USING '%s' AS '%s'\n", new_id, pipe_name->str, user_name->str);
+  free(user_name); // != free_Str()
+  free(pipe_name); // != free_Str()
+}
+
+void handle_BYEE(char *sub_message) {
+  int fd, id_writer, index;
+  printf("BYEE : %s\n", sub_message);
+
+  if (!handle_client_id(sub_message, &id_writer, &index))
+    return;
+
+  fd = open(get_element(index)->pipe_name, O_WRONLY);
+  write(fd, build_msg(0, NB_SIZE, T_BYE, id_writer), TYPE_SIZE+NB_SIZE*2);
+  close(fd);
+
+  printf("SUCCESS: Client (ID)%d USING '%s' AS '%s' disconnected\n",
+	 get_element(index)->id, get_element(index)->pipe_name, get_element(index)->user_name);
+
+  disconnect_client(index);
+}
+
+void handle_BCST(char *sub_message) {
+  int id_writer, index, i, fd;
+  char *user_name, *formated_message;
+  Str *message;
+  printf("BCST : %s\n", sub_message);
+
+  if (!handle_client_id(sub_message, &id_writer, &index))
+    return;
+
+  sub_message = &sub_message[NB_SIZE];
+
+  if (!(handle_string(sub_message, &message, 2)))
+    return;
+
+  user_name = string_copy(get_element(index)->user_name);
+  
+  formated_message = build_msg(0, NB_SIZE, T_PUB, user_name, message->str);
+
+  for (i = 0; i < get_size(); i++) {
+    fd = open(get_element(i)->pipe_name, O_WRONLY);
+    write(fd, formated_message, strlen(formated_message));
+    close(fd);
+  }
+
+  printf("SUCCESS: Message from client (ID)%d USING '%s' AS '%s' sent to all\n",
+	 get_element(index)->id, get_element(index)->pipe_name, get_element(index)->user_name);
+
+  free(formated_message);
+  free_Str(message);
+  free(user_name);
+}
+
+void handle_PRVT(char *sub_message) {
+  char *user_name = NULL, *formated_message = NULL;
+  int id_writer, index, recipient_index, i, fd;
+  Str *recipient_user_name, *message;
+  printf("PRVT : %s\n", sub_message);
+
+  if (!handle_client_id(sub_message, &id_writer, &index))
+    return;
+
+  sub_message = &sub_message[NB_SIZE];
+
+  if (!(handle_string(sub_message, &recipient_user_name, 3)))
+    return;
+
+  sub_message = &sub_message[NB_SIZE+recipient_user_name->len];
+
+  if (!(handle_string(sub_message, &message, 2)))
+    return;
+
+  recipient_index = -1;
+  for (i = 0; i < get_size(); i++)
+    if (!strcmp(get_element(i)->user_name, recipient_user_name->str)) {
+      recipient_index = i;
+      break;
+    }
+
+  fd = open(get_element(index)->pipe_name, O_WRONLY);
+
+  if (recipient_index == -1) {
+    write(fd, "0008" T_NO, NB_SIZE+TYPE_SIZE); // Message BADD d'echec a l'envoyeur
+    close(fd);
+
+    printf("FAILURE: Client AS '%s' does not exist\n", recipient_user_name->str);
+  }
+  else {
+    write(fd, build_msg(0, NB_SIZE, T_OK, id_writer), TYPE_SIZE+NB_SIZE*2); // Message OKOK de confirmation a l'envoyeur
+    close(fd);
+
+    user_name = string_copy(get_element(index)->user_name);
+    formated_message = build_msg(0, NB_SIZE, T_PRIV, user_name, message->str);
+
+    fd = open(get_element(i)->pipe_name, O_WRONLY);
+    write(fd, formated_message, strlen(formated_message));
+    close(fd);
+
+    printf("SUCCESS: Message from client (ID)%d USING '%s' AS '%s' sent in private to client (ID)%d USING '%s' AS '%s'\n",
+	   get_element(index)->id, get_element(index)->pipe_name, get_element(index)->user_name,
+	   get_element(i)->id, get_element(i)->pipe_name, get_element(i)->user_name);
+  }
+
+  free_Str(recipient_user_name);
+  free(formated_message);
+  free_Str(message);
+  free(user_name);
+}
+
+void handle_LIST(char *sub_message) {
+  int id_writer, index, n, i, fd;
+  char *formated_message;
+  printf("LIST : %s\n", sub_message);
+
+  if (!handle_client_id(sub_message, &id_writer, &index))
+    return;
+
+  n = get_size();
+  fd = open(get_element(index)->pipe_name, O_WRONLY);
+  for (i = 0; i < n; i++) {
+    formated_message = build_msg(0, NB_SIZE, T_LIST, n, get_element(i)->user_name);
+
+    write(fd, formated_message, strlen(formated_message));
+    free(formated_message);
+  }
+  close(fd);
+
+  printf("SUCCESS: Usernames list sent to client (ID)%d USING '%s' AS '%s'\n",
+	 get_element(index)->id, get_element(index)->pipe_name, get_element(index)->user_name);
+}
+
+void handle_SHUT(char *sub_message) {
+  char *formated_message, *pipe_name, *user_name;
+  int id_writer, index, fd;
+  printf("SHUT : %s\n", sub_message);
+
+  if (!handle_client_id(sub_message, &id_writer, &index))
+    return;
+
+  pipe_name = string_copy(get_element(index)->pipe_name);
+  user_name = string_copy(get_element(index)->user_name);
+
+  formated_message = build_msg(0, NB_SIZE, T_SHUT, user_name);
+
+  while (get_size() > 0) {
+    fd = open(get_element(0)->pipe_name, O_WRONLY);
+    write(fd, formated_message, strlen(formated_message));
+    close(fd);
+
+    disconnect_client(0);
+  }
+  
+  printf("SUCCESS: Server SHUTDOWN message from client (ID)%d USING '%s' AS '%s' sent to all\n",
+	 id_writer, pipe_name, user_name);
+  free(formated_message);
+  free(sub_message);
+  free_array_list();
+  free(pipe_name);
+  free(user_name);
+
+  unlink(PIPE_SERVER);
+  printf("\n   -----Server SHUTDOWN-----\n\n");
+
+  exit(EXIT_SUCCESS);
+}
+
+void handle_DEBG() {
+  int i;
+  printf("\n ==== DEBUG MESSAGE ====\n\n");
+  printf("Users number :%d\n", get_size());
+  for (i = 0; i < get_size(); i++)
+    printf(" -ID: %d | User_name: '%s' | Pipe_name: '%s'\n",
+	   get_element(i)->id, get_element(i)->user_name, get_element(i)->pipe_name);
+  printf("\n =======================\n\n");
+}
+
+void handle_FILE(char *sub_message) { // DATA MESSAGES UNCHECKED
+  int series_nb, id_writer, index, i, recipient_index, id_transfer, length, fd, fd_server;
+  long int file_size, message_nb, i_long;
+  Str *recipient_user_name, *file_name;
+  char *formated_message = NULL;
+
+  printf("FILE : %s\n", sub_message);
+
+  sscanf(sub_message, "%4d", &series_nb);
+
+  if (series_nb < 0) {
+    printf("FAILURE: Series number %d cannot be negative\n", series_nb);
+    return;
+  }
+  printf("-Series number: %d\n", series_nb);
+
+  sub_message = &sub_message[NB_SIZE];
+
+  if (series_nb == 0) {  // Si message d'initialisation de transfert
+    
+    if (!handle_client_id(sub_message, &id_writer, &index))
+      return;
+
+    sub_message = &sub_message[NB_SIZE];
+
+    if (!(handle_string(sub_message, &recipient_user_name, 3)))
+      return;
+
+    recipient_index = -1;
+    for (i = 0; i < get_size(); i++)
+      if (!strcmp(get_element(i)->user_name, recipient_user_name->str)) {
+	recipient_index = i;
+	break;
+      }
+
+    fd = open(get_element(index)->pipe_name, O_WRONLY);
+    if (recipient_index == -1) {
+      write(fd, "0008" T_NO, NB_SIZE+TYPE_SIZE);
+
+      printf("FAILURE: Client AS '%s' does not exist\n", recipient_user_name->str);
+    }
+    else {
+      sub_message = &sub_message[4+recipient_user_name->len];
+
+      sscanf(sub_message, "%8ld", &file_size);  
+      printf("-File size: %ld\n", file_size);
+ 
+      sub_message = &sub_message[8];
+
+      if (!(handle_string(sub_message, &file_name, 4)))
+	return;
+
+      id_transfer = get_new_transfer_id();
+      transfers_array[(id_transfer-1)%TRANSFERS_NB] = recipient_index+1;
+
+      write(fd, build_msg(0, NB_SIZE, T_OK, id_transfer), TYPE_SIZE+NB_SIZE*2); // Message OKOK de confirmation a l'envoyeur
+      close(fd);
+      
+      formated_message = build_msg(0, NB_SIZE, T_FILE, 0, id_transfer, file_size, file_name->str);
+
+      printf("message de contact avec le récepteur %s\n", formated_message) ;
+      
+      fd = open(get_element(recipient_index)->pipe_name, O_WRONLY);
+      write(fd, formated_message, strlen(formated_message));
+
+      printf("SUCCESS: File from client (ID)%d USING '%s' AS '%s' starting to transfer to client (ID)%d USING '%s' AS '%s'\n",
+	     get_element(index)->id, get_element(index)->pipe_name, get_element(index)->user_name,
+	     get_element(i)->id, get_element(i)->pipe_name, get_element(i)->user_name);
+      
+      printf("Waiting for %ld messages\n", file_size/PART_SIZE+1);
+
+      free_Str(file_name);
+    }
+
+    close(fd);
+    free_Str(recipient_user_name);
+  }
+  /* envoi des messages de série */
+  else {
+    sscanf(sub_message, "%4d", &id_transfer);
+
+    if (transfers_array[(id_transfer-1)%TRANSFERS_NB] == 0) {
+      printf("FAILURE: No file transfer initialized with the id (ID)%d\n", id_transfer);
+      return;
+    }
+    printf("-ID transfer: %d\n", id_transfer);
+
+    sub_message = &sub_message[NB_SIZE];
+
+    formated_message = build_msg(0, NB_SIZE, T_FILE, series_nb, id_transfer, sub_message);
+    length = strlen(formated_message);
+
+    index = transfers_array[(id_transfer-1)%TRANSFERS_NB]-1;
+    
+    fd = open(get_element(index)->pipe_name, O_WRONLY);
+    write(fd, formated_message, length);
+    close(fd);
+
+    printf("Message send length %d\n", length);
+    
+    if (length < TYPE_SIZE+NB_SIZE*3+PART_SIZE) {
+      transfers_array[(id_transfer-1)%TRANSFERS_NB] = 0;
+      printf("SUCCESS: File transfer (ID)%d just finished\n", id_transfer);
+    }
+  }
+
+  free(formated_message);
+}

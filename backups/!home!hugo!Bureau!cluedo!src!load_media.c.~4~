@@ -1,0 +1,38 @@
+#include <stdlib.h>
+#include <gtk/gtk.h>
+#include "utilities.h"
+
+#define JPG ".jpg"
+#define FLOOR_PATH "../ressources/images/floor"
+#define BLANK_PATH "../ressources/images/blank.jpg"
+
+
+
+GtkWidget* get_floor_img(const int indice, const int size) {
+  char* path = build_path(FLOOR_PATH, indice, JPG) ;
+  GError* gerror = NULL ;
+  GtkWidget* res ;
+  GdkPixbuf* tmp = gdk_pixbuf_new_from_file_at_scale (path, size, size,
+						      FALSE, &gerror);
+  if(!tmp) {
+    printf("error message: %s\n", gerror->message);
+    exit(1);
+  }
+  free(path) ;
+  res = gtk_image_new_from_pixbuf(tmp) ;
+  return res ;
+}
+
+GtkWidget* get_blank_img(const int size) {
+  GError* gerror = NULL ;
+  GtkWidget* res ;
+  GdkPixbuf* tmp = gdk_pixbuf_new_from_file_at_scale (BLANK_PATH, size, size,
+						      FALSE, &gerror);
+  if(!tmp) {
+    printf("error message: %s\n", gerror->message);
+    exit(1);
+  }
+  res = gtk_image_new_from_pixbuf(tmp) ;
+  return res ;
+}
+

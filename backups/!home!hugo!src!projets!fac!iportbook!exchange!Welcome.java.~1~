@@ -1,0 +1,6 @@
+public class Welcome implements Protocol {
+
+    public String ToString() {
+        return "WELCO+++" ;
+    }
+}

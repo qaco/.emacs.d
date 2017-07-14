@@ -1,0 +1,5 @@
+TOP_DIR = $(shell pwd)/../..
+PACKAGE_DIR = protocol/feedback
+PACKAGE_NAME = protocol.feedback
+
+include $(TOP_DIR)/Makefile.include

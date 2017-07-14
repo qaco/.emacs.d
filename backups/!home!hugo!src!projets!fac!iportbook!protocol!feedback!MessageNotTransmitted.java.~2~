@@ -1,0 +1,12 @@
+package protocol.feedback ;
+import client.src.ServerRequest;
+
+public class MessageNotTransmitted implements Feedback {
+    public String toString() {
+        return FeedbackVals.MESS_NOT_TRANSMIT + MainVals.EOF ;
+    }
+
+    public void exec(ServerRequest c) {
+	System.out.println("[Le message n'a pas été transmis.]");
+    }  
+}

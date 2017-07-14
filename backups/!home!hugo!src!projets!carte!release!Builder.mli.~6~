@@ -1,0 +1,12 @@
+type color_option = None | Some of Graphics.color
+type seed = { c : color_option; x : int; y : int; }
+type voronoi = { dim : int * int; seeds : seed array; }
+val euclide : int -> int -> int -> int -> int
+val taxicab : int -> int -> int -> int -> int
+val extract_colors : voronoi -> color_option array
+val regions_voronoi :
+  (int -> int -> int -> int -> int) -> voronoi -> int array array
+val adjacences_voronoi : voronoi -> int array array -> bool array array
+val produce_constraints :
+  color_option array ->
+  bool array array -> (bool * (int * Graphics.color)) list list

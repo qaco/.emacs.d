@@ -1,0 +1,7 @@
+package protocol.feedback ;
+
+public class AskFriendNO implements feedback {
+    public String toString() {
+        return "FRIE<+++" ;
+    }
+}

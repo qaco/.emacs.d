@@ -1,0 +1,8 @@
+package exception ;
+
+public class TooFewArgsException extends UnknownResultException {
+
+    public TooFewArgsException(String c, int n) {
+        super(ExceptionVals.TOO_FEW + " : " String.valueOf(n) + " for " + c) ;
+    }
+}

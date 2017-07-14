@@ -1,0 +1,10 @@
+KC=kotlinc
+KFLAGS=-include-runtime
+
+all : ExoStringKt.class
+
+ExoStringKt.class: ExoString.kt
+	$(CC) $(CFLAGS) $<
+
+clean :
+	rm -rf *.class

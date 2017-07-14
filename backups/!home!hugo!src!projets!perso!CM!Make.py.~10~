@@ -1,0 +1,75 @@
+import Misc,Root,Shutter,Slogan, Paint
+from PIL import Image
+
+class Canvas:
+    
+    # def __init__(self):
+    #     self.img = None
+    #     self.shutter = None
+    #     self.slogan = None
+    #     self.logo = None
+
+    def __init__(self, img_path, shut_cmd, shut_col, text_font, text_col):
+        self.img = None
+        self.shutter = None
+        self.slogan = None
+        self.logo = None
+
+        self.img = Image.open(img_path)
+        self.img = self.img.convert('RGBA')
+        Misc.minimize_image(self.img, Misc.IMG_MAX)
+
+        self.shutter = Shutter.factory(shut_cmd, self.img.size, shut_col)
+        self.shutter.process_position()
+        self.shutter.generate_img()
+
+        myframe = self.shutter.generate_frame()
+        self.slogan = Slogan.factory(Misc.NAIVE_SLOGAN, myframe, "", text_font, text_col)
+        
+    def change_shutter_orientation(self, cmd):
+        mycolor = self.shutter.color
+        self.shutter = Shutter.factory(cmd, self.img.size, mycolor)
+        self.shutter.process_position()
+        self.shutter.generate_img()
+        if self.slogan != None:
+            self.update_slogan_position()
+        
+    def create_slogan_on_shutter(self, cmd, mytext, myfont, mycolor):
+        myframe = self.shutter.generate_frame()
+        self.slogan = Slogan.factory(cmd, myframe, mytext, myfont, mycolor)
+        self.slogan.process_position()
+        self.slogan.generate_img()
+
+    def update_slogan(self):
+        # self.slogan.frame = self.shutter.generate_frame()
+        self.slogan.process_position()
+        self.slogan.generate_img()
+        if self.slogan.is_signed() and self.logo != None:
+            self.update_logo_position()
+
+    def create_logo_on_text(self, cmd_text, logo_path):
+        myframe = self.slogan.frame
+        mytext = self.slogan.text
+        myfont = self.slogan.sfont
+        mycolor = self.slogan.color
+        self.slogan = Slogan.factory(cmd_text, myframe, mytext, myfont, mycolor)
+        self.slogan.process_position()
+        self.slogan.generate_img()
+        self.logo = Paint.Logo(logo_path, self.slogan.logo_area)
+        self.logo.process_position()
+        self.logo.generate_img()
+
+    def update_logo_position(self):
+        myframe = self.slogan.logo_area
+        mypath = self.logo.path
+        self.logo = Paint.Logo(mypath, myframe)
+        self.logo.process_position()
+        self.logo.generate_img()
+
+    def merge_calcs(self) :
+        res = Image.alpha_composite(self.img, self.shutter.img)
+        res = Image.alpha_composite(res, self.slogan.img)
+        res = Image.alpha_composite(res, self.logo.img)
+        return res
+
+

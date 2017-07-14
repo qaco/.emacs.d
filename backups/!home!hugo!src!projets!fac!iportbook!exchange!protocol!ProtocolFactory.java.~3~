@@ -1,0 +1,46 @@
+package com.protocol ;
+
+import java.util.Arrays ;
+
+public class ProtocolFactory {
+    public Protocol create(String text) {
+        Protocol res = new Useless(text) ;
+        String suffix = text.substring(text.length() - 3, text.length()) ;
+        if (suffix.compareTo("+++") == 0) {
+            String signifiant = text.substring(0, text.length() - 3) ;
+            String cmds[] = signifiant.split(" ") ;
+            String tail[] ;
+            String mess ;
+            try {
+                switch (cmds[0]) {
+                case "REGIS" :
+                    res = new Registration (cmds[1], cmds[2], cmds[3]) ;
+                    break ;
+                case "CONNE" :
+                    res = new Connection(cmds[1], cmds[2]) ;
+                    break ;
+                case "FRIE?" :
+                    res = new AskFriend(cmds[1]) ;
+                    break ;
+                case "MESS?" :
+                    res = new FirstMessage(cmds[1], cmds[2]) ;
+                    break ;
+                case "MENUM" :
+                    tail = Arrays.copyOfRange(cmds, 2, cmds.length) ;
+                    mess = String.join(" ", tail) ;
+                    res = new SomeMessage(cmds[1], mess) ;
+                    break ;
+                case "FLOO?" :
+                    tail = Arrays.copyOfRange(cmds, 1, cmds.length) ;
+                    mess = String.join(" ", tail) ;
+                    res = new FlooMessage(mess) ;
+                    break ;
+                }
+            } catch (RuntimeException e) {
+                e.printStackTrace() ;
+            }
+        }
+        return res ;
+    }
+}
+

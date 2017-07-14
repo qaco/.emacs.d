@@ -1,0 +1,21 @@
+#include <stdlib.h>
+#include <check.h>
+#include "../misc/word.h"
+#include "../misc/wordlist.h"
+
+WordList *big, *small ;
+
+/* Comparaison */
+
+void comparison_setup(void) {
+  big = build_empty_wordlist() ;
+  add_charseq_wordlist(big, "haha") ;
+  add_charseq_wordlist(big, "hihi") ;
+  add_charseq_wordlist(big, "zaza") ;
+  second = construct_word(strlen("bye"), "bye") ;
+}
+
+void comparison_teardown(void) {
+  destruct_wordlist(first) ;
+  destruct_wordlist(second) ;
+}

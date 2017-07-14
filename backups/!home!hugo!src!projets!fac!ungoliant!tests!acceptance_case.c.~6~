@@ -1,0 +1,68 @@
+#include <stdlib.h>
+#include <check.h>
+#include "../cmds.h"
+
+char *prog ;
+char *res_args[2] ;
+
+void acceptance_setup(void) {
+  char *opt ;
+  prog = malloc(sizeof(char)*(strlen("ungoliant") + 1)) ;
+  strcpy(prog, "ungoliant") ;
+  opt = malloc(sizeof(char)*(strlen("-r") + 1)) ;
+  strcpy(opt, "-r") ;
+  res_args[0] = prog ;
+  res_args[1] = opt ;
+}
+
+void acceptance_teardown(void) {
+  free(res_args[0]) ;
+  free(res_args[1]) ;
+}
+  
+START_TEST(reset) {
+  int ret ;
+  
+  ret = cmds(2, res_args) ;
+  ck_assert_int_eq(ret, EXIT_SUCCESS) ;
+}
+END_TEST
+
+START_TEST(crawl) {
+  int ret ;
+  char* myargs[4] ;
+  char *opt ;
+  char *url ;
+  char *depth ;
+  opt = malloc(sizeof(char)*(strlen("-c") + 1)) ;
+  strcpy(opt, "-c") ;
+  url = malloc(sizeof(char)*(strlen("http://www.example.com") + 1)) ;
+  strcpy(url, "http://www.example.com") ;
+  depth = malloc(sizeof(char)*(strlen("2") + 1)) ;
+  strcpy(depth, "2") ;
+  myargs[0] = prog ;
+  myargs[1] = opt ;
+  myargs[2] = url ;
+  myargs[3] = depth ;
+  ret = cmds(4, myargs) ;
+  ck_assert_int_eq(ret, EXIT_SUCCESS) ;
+
+  cmds(2, res_args) ;
+  
+  free(opt) ;
+  free(url) ;
+  free(depth) ;
+}
+END_TEST
+
+TCase* acceptance_case(void) {
+  TCase* tc_acceptance ;
+
+  tc_acceptance = tcase_create("Acceptance") ;
+  tcase_add_checked_fixture(tc_acceptance,
+                            acceptance_setup,
+                            acceptance_teardown) ;
+  tcase_add_test(tc_acceptance, reset) ;
+  tcase_add_test(tc_acceptance, crawl) ;
+  return tc_acceptance ;
+}

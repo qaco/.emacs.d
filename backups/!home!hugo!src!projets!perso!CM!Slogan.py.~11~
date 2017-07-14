@@ -1,0 +1,154 @@
+import Misc, Root
+from PIL import Image, ImageDraw, ImageFont
+
+def factory(cmd, myframe, mytext, myfont, mycolor):
+    options = { Misc.NAIVE_SLOGAN : NaiveSlogan,
+                Misc.BOTTOM_SLOGAN : BottomSignedSlogan,
+                Misc.RIGHT_SLOGAN : RightSignedSlogan }
+    return options[cmd](myframe, mytext, myfont, mycolor)
+
+class AbstractSlogan(Root.AbstractCalc):
+    def __init__(self, myframe, mytext, myfont, mycolor):
+        super().__init__()
+        self.frame = myframe
+        self.text = mytext
+        self.sfont = myfont
+        self.color = mycolor
+        self.fontsize = None
+
+    def is_signed(self):
+        raise NotImplementedError()
+        
+    # On rétrécit un peu le cadre pour que le texte ne touche pas les bords.
+    def process_margin(self):
+        fsize = self.frame.size
+        fcorner = self.frame.corner
+        offset = fsize[0]/Misc.TEXT_RATIO
+        self.upper_size = self.frame.upper_size
+        self.corner = int(fcorner[0] + offset), int(fcorner[1] + offset)
+        self.size = int(fsize[0] - offset*2), int(fsize[1] - offset*2)
+
+    # On récupère la plus grande taille de fonte possible dans les limites du
+    # cadre, et la taille correspondante pour le cadre.
+    # def process_size(self):
+    #     self.fontsize = 0
+    #     max_size = self.size
+    #     tmp_img = Image.new('RGBA', self.frame.upper_size, (0,0,0))
+    #     draw = ImageDraw.Draw(tmp_img, 'RGBA')
+    #     issmall = len(self.text) > 0
+    #     while issmall:
+    #         tmp_fontsize = self.fontsize + 1
+    #         tmp_font = ImageFont.truetype(self.sfont, tmp_fontsize)
+    #         tmp_size = draw.textsize(self.text, tmp_font)
+    #         issmall = tmp_size[0] < max_size[0] and tmp_size[1] < max_size[1]
+    #         if issmall:
+    #             self.fontsize = tmp_fontsize
+    #             self.size = tmp_size
+
+
+    def process_size(self):
+        self.fontsize = 0
+        textlines = self.text.split("\n")
+        max_size = self.size
+        tmp_img = Image.new('RGBA', self.frame.upper_size, (0,0,0))
+        draw = ImageDraw.Draw(tmp_img, 'RGBA')
+        issmall = len(self.text) > 0
+        while issmall:
+            tmp_fontsize = self.fontsize + 1
+            tmp_font = ImageFont.truetype(self.sfont, tmp_fontsize)
+            tmp_size = (0,0)
+            for line in textlines:
+                incsize = draw.textsize(self.text, tmp_font)
+                tmp_size = max(tmp_size[0], incsize[0]), tmp_size[1] + incsize[1]
+            issmall = tmp_size[0] < max_size[0] and tmp_size[1] < max_size[1]
+            if issmall:
+                self.fontsize = tmp_fontsize
+                self.size = tmp_size
+
+    def process_layout(self):
+        raise NotImplementedError()
+        
+    def process_position(self):
+        self.process_margin()
+        self.process_size()
+        self.process_layout()
+
+# def generate_img(self):
+#         textlines = self.text.split("\n")
+#         self.img = Image.new('RGBA', self.frame.upper_size, Misc.TRANSPARENCY)
+#         font = ImageFont.truetype(self.sfont, self.fontsize)
+#         draw = ImageDraw.Draw(self.img, 'RGBA')
+#         # draw.text(self.corner, self.text, self.color, font)
+#         draw.text(self.corner, self.text, self.color, font)
+        
+    def generate_img(self):
+        textlines = self.text.split("\n")
+        self.img = Image.new('RGBA', self.frame.upper_size, Misc.TRANSPARENCY)
+        font = ImageFont.truetype(self.sfont, self.fontsize)
+        draw = ImageDraw.Draw(self.img, 'RGBA')
+        # draw.text(self.corner, self.text, self.color, font)
+        tmp_corn = self.corner
+        for line in textlines:
+            draw.text(tmp_corn, line, self.color, font)
+            offset = draw.textsize(line, font)
+            tmp_corn = tmp_corn[0], tmp_corn[1] + offset[1]
+        # dessin du cadre
+        other_corn = self.corner[0] + self.size[0], self.corner[1] + self.size[1]
+        draw.rectangle([self.corner, other_corn], None, (0,0,0))
+
+class NaiveSlogan(AbstractSlogan):
+    def __init__(self, myframe, mytext, myfont, mycolor):
+        super().__init__(myframe, mytext, myfont, mycolor)
+
+    def is_signed(self):
+        return False
+        
+    # L'espace vide est réparti pour moitié en haut et en bas du slogan.
+    def process_layout(self):
+        # On centre verticalement.
+        blanky = self.frame.size[1] - self.size[1]
+        by_half = int(blanky/2)
+        # On centre horizontalement
+        blankx = self.frame.size[0] - self.size[0]
+        bx_half = int(blankx/2)
+        self.corner = self.corner[0] + bx_half, self.frame.corner[1] + by_half
+
+class SignedSlogan(AbstractSlogan):
+    def __init__(self, myframe, mytext, myfont, mycolor):
+        super().__init__(myframe, mytext, myfont, mycolor)
+        self.logo_area = None
+
+    def is_signed(self):
+        return True
+    
+class BottomSignedSlogan(SignedSlogan):
+    def __init__(self, myframe, mytext, myfont, mycolor):
+        super().__init__(myframe, mytext, myfont, mycolor)
+
+    # L'espace vide est réparti en cinq cinquièmes :
+    # - Un cinquième au-dessus du slogan
+    # - Le slogan
+    # - Un cinquième au-dessous du slogan
+    # - Deux cinquièmes réservés au logo
+    # - Un cinquième au-dessous du logo
+    def process_layout(self):
+        blank_space = self.frame.size[1] - self.size[1]
+        b_fifth = int(blank_space/5)
+        self.corner = self.corner[0], self.frame.corner[1] + b_fifth
+        logo_corner = self.corner[0], self.corner[1] + self.size[1] + b_fifth
+        logo_size = self.frame.size[0], b_fifth*2
+        self.logo_area = Root.Frame(self.upper_size, logo_corner, logo_size)
+
+class RightSignedSlogan(SignedSlogan):
+    def __init__(self, myframe, mytext, myfont, mycolor):
+        super().__init__(myframe, mytext, myfont, mycolor)
+
+    # On ampute le cadre du rectangle d'or à droite.
+    # def process_margin(self):
+    #     fsize = self.frame.size
+    #     fcorner = self.frame.corner
+    #     offset = fsize[0]/Misc.TEXT_RATIO
+    #     xphi = fsize[0]/Misc.PHI
+    #     self.upper_size = self.frame.upper_size
+    #     self.corner = int(fcorner[0] + offset), int(fcorner[1] + offset)
+    #     self.size = int(xphi - offset*2), int(fsize[1] - offset*2)

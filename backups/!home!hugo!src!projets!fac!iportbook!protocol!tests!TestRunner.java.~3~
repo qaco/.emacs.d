@@ -1,0 +1,27 @@
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
+public class TestRunner {
+   public static void main(String[] args) {
+       Result result ;
+
+       result = JUnitCore.runClasses(CommandFactoryTest.class);
+       System.out.println("CommandFactory") ;
+       for (Failure failure : result.getFailures()) {
+           System.out.println(failure.toString());
+       }
+
+       result = JUnitCore.runClasses(FeedbackFactoryTest.class);
+       System.out.println("FeedbackFactory") ;
+       for (Failure failure : result.getFailures()) {
+           System.out.println(failure.toString());
+       }
+       
+       result = JUnitCore.runClasses(FlowFactoryTest.class);
+       System.out.println("FlowFactory") ;
+       for (Failure failure : result.getFailures()) {
+           System.out.println(failure.toString());
+       }
+   }
+}

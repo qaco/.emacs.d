@@ -1,0 +1,6 @@
+package protocol.fromclient ;
+import package protocol.* ;
+
+public abstract class FromClient implements Protocol {
+
+}

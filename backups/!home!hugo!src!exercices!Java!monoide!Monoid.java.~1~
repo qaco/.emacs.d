@@ -1,0 +1,4 @@
+public class Monoid<T> {
+    BinaryOperator<T> mult ;
+    Supplier<T> unit ;
+}

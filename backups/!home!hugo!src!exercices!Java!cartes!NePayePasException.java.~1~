@@ -1,0 +1,4 @@
+public class NePayePasException.java extends Exception {
+    public NePayePasException.java() { super() ; }
+    public NePayePasException.java(String message) { super(message) ; }
+}

@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#define T1 "/tmp/usr1"
+#define T2 "/tmp/usr2"
+#define INFA 10
+#define SUPA 100
+#define INFB 2
+#define SUPB 9
+#define SIZE_BUF 10
+
+int characters_in_int(int num) {
+  return (int)((ceil(log10(num))+1)*sizeof(char)) ;
+}
+
+char* int_to_string(int num) {
+  int size = characters_in_int(num) ;
+  char *str = malloc(size) ;
+  sprintf(str, "%d", num);
+  return str ;
+}
+
+int file_to_int(FILE *fic) {
+    char* buf = malloc(sizeof(char)*SIZE_BUF) ;
+    char tmp ;
+    int res, i = 0 ;
+    do {
+      tmp = fgetc(fic) ;
+      if (tmp != 'EOF')
+	(buf + i++)* = tmp ;
+    } while (tmp != 'EOF') ;
+    (buf + i)* = '\0' ;
+    res = atoi(buf) ;
+    free(buf) ;
+}
+
+void int_to_file(int entier, FILE* fic) {
+  char* buf = int_to_string(entier) ;
+  fputs(buf,fic) ;
+}
+
+int main (int argc, char* argv[]) {
+  const mode_t droits = S_IRWXU | S_IRWXG | S_IRWXO ;
+  FILE *lecture, *ecriture ;
+  int a, b ;
+  int x = 0 ;
+
+  if (--argc)
+    argv++ ;
+  else {
+    perror("Argument manquant") ;
+    exit(EXIT_FAILURE) ;
+  }
+
+  mkfifo(T1, droits) ;
+  mkfifo(T2, droits) ;
+
+  if (**argv == '1') {
+    ecriture = fopen(T1, "w") ;
+    lecture = fopen(T2, "r") ;
+    srand(time(NULL)) ;
+    a = rand() % (SUPA - INFA) + INFA ;
+    b = rand() % (SUPB - INFB) + INFB ;
+    int_to_file(a) ;
+    int_to_file(b) ;
+    a = file_to_int(lecture) ;
+  }
+  else if (**argv == '2') {
+    ecriture = fopen(T2, "w") ;
+    lecture = fopen(T1, "r") ;
+    a = file_to_int(lecture) ;
+    b = file_to_int(lecture) ;
+  }
+  else {
+    perror("Argument incorrect") ;
+    exit(EXIT_FAILURE) ;
+  }
+  while (a - x > 0 && a > 0) {
+    // saisie
+    while (x < 1 || x > b)
+      x = file_to_int(stdin) ; 
+    // envoi
+    int_to_file(ecriture) ;
+    // écoute
+    a = file_to_int(lecture) ;
+  }
+  
+}

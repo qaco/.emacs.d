@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include "messages.h"
+#include "aux.h"
+
+typedef struct {
+  char* pseudo ;
+  int id ;
+  int tube ;
+} user ;
+
+void* thread_lecture (void *arg)
+{
+  user* avatar = (user*)arg ;
+  while(1)
+    {
+      receive_msg(avatar->pseudo, avatar->tube) ;
+    }
+  pthread_exit(NULL);
+}
+
+void* thread_ecriture(void *arg)
+{
+  user* avatar = (user*)arg ;
+  while(1)
+    {
+      send_msg(avatar->pseudo, avatar->id, avatar->tube) ;
+    }
+  pthread_exit(NULL);
+}
+
+void main_loop(char* tube_server)
+{
+  int server, client ;
+  user avatar ;
+  pthread_t sender, receiver ;
+
+  /* Tant que le pseudo existe, l'utilisateur doit en saisir un nouveau,
+     puis on crée le tube de l'utilisateur.*/
+  avatar.pseudo = get_input("Pseudo>") ;
+  while (access(avatar.pseudo, F_OK ) == 0 )
+    {
+      free(avatar.pseudo) ;
+      avatar.pseudo = get_input("Pseudo>") ;
+    }
+  mkfifo(avatar.pseudo, S_IRWXU | S_IRWXG | S_IRWXO) ;
+  
+  /* On récupère les tubes du serveur et du client, puis on les connecte. */
+  server = open(tube_server, O_WRONLY) ;
+  if (server == -1)
+    fprintf(stderr,"Échec du branchement au serveur: %s\n", strerror(errno)) ;
+  client = open(avatar.pseudo, O_RDONLY) ;
+  avatar.id = connexion(server,client, avatar.pseudo, avatar.pseudo) ;
+
+  avatar.tube = server ;
+  pthread_create(&receiver, NULL, thread_lecture, &avatar) ;
+  avatar.tube = client ;
+  pthread_create(&sender, NULL, thread_ecriture, &avatar) ;
+}
+
+int main(int argc, char* argv[])
+{
+  main_loop("patron") ;
+  /* char* test = send_msg("hugo", 1) ; */
+  /* printf("%s\n", test) ; */
+  return 1 ;
+}

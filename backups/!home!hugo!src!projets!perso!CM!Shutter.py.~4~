@@ -1,0 +1,33 @@
+import Misc, Root
+from PIL import Image, ImageDraw
+
+class AbstractShutter(Root.AbstractCalc):
+    def __init__(self, upper_size):
+        self.upper_size = upper_size
+        self.color = Misc.OPACITY
+
+    def switch_logo(self):
+        if self.has_logo:
+            self.has_logo = False
+            self.writeable = frame(self.upper_size, self.corner, self.size)
+        else:
+            self.has_logo = True
+            shutter_phi = int(self.size[1]/Misc.PHI)
+            corner = self.corner[0], self.corner[1] + shutter_phi
+            size = self.size[0], self.size[1] - shutter_phi
+            self.logo_place = Root.Frame(self.upper_size, corner, size)
+            self.writeable = Root.Frame(self.upper_size, self.corner, (self.size[0], shutter_phi))
+    
+    def process_img(self):
+        upper_size = self.size[0] + self.corner[0], self.size[1] + self.corner[1]
+        self.img = Image.new('RGBA', upper_size, Misc.TRANSPARENCY)
+        draw = ImageDraw.Draw(self.img, 'RGBA')
+        draw.rectangle([self.corner, self.img.size], self.color)
+
+class BottomShutter(AbstractShutter):
+    def __init__(self, upper_size):
+        super().__init__(upper_size)
+        
+    def set_in_space(self):
+        self.corner = 0, int(self.upper_size[1]/Misc.PHI)
+        self.size = self.upper_size[0], self.upper_size[1] - self.corner[1]

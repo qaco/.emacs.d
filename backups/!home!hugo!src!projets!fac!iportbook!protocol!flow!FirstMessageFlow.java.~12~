@@ -1,0 +1,50 @@
+package protocol.flow ;
+
+import field.Field ;
+import main.MainVals ;
+import java.io.InputStreamReader ;
+import java.io.IOException ;
+import protocol.AbstractFirstMessage ;
+import exception.UnknownResultException ;
+import client.src.ServerRequest;
+
+public class FirstMessageFlow extends AbstractFirstMessage implements Flow {
+
+    public FirstMessageFlow (byte[] myid, byte[] mynum)
+        throws UnknownResultException {
+        super(myid, mynum) ;
+    }
+    
+    public FirstMessageFlow (String myid, String mynum) {
+        super(myid, mynum) ;
+    }
+
+    public FirstMessageFlow (String myid, int mynum) {
+        super(myid, mynum) ;
+    }
+    
+    public void exec(ServerRequest c) throws IOException {
+        try {
+	    System.out.println("[Vous avez reçu "+this.num.toString()+
+                               " messages de "+this.id.toString()+".]");
+	    FlowFactory ffactory = new FlowFactory();
+	    for(int i = 0; i < this.num.getInt() - 1; i++) {
+		Flow flow = ffactory.create(c.getSo());
+		flow.exec(c);
+	    }
+	} catch (UnknownResultException e) {
+	    System.out.println("[Problème à la lecture des messages.]");
+	} 
+    }
+
+    public byte[] toBytes() {
+        Field[] fields = { this.id, this.num } ;
+        return Field.makeSentence(FlowVals.FIRST_MESSAGE, fields) ;
+    }
+    
+    public String toString() {
+        return
+            FlowVals.FIRST_MESSAGE + " " +
+            this.id.toString() + " " + this.num.toString() + MainVals.EOF ;
+    }
+}

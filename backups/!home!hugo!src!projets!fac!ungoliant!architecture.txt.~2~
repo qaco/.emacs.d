@@ -1,0 +1,87 @@
+Parser
+======
+
+Entrée : code HTML
+Sorties : texte brut + URL
+
+Interface publique :
+int parse (MemoryStruct myhtml, charlist* text,	charlist* url)
+
+Erreurs possibles :
+- entrée : HTML malformé
+- entrée : pas du HTML
+- Gestion des accents et des caractères spéciaux
+- Gestion du \0
+- Gestion des fuites mémoire des char*
+
+Dépendances :
+- MemoryStruct
+- charlist
+
+Crawler
+=======
+
+Entrée : adresse URL
+Effet de bord : mise à jour de l'index (via index manager)
+
+Interface publique :
+int crawl (char* myurl)
+
+Erreurs possibles :
+- myurl ne pointe sur rien (gestion des "mauvais" url)
+
+Dépendances :
+- parser, index manager 
+
+query engine
+============
+
+Entrée : mot
+Sortie : adresses URL contenant le mot
+
+Interface publique :
+int query (MemoryStruct word, char* word, charlist* url)
+
+Erreurs possibles :
+- gestion caractères spéciaux (ex : '\0')
+
+Dépendances :
+- charlist, index manager
+
+index manager
+=============
+
+Interface publique :
+int add_to_index (char* word, char* url)
+int peek_from_index (char* word, charlist* pages)
+
+Erreurs possibles :
+- fichier d'index corrompu/inutilisable
+- aucune occurence du mot
+
+Dépendances :
+- charlist
+
+charlist
+========
+
+structure avec 2 champs :
+char* word
+charlist* next
+
+Word
+====
+
+Represente une chaîne de caractères.
+
+Interface publique :
+Word construct_word(const char *src, size_t n)
+Word construct_empty_word()
+int destruct_word(Word* myword)
+int add_char_word(Word* myword, const char mychar)
+int insert_char_word(Word* myword, const char mychar, const int index)
+int remove_char_word(Word* myword, const int index)
+char* get_content_word(const Word myword)
+char get_char_word(const Word myword, const int index)
+int get_size_word(const Word myword)
+int print_word(Word myword, FILE* stream)

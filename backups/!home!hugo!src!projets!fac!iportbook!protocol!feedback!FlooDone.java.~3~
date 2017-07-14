@@ -1,0 +1,15 @@
+package protocol.feedback ;
+import client.src.ServerRequest;
+import client.src.ConnexionRequest;
+import main.MainVals ;
+
+public class FlooDone implements Feedback {
+    public String toString() {
+        return FeedbackVals.FLOO_DONE + MainVals.EOF ;
+    }
+
+    public void exec(ServerRequest c) {
+	System.out.println("[Innodation réussie.]");
+    }
+    public void exec(ConnexionRequest cr) {}
+}

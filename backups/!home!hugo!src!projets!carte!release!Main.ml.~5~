@@ -1,0 +1,12 @@
+(* open "examples.cmo" ;; *)
+  
+let shuffle examples =
+  let nd = List.map (fun c -> (Random.bits (), c)) examples in
+  let sond = List.sort compare nd in
+  List.map snd sond
+
+let myvor = shuffle examples ;;
+let matrix = Builder.regions_voronoi taxicab myvor ;;
+let adj = Builder.adjacences_voronoi myvor matrix ;;
+let tab = Builder.extract_colors myvor ;;
+let constraints = produce_constraints tab adj ;;

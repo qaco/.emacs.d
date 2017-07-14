@@ -1,0 +1,72 @@
+
+package protocol ;
+
+import java.io.InputStream ;
+import java.io.IOException ;
+import java.util.ArrayList ;
+import java.util.Arrays ;
+import java.nio.charset.Charset ;
+
+public abstract class ProtocolFactory {
+
+    protected byte[][] readStream(InputStream in) throws IOException {
+        byte res[][] ;
+        int succplus = 0 ;
+        ArrayList<ArrayList<Byte>> wholelist = new ArrayList<ArrayList<Byte>>() ;
+        ArrayList<Byte> currentlist = new ArrayList<Byte>() ;
+        
+        wholelist.add(currentlist) ;
+        
+        while (succplus < 3) {
+            byte b = ((byte)in.read()) ;
+            if (b == 32) {
+                currentlist = new ArrayList<Byte>() ;
+                wholelist.add(currentlist) ;
+            }
+            else if (b == 43) {
+                currentlist.add(new Byte(b)) ;
+                succplus++ ;
+            }
+            else {
+                currentlist.add(new Byte(b)) ;
+                succplus = 0 ;
+            }
+        }
+
+        res = new byte[wholelist.size()][] ; 
+
+        // on ne prend pas les 3 derniers bytes
+        for (int i = 0 ; i < res.length ; i++) {
+            if (i < res.length - 2)
+                res[i] = new byte[wholelist.get(i).size()] ;
+            else
+                res[i] = new byte[wholelist.get(i).size() - 3] ;
+            for (int j = 0 ; j < res[i].length ; j++) 
+                res[i][j] = wholelist.get(i).get(j).byteValue() ;
+        }
+        return res ;
+    }
+
+    protected String extractCode(byte[][] cmd) {
+        return new String(cmd[0], Charset.forName("US-ASCII")) ;
+    }
+
+    protected byte[] joinArray(byte[][] arr, int index) {
+        byte[] joined ;
+        int sepsize = 1 ;
+        byte[][] tail = Arrays.copyOfRange(arr, index, arr.length) ;
+        int nonblankbytes = 0 ;
+        int mainc = 0 ;
+        for (int i = 0 ; i < tail.length ; i++)
+            nonblankbytes += tail[i].length ;
+        // joined = new byte[nonblankbytes + sepsize*tail.length] ;
+        joined = new byte[nonblankbytes + sepsize*(tail.length - 1)] ;
+        for (int i = 0 ; i < tail.length ; i++) {
+            if (i > 0)
+                joined[mainc++] = 32 ;
+            for (int j = 0 ; j < tail[i].length ; j++)
+                joined[mainc++] = tail[i][j] ;
+        }
+        return joined ;
+    }
+}

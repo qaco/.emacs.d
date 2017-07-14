@@ -1,0 +1,51 @@
+import java.util.LinkedList ;
+
+public class Pioche {
+    LinkedList<Carte> tas = new LinkedList<Carte>() ;
+
+    public Pioche() {
+	int c = 0 ;
+	String signe ;
+	Carte tmp ;
+	while (c != 4) {
+	    switch (c) {
+	    case 0 :
+		signe = "PIQUE" ;
+		break ;
+	    case 1 :
+		signe = "TREFLE" ;
+		break ;
+	    case 2 :
+		signe = "COEUR" ;
+		break ;
+	    case 3 :
+		signe = "CARREAU" ;
+		break ;
+	    }
+	    tmp = new Carte(signe, "AS") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "DEUX") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "TROIS") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "QUATRE") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "CINQ") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "SIX") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "SEPT") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "HUIT") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "NEUF") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "DIX") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "VALET") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "DAME") ;
+	    tas.push(tmp) ;
+	    tmp = new Carte(signe, "ROI") ;
+	    tas.push(tmp) ;
+	    

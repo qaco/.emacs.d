@@ -1,0 +1,84 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.* ;
+import service.User ;
+import protocol.field.* ;
+import protocol.feedback.* ;
+import java.net.Socket ;
+import java.util.List ;
+import java.io.OutputStream ;
+import java.io.OutputStreamWriter ;
+import java.io.Writer ;
+import java.io.IOException ;
+
+public class Connection implements Anon {
+
+    private IdField id ;
+    private PassField mdp ;
+
+    public Connection (byte[] i, byte[] m) throws UnknownResultException {
+        this.id = new IdField(i) ;
+        this.mdp = new PassField(m) ;
+    }
+    
+    public Connection (String i, int m) {
+        this.id = new IdField(i) ;
+        this.mdp = new PassField(m) ;
+    }
+
+    public String getId() {
+        return this.id.toString() ;
+    }
+    
+    public void
+        exec(Socket so, List<User> allusers) throws UnknownResultException,
+                                                    IOException {
+        String myid = this.id.toString() ;
+        boolean unfound = true ;
+        for (User guy : allusers) {
+            if (myid.equals(guy.getId())) { 
+                if(this.mdp.getInt() == guy.getPassword()) {
+                    guy.setSocket(so) ;
+                    guy.sendTCP(new Hello()) ;
+                    unfound = false ;
+                    this.describeConnectionSuccess() ;
+                }
+                else {
+                    this.deconnectRoutine(so) ;            
+                    throw new NotExecutableException("Connnection",
+                                                     "wrong password") ;
+                }
+            }
+        }
+        if (unfound) {
+            this.deconnectRoutine(so) ;            
+            throw new NotExecutableException("Connection",
+                                             myid +" not registered") ;
+        }
+    }
+
+    public byte[] toBytes() {
+        Field[] fields = { this.id, this.mdp } ;
+        return Field.makeSentence(AnonVals.CONNECTION, fields) ;
+    }
+    
+    public String toString() {
+        return
+            AnonVals.CONNECTION + " " +
+            this.id.toString() + " " + this.mdp.toString() + MainVals.EOF ;
+    }
+
+    private void deconnectRoutine(Socket so) throws IOException {
+        Writer w = new OutputStreamWriter(so.getOutputStream()) ;
+        w.write((new Goodbye()).toString()) ;
+        w.flush() ;
+        so.close() ;
+    }
+    
+    private void describeConnectionSuccess() {
+        MainVals.describe("Connection success : [id:" + this.id.toString() +
+                          "] [password:" + this.mdp.toString() + "]") ;
+    }
+}
+        

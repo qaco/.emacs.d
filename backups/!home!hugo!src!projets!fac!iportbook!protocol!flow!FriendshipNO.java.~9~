@@ -1,0 +1,26 @@
+package protocol.flow ;
+
+import protocol.field.* ;
+import exception.* ;
+import client.src.ServerRequest;
+import java.io.IOException ;
+import main.MainVals ;
+import exception.* ;
+import main.MainVals ;
+
+public class FriendshipNO implements Flow {
+    private IdField id ;
+
+    public FriendshipNO(String myid) throws UnknownResultException {
+        this.id = new IdField(myid) ;
+    }
+
+    public void exec(ServerRequest c) throws IOException { 
+	System.out.println("[" + this.id.toString() +
+                           " ne souhaite pas être ami avec vous.]");
+    }
+
+    public String toString() {
+        return FlowVals.FRIENDSHIP_NO + " " +this.id.toString() + MainVals.EOF ;
+    }
+}

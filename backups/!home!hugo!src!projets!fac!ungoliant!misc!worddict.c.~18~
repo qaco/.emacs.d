@@ -1,0 +1,351 @@
+#include <stdlib.h>
+#include <string.h>
+
+#include "word.h"
+#include "wordlist.h"
+#include "worddict.h"
+
+typedef struct {
+  Word *key ;
+  WordList *values ;
+} Page ;
+
+struct WordDict {
+  Page *pages ;
+  size_t length ;
+  size_t allocated ;
+} ;
+
+WordDict* construct_empty_worddict()
+{
+  WordDict *res = malloc(sizeof(WordDict)) ;
+  res->length = 0 ;
+  res->allocated = 1 ;
+  res->pages = malloc(sizeof(Page)*res->allocated) ;
+  return res ;
+}
+
+void clear_worddict(WordDict* mydict)
+{
+    for (int i = 0 ; i < mydict->length ; i++) {
+    Page *tmp ;
+    tmp = mydict->pages + i ;
+    destruct_word(tmp->key) ;
+    destruct_wordlist(tmp->values) ;
+  }
+  free(mydict->pages) ;
+  mydict->pages = malloc(sizeof(Page)) ;
+  mydict->length = 0 ;
+  mydict->allocated = 1 ;
+}
+
+size_t get_length_worddict(WordDict* mydict)
+{
+  return mydict->length ;
+}
+
+int get_key_worddict(Word* key, const WordDict* mydict, const int index)
+{
+  if (index < 0 || index >= mydict->length)
+    return EXIT_FAILURE ;
+  clear_word(key) ;
+  append_word(key, (mydict->pages + index)->key) ;
+  return EXIT_SUCCESS ;
+}
+
+/* Recherche dichotomique : O(logn) */
+static int where_is(const Word *mykey, const WordDict *mydict) {
+  int ret = -1 ;
+  if (mydict->length) {
+    int start = 0 ;
+    int end = mydict->length - 1 ;
+    int break_cond = 0 ;
+    while (!break_cond) {
+      int pivot = start + (end - start)/2 ;
+      Word *current = (mydict->pages + pivot)->key ;
+      int success = compare_word(mykey, current) == 0 ;
+      int goright = compare_word(mykey, current) > 0 ;
+      int goleft = compare_word(mykey, current) < 0 ;
+      break_cond = start == end ;
+      if (success) {
+        ret = pivot ;
+        break_cond = 1 ;
+      }
+      else if (goright)
+        start = pivot + 1 ;
+      else if (goleft)
+        end = pivot - 1 ;
+    }
+  }
+  return ret ;
+}
+
+int get_value_worddict(WordList* values,
+                       const WordDict* mydict, const Word* myword)
+{
+  Page res_tmp ;
+  int index ;
+  index = where_is(myword, mydict) ;
+  if (index < 0)
+    return EXIT_FAILURE ;
+  res_tmp = *(mydict->pages + index) ;
+  clear_wordlist(values) ;
+  addall_wordlist(values, res_tmp.values) ;
+  return EXIT_SUCCESS ;
+}
+
+int is_in_worddict(const Word *mykey, const WordDict *mydict)
+{
+  int test ;
+  test = where_is(mykey, mydict) >= 0 ;
+  return test ;
+}
+
+/* /\* Recherche dichotomique : O(logn) *\/ */
+static int where_insert(const Word *mykey, const WordDict *mydict) {
+  if (mydict->length) {
+    int start = 0 ;
+    int end = mydict->length - 1 ;
+    int break_cond = 0 ;
+    while (!break_cond) {
+      int pivot = start + (end - start)/2 ;
+      Word *current = (mydict->pages + pivot)->key ;
+      Word *previous ;
+      if (pivot)
+        previous = (mydict->pages + pivot - 1)->key ;
+      int regular_success =
+        (pivot == start || compare_word(mykey,previous) > 0) &&
+        compare_word(mykey,current) < 0 ;
+      int allright_success = compare_word(mykey,current) > 0 && pivot == end ;
+      int failure = compare_word(mykey, current) == 0 ;
+      int goright = compare_word(mykey, current) > 0 ;
+      int goleft = compare_word(mykey, current) < 0 ;
+      break_cond = start == end ;
+      if (regular_success)
+        return pivot ;
+      else if (allright_success)
+        return pivot + 1 ;
+      else if (failure)
+        return -1 ;
+      else if (goright)
+        start = pivot + 1 ;
+      else if (goleft)
+        end = pivot - 1 ;
+    }
+  }
+  return 0 ;
+}
+
+static void maj_memory(WordDict* mydict)
+{
+  if (mydict->length >= mydict->allocated) {
+    mydict->allocated *= 2 ;
+    mydict->pages = realloc(mydict->pages, sizeof(Page)*mydict->allocated) ;
+  }
+  else if (mydict->length < mydict->allocated/4) {
+    mydict->allocated /= 2 ;
+    mydict->pages = realloc(mydict->pages, sizeof(Page)*mydict->allocated) ;
+  }
+}
+
+int add_key_worddict(WordDict* mydict, const Word *myword)
+{
+  int index = where_insert(myword, mydict) ;
+
+  if (index < 0)
+    return EXIT_FAILURE ;
+  maj_memory(mydict) ;
+  /* La séquence commençant à l'indice index jusqu'à la fin est décalée
+     vers la droite. */
+  memmove(mydict->pages + index + 1,
+          mydict->pages + index,
+          sizeof(Page)*(mydict->length - index)) ;
+  mydict->length++ ;
+  /* La page manquante est insérée à l'indice index. */
+  (mydict->pages + index)->key = clone_word(myword) ;
+  (mydict->pages + index)->values = build_empty_wordlist() ;
+
+  return EXIT_SUCCESS ;
+}
+
+int add_value_worddict(WordDict* mydict,
+                      const Word* mykey, const Word* myvalue)
+{
+  int index = where_is(mykey, mydict) ;
+  if (index == -1)
+    return EXIT_FAILURE ;
+  add_word_wordlist((mydict->pages + index)->values, myvalue) ;
+  return EXIT_SUCCESS ;
+}
+
+int add_line_worddict(WordDict* mydict,
+                      const Word* myword, const WordList* mylist)
+{
+  int index = where_insert(myword, mydict) ;
+  if (index < 0)
+    return EXIT_FAILURE ;
+  maj_memory(mydict) ;
+  /* La séquence commençant à l'indice index jusqu'à la fin est décalée
+     vers la droite. */
+
+  memmove(mydict->pages + index + 1,
+          mydict->pages + index,
+          sizeof(Page)*(mydict->length - index)) ;
+  mydict->length++ ;
+  /* La page manquante est insérée à l'indice index. */
+  (mydict->pages + index)->key = clone_word(myword) ;
+  (mydict->pages + index)->values = clone_wordlist(mylist) ;
+  return EXIT_SUCCESS ;
+}
+
+int remove_key_worddict(WordDict* mydict, const Word* myword)
+{
+  int index ;
+  Page *tmp ;
+  index = where_is(myword, mydict) ;
+  if (index < 0)
+    return EXIT_FAILURE ;
+  /* Suppression. */
+  tmp = mydict->pages + index ;
+  destruct_word(tmp->key) ;
+  destruct_wordlist(tmp->values) ;
+  /* Décalage de la mémoire vers la gauche. */
+  memmove(mydict->pages + index, mydict->pages + index + 1,
+          sizeof(Page)*(mydict->length - index - 1)) ;
+  mydict->length-- ;
+  maj_memory(mydict) ;
+  return EXIT_SUCCESS ;
+}
+
+void addall_worddict(WordDict* dest, WordDict* src)
+{
+  for (int i = 0 ; i < src->length ; i++) {
+    Word *key ;
+    WordList *values ;
+    Page *tmp ;
+
+    tmp = src->pages + i ;
+    key = tmp->key ;
+    values = tmp->values ;
+    add_line_worddict(dest, key, values) ;
+  }
+}
+
+int is_equal_worddict(WordDict* dict1, WordDict* dict2) {
+  int ret = 1 ;
+  int ended = 0 ;
+  int size1 = get_length_worddict(dict1) ;
+  int size2 = get_length_worddict(dict2) ;
+  
+  if (size1 != size2) {
+    ret = 0 ;
+    ended = 1 ;
+  }
+
+  if (!ended) {
+    for (int i = 0 ; i < size1 && !ended ; i++) {
+      Word *key1 = (dict1->pages + i)->key ;
+      Word *key2 = (dict2->pages + i)->key ;
+      WordList *val1 = (dict1->pages + i)->values ;
+      WordList *val2 = (dict2->pages + i)->values ;
+      if (compare_word(key1, key2) != 0) {
+        ret = 0 ;
+        ended = 1 ;
+      }
+      else if (compare_wordlist(val1, val2) != 0) {
+        ret = 0 ;
+        ended = 1 ;
+      }
+    }
+  }
+  return ret ;
+}
+
+Word* worddict_to_dot(Word* titre, const WordDict* mydict) {
+  Word *res = construct_word(strlen("digraph "), "digraph ") ;
+  append_word(res, titre) ;
+  add_chars_word(res, " {\n", strlen(" {\n")) ;
+  
+  for (int i = 0 ; i < mydict->length ; i++) {
+    Word *key = (mydict->pages + i)->key ;
+    WordList *values = (mydict->pages + i)->values ;
+    append_word(res, key) ;
+    add_chars_word(res, "\n", strlen("\n")) ;
+    for (int j = 0 ; j < get_length_wordlist(values) ; j++) {
+      Word *neighboor = construct_word(0, NULL) ;
+      get_word_wordlist(neighboor, values, j) ;
+      append_word(res, key) ;
+      add_chars_word(res, " -> ", strlen(" -> ")) ;
+      append_word(res, neighboor) ;
+      add_chars_word(res, "\n", strlen("\n")) ;
+      destruct_word(neighboor) ;
+    }
+  }
+  add_chars_word(res, "}\n", strlen("}\n")) ;
+
+  return res ;
+}
+
+WordDict* dot_to_worddict(Word* mydot) {
+  Word *sep = construct_word(strlen(" -> "), " -> ") ;
+  Word *endline = construct_word(strlen("\n"), "\n") ;
+  WordDict *res = construct_empty_worddict() ;
+  WordList *lines = split_word(mydot, endline) ;
+  for (int i = 1 ; i <= get_length_wordlist(lines) - 2 ; i++) {
+    WordList *words ;
+    Word *current_line = construct_word(0, NULL) ;
+    Word *key = construct_word(0, NULL) ;
+    get_word_wordlist(current_line, lines, i) ;
+    words = split_word(current_line, sep) ;
+    if (get_length_wordlist(words) == 1) {
+      get_word_wordlist(key, words, 0) ;
+      cut_sub_word(key, endline) ;
+      add_key_worddict(res, key) ;
+    }
+    else {
+      Word *value = construct_word(0, NULL) ;
+      get_word_wordlist(value, words, 1) ;
+      cut_sub_word(value, endline) ;
+      get_word_wordlist(key, words, 0) ;
+      add_value_worddict(res, key, value) ;
+      destruct_word(value) ;
+    }
+    destruct_word(key) ;
+    destruct_word(current_line) ;
+    destruct_wordlist(words) ;
+  }
+  destruct_word(sep) ;
+  destruct_word(endline) ;
+  destruct_wordlist(lines) ;
+  return res ;
+}
+
+void destruct_worddict(WordDict* mydict)
+{
+  for (int i = 0 ; i < mydict->length ; i++) {
+    Page *tmp ;
+    tmp = mydict->pages + i ;
+    destruct_word(tmp->key) ;
+    destruct_wordlist(tmp->values) ;
+  }
+  free(mydict->pages) ;
+  free(mydict) ;
+}
+
+int print_worddict(const WordDict* mydict, FILE* stream)
+{
+  if (fprintf(stream, "{\n") < 0)
+    return EXIT_FAILURE ;
+  for (int i = 0 ; i < mydict->length ; i++) {
+    Page current = *(mydict->pages + i) ;
+    if (print_word(current.key, stream) == EXIT_FAILURE ||
+        fprintf(stream, " -> ") < 0 ||
+        print_wordlist(current.values, stream) == EXIT_FAILURE)
+      return EXIT_FAILURE ;
+  }
+  if (fprintf(stream, "}\n") < 0)
+    return EXIT_FAILURE ;
+  return EXIT_SUCCESS ;
+}
+
+

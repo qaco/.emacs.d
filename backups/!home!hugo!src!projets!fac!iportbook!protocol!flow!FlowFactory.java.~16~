@@ -1,0 +1,52 @@
+package protocol.flow ;
+
+import exception.* ;
+import java.util.Arrays ;
+import protocol.ProtocolFactory ;
+import java.io.InputStream ;
+import java.io.IOException ;
+
+public class FlowFactory extends ProtocolFactory {
+
+    public Flow create(InputStream in) throws UnknownResultException,
+                                         IOException {
+        byte[][] raw_arr = this.readStream(in) ;
+        String code = this.extractCode(raw_arr) ;
+        byte[][] smooth_arr = Arrays.copyOfRange(raw_arr,1,raw_arr.length) ;
+        return this.create(code, smooth_arr) ;
+    }
+    
+    private Flow create(String code, byte[][] params) throws UnknownResultException {
+        byte[] mess ;
+        
+        try {
+            switch (code) {
+            case FlowVals.ASK_FRIEND :
+                return new AskFriendFlow(params[0]) ;
+            case FlowVals.FIRST_MESSAGE :
+                return new FirstMessageFlow(params[0], params[1]) ;
+            case FlowVals.SOME_MESSAGE :
+                mess = this.joinArray(params, 1) ;
+                return new SomeMessageFlow(params[0], mess) ;
+            case FlowVals.FLOO_MESSAGE :
+                mess = this.joinArray(params, 1) ;
+                return new FlooMessageFlow(params[0], mess) ;
+            case FlowVals.FRIENDSHIP_NO :
+                return new FriendshipNO(params[0]) ;
+            case FlowVals.FRIENDSHIP_OK :
+                return new FriendshipOK(params[0]) ; 
+            case FlowVals.PUB:
+                mess = this.joinArray(params, 2) ;
+                return new PubFlow (params[0], params[1], mess) ;
+            case FlowVals.NO_FLOW :
+                return new NoFlow() ;
+            default :
+                throw new UnknownCommandException(code, "flow") ;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new TooFewArgsException(code,
+                                          String.valueOf(params.length)) ;
+        }
+    }
+}
+

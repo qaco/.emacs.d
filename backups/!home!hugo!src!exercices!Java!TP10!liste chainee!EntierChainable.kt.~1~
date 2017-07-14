@@ -1,0 +1,2 @@
+class EntierChainable: Chainable (elt: Int, suiv: Chainable?) {
+    

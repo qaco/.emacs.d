@@ -1,0 +1,37 @@
+package service ;
+
+import main.MainVals ;
+import java.net.ServerSocket ;
+import java.net.Socket ;
+import java.io.Reader ;
+
+import java.io.IOException ;
+import java.lang.Thread ;
+import java.util.List ;
+import java.util.LinkedList ;
+
+public class Server {
+
+    private ServerSocket socketforclients ;
+    private ServerSocket socketforpromo ;
+    private List<User> allusers ;
+
+    public Server(int port) throws IOException {
+        this.socketforclients = new ServerSocket(port) ;
+        this.allusers = new LinkedList<User>() ;
+    }
+    
+    public void mainLoop() throws IOException {
+        while (true) {
+            Socket s = this.socketforclients.accept() ;
+            Thread t ;
+            this.describeAccept() ;
+            t = new Thread(new UserLife(s, this.allusers)) ;
+            t.start() ;
+        }
+    }
+
+    private void describeAccept() {
+        MainVals.describe("New com launched") ;
+    }
+}

@@ -1,0 +1,24 @@
+package protocol ;
+
+import protocol.field.* ;
+import exception.* ;
+
+public class AbstractPub {
+    
+    protected IpDiffField ip ;
+    protected PortField port ;
+    protected MessField message ;
+
+    public AbstractPub(byte[] i, byte[] p, byte[] m) throws UnknownResultException {
+        this.ip = new IpDiffField(i) ;
+        this.port = new PortField(p) ;
+        this.message = new MessField(m) ;
+    }
+    
+    public AbstractPub(String i, String p, String m) {
+        this.ip = new IpDiffField(i) ;
+        this.port = new PortField(p) ;
+        this.message = new MessField(m) ;
+    }
+}
+            

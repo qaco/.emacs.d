@@ -1,0 +1,2 @@
+gboolean on_click (GtkWidget *widget, GdkEvent  *event, gpointer user_data) ;
+void set_tiles_events(const int num_cells, GtkWidget*** tiles) ;

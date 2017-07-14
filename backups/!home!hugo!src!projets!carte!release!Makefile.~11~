@@ -1,0 +1,31 @@
+OC=ocamlc
+LINKS=graphics.cma
+EXEC=coloriage
+SRC=examples.ml sat_solver.ml voronoi.ml interaction.ml 
+OBJ=$(SRC:.ml=.cmo)
+
+all: $(EXEC)
+
+$(EXEC) : $(OBJ)
+	$(OC) -o $@ $(LINKS) $^
+
+interaction.cmo: interaction.ml voronoi.cmo examples.cmo
+	$(OC) -c $<
+
+voronoi.cmo: voronoi.ml voronoi.cmi sat_solver.cmo
+	$(OC) -c $<
+
+sat_solver.cmo: sat_solver.ml sat_solver.cmi
+	$(OC) -c $<
+
+examples.cmo: examples.ml voronoi.cmo
+	$(OC) -c $<
+
+%.cmi: %.mli
+	$(OC) -o $@ -c $<
+
+clean :
+	rm -rf *.cmo *.cmi
+
+mrproper : clean
+	rm -rf $(EXEC)

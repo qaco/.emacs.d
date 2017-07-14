@@ -1,0 +1,1023 @@
+#include <unistd.h>
+#include <sys/stat.h>
+#include <db.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include "db_manager.h"
+#include "../misc/word.h"
+#include "../misc/wordlist.h"
+#include "../misc/data_container.h"
+
+////////////////////////////////////////////////////////////////////////////////
+// DB_ENV CONSTANTS
+// create
+#define DB_ENV_CREATE_FLAGS 0
+
+// open
+#define DB_ENV_DIR "database"
+#define DB_ENV_OPEN_FLAGS DB_CREATE | DB_INIT_MPOOL //| DB_THREAD | DB_INIT_TXN | DB_INIT_CDB
+#define DB_ENV_OPEN_MODE 0644
+
+// close
+#define DB_ENV_CLOSE_FLAGS 0
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DBs GENERAL CONSTANTS
+// create
+#define DB_CREATE_FLAGS 0
+
+// open
+#define DB_OPEN_TXN NULL
+#define DB_OPEN_DATABASE NULL
+#define DB_OPEN_DTYPE DB_BTREE
+#define DB_OPEN_FILE_RIGHTS 0664
+#define DB_OPEN_FLAGS DB_CREATE //| DB_THREAD | DB_AUTO_COMMIT
+
+// associate
+#define DB_ASSOCIATE_TXNID NULL
+#define DB_ASSOCIATE_FLAGS DB_CREATE //| DB_AUTO_COMMIT
+
+// close
+#define DB_CLOSE_FLAGS 0
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DB PRIMARY PAIR CONSTANTS
+// open
+#define DB_PAIR_PRIMARY_OPEN_NAME "pairs_primary.db"
+
+// DB SECONDARY PAIR WORD CONSTANTS
+// open
+#define DB_PAIR_SECONDARY_WORD_OPEN_NAME "pairs_word_secondary.db"
+
+// DB SECONDARY PAIR URL CONSTANTS
+// open
+#define DB_PAIR_SECONDARY_URL_OPEN_NAME "pairs_url_secondary.db"
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DB PRIMARY URL CONSTANTS
+// open
+#define DB_URL_PRIMARY_OPEN_NAME "urls_primary.db"
+
+// DB SECONDARY URL CONSTANTS
+// open
+#define DB_URL_SECONDARY_OPEN_NAME "urls_secondary.db"
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DB PRIMARY WORD CONSTANTS
+// open
+#define DB_WORD_PRIMARY_OPEN_NAME "words_primary.db"
+
+// DB SECONDARY WORD CONSTANTS
+// open
+#define DB_WORD_SECONDARY_OPEN_NAME "words_secondary.db"
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+// TODO add USERMEM to fonctions get_data
+
+int initialize_ids(DbId *id) {
+    DB *pair_dbp, *url_dbp, *word_dbp;
+    DBT key, data;
+    DBC *dbc;
+    int ret;
+
+    // INIT PAIR ID
+    pair_dbp = id->pair_dbp;
+
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+
+    ret = pair_dbp->cursor(pair_dbp, NULL, &dbc, 0);
+    if (ret != 0) {
+        ret = dbc->c_close(dbc);
+        return EXIT_FAILURE;
+    }
+
+    ret = dbc->c_get(dbc, &key, &data, DB_LAST);
+    if (ret == DB_NOTFOUND) {
+        id->next_pair_index = 0;
+    } else if (ret != 0) {
+        ret = dbc->c_close(dbc);
+        return EXIT_FAILURE;
+    } else {
+        id->next_pair_index = *(uint64_t *)(key.data) + 1;
+    }
+
+    /* printf("pair id: %lu\n", id->next_pair_index); */
+
+    ret = dbc->c_close(dbc);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+
+    // INIT URL ID
+    url_dbp = id->url_dbp;
+
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+
+    ret = url_dbp->cursor(url_dbp, NULL, &dbc, 0);
+    if (ret != 0) {
+        ret = dbc->c_close(dbc);
+        return EXIT_FAILURE;
+    }
+
+    ret = dbc->c_get(dbc, &key, &data, DB_LAST);
+    if (ret == DB_NOTFOUND) {
+        id->next_url_index = 0;
+    } else if (ret != 0) {
+        ret = dbc->c_close(dbc);
+        return EXIT_FAILURE;
+    } else {
+        id->next_url_index = *(uint64_t *)(key.data) + 1;
+    }
+
+    /* printf("url id: %lu\n", id->next_url_index); */
+
+    ret = dbc->c_close(dbc);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+
+    // INIT WORD ID
+    word_dbp = id->word_dbp;
+
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+
+    ret = word_dbp->cursor(word_dbp, NULL, &dbc, 0);
+    if (ret != 0) {
+        ret = dbc->c_close(dbc);
+        return EXIT_FAILURE;
+    }
+
+    ret = dbc->c_get(dbc, &key, &data, DB_LAST);
+    if (ret == DB_NOTFOUND) {
+        id->next_word_index = 0;
+    } else if (ret != 0) {
+        ret = dbc->c_close(dbc);
+        return EXIT_FAILURE;
+    } else {
+        id->next_word_index = *(uint64_t *)(key.data) + 1;
+    }
+
+    /* printf("word id: %lu\n", id->next_word_index); */
+
+    ret = dbc->c_close(dbc);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int urlw_callback(DB *dbp, const DBT *key, const DBT *data, DBT *skey) {
+    struct url_data *udata;
+
+    udata = data->data;
+
+    skey->data = &(udata->url)[0];
+    skey->size = data->size - (sizeof(struct url_data) - 1);
+
+    return EXIT_SUCCESS;
+}
+
+int wordw_callback(DB *dbp, const DBT *key, const DBT *data, DBT *skey) {
+    struct word_data *wdata;
+
+    wdata = data->data;
+
+    skey->data = wdata->word;
+    skey->size = data->size - (sizeof(struct word_data) - 1);
+
+    return EXIT_SUCCESS;
+}
+
+int pair_wordw_callback(DB *dbp, const DBT *key, const DBT *data, DBT *skey) {
+    struct pair_data *pdata;
+
+    pdata = data->data;
+
+    skey->data = &(pdata->word_id);
+    skey->size = sizeof(pdata->word_id);
+
+    return EXIT_SUCCESS;
+}
+
+int pair_urlw_callback(DB *dbp, const DBT *key, const DBT *data, DBT *skey) {
+    struct pair_data *pdata;
+
+    pdata = data->data;
+
+    skey->data = &(pdata->url_id);
+    skey->size = sizeof(pdata->url_id);
+
+    return EXIT_SUCCESS;
+}
+
+int opendb(DbId *id) {
+    DB_ENV *dbenv;
+    DB *pair_dbp, *pair_word_sdbp, *pair_url_sdbp, *url_dbp, *url_sdbp,
+        *word_dbp, *word_sdbp;
+    int ret, t_ret;
+
+    //////////////////////////////////////////////////////////////
+    // Create the directory for the database if it doesn't exit //
+    //////////////////////////////////////////////////////////////
+
+    struct stat st = {0};
+    if (stat(DB_ENV_DIR, &st) == -1) {
+        mkdir(DB_ENV_DIR, 0700);
+    }
+
+    ////////////////////////////////////////////
+    // Create and open handle for environment //
+    ////////////////////////////////////////////
+
+    if ((ret = db_env_create(&dbenv, DB_ENV_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_env_create: %s\n", db_strerror(ret));
+        return EXIT_FAILURE;
+    }
+
+    /*
+     * Place to configure database
+     */
+
+    if ((ret = dbenv->open(dbenv, DB_ENV_DIR, DB_ENV_OPEN_FLAGS, DB_ENV_OPEN_MODE)) != 0) {
+        fprintf(stderr, "db_env_open: %s\n", db_strerror(ret));
+        return EXIT_FAILURE;
+    }
+
+    id->dbenv = dbenv;
+
+    ///////////////////////////////////////////
+    // Create and open handle for pair table //
+    ///////////////////////////////////////////
+
+    if ((ret = db_create(&pair_dbp, dbenv, DB_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_create pair table: %s\n", db_strerror(ret));
+        // TODO voir si je dois gerer la valeur de retour de closedb ou utiliser
+        // une autre fonction
+        closedb(id);
+        return EXIT_FAILURE;
+    }
+
+    /*
+     * Place to configure pair primary table
+     */
+
+    if ((ret = pair_dbp->open(pair_dbp, DB_OPEN_TXN,
+                              DB_PAIR_PRIMARY_OPEN_NAME,
+                              DB_OPEN_DATABASE,
+                              DB_OPEN_DTYPE,
+                              DB_OPEN_FLAGS,
+                              DB_OPEN_FILE_RIGHTS)) != 0) {
+        pair_dbp->err(pair_dbp, ret, "%s", DB_PAIR_PRIMARY_OPEN_NAME);
+        if ((t_ret = pair_dbp->close(pair_dbp, 0)) != 0 && ret == 0) {
+            ret = t_ret;
+        }
+        return EXIT_FAILURE;
+    }
+
+    id->pair_dbp = pair_dbp;
+
+    /////////////////////////////////////////////////////////////////////
+    // Create, open and associate handle for secondary pair word table //
+    /////////////////////////////////////////////////////////////////////
+
+    if ((ret = db_create(&pair_word_sdbp, dbenv, DB_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_create url secondary table: %s\n", db_strerror(ret));
+        return EXIT_FAILURE;
+    }
+    //
+    // Place to configure secondary pair table
+    //
+    ret = pair_word_sdbp->set_flags(pair_word_sdbp, DB_DUP);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+    //
+    // end configure
+    //
+
+    if ((ret = pair_word_sdbp->open(pair_word_sdbp, DB_OPEN_TXN,
+                               DB_PAIR_SECONDARY_WORD_OPEN_NAME,
+                               DB_OPEN_DATABASE,
+                               DB_OPEN_DTYPE,
+                               DB_OPEN_FLAGS,
+                               DB_OPEN_FILE_RIGHTS)) != 0) {
+        pair_word_sdbp->err(pair_word_sdbp, ret, "%s", DB_PAIR_SECONDARY_WORD_OPEN_NAME);
+        if ((t_ret = pair_word_sdbp->close(pair_word_sdbp, 0)) != 0 && ret == EXIT_SUCCESS) {
+            ret = t_ret;
+        }
+        return EXIT_FAILURE;
+    }
+
+    if((ret = pair_dbp->associate(pair_dbp, DB_ASSOCIATE_TXNID, pair_word_sdbp,
+                                  pair_wordw_callback,
+                                  DB_ASSOCIATE_FLAGS)) != 0) {
+        pair_dbp->err(pair_dbp, ret, "%s", DB_PAIR_SECONDARY_WORD_OPEN_NAME);
+        return EXIT_FAILURE;
+    }
+
+    id->pair_word_sdbp = pair_word_sdbp;
+
+    ////////////////////////////////////////////////////////////////////
+    // Create, open and associate handle for secondary pair url table //
+    ////////////////////////////////////////////////////////////////////
+
+    if ((ret = db_create(&pair_url_sdbp, dbenv, DB_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_create url secondary table: %s\n", db_strerror(ret));
+        return EXIT_FAILURE;
+    }
+    //
+    // Place to configure secondary pair table
+    //
+    ret = pair_url_sdbp->set_flags(pair_url_sdbp, DB_DUP);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+    //
+    // end configure
+    //
+
+    if ((ret = pair_url_sdbp->open(pair_url_sdbp, DB_OPEN_TXN,
+                               DB_PAIR_SECONDARY_URL_OPEN_NAME,
+                               DB_OPEN_DATABASE,
+                               DB_OPEN_DTYPE,
+                               DB_OPEN_FLAGS,
+                               DB_OPEN_FILE_RIGHTS)) != 0) {
+        pair_url_sdbp->err(pair_url_sdbp, ret, "%s", DB_PAIR_SECONDARY_URL_OPEN_NAME);
+        if ((t_ret = pair_url_sdbp->close(pair_url_sdbp, 0)) != 0 && ret == EXIT_SUCCESS) {
+            ret = t_ret;
+        }
+        return EXIT_FAILURE;
+    }
+
+    if((ret = pair_dbp->associate(pair_dbp, DB_ASSOCIATE_TXNID, pair_url_sdbp,
+                                  pair_urlw_callback,
+                                  DB_ASSOCIATE_FLAGS)) != 0) {
+        pair_dbp->err(pair_dbp, ret, "%s", DB_PAIR_SECONDARY_URL_OPEN_NAME);
+        return EXIT_FAILURE;
+    }
+
+    id->pair_url_sdbp = pair_url_sdbp;
+
+    //////////////////////////////////////////////////
+    // Create and open handle for primary url table //
+    //////////////////////////////////////////////////
+
+    if ((ret = db_create(&url_dbp, dbenv, DB_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_create url primary table: %s\n", db_strerror(ret));
+        return EXIT_FAILURE;
+    }
+
+    /*
+     * Place to configure url primary table
+     */
+
+    if ((ret = url_dbp->open(url_dbp, DB_OPEN_TXN,
+                             DB_URL_PRIMARY_OPEN_NAME,
+                             DB_OPEN_DATABASE,
+                             DB_OPEN_DTYPE,
+                             DB_OPEN_FLAGS,
+                             DB_OPEN_FILE_RIGHTS)) != 0) {
+        url_dbp->err(url_dbp, ret, "%s", DB_URL_PRIMARY_OPEN_NAME);
+        if ((t_ret = url_dbp->close(url_dbp, 0)) != 0 && ret == 0)
+            ret = t_ret;
+        return EXIT_FAILURE;
+    }
+
+    id->url_dbp = url_dbp;
+
+    ///////////////////////////////////////////////////////////////
+    // Create, open and associate handle for secondary url table //
+    ///////////////////////////////////////////////////////////////
+
+    if ((ret = db_create(&url_sdbp, dbenv, DB_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_create url secondary table: %s\n", db_strerror(ret));
+        return EXIT_FAILURE;
+    }
+
+    /*
+     * Place to configure url secondary table
+     */
+
+    if ((ret = url_sdbp->open(url_sdbp, DB_OPEN_TXN,
+                              DB_URL_SECONDARY_OPEN_NAME,
+                              DB_OPEN_DATABASE,
+                              DB_OPEN_DTYPE,
+                              DB_OPEN_FLAGS,
+                              DB_OPEN_FILE_RIGHTS)) != 0) {
+        url_sdbp->err(url_sdbp, ret, "%s", DB_URL_SECONDARY_OPEN_NAME);
+        if ((t_ret = url_sdbp->close(url_sdbp, 0)) != 0 && ret == EXIT_SUCCESS) {
+            ret = t_ret;
+        }
+        return EXIT_FAILURE;
+    }
+
+    if((ret = url_dbp->associate(url_dbp, DB_ASSOCIATE_TXNID, url_sdbp,
+                                 urlw_callback, DB_ASSOCIATE_FLAGS)) != 0) {
+        url_dbp->err(url_dbp, ret, "%s", DB_URL_SECONDARY_OPEN_NAME);
+        return EXIT_FAILURE;
+    }
+
+    id->url_sdbp = url_sdbp;
+
+    ///////////////////////////////////////////////////
+    // Create and open handle for primary word table //
+    ///////////////////////////////////////////////////
+
+    if ((ret = db_create(&word_dbp, dbenv, DB_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_create url primary table: %s\n", db_strerror(ret));
+        return EXIT_FAILURE;
+    }
+
+    /*
+     * Place to configure word primary table
+     */
+
+    if ((ret = word_dbp->open(word_dbp, DB_OPEN_TXN,
+                              DB_WORD_PRIMARY_OPEN_NAME,
+                              DB_OPEN_DATABASE,
+                              DB_OPEN_DTYPE,
+                              DB_OPEN_FLAGS,
+                              DB_OPEN_FILE_RIGHTS)) != 0) {
+        word_dbp->err(word_dbp, ret, "%s", DB_WORD_PRIMARY_OPEN_NAME);
+        if ((t_ret = word_dbp->close(word_dbp, 0)) != 0 && ret == 0)
+            ret = t_ret;
+        return EXIT_FAILURE;
+    }
+
+    id->word_dbp = word_dbp;
+
+    /////////////////////////////////////////////////////
+    // Create and open handle for secondary word table //
+    /////////////////////////////////////////////////////
+
+    if ((ret = db_create(&word_sdbp, dbenv, DB_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_create url secondary table: %s\n", db_strerror(ret));
+        return EXIT_FAILURE;
+    }
+
+    /*
+     * Place to configure word secondary table
+     */
+
+    if ((ret = word_sdbp->open(word_sdbp, DB_OPEN_TXN,
+                               DB_WORD_SECONDARY_OPEN_NAME,
+                               DB_OPEN_DATABASE,
+                               DB_OPEN_DTYPE,
+                               DB_OPEN_FLAGS,
+                               DB_OPEN_FILE_RIGHTS)) != 0) {
+        word_sdbp->err(word_sdbp, ret, "%s", DB_WORD_SECONDARY_OPEN_NAME);
+        if ((t_ret = word_sdbp->close(word_sdbp, 0)) != 0 && ret == EXIT_SUCCESS) {
+            ret = t_ret;
+        }
+        return EXIT_FAILURE;
+    }
+
+    if((ret = word_dbp->associate(word_dbp, DB_ASSOCIATE_TXNID, word_sdbp,
+                                 wordw_callback, DB_ASSOCIATE_FLAGS)) != 0) {
+        word_dbp->err(word_dbp, ret, "%s", DB_WORD_SECONDARY_OPEN_NAME);
+        return EXIT_FAILURE;
+    }
+
+    id->word_sdbp = word_sdbp;
+
+    initialize_ids(id);
+    // TODO initialize word_id and url_id at 0 each or check database
+
+    return EXIT_SUCCESS;
+}
+
+
+int closedb(DbId *id)
+{
+    int ret;
+
+    if ((ret = id->pair_url_sdbp->close(id->pair_url_sdbp, 0)) != 0) {
+        perror("ERROR closing pair_url_sdbp");
+        return EXIT_FAILURE;
+    }
+    if ((ret = id->pair_word_sdbp->close(id->pair_word_sdbp, 0)) != 0)
+        return EXIT_FAILURE;
+    if ((ret = id->pair_dbp->close(id->pair_dbp, 0)) != 0)
+        return EXIT_FAILURE;
+    if ((ret = id->url_sdbp->close(id->url_sdbp, 0)) != 0)
+        return EXIT_FAILURE;
+    if ((ret = id->url_dbp->close(id->url_dbp, 0)) != 0)
+        return EXIT_FAILURE;
+    if ((ret = id->word_sdbp->close(id->word_sdbp, 0)) != 0)
+        return EXIT_FAILURE;
+    if ((ret = id->word_dbp->close(id->word_dbp, 0)) != 0)
+        return EXIT_FAILURE;
+    if ((ret = (id->dbenv)->close(id->dbenv, 0)) != 0)
+        return EXIT_FAILURE;
+    return ret;
+}
+
+int word_url_pair_exists(DbId *id, struct pair_data *pdata) {
+    DB *pair_url_sdbp;
+    DBT pkey, skey, data;
+    DBC *sdbc;
+    int ret;
+
+    pair_url_sdbp = id->pair_url_sdbp;
+
+    memset(&pkey, 0, sizeof(pkey));
+    memset(&skey, 0, sizeof(skey));
+    memset(&data, 0, sizeof(data));
+
+    skey.data = &(pdata->url_id);
+    skey.size = sizeof(pdata->url_id);
+
+    pair_url_sdbp->cursor(pair_url_sdbp, NULL, &sdbc, 0);
+
+    for (ret = sdbc->c_pget(sdbc, &skey, &pkey, &data, DB_SET);
+         ret == 0;
+         ret = sdbc->c_pget(sdbc, &skey, &pkey, &data, DB_NEXT_DUP)) {
+        if (((struct pair_data *)data.data)->word_id == pdata->word_id) {
+            ret = sdbc->c_close(sdbc);
+            if (ret != EXIT_SUCCESS) {
+                return EXIT_FAILURE;
+            }
+            return PAIR_EXISTS;
+        }
+    }
+
+    ret = sdbc->c_close(sdbc);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+
+    return NOT_PAIR_EXISTS;
+}
+
+int add_word_data(DbId *id, uint64_t *word_id, struct word_data *wdata,
+                  size_t word_data_size) {
+    DB *word_dbp, *word_sdbp;
+    DBT pkey, skey, data;
+    int ret;
+    /* Word *stored; */
+
+    word_dbp = id->word_dbp;
+    word_sdbp = id->word_sdbp;
+
+    memset(&pkey, 0, sizeof(pkey));
+    memset(&skey, 0, sizeof(skey));
+    memset(&data, 0, sizeof(data));
+
+    skey.data = &(wdata->word[0]);
+    skey.size = word_data_size - (sizeof(struct word_data) - 1);
+
+    if ((ret = word_sdbp->pget(word_sdbp, NULL, &skey, &pkey, &data, 0))
+        == DB_NOTFOUND) {
+        *word_id = id->next_word_index++; // TODO Voir si je mets ca dans une fonction
+        pkey.data = word_id;
+        pkey.size = sizeof(uint64_t);
+    } else if (ret == EXIT_SUCCESS) {
+        *word_id = *(uint64_t *)(pkey.data);
+    } else {
+        word_sdbp->err(word_sdbp, ret, "DB->pget");
+        return EXIT_FAILURE;
+    }
+
+    memset(&data, 0, sizeof(data));
+    data.data = wdata;
+    data.size = word_data_size;
+
+    if ((ret = word_dbp->put(word_dbp, NULL, &pkey, &data, 0)) == 0) {
+	/* stored = construct_word(data.size, data.data) ; */
+	/* printf("db: "); */
+	/* print_word(stored, stdout); */
+	/* printf(" word data stored.\n"); */
+	/* destruct_word(stored); */
+    } else {
+        word_dbp->err(word_dbp, ret, "DB->put");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int add_url_data(DbId *id, uint64_t *url_id, struct url_data *udata,
+                 size_t url_data_size) {
+    DB *url_dbp, *url_sdbp;
+    DBT pkey, skey, data;
+    int ret;
+
+    url_dbp = id->url_dbp;
+    url_sdbp = id->url_sdbp;
+
+    memset(&skey, 0, sizeof(skey));
+    memset(&pkey, 0, sizeof(pkey));
+    memset(&data, 0, sizeof(data));
+
+    skey.data = &(udata->url[0]);
+    skey.size = url_data_size;
+
+    if ((ret = url_sdbp->pget(url_sdbp, NULL, &skey, &pkey, &data, 0))
+        == DB_NOTFOUND) {
+        *url_id = id->next_url_index++; // TODO Voir si je mets ca dans une fonction
+        pkey.data = url_id;
+        pkey.size = sizeof(uint64_t);
+    } else if (ret == EXIT_SUCCESS) {
+        *url_id = *(uint64_t *)(pkey.data);
+    } else {
+        url_sdbp->err(url_sdbp, ret, "DB->pget");
+        return EXIT_FAILURE;
+    }
+
+    memset(&data, 0, sizeof(data));
+    data.data = udata;
+    data.size = url_data_size;
+
+    if ((ret = url_dbp->put(url_dbp, NULL, &pkey, &data, 0)) == 0) {
+        /* printf("db: %s: url data stored.\n", (char *)((struct url_data *)data.data)->url); */
+    } else {
+        url_dbp->err(url_dbp, ret, "DB->put");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int add_pair_data(DbId *id, struct pair_data *pdata) {
+    int ret;
+    DB *pair_dbp;
+    DBT key, data;
+    uint64_t url_index;
+
+    ret = word_url_pair_exists(id, pdata);
+
+    if (ret == PAIR_EXISTS) {
+        return EXIT_SUCCESS;
+    } else if (ret != NOT_PAIR_EXISTS) {
+        return EXIT_FAILURE;
+    }
+
+    pair_dbp = id->pair_dbp;
+
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+
+    url_index = id->next_pair_index++;
+    key.data = &url_index;
+    key.size = sizeof(url_index);
+    data.data = pdata;
+    data.size = sizeof(struct pair_data);
+    // TODO voir pour les MACROS
+    if ((ret = pair_dbp->put(pair_dbp, NULL, &key, &data, 0)) == 0) {
+        /* printf("db: %lu: pair key stored.\n", *(uint64_t *)key.data); */
+       	/* printf("db: %ld: occurences.\n", ((struct pair_data *)data.data)->nb_occurence); */
+    } else {
+        pair_dbp->err(pair_dbp, ret, "DB->put");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int add_data(DbId *id, struct word_data_list *wdata_list,
+             struct url_data_list *udata_list, struct pair_data_list *pdata_list) {
+    int ret;
+    uint64_t url_id;
+    uint64_t word_id;
+
+    if (wdata_list->wdata == NULL) {
+	return EXIT_FAILURE;
+    }
+
+    ret = add_url_data(id, &url_id, udata_list->udata, udata_list->udata_size);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+
+    ret = add_word_data(id, &word_id, wdata_list->wdata,
+                        wdata_list->wdata_size);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+
+    pdata_list->pdata->word_id = word_id;
+    pdata_list->pdata->url_id = url_id;
+
+    ret = add_pair_data(id, pdata_list->pdata);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+/* int add_pair(DbId *id, Word *word, Word *url) { */
+/*     int ret; */
+/*     struct word_data *wdata; */
+/*     struct url_data *udata; */
+/*     struct pair_data *pdata; */
+/*     size_t wdata_size; */
+/*     size_t udata_size; */
+/*     size_t pair_data_size; */
+
+/*     ret = create_word_data(&wdata, word, &wdata_size); */
+/*     if (ret == EXIT_FAILURE) { */
+/*         return EXIT_FAILURE; */
+/*     } */
+
+/*     ret = create_url_data(&udata, url, &udata_size); */
+/*     if (ret == EXIT_FAILURE) { */
+/*         free_word_data(wdata); */
+/*         return EXIT_FAILURE; */
+/*     } */
+
+/*     ret = create_pair_data(&pdata, -1, -1, &pair_data_size); */
+/*     if (ret == EXIT_FAILURE) { */
+/*         free_url_data(udata); */
+/*         free_word_data(wdata); */
+/*         return EXIT_FAILURE; */
+/*     } */
+
+/*     pdata->nb_occurence = 1; */
+
+/*     ret = add_data(id, wdata, wdata_size, */
+/*                    udata, udata_size, */
+/*                    pdata, pair_data_size); */
+/*     free_pair_data(pdata); */
+/*     free_url_data(udata); */
+/*     free_word_data(wdata); */
+/*     if (ret == EXIT_FAILURE) { */
+/*         return EXIT_FAILURE; */
+/*     } */
+/*     return EXIT_SUCCESS; */
+/* } */
+
+int get_all_pairs(DbId *id, struct pair_data_list *pdata_list) {
+    DB *pair_dbp;
+    DBC *dbc;
+    DBT key, data;
+    int ret, fret;
+
+    pair_dbp = id->pair_dbp;
+
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+
+    pair_dbp->cursor(pair_dbp, NULL, &dbc, 0);
+
+    for (ret = dbc->c_get(dbc, &key, &data, DB_FIRST);
+         ret != DB_NOTFOUND;
+         ret = dbc->c_get(dbc, &key, &data, DB_NEXT)) {
+        fret = add_pdata_clone_to_list(pdata_list, *(uint64_t *)key.data,
+                                       (struct pair_data *) data.data,
+                                       data.size);
+        if (fret != EXIT_SUCCESS) {
+            fret = dbc->c_close(dbc);
+            return EXIT_FAILURE;
+        }
+        printf("db: %lu: pair key retrieved\n", *(uint64_t *)key.data);
+    }
+
+    ret = dbc->c_close(dbc);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+
+}
+
+int get_all_urls(DbId *id, struct url_data_list *udata_list) {
+    DB *url_dbp;
+    DBC *dbc;
+    DBT key, data;
+    int ret, fret;
+
+    url_dbp = id->url_dbp;
+
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+
+    url_dbp->cursor(url_dbp, NULL, &dbc, 0);
+
+    for (ret = dbc->c_get(dbc, &key, &data, DB_FIRST);
+         ret != DB_NOTFOUND;
+         ret = dbc->c_get(dbc, &key, &data, DB_NEXT)) {
+        fret = add_udata_clone_to_list(udata_list, *(uint64_t *)key.data,
+                                       (struct url_data *) data.data,
+                                       data.size);
+        if (fret != EXIT_SUCCESS) {
+            fret = dbc->c_close(dbc);
+            return EXIT_FAILURE;
+        }
+        printf("db: %lu: url key retrieved\n", *(uint64_t *)key.data);
+    }
+
+    ret = dbc->c_close(dbc);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+
+}
+
+int get_all_words(DbId *id, struct word_data_list *wdata_list) {
+    DB *word_dbp;
+    DBC *dbc;
+    DBT key, data;
+    int ret, fret;
+
+    word_dbp = id->word_dbp;
+
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+
+    word_dbp->cursor(word_dbp, NULL, &dbc, 0);
+
+    for (ret = dbc->c_get(dbc, &key, &data, DB_FIRST);
+         ret != DB_NOTFOUND;
+         ret = dbc->c_get(dbc, &key, &data, DB_NEXT)) {
+        fret = add_wdata_clone_to_list(wdata_list, *(uint64_t *)key.data,
+                                       (struct word_data *) data.data,
+                                       data.size);
+        if (fret != EXIT_SUCCESS) {
+            fret = dbc->c_close(dbc);
+            return EXIT_FAILURE;
+        }
+    }
+
+    ret = dbc->c_close(dbc);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+
+}
+
+int get_pair_data(DbId *id, struct word_data_list *wdata_list,
+                  struct pair_data_list *pdata_list) {
+    DB *pair_word_sdbp;
+    DBC *dbc;
+    DBT key, skey, data;
+    int ret, fret;
+
+    pair_word_sdbp = id->pair_word_sdbp;
+
+    memset(&key, 0, sizeof(key));
+    memset(&skey, 0, sizeof(skey));
+    memset(&data, 0, sizeof(data));
+
+    skey.data = &(wdata_list->wdata_key);
+    skey.size = sizeof(wdata_list->wdata_key);
+
+    pair_word_sdbp->cursor(pair_word_sdbp, NULL, &dbc, 0);
+
+    for (ret = dbc->c_pget(dbc, &skey, &key, &data, DB_SET);
+         ret == 0;
+         ret = dbc->c_pget(dbc, &skey, &key, &data, DB_NEXT_DUP)) {
+        fret = add_pdata_clone_to_list(pdata_list, *(uint64_t *)key.data,
+                                       (struct pair_data *) data.data,
+                                       data.size);
+        if (fret != EXIT_SUCCESS) {
+            fret = dbc->c_close(dbc);
+            return EXIT_FAILURE;
+        }
+        /* printf("db: %lu: pair key retrieved\n", *(uint64_t *)key.data); */
+    }
+
+    ret = dbc->c_close(dbc);
+    if (ret != 0) {
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
+
+int get_word_data(DbId *id, struct word_data_list *wdata_list) {
+    DB *word_sdbp;
+    DBT key, skey, data;
+    int ret;
+
+    memset(&key, 0, sizeof(key));
+    memset(&skey, 0, sizeof(skey));
+    memset(&data, 0, sizeof(data));
+
+    skey.data = &(wdata_list->wdata->word[0]);
+    skey.size = wdata_list->wdata_size;
+
+    word_sdbp = id->word_sdbp;
+
+    if ((ret = word_sdbp->pget(word_sdbp, NULL, &skey, &key, &data, 0)) == 0) {
+        /* printf("word data retrieved: %s.\n", (char *)((struct word_data *)data.data)->word); */
+    } else {
+        return EXIT_FAILURE;
+    }
+    wdata_list->wdata_key = *(uint64_t *)(key.data);
+    wdata_list->wdata = data.data;
+    wdata_list->wdata_size = data.size;
+    return EXIT_SUCCESS;
+}
+
+int get_url_data(DbId *id, struct url_data_list *udata_list) {
+    DB *url_dbp;
+    DBT key, data;
+    int ret;
+
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+
+    key.data = &(udata_list->udata_key);
+    key.size = sizeof(udata_list->udata_key);
+
+    url_dbp = id->url_dbp;
+    if ((ret = url_dbp->get(url_dbp, NULL, &key, &data, 0)) == 0) {
+        /* printf("url data retrieved: %s.\n", (char *)((struct url_data *)data.data)->url); */
+    } else {
+        return EXIT_FAILURE;
+    }
+    ret = add_udata_clone_to_list(udata_list, udata_list->udata_key,
+                                  (struct url_data *) data.data, data.size);
+    return ret;
+}
+
+int get_data(DbId *id, struct url_data_list *udata_list,
+             struct word_data_list *wdata_list,
+             struct pair_data_list *pdata_list) {
+    int ret;
+    struct pair_data_list *next;
+
+    ret = get_word_data(id, wdata_list);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+
+    ret = get_pair_data(id, wdata_list, pdata_list);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+
+    for (; pdata_list != NULL; pdata_list = next) {
+        next = pdata_list->next_pair_data_list;
+        udata_list->udata_key = pdata_list->pdata->url_id;
+        ret = get_url_data(id, udata_list);
+        if (ret != EXIT_SUCCESS) {
+            return EXIT_FAILURE;
+        }
+    }
+    return EXIT_SUCCESS;
+}
+
+int get_pair(DbId *id, Word *word, WordList *url_list) {
+    int ret;
+    struct pair_data_list *pdata_list;
+    struct url_data_list *udata_list;
+    struct word_data_list *wdata_list;
+    struct url_data_list *next;
+    ret = create_pair_data_list(&pdata_list);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+    ret = create_url_data_list(&udata_list);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+    ret = create_word_data_list(&wdata_list);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+
+    ret = add_word_data_list(wdata_list, word);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+
+    ret = get_data(id, udata_list, wdata_list, pdata_list);
+    if (ret == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    }
+
+    for (; udata_list != NULL; udata_list = next) {
+        Word* url = construct_word(0, NULL);
+        next = udata_list->next_url_data_list;
+        add_chars_word(url,
+                       (char*)&(udata_list->udata->url)[0],
+                       udata_list->udata_size-(sizeof(struct url_data) - 1));
+        add_word_wordlist(url_list, url);
+        destruct_word(url);
+    }
+
+    return EXIT_SUCCESS;
+}

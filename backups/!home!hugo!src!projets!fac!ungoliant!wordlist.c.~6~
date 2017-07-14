@@ -1,0 +1,190 @@
+/**
+ * \file wordlist.h
+ * \brief Fonctions associées au type WordList.
+ * \details Le type WordList représente une liste de Word.
+ * \author Hugo Pompougnac
+ * \version 0.9
+ * \todo Tester les cas-limites
+ * \date 17/02/2017
+ */
+
+#include <stdio.h>
+
+#include "word.h"
+#include "wordlist.h"
+
+/**
+ * \fn WordList build_wordlist(Word myword)
+ * \brief Construit une WordList.
+ * \param myword Le premier Word de la WordList.
+ * \return La nouvelle WordList.
+ */
+WordList build_wordlist(Word myword)
+{
+  WordList res ;
+  res.word = myword ;
+  res.next = NULL ;
+  res.length = 1 ;
+  return res ;
+}
+
+/**
+ * \fn WordList build_empty_wordlist()
+ * \brief Construit une WordList vide.
+ * \return La nouvelle WordList.
+ */
+WordList build_empty_wordlist()
+{
+  WordList res ;
+  res.word = construct_null_word() ;
+  res.next = NULL ;
+  res.length = 0 ;
+  return res ;
+}
+
+/**
+ * \fn WordList next_wordlist(WordList mylist)
+ * \brief Renvoie la WordList sans son premier chaînon.
+ * \param mylist Le premier chaînon de la WordList.
+ * \return La WordList sans son premier chaînon.
+ */
+WordList next_wordlist(const WordList mylist)
+{
+  return *(mylist.next) ;
+}
+
+/**
+ * \fn size_t get_length_wordlist(const WordList mylist)
+ * \brief Renvoie la taille de la WordList.
+ * \param mylist La liste dont on veut connaître la taille.
+ * \return La taille de la WordList.
+ */
+size_t get_length_wordlist(const WordList mylist)
+{
+  return mylist.length ;
+}
+
+/**
+ * \fn Word get_word_wordlist(WordList mylist, int index)
+ * \brief Renvoie le Word situé à un certain indice de la WordList.
+ * \param mylist La liste dont on veut extraire un Word.
+ * \param index L'index du Word que l'on veut extraire.
+ * \return Le Word que l'on a extrait.
+ */
+Word get_word_wordlist(const WordList mylist, const int index)
+{
+  if (index <= 0)
+    return mylist.word ;
+  else if (mylist.next != NULL)
+    return get_word_wordlist(*(mylist.next), index-1) ;
+  else
+    return construct_null_word() ;
+}
+
+/**
+ * \fn int is_empty_wordlist(const WordList mylist)
+ * \brief Teste si une WordList est vide.
+ * \param mylist La WordList à tester.
+ * \return O si la WordList est vide, >0 sinon.
+ */
+int is_empty_wordlist(const WordList mylist)
+{
+  return mylist.length == 0 ;
+}
+
+/**
+ * \fn Word pop_word_wordlist(WordList* mylist)
+ * \brief Extrait et supprime le premier Word de la WordList (FIFO).
+ * \param mylist La WordList dont extraire le premier Word.
+ * \return Le premier Word de la WordList.
+ */
+Word pop_word_wordlist(WordList* mylist)
+{
+  Word res = mylist->word ;
+  if (mylist->next == NULL) {
+    mylist->word = construct_null_word() ;
+    mylist->length = 0 ;
+  }
+  else
+    *mylist = *(mylist->next) ;
+  return res ;
+}
+
+/**
+ * \fn int set_word_wordlist(WordList *mylist, Word myword)
+ * \brief Modifie le premier Word de la WordList.
+ * \param mylist La WordList dont modifier le premier Word.
+ * \param myword Le Word à placer en tête de la WordList.
+ * \return -1 si échec.
+ */
+int set_word_wordlist(WordList *mylist, Word myword)
+{
+  mylist->word = myword ;
+  return 0 ;
+}
+
+/**
+ * \fn int append_wordlist(WordList* dest, WordList* src)
+ * \brief Ajoute une WordList à l'autre.
+ * \param dest La WordList à laquelle une autre WordList sera ajoutée.
+ * \param src La WordList qui sera ajoutée à une autre WordList.
+ * \return -1 si échec.
+ */
+int append_wordlist(WordList* dest, WordList* src)
+{
+  WordList *last = dest ;
+
+  if (is_empty_wordlist(*dest))
+    *dest = *src ;
+  else if (!is_empty_wordlist(*src)) {
+    while (last->next != NULL) {
+      last->length += src->length ;
+      last = last-> next ;
+    }
+    last->length += src->length ;
+    last->next = src ;
+  }
+
+  return 0 ;
+}
+
+/**
+ * \fn int destruct_wordlist(WordList mylist)
+ * \brief Libère la mémoire mobilisée par une WordList.
+ * \param mylist La list dont on n'a plus besoin.
+ * \return -1 si échec.
+ */
+int destruct_wordlist(WordList mylist)
+{
+  WordList tmp = mylist ;
+  while (tmp.next != NULL) {
+    destruct_word(&tmp.word) ;
+    tmp = *(tmp.next) ;
+  }
+  destruct_word(&tmp.word) ;
+
+  return 0 ;
+}
+
+/**
+ * \fn int print_wordlist(WordList mylist, FILE* stream)
+ * \brief Imprime une WordList dans un fichier.
+ * \param mylist La WordList à imprimer.
+ * \param stream Le fichier dans lequel imprimer la Wordlist (peut être stdout).
+ * \return -1 si échec.
+ */
+int print_wordlist(WordList mylist, FILE* stream)
+{
+  WordList tmp = mylist ;
+  fprintf(stream, "[ ") ;
+  while (tmp.next != NULL) {
+    print_word(tmp.word, stream) ;
+    fprintf(stream, ", ") ;
+    tmp = *(tmp.next) ;
+  }
+  print_word(tmp.word, stream) ;
+  fprintf(stream, " ]\n") ;
+
+  return 0 ;
+}
+    

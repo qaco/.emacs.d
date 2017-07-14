@@ -1,0 +1,139 @@
+#include <check.h>
+#include <stdlib.h>
+#include "../misc/word.h"
+#include "../misc/wordlist.h"
+#include "../misc/worddict.h"
+
+WordDict* mydict ;
+Word *mykey, *tail, *kdest ;
+WordList *myvalues, *vdest ;
+
+void accessor_worddict_setup(void) {
+  mydict = construct_empty_worddict() ;
+  mykey = construct_word(strlen("hello"), "hello") ;
+  myvalues = build_empty_wordlist() ;
+  add_charseq_wordlist(myvalues, "haha", strlen("haha")) ;
+  add_charseq_wordlist(myvalues, "hoho", strlen("hoho")) ;
+  add_charseq_wordlist(myvalues, "hihi", strlen("hihi")) ;
+  tail = construct_word(strlen("hehe"), "hehe") ;
+  kdest = construct_word(0, NULL) ;
+  vdest = build_empty_wordlist() ;
+}
+
+void accessor_worddict_teardown(void) {
+  destruct_worddict(mydict) ;
+  destruct_word(mykey) ;
+  destruct_word(kdest) ;
+  destruct_word(tail) ;
+  destruct_wordlist(vdest) ;
+}
+
+START_TEST(test_add_key_notin) {
+  int ret, test, initsize, endsize ;
+
+  initsize = get_length_worddict(mydict) ;
+  ret = add_key_worddict(mydict, mykey) ;
+  test = is_in_worddict(mykey, mydict) ;
+  endsize = get_length_worddict(mydict) ;
+
+  ck_assert_int_eq(ret, EXIT_SUCCESS) ;
+  ck_assert_int_eq(test, 1) ;
+  ck_assert_int_eq(initsize, endsize-1) ;
+}
+END_TEST
+
+START_TEST(test_add_key_isinyet) {
+  int ret, initsize, endsize ;
+
+  ret = add_key_worddict(mydict, mykey) ;
+  initsize = get_length_worddict(mydict) ;
+  ret = add_key_worddict(mydict, mykey) ;
+  endsize = get_length_worddict(mydict) ;
+  
+  ck_assert_int_eq(ret, EXIT_FAILURE) ;
+  ck_assert_int_eq(initsize, endsize) ;
+}
+END_TEST 
+
+START_TEST(test_get_key_correct) {
+  int ret, test ;
+  
+  add_key_worddict(mydict, mykey) ;
+  ret = get_key_worddict(kdest, mydict, 0) ;
+  test = compare_word(kdest, mykey) == 0 ;
+
+  ck_assert_int_eq(ret, EXIT_SUCCESS) ;
+  ck_assert_int_eq(test, 1) ;
+}
+END_TEST
+
+START_TEST(test_get_key_outofbounds) {
+  int size ;
+  int ret ;
+
+  size = get_length_worddict(mydict) ;
+  ret = get_key_worddict(NULL, mydict, size) ;
+  ck_assert_int_eq(ret, EXIT_FAILURE) ;
+  ret = get_key_worddict(NULL, mydict, -1) ;
+  ck_assert_int_eq(ret, EXIT_FAILURE) ;
+}
+END_TEST
+
+START_TEST(test_get_values_correct) {
+  int ret, test ;
+
+  add_line_worddict(mydict, mykey, myvalues) ;
+  add_value_worddict(mydict, mykey, tail) ;
+  add_word_wordlist(myvalues, tail) ;
+  ret = get_value_worddict(vdest, mydict, mykey) ;
+  ck_assert_int_eq(ret, EXIT_SUCCESS) ;
+  test = compare_wordlist(myvalues, vdest) == 0 ;
+  ck_assert_int_eq(test, 1) ;
+}
+END_TEST
+
+START_TEST(test_get_values_notin) {
+  int ret ;
+
+  ret = get_value_worddict(NULL, mydict, mykey) ;
+  ck_assert_int_eq(ret, EXIT_FAILURE) ;
+}
+END_TEST
+
+START_TEST(test_remove_key_isin) {
+  int ret, test ;
+  
+  add_line_worddict(mydict, mykey, myvalues) ;
+  ret = remove_key_worddict(mydict, mykey) ;
+  test = is_in_worddict(mykey, mydict) ;
+
+  ck_assert_int_eq(ret, EXIT_SUCCESS) ;
+  ck_assert_int_eq(test, 0) ;
+}
+END_TEST
+
+START_TEST(test_remove_key_isnotin) {
+  int ret ;
+  
+  ret = remove_key_worddict(mydict, mykey) ;
+  ck_assert_int_eq(ret, EXIT_FAILURE) ;
+}
+END_TEST
+
+TCase* worddict_accessor_case(void) {
+  TCase* tc_acc ;
+
+  tc_acc = tcase_create("WordDict accessors") ;
+  tcase_add_checked_fixture(tc_acc,
+                            accessor_worddict_setup,
+                            accessor_worddict_teardown) ;
+  tcase_add_test(tc_acc, test_add_key_notin) ;
+  tcase_add_test(tc_acc, test_add_key_isinyet) ;
+  tcase_add_test(tc_acc, test_get_key_correct) ;
+  tcase_add_test(tc_acc, test_get_key_outofbounds) ;
+  tcase_add_test(tc_acc, test_get_values_correct) ;
+  tcase_add_test(tc_acc, test_get_values_notin) ;
+  tcase_add_test(tc_acc, test_remove_key_isin) ;
+  tcase_add_test(tc_acc, test_remove_key_isnotin) ;
+  return tc_acc ;
+}

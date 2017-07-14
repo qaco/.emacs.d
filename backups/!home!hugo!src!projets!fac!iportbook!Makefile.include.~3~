@@ -1,0 +1,22 @@
+CLASS_DIR = $(TOP_DIR)/class
+#JAVA_CLASS =
+LOCAL_CLASS_DIR = $(CLASS_DIR)/$(PACKAGE_DIR)
+
+JCC = javac
+FILES = $(wildcard *.java)
+
+.SUFFIXES:
+.SUFFIXES: .java .class
+
+vpath %.class $(LOCAL_CLASS_DIR)
+
+all: classes
+
+classes: $(FILES:.java=.class)
+
+.java.class:
+        CLASSPATH=$(JAVA_CLASS):$(CLASS_DIR) $(JCC) -d $(CLASS_DIR) $<
+
+clean:
+        @@ echo 'rm -f *~ *.class core *.bak *# $(LOCAL_CLASS_DIR)/*class'
+        @@rm -f *~ *.class core *.bak *

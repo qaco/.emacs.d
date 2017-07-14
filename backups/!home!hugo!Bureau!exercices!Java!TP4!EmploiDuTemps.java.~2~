@@ -1,0 +1,32 @@
+public class EmploiDuTemps {
+    private Map<Jour,String> paires ;
+
+    public EmploiDuTemps() {
+	paires = new HashMap<Jour,String>() ;
+    }
+
+    public void inscrire(Jour j, String a) {
+	boolean test = false ;
+    	for (Jour tmp : Jour.values())
+	    if (tmp.equals(j))
+		test = true ;
+	
+	if (!test)
+	    throw new IllegalArgumentException() ;
+	paires.put(j,a) ;
+    }
+
+    public String interroger(Jour j) {
+	if (paires.containsKey(j))
+	    return paires.get(j).toString() ;
+	else
+	    throw new IllegalArgumentExcpeption() ;
+    }
+
+    public String toString() {
+	return paires.toString() ;
+    }
+}
+
+
+

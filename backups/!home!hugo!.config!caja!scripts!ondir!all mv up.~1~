@@ -1,0 +1,8 @@
+#!/bin/bash
+cur_dir=${PWD##*/}
+for f in *
+do
+    mv --backup=numbered -f $f ../
+done
+cd ..
+rmdir "$cur_dir"

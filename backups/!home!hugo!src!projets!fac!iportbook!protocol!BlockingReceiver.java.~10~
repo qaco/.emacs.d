@@ -1,0 +1,47 @@
+package protocol ;
+
+import main.MainVals ;
+import exception.* ;
+import java.io.InputStream ;
+import java.io.IOException ;
+import java.nio.charset.Charset ;
+import java.util.List ;
+
+public class BlockingReceiver extends Receiver {
+
+    private InputStream in ;
+
+    public BlockingReceiver(InputStream myin) {
+        super() ;
+        this.in = myin ;
+    }
+
+    public void receive() throws UnknownResultException, IOException {
+                byte tmp[] ;
+        byte res[][] ;
+        int c = 0 ;
+        LinkedList<Byte> list = new LinkedList<Byte>() ;
+
+        while (c < suffix.length) {
+            int n = in.read() ;
+            byte b ;
+            if (n == -1) throw new IOException() ;
+            b = ((byte)n) ;
+            list.add(new Byte(b)) ;
+            if (b == this.suffix[c]) c++ ;
+            else c = 0 ;
+        }
+        
+        tmp = new byte[list.size() - this.suffix.length] ;
+
+        
+        for (int i = 0 ; i < tmp.length ; i++)
+            tmp[i] = list.get(i).byteValue() ;
+
+        MainVals.describe("Received: " +
+                          new String(tmp, Charset.forName("US-ASCII")) +
+                          new String(this.suffix, Charset.forName("US-ASCII")));
+        
+        this.raw = tmp ;
+    }
+}

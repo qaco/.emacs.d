@@ -1,0 +1,12 @@
+package protocol.command ;
+public class AskFriend extends FromClient {
+    private String id ;
+
+    public AskFriend (String myid) {
+        this.id = myid ;
+    }
+
+    public String toString() {
+        return "FRIE? " + this.id + "+++" ;
+    }
+}

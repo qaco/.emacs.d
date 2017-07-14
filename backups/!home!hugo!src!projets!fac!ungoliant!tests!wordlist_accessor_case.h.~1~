@@ -1,0 +1,8 @@
+#ifndef ACCESSOR
+#define ACCESSOR
+
+#include <check.h>
+
+TCase* wordlist_accessor_case(void) ;
+
+#endif

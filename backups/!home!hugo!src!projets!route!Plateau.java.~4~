@@ -1,0 +1,98 @@
+import java.util.List ;
+
+public class Plateau {
+    private Case[][] cases = new Case[Data.NBCASES][Data.NBCASES] ;
+
+    public Plateau() {
+	for (int i = 0 ; i < Data.NBCASES ; i++)
+	    for (int j = 0 ; j < Data.NBCASES ; j++)
+		cases[i][j] = new Case(j,i) ;
+    }
+
+    public Case getCase(int x, int y) {
+	return cases[y][x] ;
+    }
+
+    public void industrialiserPlateau(List<Joueur> players) {
+	int joueursParCote = players.size()/2 ;
+	// ci dessous sale
+	if (joueursParCote == 0) joueursParCote = 1 ;
+	int casesParJoueur = Data.NBCASES/joueursParCote ;
+	int c = 0 ;
+	int p = 0 ;
+
+	// problème avec le c qui pète la boucle
+	for (int i = p ; i < joueursParCote ; i++) {
+	    for (int j = c ; j < casesParJoueur + x ; j++) { 
+		industrialiserCase(j, 0, players.get(i)) ;
+		c++ ;
+	    }
+	    p++ ;
+	}
+	for (int i = p ; i < joueursParCote ; i++) {
+	    for (int j = c ; j < casesParJoueur + c ; j++) { 
+		industrialiserCase(0,j, players.get(i)) ;
+		c++ ;
+	    }
+	    p++ ;
+	}
+	    
+    }
+    
+    public void industrialiserCase(int x, int y, Joueur j) {
+	cases[y][x] = new Ville(x,y,j) ;
+    }
+
+    public String toString() {
+	String s = new String() ;
+	for (int i = 0 ; i < Data.NBCASES ; i++) {
+	    for (int c = 0 ; c < 3 ; c++) {
+		switch(c) {
+		case 0 :
+		    for (int j = 0 ; j < Data.NBCASES ; j++) {
+			s += " " ;
+			try {
+			    s += cases[i][j].getRoute(Data.TOP).toString() ;
+			} catch (NoRouteException e) {
+			    s += " " ;
+			}
+			s += " " ;
+		    }
+		    s += "\n" ;
+		    break ;
+		case 1 :
+		    for (int j = 0 ; j < Data.NBCASES ; j++) {
+			try {
+			    s += cases[i][j].getRoute(Data.LEFT).toString() ;
+			} catch (NoRouteException e) {
+			    s += " " ;
+			}
+			
+			s+= cases[i][j].toString() ;
+
+			try {
+			    s += cases[i][j].getRoute(Data.RIGHT).toString() ;
+			} catch (NoRouteException e) {
+			    s += " " ;
+			}
+		    }
+		    s += "\n" ;
+		    break ;
+		case 2 :
+		    for (int j = 0 ; j < Data.NBCASES ; j++) {
+			s += " " ;
+			try {
+			    s += cases[i][j].getRoute(Data.BOTTOM).toString() ;
+			} catch (NoRouteException e) {
+			    s += " " ;
+			}
+			s += " " ;
+		    }
+		    s += "\n" ;
+		    break ;	    
+		}
+	    }
+	}
+	return s ;
+    }
+}

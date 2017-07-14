@@ -1,0 +1,79 @@
+import java.util.Scanner ;
+
+public class Joueur {
+    private static int numJoueur = 0 ;
+    private Plateau plat ;
+    private int id ;
+    private boolean win = false ; // changer quand la bonne route est posee
+
+    public Joueur (Plateau p) {
+	this.plat = p ;
+	switch(numJoueur) {
+	case 0 :
+	    this.id = Data.PLAYER1 ;
+	    break ;
+	case 1 :
+	    this.id = Data.PLAYER2 ;
+	    break ;
+	}
+	numJoueur++ ;
+    }
+
+    public int getId() {
+	return this.id ;
+    }
+    
+    public boolean victoire() {
+	return this.win ;
+    }
+
+    public void tour() throws ActionIllegaleException {
+	Coordinates depart ;
+	Coordinates arrivee ;
+	System.out.println("Indiquer la case dont part la route") ;
+	depart = saisie() ;
+	System.out.println("Indiquer la case ou arrive la route") ;
+	arrivee = saisie() ;
+	if (!actionLegale(depart, arrivee))
+	    throw new ActionIllegaleException() ;
+	action(depart, arrivee) ;
+
+    }
+
+    private Coordinates saisie() {
+	Scanner sc = new Scanner(System.in) ;
+	int x ;
+	int y ;
+	System.out.println("Coordonnee sur l'axe X") ;
+	x = sc.nextInt() ;
+	System.out.println("Coordonnee sur l'axe Y") ;
+	y = sc.nextInt() ;
+	return new Coordinates(x,y) ;
+    }
+
+    private void action(Coordinates depart, Coordinates arrivee) {
+	Case un = this.plat.getCase(depart.getX(), depart.getY()) ;
+	Case deux = this.plat.getCase(arrivee.getX(), arrivee.getY()) ;
+	
+	if (depart.getX() > arrivee.getX()) {
+	    un.put(Data.LEFT, this.id) ;
+	    deux.put(Data.RIGHT, this.id) ;
+	}
+	else if (depart.getX() < arrivee.getX()) {
+	    un.put(Data.RIGHT, this.id) ;
+	    deux.put(Data.LEFT, this.id) ;
+	}
+	else if (depart.getY() > arrivee.getY()) {
+	    un.put(Data.TOP, this.id) ;
+	    deux.put(Data.BOTTOM, this.id) ;
+	}
+	else if (depart.getY() < arrivee.getY()) {
+	    un.put(Data.BOTTOM, this.id) ;
+	    deux.put(Data.TOP, this.id) ;
+	}
+    }
+
+    private boolean actionLegale(Coordinates depart, Coordinates arrivee) {
+	return true ;
+    }
+}

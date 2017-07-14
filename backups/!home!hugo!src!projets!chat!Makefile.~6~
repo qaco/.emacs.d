@@ -1,0 +1,30 @@
+CC=gcc
+CFLAGS=-std=gnu99 -Wall -g
+CLINKS=-lpthread
+CLIENT=client
+SERVER=server
+CSRC=client.c build.c inout.c
+COBJ= $(CSRC:.c=.o)
+SSRC=server.c aux.c
+SOBJ= $(SSRC:.c=.o)
+
+all : $(CLIENT) $(SERVER)
+
+$(CLIENT) : $(COBJ)
+	$(CC) $(CLINKS) -o $@ $^
+
+$(SERVER) : $(SOBJ)
+	$(CC) $(CLINKS) -o $@ $^	
+
+client.o : inout.c inout.h build.c build.h
+
+messages.o : build.c build.h
+
+%.o: %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+clean :
+	rm -rf *.o
+
+mrproper : clean
+	rm -rf $(CLIENT) $(SERVER)

@@ -1,0 +1,41 @@
+package protocol.flow ;
+
+import exception.* ;
+import main.MainVals ;
+import client.src.ServerRequest;
+import service.User ;
+import exception.UnknownResultException ;
+import protocol.answer.* ;
+import protocol.field.* ;
+import java.util.List ;
+import java.io.Reader ;
+import java.io.IOException ;
+
+public class AskFriendFlow implements Flow {
+    private IdField id ;
+
+    public AskFriendFlow(byte[] myid) throws UnknownResultException {
+        this.id = new IdField(myid) ;
+    }
+    
+    public AskFriendFlow(String myid) {
+        this.id = new IdField(myid) ;
+    }
+    
+    public void exec(ServerRequest c) throws IOException {
+	c.client_reponse_fr(this.id.toString());
+    }
+
+    public void treatAnswer(User rep, List<User> all) throws IOException,
+                                                             UnknownResultException {
+        AnswerFactory f = new AnswerFactory() ;
+        User want = User.getUserFromList(this.id.toString(), all) ;
+        Reader r = rep.getReader() ;
+        Answer a = f.create(r) ;
+        a.exec(want, rep) ;
+    }
+
+    public String toString() {
+        return FlowVals.ASK_FRIEND + " " + this.id.toString() + MainVals.EOF ;
+    }
+}

@@ -1,0 +1,20 @@
+package protocol.knock ;
+
+public class MessageKnock extends Knock {
+    
+    public MessageKnock(int flows) {
+        super(flows) ;
+    }
+
+    public MessageKnock(byte mylow, byte myhigh) {
+        super(mylow, myhigh) ;
+    }
+
+    public byte getCode() {
+        return KnockVals.MESSAGE_CODE ;
+    }
+
+    public String popUp() {
+        return KnockVals.MESSAGE_MESS;
+    }
+}

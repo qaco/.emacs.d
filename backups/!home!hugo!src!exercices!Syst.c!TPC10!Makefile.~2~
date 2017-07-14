@@ -1,0 +1,33 @@
+CC=gcc
+CFLAGS=-std=gnu99 -Wall
+CLINKS=-lm
+HUMAN=-D HUMAN
+RANDOM=-D RANDOM
+ONE=-D ONE
+EXEC=nimh nimr nimo
+SRC=nim.c misc.h
+
+all : $(EXEC)
+
+nimh : nimh.o misc.o
+	$(CC) $(CLINKS) -o $@ $^
+nimr : nimr.o misc.o
+	$(CC) $(CLINKS) -o $@ $^
+nimo : nimo.o misc.o
+	$(CC) $(CLINKS) -o $@ $^
+
+nimh.o : $(SRC)
+	$(CC) $(CFLAGS) $(HUMAN) -o $@ -c $<
+nimr.o : $(SRC)
+	$(CC) $(CFLAGS) $(ROBOT) -o $@ -c $<
+nimo.o : $(SRC)
+	$(CC) $(CFLAGS) $(ONE) -o $@ -c $<
+misc.o : misc.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+check-syntax:
+	gcc -o nul -S ${CHK_SOURCES}
+clean :
+	rm -rf *.o
+mrproper : clean
+	rm -rf $(EXEC)

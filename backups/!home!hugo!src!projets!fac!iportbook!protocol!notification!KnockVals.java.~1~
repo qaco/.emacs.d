@@ -1,0 +1,5 @@
+package knock ;
+
+public class KnockVals {
+    public static final byte FRIENDSHIP_CODE = 1 ;
+    public static final String FRIENDSHIP_MESS = "Friendship request" ;

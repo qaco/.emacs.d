@@ -1,0 +1,13 @@
+#!/bin/bash
+cur_dir=${PWD##*/}
+for f in *
+do
+    if [ -f "../$f" ]
+    then
+       mv $f "../$f.backup";
+    else
+        mv $f ../
+    fi
+done
+cd ..
+rmdir "$cur_dir"

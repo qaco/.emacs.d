@@ -1,0 +1,43 @@
+CAMLC=ocamlc
+CAMLOPT=ocamlopt
+LINKS=graphics.cma
+LINKSOPT=graphics.cmxa
+EXEC=editeur
+SRC=geom.ml fieldtext.ml
+OBJ=$(SRC:.ml=.cmo)
+OBJOPT=$(SRC:.ml=.cmx)
+
+all: $(EXEC)
+
+opt: $(EXEC).opt
+
+$(EXEC) : $(OBJ)
+	$(CAMLC) -o $@ $(LINKS) $^
+
+$(EXEC).opt : $(OBJOPT)
+	$(CAMLOPT) -o $@ $(LINKSOPT) $^
+
+fieldtext.cmo: fieldtext.ml fieldtext.cmi geom.cmo
+	$(CAMLC) -c $<
+
+fieldtext.cmx: fieldtext.ml fieldtext.cmi geom.cmx
+	$(CAMLOPT) -c $<
+
+geom.cmo: geom.ml geom.cmi
+	$(CAMLC) -c $<
+
+geom.cmx: geom.ml geom.cmi
+	$(CAMLOPT) -c $<
+
+%.cmi: %.mli
+	$(CAMLC) -o $@ -c $<
+
+clean :
+	rm -rf *.cmx
+	rm -rf *.cmi
+	rm -rf *.cmo
+	rm -rf *.o
+
+mrproper : clean
+	rm -rf $(EXEC)
+	rm -rf $(EXEC).opt

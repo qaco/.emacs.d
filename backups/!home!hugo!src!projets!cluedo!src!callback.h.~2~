@@ -1,0 +1,13 @@
+#ifndef CALLBACK
+#define CALLBACK
+
+#include "game.h"
+
+gboolean cb_click_on_tile (GtkWidget *widget,
+			   GdkEvent  *event,
+			   gpointer data) ;
+void he_is_the_human(Joueur* joueur) ;
+
+void my_loop(Joueur** joueurs) ; // sucre
+
+#endif

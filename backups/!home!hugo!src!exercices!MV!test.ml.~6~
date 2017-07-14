@@ -1,0 +1,12 @@
+open Mv ;;
+open MyrtheAST ;;
+open Myrthe ;;
+open Compil ;;
+
+
+let mycompilation = Array.of_list (compil excompil6) ;;
+let myinitstate = init mycompilation ;;
+let myendingstate = exec myinitstate ;;
+  print_newline ;;
+    print_endline("Résultat : "^string_of_int(myendingstate.acc)) ;;
+  

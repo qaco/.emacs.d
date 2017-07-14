@@ -1,0 +1,202 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include "build.h"
+
+#define T_IN "HELO"
+#define SUCCESS "OKOK"
+#define FAILURE "BADD"
+#define T_OUT "BYEE"
+#define T_PUBLIC "BCST"
+#define T_PRIVE "PRVT"
+#define T_LIST "LIST"
+#define T_SHUT "SHUT"
+#define T_ADMIN "DEBG"
+#define INVIT "> "
+#define CMD_QUIT "quit"
+#define CMD_PRIVATE "private to"
+#define CMD_SHUT "shut"
+#define CMD_DBG "debg"
+#define CMD_LIST "list"
+#define NB_SIZE 4
+#define TYPE_SIZE 4
+
+/* Stocke dans *string la chaîne reçue par fd_read et renvoie sa taille
+   totale. */
+int wait_for_string(char** string, const char* tube_client, const int offset)
+{
+  char* preffix = malloc(sizeof(char)*(offset + 1)) ;
+  char *suffix ;
+  int fd_read = open(tube_client, O_RDONLY) ;
+  int total_size ;
+
+  /* Réception du préfixe numérique. */
+  read(fd_read, preffix, offset) ;
+  *(preffix + offset) = '\0' ;
+  total_size = atoi(preffix) ;
+
+  /* Réception du reste de la chaîne. */
+  suffix = malloc(sizeof(char)*(total_size - offset + 1)) ;
+  read(fd_read, suffix, total_size - offset) ;
+  *(suffix + total_size - offset ) = '\0' ;
+  close(fd_read) ;
+
+  /* Concaténation des deux parties. */
+  *string = malloc(sizeof(char)*(total_size + 1)) ;
+  strcpy(*string, preffix) ;
+  strcat(*string, suffix) ;
+
+  free(preffix) ;
+  free(suffix) ;
+
+  return total_size ;
+}
+
+/* Reçoit et traite un message. Retourne 0 si une commande de déconnexion
+   est reçue, < 0 si une commande d'extinction est reçue, > 1. */
+int receive_msg (const char* mypseudo, const char* tube_client)
+{
+  char *saisie, *msg ;
+  int res = 1 ;
+  
+  wait_for_string(&saisie, tube_client, NB_SIZE)  ;
+  msg = saisie ;
+  msg += NB_SIZE ;
+
+  /* Message d'erreur. */
+  if (strcmp(msg, FAILURE) == 0)
+    printf("Échec\n") ;
+  /* Message de logout. */
+  else if (memcmp(msg, T_OUT, strlen(T_OUT)) == 0)
+    {
+      res = 0 ;
+      printf("Bye %s\n", mypseudo) ;
+    }
+  else {
+    int
+      is_public = memcmp(msg, T_PUBLIC, strlen(T_PUBLIC)) == 0,
+      is_prive = memcmp(msg, T_PRIVE, strlen(T_PRIVE)) == 0,
+      is_list = memcmp(msg, T_LIST, strlen(T_LIST)) == 0,
+      is_shut = memcmp(msg, T_SHUT, strlen(T_SHUT)) == 0 ;
+    char* pseudo ;
+
+    msg += TYPE_SIZE ;
+    /* Dans le cas d'une liste, on néglige le nombre d'usagers connectés. */
+    if (is_list)
+      msg += NB_SIZE ;
+    pseudo = extract_string(&msg, NB_SIZE) ;
+
+    /* Dans le cas d'un message privé ou public : décodage et affichage. */
+    if (is_public || is_prive)
+      {
+        char* text = extract_string(&msg, NB_SIZE) ;
+
+        if (is_public)
+          printf("[%s] %s\n", pseudo, text) ;
+        else
+          printf("[%s --> %s] %s\n", pseudo, mypseudo, text) ;
+        free(text) ;
+      }
+    /* Dans le cas d'un usager listé : affichage de son pseudo. */
+    else if (is_list)
+      printf("-> %s\n", pseudo) ;
+    /* Dans le cas de l'extinction du serveur : message d'information. */
+    else if (is_shut)
+      {
+        printf("Serveur éteint par %s\n", pseudo) ;
+        res = -1 ;
+      }
+    free(pseudo) ;
+  }
+  free(saisie) ;
+  return res ;
+}
+
+/* MODIF JULIEN: suppr open(tube_client) avant wait_for_string() car ouverture */
+/* effectuee egalement dans cette fct */
+
+/* Ping le serveur et renvoie l'id attribuée. */
+int connexion(const char* tube_server, const char* tube_client,
+              const char* pseudo)
+{
+  char *request, *answer ;
+  int fd_write, res ;
+
+  mkfifo(tube_client, S_IRWXU | S_IRWXG | S_IRWXO) ;
+  request = build_msg(NB_SIZE, T_IN, pseudo, tube_client) ;
+  fd_write = open(tube_server, O_WRONLY) ;
+  res = -1 ;
+
+  if (fd_write == -1)
+    fprintf(stderr,"Échec du branchement: %s\n", strerror(errno)) ;
+
+  /* Envoi du ping. */
+  if (write(fd_write, request, strlen(request)) == -1)
+    fprintf(stderr,"Login non envoyé: %s\n", strerror(errno)) ;
+
+  /* Réception et traitement de l'id. */
+  wait_for_string(&answer, tube_client, NB_SIZE) ;
+  if (memcmp(answer + NB_SIZE, SUCCESS, strlen(SUCCESS)) == 0)
+    res = atoi(answer + NB_SIZE + TYPE_SIZE) ;
+
+  close(fd_write) ;
+  free(request) ;
+  free(answer) ;
+  
+  return res ;
+}
+
+/* Supprime toutes les traces du client. */
+void deconnexion(const char* tube_client)
+{
+  unlink(tube_client) ;
+}
+
+/* Saisit, encode et envoie les commandes. */
+void send_msg(const char* pseudo, const int id, const char* tube)
+{
+  char* input = get_input(INVIT) ;
+  char* msg ;
+  int fd_write ;
+
+  /* quit */
+  if(strcmp(input, CMD_QUIT) == 0)
+    msg = build_msg(NB_SIZE, T_OUT, id) ;
+  /* message privé */
+  else if (memcmp(input, CMD_PRIVATE, strlen(CMD_PRIVATE)) == 0)
+    {
+      int start = strlen(CMD_PRIVATE) + 1 ;
+      char* location = strchr(input + start, ' ') ;
+      int end = location - input ;
+      char* friend_pseudo = malloc(sizeof(char)*(end-start)) ;
+
+      memcpy(friend_pseudo, input + start, end - start) ;
+      *(friend_pseudo + end - start) = '\0' ;
+      msg = build_msg(NB_SIZE, T_PRIVE, id, friend_pseudo, input + end + 1) ;
+      free(friend_pseudo) ;
+    }
+  /* extinction */
+  else if(strcmp(input, CMD_SHUT)==0)
+    msg = build_msg(NB_SIZE, T_SHUT, id) ;
+  /* debug */
+  else if(strcmp(input, CMD_DBG)==0)
+    msg = build_msg(NB_SIZE, T_ADMIN) ;
+  /* list */
+  else if(strcmp(input, CMD_LIST)==0)
+    msg = build_msg(NB_SIZE, T_LIST, id) ;
+  /* message public */
+  else
+    msg = build_msg(NB_SIZE, T_PUBLIC, id, input) ;
+
+  fd_write = open(tube, O_WRONLY) ;
+  write(fd_write, msg, strlen(msg)) ;
+  close(fd_write) ;
+  free(input) ;
+  free(msg) ;
+}
+

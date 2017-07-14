@@ -1,0 +1,21 @@
+#ifndef TUBING
+
+#define TUBING
+
+typedef struct
+{
+  char* tube_server ;
+  char* tube_client ;
+  char* pseudo ;
+  int id ;
+  WINDOW* outbox ;
+  WINDOW* inbox ;
+} data ;
+
+int take_msg(int fd_read, char **saisie) ;
+int receive_msg (data mydata) ;
+void send_msg(data mydata) ;
+void connexion(data* mydata) ;
+void deconnexion(data* mydata) ;
+
+#endif

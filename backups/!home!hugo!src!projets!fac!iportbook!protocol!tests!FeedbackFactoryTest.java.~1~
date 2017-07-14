@@ -1,0 +1,83 @@
+import protocol.feedback.* ;
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+public class FeedbackFactoryTest {
+
+    private FeedbackFactory pf ;
+
+    @Before
+    public final void setFeedbackFactoryUp() {
+        this.pf = new FeedbackFactory() ;
+    }
+
+    @Test
+    public final void testAskFriendOKBuild() {
+        String tmp = "FRIE>+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+    
+    @Test
+    public final void testAskFriendNOBuild() {
+        String tmp = "FRIE<+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testFlooDoneBuild() {
+        String tmp = "FLOO>+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testGoodbyeBuild() {
+        String tmp = "GOBYE+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testHelloBuild() {
+        String tmp = "HELLO+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testMessageTransmittedBuild() {
+        String tmp = "MESS>+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testMessageNotTransmittedBuild() {
+        String tmp = "MESS<+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testWelcomeBuild() {
+        String tmp = "WELCO+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testFirstListBuild() {
+        String tmp = "RLIST 12+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+   @Test
+    public final void testSomeListBuild() {
+        String tmp = "LINUM hugo+++" ;
+        Feedback p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+}

@@ -1,0 +1,12 @@
+#! /usr/bin/env python3
+
+import sys
+
+filename = sys.argv[1]
+source = open(filename, "r") ;
+lines = myfile.readlines()
+close(myfile)
+target = open(filename+"copy", "w")
+for oneline in lines :
+    target.write(oneline)
+close(target)

@@ -1,0 +1,19 @@
+JC = javac
+
+JUNIT_PATH = /usr/share/java/junit4.jar
+PROTOCOL_TEST_DIR = protocol/tests
+SERVER_TEST_DIR = service/tests
+MAIN_TEST_SRC = Tests.java
+MAIN_SERVER_SRC = MainServer.java
+
+server: 
+	$(JC) -cp $(shell pwd) $(MAIN_SERVER_SRC)
+
+tests:
+	make -C $(PROTOCOL_TEST_DIR)
+	make -C $(SERVER_TEST_DIR)
+	$(JC) -cp $(JUNIT_PATH):$(shell pwd) $(MAIN_TEST_SRC)
+
+clean:
+	find . -name '*.class' -delete
+	find . -name '*.o' -delete

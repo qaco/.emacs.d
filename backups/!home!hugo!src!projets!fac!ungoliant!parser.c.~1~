@@ -1,0 +1,10 @@
+#include "word.h"
+#include "wordlist.h"
+
+int parse (Word myhtml, Word myurl, WordList* text, WordList* url)
+{
+  Word newword = construct_word("hello", strlen("hello")) ;
+  *text = build_wordlist(newword) ;
+  *url = build_empty_wordlist() ;
+  return 0 ;
+}

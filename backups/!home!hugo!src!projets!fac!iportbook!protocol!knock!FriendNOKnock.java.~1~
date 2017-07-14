@@ -1,0 +1,20 @@
+package protocol.knock ;
+
+public class FriendNOKnock extends Knock {
+    
+    public FriendNOKnock(int flows) {
+        super(flows) ;
+    }
+
+    public FriendNOKnock(byte mylow, byte myhigh) {
+        super(mylow, myhigh) ;
+    }
+
+    public byte getCode() {
+        return KnockVals.FRIENDNO_CODE ;
+    }
+
+    public String popUp() {
+        return KnockVals.FRIENDNO_MESS;
+    }
+}

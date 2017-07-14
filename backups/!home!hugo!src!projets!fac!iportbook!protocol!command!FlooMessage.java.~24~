@@ -1,0 +1,69 @@
+package protocol.command ;
+
+import main.MainVals ;
+import protocol.field.* ;
+import protocol.feedback.FlooDone ;
+import protocol.flow.FlooMessageFlow ;
+import protocol.knock.FlooKnock ;
+import exception.* ;
+import java.io.IOException ;
+import service.User ;
+import java.util.List ;
+import java.util.Set ;
+import java.util.HashSet ;
+
+public class FlooMessage implements Protocol {
+
+    private MessField mess ;
+
+    public FlooMessage (byte[] mymess) throws UnknownResultException {
+        this.mess = new MessField(mymess) ;
+    }
+
+    public FlooMessage (String mymess) {
+        this.mess = new MessField(mymess) ;
+    }
+
+    private Set<User> crawl(User sender, User root, Set<User> mem) {
+        for (User friend : root.getFriends()) {
+            if (!friend.equals(sender) && !mem.contains(friend)) {
+                mem.add(friend) ;
+                mem.addAll(this.crawl(sender, friend, mem)) ;
+            }
+        }
+        return mem ;
+    }
+    
+    public void exec(User one, List<User> all) throws UnknownResultException,
+                                                      IOException {
+        FlooMessageFlow floo = new FlooMessageFlow (one.getId(),
+                                                    this.mess.toString()) ;
+        Set<User> targets = this.crawl(one, one, new HashSet<User>()) ;
+        for (User guy : targets) {
+            guy.pushFlow(floo) ;
+            guy.sendUDP(new FlooKnock(guy.howManyFlows())) ;
+            this.describeSendMessage(guy.getId()) ;
+        }
+        one.sendTCP(new FlooDone()) ;
+        this.describeFlooDone() ;
+    }
+
+    public byte[] toBytes() {
+        byte[][] fields = { this.mess.toBytes() } ;
+        return Field.makeSentence(CommandVals.FLOO_MESSAGE, fields) ;
+    }
+    
+    public String toString() {
+        return
+            CommandVals.FLOO_MESSAGE + " " + this.mess.toString() +
+            MainVals.EOF ;
+    }
+
+    private void describeSendMessage(String s) {
+        MainVals.describe(s + " : message send") ;
+    }
+    
+    private void describeFlooDone() {
+        MainVals.describe("Floo done") ;
+    }
+}

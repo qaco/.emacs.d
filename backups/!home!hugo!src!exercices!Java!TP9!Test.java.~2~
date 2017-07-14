@@ -1,0 +1,30 @@
+public class Test {
+
+    static Try<Integer, ArithmeticException> divide(int a, int b) {
+	if (b == 0)
+	    return Try.failure(new ArithmeticException()) ;
+	else
+	    return Try.success(a/b) ;
+    }
+
+    public static void main(String[] args) {
+	// Try<Integer, ArithmeticException> c = divide(1,0) ;
+	Try<Integer, ArithmeticException> c = divide(1,1) ;
+	// premier test
+	c.tryCatch(
+		   r -> {
+		       System.out.println("Resultat: " + r) ;
+		       return null ; },
+		   e -> {
+		       System.out.println("Erreur: " + e) ;
+		       return null ; }
+		   );
+	// deuxième test
+	if (c.isSuccess())
+	    System.out.println("Resultat : " + c.get()) ;
+	else
+	    System.out.println("Échec : " + c.getError()) ;
+    }
+}
+		       
+    

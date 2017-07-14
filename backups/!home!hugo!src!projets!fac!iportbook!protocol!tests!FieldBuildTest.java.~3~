@@ -1,0 +1,16 @@
+package protocol.tests ;
+
+import exception.UnknownResultException ;
+import protocol.field.* ;
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+public class FieldBuildTest {
+
+    @Test
+    public final void testSimpleNumMess() {
+        NumStringField f = new NumMessField(7230) ;
+        assertEquals(7230, f.getInt()) ;
+    }
+}

@@ -1,0 +1,105 @@
+package client.src;
+
+import java.util.Scanner;
+import java.util.Iterator;
+import java.nio.*;
+import java.nio.channels.*;
+import java.net.InetSocketAddress;
+import java.io.IOException ;
+
+public class Client {
+
+    public void deconnected_prompt() throws IOException {
+	Scanner sc = new Scanner(System.in);
+	boolean status = true;
+	String input = "";
+	ConnexionRequest request;
+	
+	while(status) {
+	    System.out.println("[Entrez 'connexion','register' ou 'quitter']");
+	    System.out.print(":");
+	    input = sc.nextLine();
+	    
+	    switch(input) {
+	    case "test1" :
+		automated_client(0) ; 
+		break;
+	    case "test2" :
+		automated_client(1) ; 
+		break;
+	    case "test3" :
+		automated_client(2) ; 
+		break;
+	    case "connexion" : 
+		request = new ConnexionRequest();
+		if(request.client_connexion())
+		    run(request);
+		break;
+	    case "register" :
+		request = new ConnexionRequest();
+		request.client_register() ;
+		break;
+	    case "quitter" : status = false; break; 
+	    default : deconnected_prompt(); break;
+	    }
+	}
+    }
+
+    public void automated_client(int i) throws IOException {
+	ConnexionRequest cr1 = new ConnexionRequest();
+	if (cr1.automated_registration(i)) {
+	    ConnexionRequest cr2 = new ConnexionRequest();
+	    if (cr2.automated_connexion(i)) {
+		run(cr2);
+	    }
+	}
+    }
+
+    public ServerRequest build_sr(ConnexionRequest cr) throws IOException {
+	String id, udp;
+	id = cr.getId();
+	udp = cr.getUdp();
+	SocketChannel soch = cr.getSo();
+	
+	return new ServerRequest(id, udp, soch);
+    }
+
+    private SocketChannel configure_sr(ServerRequest sr, Selector sel) throws IOException {
+	SocketChannel sc = sr.getSo();
+	sc.configureBlocking(false);
+	sc.register(sel, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+	return sc;
+    }
+   
+    private DatagramChannel configure_notif(Notifications notif, Selector sel, int udp) throws IOException {
+	DatagramChannel dc = notif.getDc();
+	dc.configureBlocking(false);
+	dc.bind(new InetSocketAddress(udp));
+	dc.register(sel, SelectionKey.OP_READ);
+	return dc;
+    }
+
+    public void run(ConnexionRequest cr) throws IOException {
+	System.out.println("you're in run");
+	ServerRequest sr = build_sr(cr);
+	Notifications notif = new Notifications();
+	Selector sel = Selector.open();
+	SocketChannel dsc = configure_sr(sr, sel);
+	int udp = Integer.parseInt(sr.getUdp());
+	DatagramChannel ddc = configure_notif(notif, sel, udp);
+
+	while(sr.getStatus()) {
+	    sel.select();
+	    Iterator<SelectionKey> it = sel.selectedKeys().iterator();
+	    while(it.hasNext()){
+		SelectionKey sk = it.next();
+		it.remove();
+		if((sk.isReadable() || sk.isWritable()) && sk.channel()==dsc){
+		    sr.client_hub();
+		} else if (sk.isReadable() && sk.channel()==ddc){
+		    notif.reception();
+		}
+	    }
+	}
+    }
+}

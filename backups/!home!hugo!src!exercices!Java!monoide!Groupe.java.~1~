@@ -1,0 +1,4 @@
+public class Groupe<T> extends Monoid<T> {
+
+    UnaryOperator<T> inv ;
+}

@@ -1,0 +1,5 @@
+val fieldtext_build : 'a -> 'b -> 'c -> ('a * ('b * int)) * int * string * 'c
+val fieldtext_draw :
+  ((int * int) * (int * int)) * int * string * string -> bool -> unit
+val fieldtext_interaction :
+  ((int * int) * (int * int)) * int * string * string -> unit

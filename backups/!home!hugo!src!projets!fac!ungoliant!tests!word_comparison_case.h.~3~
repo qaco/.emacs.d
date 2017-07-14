@@ -1,0 +1,3 @@
+#include <check.h>
+
+TCase* word_comparison_case(void) ;

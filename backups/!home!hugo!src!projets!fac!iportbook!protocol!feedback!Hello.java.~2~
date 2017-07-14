@@ -1,0 +1,13 @@
+package protocol.feedback ;
+import client.src.ConnexionRequest;
+
+public class Hello implements Feedback {
+    public String toString() {
+        return FeedbackVals.HELLO + MainVals.EOF ;
+    }
+
+    public void exec(ConnexionRequest cr) {
+	System.out.println("[Connexion réussie.]");
+	cr.setStatus(true);
+    }  
+}

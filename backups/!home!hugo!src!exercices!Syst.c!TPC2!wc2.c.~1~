@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <string.h>
+
+void wc(int res[3]) {
+  res[0] = -1 ; // caracteres
+  res[1] = -1 ; // mots
+  res[2] = 0 ; // lignes
+  int dansUnMot = 0 ;
+  int tmp = 0 ;
+
+    while (tmp != EOF) {
+      tmp = getchar();
+      res[0]++ ;
+
+      if (tmp == '\n') {
+	res[2]++ ;
+	dansUnMot = 0 ;
+      }
+      else if (tmp != ' ' && tmp != '\t') {
+	if (!dansUnMot) {
+	  res[1]++ ;
+	  dansUnMot = 1 ;
+	}
+      }
+      else
+	dansUnMot = 0 ;
+  }
+}  
+
+int main(int argc, char* argv[]) {
+  int carac = 1 ;  // booleens
+  int mot = 1 ;
+  int ligne = 1 ;
+  int res[3] ;
+
+  wc(res) ;
+  
+  if (argc == 2) {
+    
+    carac = 0 ;
+    mot = 0 ;
+    ligne = 0 ;
+    
+    if (*argv[1] == '-') {
+
+      if (strlen(argv[1]) == 1)
+	goto erreur ;
+
+      else {
+      
+	for (int i = 0 ; i < strlen(argv[1]) - 1 ; i++) { 
+
+	  switch (argv[1][1+i]) {
+	  case 'c' :
+	    carac = 1 ;
+	    break ;
+	  case 'w' :
+	    mot = 1 ;
+	    break ;
+	  case 'l' :
+	    ligne = 1 ;
+	    break ;
+	  default :
+	    goto erreur ;
+	  }
+	}
+      }
+    }
+    else
+      goto erreur ;
+  }
+  
+  else if (argc > 2)
+    goto erreur ;
+  
+  if (carac)
+    printf("Caractères : %d\n", res[0]) ;
+  if (mot)
+    printf("Mots : %d\n", res[1]) ;
+  if (ligne)
+    printf("Lignes : %d\n", res[2]) ;
+  
+  return 0 ;
+
+ erreur :
+  printf("Argument(s) incorrect(s), wc2 s'utilise avec c et/ou w\n") ;
+  printf("et/ou l, le tout précédé d'un tiret \"-\".\n") ;
+  return 1 ;
+}

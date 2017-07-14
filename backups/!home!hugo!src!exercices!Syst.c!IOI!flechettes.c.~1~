@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main() {
+  int n = 0 ;
+  do {
+    scanf("%d",&n) ;
+  } while (n < 1 && n > 26) ;
+  int tailleCote = (n * 2 - 1) ;
+  int tailleTotale = tailleCote * tailleCote + tailleCote ; // retours chariot
+  char res[tailleTotale] ;
+  char temoin = 'a' ;
+  for (int i = 0 ; i < tailleCote ; i++) {
+    for (int j = 0 ; j < tailleCote ; j++) {
+      if (j >= i)
+	res[i * (tailleCote + 1) + j] = temoin + i ;
+      else
+	res[i * (tailleCote + 1) + j] = temoin + j ;
+    }
+    if (i < tailleCote - 1)
+      res[i * (tailleCote + 1) + tailleCote] = '\n' ;
+    else
+      res[i * (tailleCote + 1) + tailleCote] = '\0' ;
+  }
+
+  

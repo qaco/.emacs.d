@@ -1,0 +1,5 @@
+public class Data {
+    public static final NBJOUEURS = 2 ;
+    public static final NBPAQUETS = 1 ;
+}
+    

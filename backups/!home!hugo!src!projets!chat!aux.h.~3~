@@ -1,0 +1,18 @@
+#ifndef AUX
+
+#define AUX
+
+/* Renvoie la représentation en n = offset caractères de l'entier nb */
+char* int_to_string(int offset, int nb) ;
+/* Encode toadd et l'ajoute à la queue de *init */
+char* add_a_string (char** init, int offset, char *toadd) ;
+/* Decode *string suivant la taille d'offset et place le pointeur au
+   début de la chaîne suivante */
+char* extract_string (char** string, int offset) ;
+/* Stocke dans *string la chaîne reçue par fd_read et renvoie sa taille
+   totale. */
+int wait_for_string(char** string, int fd_read, int offset) ;
+/* Saisit une chaîne finissant par \n */
+char* get_input (char* invit) ;
+
+#endif 

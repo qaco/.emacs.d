@@ -1,0 +1,57 @@
+#include <check.h>
+#include <stdlib.h>
+#include "../misc/wordlist.h"
+#include "../misc/word.h"
+
+WordList* mylist ;
+
+void accessor_setup(void) {
+  mylist = build_empty_wordlist() ;
+}
+
+void accessor_teardown(void) {
+  destruct_wordlist(mylist) ;
+}
+
+START_TEST(test_pop_word_empty) {
+  int ret ;
+  print_wordlist(mylist, stdout) ;
+  printf("apres instanciation\n") ;
+  ret = pop_word_wordlist(NULL, mylist) ;
+  ck_assert_int_eq(ret, EXIT_FAILURE) ;
+}
+END_TEST
+
+START_TEST(test_pop_word_notempty) {
+  Word *first, *dest ;
+  int ret, test, initsize, endsize ;
+
+  first = construct_word(strlen("hello"), "hello") ;
+  add_word_wordlist(mylist, first) ;
+  initsize = get_length_wordlist(mylist) ;
+  
+  dest = construct_word(0, NULL) ;
+  ret = pop_word_wordlist(dest, mylist) ;
+  endsize = get_length_wordlist(mylist) ;
+  test = compare_word(first, dest) == 0 ;
+  
+  ck_assert_int_eq(ret, EXIT_SUCCESS) ;
+  ck_assert_int_eq(test, 1) ;
+  ck_assert_int_eq(initsize, endsize + 1) ;
+
+  destruct_word(first) ;
+  destruct_word(dest) ;
+}
+END_TEST
+
+
+TCase* wordlist_accessor_case(void) {
+  TCase* tc_acc ;
+
+  tc_acc = tcase_create("Accessor") ;
+  tcase_add_checked_fixture(tc_acc, accessor_setup, accessor_teardown) ;
+  tcase_add_test(tc_acc, test_pop_word_empty) ;
+  tcase_add_test(tc_acc, test_pop_word_notempty) ;
+
+  return tc_acc ;
+}

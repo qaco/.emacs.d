@@ -1,0 +1,16 @@
+#include <check.h>
+#include <stdlib.h>
+#include "../misc/wordlist.h"
+#include "../misc/word.h"
+
+TCase* wordlist_split_case(void) {
+  TCase* tc_split ;
+
+  tc_split = tcase_create("WordList split") ;
+  tcase_add_checked_fixture(tc_split,
+                            split_wordlist_setup,
+                            split_wordlist_teardown) ;
+  tcase_add_test(tc_acc, test_addall_wordlist) ;
+
+  return tc_split ;
+}

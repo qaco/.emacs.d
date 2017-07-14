@@ -1,0 +1,12 @@
+package protocol.feedback ;
+
+public class AskFriendNO implements Feedback {
+    public String toString() {
+        return "FRIE<+++" ;
+    }
+
+    public default boolean exec() {
+	System.out.println("[La demande d'amitié a échoué.]");
+	return false;
+    }  
+}

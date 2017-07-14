@@ -1,0 +1,6 @@
+#ifndef UNGOLIANT
+#define UNGOLIANT
+
+int cmds(int argc, char* argv[]) ;
+
+#endif

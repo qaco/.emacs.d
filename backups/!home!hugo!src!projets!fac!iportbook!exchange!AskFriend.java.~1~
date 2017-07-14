@@ -1,0 +1,11 @@
+public class AskFriend implements Protocol {
+    private String id ;
+
+    public AskFriend (String myid) {
+        this.id = myid ;
+    }
+
+    public String getRepresentation() {
+        return "FRIE? " + this.id + "+++" ;
+    }
+}

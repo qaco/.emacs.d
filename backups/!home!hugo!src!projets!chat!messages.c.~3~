@@ -1,0 +1,206 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include "aux.h"
+
+
+#define T_IN "HELO"
+#define SUCCESS "OKOK"
+#define FAILURE "BADD"
+#define T_OUT "BYEE"
+#define T_PUBLIC "BCST"
+#define T_PRIVE "PRVT"
+#define T_LIST "LIST"
+#define T_SHUT "SHUT"
+#define T_ADMIN "DEBG"
+#define INVIT "> "
+#define CMD_QUIT "quit"
+#define CMD_PRIVATE "private to"
+#define CMD_SHUT "shut"
+#define CMD_DBG "debg"
+#define CMD_LIST "list"
+#define NB_SIZE 4
+#define TYPE_SIZE 4
+
+
+/* Construit un message respectant le protocole suivant le paramètre fixe
+   désignant le type et les paramètres variables. */
+char* build_msg(char* typem, ...)
+{
+  va_list va ;
+  int
+    is_in = strcmp(typem, T_IN) == 0,
+    is_public = strcmp(typem, T_PUBLIC) == 0,
+    is_private = strcmp(typem, T_PRIVE) == 0,
+    is_admin = strcmp(typem, T_ADMIN) == 0 ;
+  int total_size ;
+  char* res = malloc(sizeof(char)*(strlen(typem) + 1)) ;
+  char* new_res ;
+
+  va_start(va,typem) ;
+  
+  /* [type | ... ] */
+  strcpy(res,typem) ;
+
+  /* [... | id | ... ] */
+  if (!is_admin && !is_in)
+    {
+      int iid = va_arg(va,int) ;
+      char* sid = int_to_string(NB_SIZE,iid) ;
+      
+      res = realloc(res, sizeof(char)*(strlen(res) +
+                                       NB_SIZE + 1)) ;
+      strcat(res,sid) ;
+      free(sid) ;
+    }
+
+  /* [... | string | ... ] */
+  if (is_private || is_in)
+    add_a_string(&res, NB_SIZE, va_arg(va, char*)) ;
+  /* [... | string ] */
+  if (is_public || is_private || is_in)
+    add_a_string(&res, NB_SIZE, va_arg(va, char*)) ;
+
+  /* Calcul et écriture des 4 premiers caractères
+     [nombre | ... ] */
+  total_size = strlen(res) + NB_SIZE ;
+  new_res = int_to_string(NB_SIZE,total_size) ;
+  new_res = realloc(new_res, strlen(new_res) + strlen(res) + 1) ;
+  strcat(new_res,res) ;
+  free(res) ;
+  res = new_res ;
+
+  return res ;
+}
+
+void receive_msg (char* mypseudo, int fd_read)
+{
+  char* offset = malloc(sizeof(char)*(NB_SIZE + 1)) ;
+  char* msg ;
+  int total_size ;
+
+  /* Lecture et traitement des 4 premiers caractères. */
+  read(fd_read, offset, NB_SIZE) ;
+  total_size = atoi(offset) - NB_SIZE ;
+  msg = malloc(sizeof(char)*(total_size + 1)) ;
+  /* Récupération du reste du message. */
+  read(fd_read, msg, total_size) ;
+  *(msg + total_size) = '\0' ;
+
+  /* Message d'erreur. */
+  if (strcmp(msg, FAILURE) == 0)
+    printf("Échec\n") ;
+  /* Message de logout. */
+  else if (memcmp(msg, T_OUT, strlen(T_OUT)) == 0)
+      printf("Bye %s\n", mypseudo) ; // Todo : gestion de la déconnexion
+  else {
+    int
+      is_public = memcmp(msg, T_PUBLIC, strlen(T_PUBLIC)) == 0,
+      is_prive = memcmp(msg, T_PRIVE, strlen(T_PRIVE)) == 0,
+      is_list = memcmp(msg, T_LIST, strlen(T_LIST)) == 0,
+      is_shut = memcmp(msg, T_SHUT, strlen(T_SHUT)) == 0 ;
+    char* pseudo ;
+
+    msg += TYPE_SIZE ;
+    /* Dans le cas d'une liste, on néglige le nombre d'usagers connectés. */
+    if (is_list)
+      msg += NB_SIZE ;
+    pseudo = extract_string(&msg, NB_SIZE) ;
+
+    /* Dans le cas d'un message privé ou public : décodage et affichage. */
+    if (is_public || is_prive)
+      {
+        char* text = extract_string(&msg, NB_SIZE) ;
+        if (is_public)
+          printf("[%s] %s\n", pseudo, text) ;
+        else
+          printf("[%s --> %s] %s\n", pseudo, mypseudo, text) ;
+        free(text) ;
+      }
+    /* Dans le cas d'un usager listé : affichage de son pseudo. */
+    else if (is_list)
+      printf("[%s]\n", pseudo) ;
+    /* Dans le cas de l'extinction du serveur : message d'information. */
+    else if (is_shut)
+      {
+        printf("Serveur éteint par %s\n", pseudo) ;
+        exit(EXIT_SUCCESS) ;
+      }
+    free(pseudo) ;
+  }
+
+  free(msg) ;
+}
+
+/* Ping le serveur et renvoie l'id attribuée. */
+int connexion(int fd_write, int fd_read, char* pseudo, char* tube)
+{
+  char* request = build_msg(T_IN, pseudo, tube) ;
+  char* offset = malloc(sizeof(char)*(NB_SIZE + 1)) ;
+  char* answer ;
+  int total_size ;
+  int res = -1 ;
+
+  /* Envoi du ping. */
+  if (write(fd_write, request, strlen(request)) == -1)
+    fprintf(stderr,"Login non envoyé: %s", strerror(errno)) ;
+  fsync(fd_write) ;
+  free(request) ;
+
+  /* Réception et traitement de l'id. */
+  read(fd_read, offset, NB_SIZE) ;
+  total_size = atoi(offset) - NB_SIZE ;
+  answer = malloc(sizeof(char)*(total_size + 1)) ;
+  read(fd_read, answer, total_size) ;
+  *(answer + total_size) = '\0' ;
+  if (strcmp(answer, SUCCESS))
+    res = atoi(answer + TYPE_SIZE) ;
+
+  free(offset) ;
+  free(answer) ;
+  return res ;
+}
+
+/* Saisit, encode et envoie les commandes. */
+void send_msg(char* pseudo, int id, int fd_write)
+{
+  char* input = get_input(INVIT) ;
+  char* msg ;
+
+  /* quit */
+  if(strcmp(input, CMD_QUIT) == 0)
+    msg = build_msg(T_OUT, id) ;
+  /* message privé */
+  else if (memcmp(input, CMD_PRIVATE, strlen(CMD_PRIVATE)) == 0)
+    {
+      int start = strlen(CMD_PRIVATE) + 1 ;
+      char* location = strchr(input + start, ' ') ;
+      int end = location - input ;
+      char* friend_pseudo = malloc(sizeof(char)*(end-start)) ;
+
+      memcpy(friend_pseudo, input + start, end - start) ;
+      *(friend_pseudo + end - start) = '\0' ;
+      msg = build_msg(T_PRIVE, id, friend_pseudo, input + end + 1) ;
+      free(friend_pseudo) ;
+    }
+  /* extinction */
+  else if(strcmp(input, CMD_SHUT)==0)
+    msg = build_msg(T_SHUT, id) ;
+  /* debug */
+  else if(strcmp(input, CMD_DBG)==0)
+    msg = build_msg(T_ADMIN) ;
+  /* list */
+  else if(strcmp(input, CMD_LIST)==0)
+    msg = build_msg(T_LIST, id) ;
+  /* message public */
+  else
+    msg = build_msg(T_PUBLIC, id, input) ;
+
+  write(fd_write, msg, strlen(msg)) ;
+  free(input) ;
+  free(msg) ;
+}
+

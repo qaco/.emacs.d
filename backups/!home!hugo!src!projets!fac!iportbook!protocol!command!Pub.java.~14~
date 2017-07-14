@@ -1,0 +1,59 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.UnknownResultException ;
+import java.io.IOException ;
+import java.io.OutputStream ;
+import java.net.Socket ;
+import java.util.List ;
+import service.User ;
+import protocol.field.Field ;
+import protocol.feedback.PubDone ;
+import protocol.knock.PublicityKnock ;
+import protocol.AbstractPub ;
+import protocol.flow.PubFlow ;
+
+public class Pub extends AbstractPub implements Anon {
+
+    public Pub(byte[] i, byte[] p, byte[] m) throws UnknownResultException {
+        super(i, p, m) ;
+    }
+    
+    public Pub(String i, int p, String m) {
+        super(i, p, m) ;
+    }
+
+    public void exec(Socket so,List<User> all) throws IOException,
+                                                      UnknownResultException {
+        OutputStream o = so.getOutputStream() ;
+        synchronized(all) {
+            for (User guy : all) {
+                if (target.howManyFlows() <= FieldVals.MAX_MDP) {
+                    guy.pushFlow(new PubFlow(this.ip.toBytes(),
+                                             this.port.toBytes(),
+                                             this.message.toBytes())) ;
+                    guy.sendUDP(new PublicityKnock(guy.howManyFlows())) ;
+                }
+            }
+        }
+        o.write((new PubDone()).toBytes()) ;
+    }
+
+    public String getId() {
+        return this.ip.toString() ;
+    }
+    
+    public String toString() {
+        return
+            AnonVals.PUB + MainVals.SEP +
+            this.ip.toString() + MainVals.SEP +
+            this.port.toString() + MainVals.SEP +
+            this.message.toString() + MainVals.EOF ;
+    }
+
+    public byte[] toBytes() {
+        Field[] fields = { this.ip, this.port, this.message } ;
+        return Field.makeSentence(AnonVals.PUB, fields) ;
+    }
+}
+            

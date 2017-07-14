@@ -1,0 +1,41 @@
+package protocol.command ;
+
+import exception.* ;
+import protocol.ProtocolFactory ;
+import java.util.Arrays ;
+import java.io.InputStream ;
+import java.io.IOException ;
+import main.MainVals ;
+
+public class AnonFactory extends ProtocolFactory {
+
+    public Anon create(Reader in) throws UnknownResultException,
+                                         IOException {
+        byte[][] raw_arr = this.readStream(in) ;
+        String code = this.extractCode(raw_arr) ;
+        byte[][] smooth_arr = Arrays.copyOfRange(raw_arr,1,smooth_arr.length) ;
+        return this.create(code, smooth_arr) ;
+    }
+    
+    private Anon create(String code, byte[][] params) throws UnknownResultException {
+        byte[] mess ;
+
+        try {
+            switch (code) {
+            case AnonVals.REGISTRATION:
+                return new Registration(params[0], params[1], params[2]) ;
+            case AnonVals.CONNECTION :
+                return new Connection(params[0], params[1]) ;
+            case AnonVals.PUB:
+                mess = this.joinArray(params, 2) ;
+                return new Pub(params[0], params[1], mess) ;
+            default :
+                throw new UnknownCommandException("anon", code) ;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new TooFewArgsException(code,
+                                          String.valueOf(params.length)) ;
+        }
+    }
+}
+

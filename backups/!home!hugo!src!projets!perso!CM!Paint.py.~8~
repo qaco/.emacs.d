@@ -1,0 +1,38 @@
+import Root
+from PIL import Image
+
+class EmptyLogo(Root.Place):
+    def __init__(self):
+        pass
+
+    def process_position(self):
+        pass
+
+    def stamp_img(self, img):
+        return img
+
+class ActualLogo(Root.Place):
+    def __init__(self, myframe, logo_path):
+        super().__init__(myframe.plane_size, myframe.point, myframe.size)
+        self.raw_logo = Image.open(logo_path)
+        self.smooth_logo = None
+
+    def replace(self, place):
+        self.plane_size = place.plane_size
+        self.point = place.point
+        self.size = place.size
+        
+    def process_position(self):
+        self.smooth_logo = self.raw_logo.copy()
+        self.smooth_logo.thumbnail(self.size)
+        xcorn = self.point[0] + (self.size[0] - self.smooth_logo.size[0])/2
+        ycorn = self.point[1] + (self.size[1] - self.smooth_logo.size[1])/2
+        self.point = int(xcorn), int(ycorn)
+        self.size = self.smooth_logo.size
+
+    def stamp_img(self, img):
+        tostamp = img.copy()
+        back = Image.new('RGBA', tostamp.size, (0,0,0,0))
+        back.paste(self.smooth_logo, self.point)
+        tostamp = Image.alpha_composite(tostamp, back)
+        return tostamp

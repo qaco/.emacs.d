@@ -1,0 +1,64 @@
+import datetime
+
+class SMS:
+
+    def __init__(self, numero, texte, dateheure=None):
+        self.vu = False
+        self.numero = numero
+        if dateheure != None:
+            self.heure = dateheure
+        else:
+            self.heure = datetime.now()
+        self.texte = texte
+
+    def __str__(self):
+        mess = str(self.numero)+" "+str(self.dateheure)+" "+self.texte
+        return mess if self.vu else "+ "+mess
+
+    def __contains__(self, mot):
+        return mot in self.texte
+
+    def estvu(self):
+        self.vu = True
+
+    def nonvu(self):
+        self.vu = False
+
+class messagerie:
+
+    def __init__(self):
+        self.messages = []
+
+    def __getitem__(self,i):
+        return self.messages[i]
+
+    def __delitem__(self,i):
+        del self.messages[i]
+
+    def __len__(self):
+        return len(self.messages)
+
+    def __str__(self):
+        return "\n".join(self.messages)
+
+    def ajoute(self, m):
+        self.messages.append(m)
+
+    def nonLu(self):
+        return [ i for i,sms in enumerate(self.messages) if not sms.vu ]
+
+    def messagesNonLus(self):
+        for sms in self.messages:
+            if not sms.vu:
+                print(str(sms)+"\n")
+                sms.esvu()
+
+    def recherchenum(self, num):
+        return [ i for i,sms in enumerate(self.messages) if sms.numero == num ]
+
+    def effacenum(self, num):
+        recups = self.recherchenum(num)
+        nb = len(recupts)
+        [ self.__delitem__(i) for mess in recups ]
+        return nb
+                

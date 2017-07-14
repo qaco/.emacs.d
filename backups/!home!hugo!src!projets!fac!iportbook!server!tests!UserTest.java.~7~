@@ -1,0 +1,73 @@
+package server.tests ;
+
+import java.net.Socket ;
+import java.util.List ;
+import server.User ;
+import protocol.flow.* ;
+
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+
+public class UserTest {
+
+    private User myuser ;
+    private String errmess ;
+
+    @Before
+    public final void setUserUp() {
+        this.myuser = new User(new Socket(), "hugo", "pass") ;
+        this.errmess = "Not implemented yet !" ;
+    }
+
+    @Test
+    public final void testSocketNotConnected() {
+        assertFalse(this.myuser.isConnected()) ;
+    }
+
+    @Test
+    public final void testSocketConnected() {
+        fail(this.errmess) ;
+    }
+
+    @Test
+    public final void testSendTCP() {
+        fail(this.errmess) ;
+    }
+
+    @Test
+    public final void testIsNotAFriend() {
+        User myfriend = new User(new Socket(), "jojo", "pass") ;
+        assertFalse(this.myuser.isAFriend(myfriend)) ;
+    }
+
+    @Test
+    public final void testIsAFriend() {
+        User myfriend = new User(new Socket(), "jojo", "pass") ;
+        this.myuser.addFriend(myfriend) ;
+        assertTrue(this.myuser.isAFriend(myfriend)) ;
+    }
+
+    @Test
+    public final void testAddTwiceAFriend() {
+        User myfriend = new User(new Socket(), "jojo", "pass") ;
+        boolean b ;
+        this.myuser.addFriend(myfriend) ;
+        b = this.myuser.addFriend(myfriend) ;
+        assertFalse(b) ;
+        assertEquals(this.myuser.howManyFriends(), 1) ;
+    }
+
+    @Test
+    public final void testPopFlowWhenEmpty() {
+        fail(this.errmess) ;
+    }
+
+    @Test
+    public final void testPopFlow() {
+        fail(this.errmess) ;
+    }
+}
+        
+    

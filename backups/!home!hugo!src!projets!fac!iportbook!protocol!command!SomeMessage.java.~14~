@@ -1,0 +1,70 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.UnknownResultException ;
+import java.util.Arrays ;
+
+public class SomeMessage {
+
+    public static boolean isSomeMessage(String input) {
+        int suf_size = MainVals.EOF.length() ;
+        String signifiant = input.substring(0, input.length() - suf_size) ;
+        String[] parts = signifiant.split(MainVals.SEP) ;
+        String[] tail = null ;
+        String mess = null ;
+        try {
+            tail = Arrays.copyOfRange(parts, 2, parts.length) ;
+            String.join(" ", tail) ;
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            return false ;
+        }
+        return
+            parts[0].equals(CommandVals.SOME_MESSAGE) &&
+            mess.length() < MainVals.MAX_MSG_SIZE ;
+    }
+    
+    public static int extractNum(String input) {
+        String[] parts = input.split(MainVals.SEP) ;
+        return Integer.parseInt(parts[1]) ;
+    }
+    
+    public static String extractMess(String in) {
+        String mess ;
+        int suf_size = MainVals.EOF.length() ;
+        String signifiant = in.substring(0, in.length() - suf_size) ;
+        String[] parts = signifiant.split(MainVals.SEP) ;
+        if (parts.length > 1) {
+            String[] tail = Arrays.copyOfRange(parts, 2, parts.length) ;
+            mess = String.join(MainVals.SEP, tail) ;
+        }
+        else
+            mess = new String() ;
+        return mess ;
+    }
+    
+    private int num ;
+    private String mess ;
+
+    public SomeMessage (int mynu, String mymess) {
+        if (mymess.length() > MainVals.MAX_MSG_SIZE ||
+            mynu < 0)
+            throw new IllegalArgumentException() ;
+        this.num = mynu ;
+        this.mess = mymess ;
+    }
+
+    public int getNum() {
+        return this.num ;
+    }
+
+    public String getMess() {
+        return this.mess ;
+    }
+
+    public String toString() {
+        String mynum = String.valueOf(this.num) ;
+        return
+            CommandVals.SOME_MESSAGE + " " +
+            mynum + " " + this.mess + MainVals.EOF  ;
+    }
+}

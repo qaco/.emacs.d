@@ -1,0 +1,20 @@
+package protocol.command ;
+
+import server.User ;
+import protocol.feedback ;
+import protocol.feedback.Goodbye ;
+import java.util.List ;
+
+public class Deconnection implements Command {
+
+    // pas besoin de allusers
+    public void exec(User myuser, List<User> allusers) {
+        myuser.sendTCP(new Goodbye()) ;
+        myuser.disconnect() ;
+    }
+    
+    public String toString() {
+        return CommandVals.DECONNECTION + CommandVals.EOF ;
+    }
+}
+        

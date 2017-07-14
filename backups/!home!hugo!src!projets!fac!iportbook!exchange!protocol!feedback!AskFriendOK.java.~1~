@@ -1,0 +1,7 @@
+package protocol.feedback ;
+import protocol.* ;
+public class AskFriendOK implements FeedBack {
+    public String toString() {
+        return "FRIE>+++" ;
+    }
+}

@@ -1,0 +1,16 @@
+import service.Server ;
+import main.MainVals ;
+// MainVals.SERVERPORT
+import java.io.IOException ;
+
+public class MainHacker {
+    public static void main(String[] args) {
+        int port = MainVals.SERVERPORT ;
+        try {
+            Server s = new Server(MainVals.SERVERPORT) ;
+            s.mainLoop() ;
+        } catch (IOException e) {
+            System.out.println(e.getMessage()) ;
+        }
+    }
+}

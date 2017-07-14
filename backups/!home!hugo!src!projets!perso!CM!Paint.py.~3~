@@ -1,0 +1,21 @@
+import Root, Misc
+from PIL import Image
+
+class Logo(Root.AbstractCalc):
+    def __init__(self, logo_path, myframe):
+        super().__init__(myframe.upper_size, myframe.corner, myframe.size)
+        self.path = logo_path
+
+    def process_position(self):
+        raw_logo = Image.open(self.path)
+        Misc.minimize_image(raw_logo, self.size)
+        xcorn = self.corner[0] + (self.size[0] - raw_logo.size[0])/2
+        ycorn = self.corner[1] + (self.size[1] - raw_logo.size[1])/2
+        self.corner = int(xcorn), int(ycorn)
+        self.size = raw_logo.size
+
+    def generate_img(self):
+        raw_logo = Image.open(self.path)
+        raw_logo.thumbnail(self.size)
+        self.img = Image.new('RGBA', self.upper_size, Misc.TRANSPARENCY)
+        self.img.paste(raw_logo, self.corner)

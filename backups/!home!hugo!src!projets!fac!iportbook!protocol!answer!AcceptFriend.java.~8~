@@ -1,0 +1,29 @@
+package protocol.answer ;
+
+import main.MainVals ;
+import exception.UnknownResultException ;
+import protocol.feedback.AckFriend ;
+import protocol.knock.OkFriendKnock ;
+import service.User ;
+import java.util.List ;
+import java.io.IOException ;
+
+public class AcceptFriend implements Answer {
+    
+    public void exec(User want, User rep) throws UnknownResultException,
+                                                 IOException {
+        want.addFriend(rep) ;
+        rep.addFriend(want) ;
+        this.describeFriendShip(want.getId(), rep.getId()) ;
+        rep.sendTCP(new AckFriend()) ;
+        want.sendUDP(new OkFriendKnock(want.howManyFlows())) ;
+    }
+
+    public String toString() {
+        return AnswerVals.OK_FRIEND + AnswerVals.EOF ;
+    }
+
+    private void describeFriendship(String want, String rep) {
+        MainVals.describe(rep + " accepts " + want + "as friend") ;
+    }
+}

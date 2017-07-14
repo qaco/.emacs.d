@@ -1,0 +1,74 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.* ;
+import service.User ;
+import protocol.feedback.* ;
+import protocol.field.* ;
+import java.net.Socket ;
+import java.io.OutputStream ;
+import java.io.OutputStreamWriter ;
+import java.io.Writer ;
+import java.io.IOException ;
+import java.util.List ;
+
+public class Registration implements Anon {
+    
+    private IdField id ; ;
+    private PortField port ;
+    private PassField mdp ;
+
+    public Registration (byte[] i, byte[] p, byte[] m) throws UnknownResultException {
+        this.id = new IdField(i) ;
+        this.port = new PortField(p) ;
+        this.mdp = new PassField(m) ;
+    }
+    
+    public Registration (String i, String p, String m) {
+        this.id = new IdField(i) ;
+        this.port = new PortField(p) ;
+        this.mdp = new PassField(m) ;
+    }
+
+    public Registration (String i,int p,int m) {
+        this.id = new IdField(i) ;
+        this.port = new PortField(p) ;
+        this.mdp = new PassField(m) ;
+    }
+
+    public String getId() {
+        return this.id.toString() ;
+    }
+    
+    public void exec(Socket so, List<User> allusers)
+        throws UnknownResultException, IOException {
+        String myid = this.id.toString() ;
+        for (User guy : allusers) {
+            if (myid.equals(guy.getId())) {
+                Writer w = new OutputStreamWriter(so.getOutputStream()) ;
+                w.write((new Goodbye()).toString()) ;
+                w.flush() ;
+                throw new NotExecutableException("Registration",
+                                                 myid + " yet registered");
+            }
+        }
+        User myuser = new User(so, myid, this.port.getInt(), this.mdp.getInt()) ;
+        myuser.sendTCP(new Welcome()) ;
+        allusers.add(myuser) ;
+        this.describeRegistrationSuccess() ;
+    }
+        
+    public String toString() {
+        String myport = String.valueOf(this.port) ;
+        String mymdp = String.valueOf(this.mdp) ;
+        return
+            AnonVals.REGISTRATION + " " + this.id.toString() + " " +
+            this.port.toString() + " " + this.mdp.toString() + MainVals.EOF ;
+    }
+
+    private void describeRegistrationSuccess() {
+        MainVals.describe("Registration success : [id:" + this.id.toString() +
+                          "] [password:" + this.mdp.toString() +
+                          "] [udp:" + this.port.toString() + "]") ;
+    }
+}

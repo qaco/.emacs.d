@@ -1,0 +1,22 @@
+package protocol.flow ;
+
+public class SomeMessageFlow implements Flow {
+
+    private int num ;
+    private String mess ;
+
+    public SomeMessageFlow (int mynum, String mymess) {
+        this.num = mynum ;
+        if (mymess.length() <= 200)
+            this.mess = mymess ;
+        else
+            this.mess = mymess.substring(0, 200) ;
+    }
+
+    public String toString() {
+        String mynum = String.valueOf(this.num) ;
+        return
+            FlowVals.SOME_MESSAGE + " " +
+            mynum + " " + this.mess + FlowVals.EOF  ;
+    }
+}

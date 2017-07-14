@@ -1,0 +1,7 @@
+import java.util.List ;
+import java.util.ArrayList ;
+public class Main {
+    public static void main (String[] args) {
+	List<Integer> test = new List<Integer>(new Integer(2)) ;
+	MyStream monstr = MyStream.makeStream(test) ;
+	System.out.println(monstr.getList()) ;

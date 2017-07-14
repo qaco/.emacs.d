@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include "miroir.h"
+
+int main(int argc, char* argv[]) {
+
+  char* entree ;
+  char* sortie ;
+  FILE* source ;
+  FILE* image ;
+
+  argv++ ;
+  argc-- ;
+
+
+  if (argc == 2) {
+    entree = *argv ;
+    sortie = *(argv+1) ;
+    source = fopen(entree, "r") ;
+    image = fopen(sortie, "w") ;
+    miroir(source,image) ;
+    fclose(source) ;
+    fclose(image) ;
+  }
+}

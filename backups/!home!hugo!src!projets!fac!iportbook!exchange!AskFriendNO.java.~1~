@@ -1,0 +1,5 @@
+public class AskFriendNO implements Protocol {
+    public String ToString() {
+        return "FRIE<+++" ;
+    }
+}

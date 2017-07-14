@@ -1,0 +1,16 @@
+import Root
+
+class Logo(Root.AbstractCalc):
+    def __init__(self, logo_path, myframe):
+        super().__init__(self, myframe.upper_size, myframe.corner, myframe.size)
+        self.raw_logo = Image.open(logo_path)
+
+    def set_in_space(self):
+        Misc.minimize_image(self.raw_logo, self.size)
+        self.size = self.raw_logo.size
+        xcorn = self.frame.corner[0] + (self.frame.size[0] - self.size[0])/2
+        self.corner = int(xcorn), self.corner[1]
+
+    def process_img(self):
+        self.img = Image.new('RGBA', self.upper_size, Misc.TRANSPARENCY)
+        self.img.paste(self.raw_logo, self.corner)

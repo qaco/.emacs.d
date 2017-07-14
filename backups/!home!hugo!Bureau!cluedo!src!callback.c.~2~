@@ -1,0 +1,42 @@
+#include <gtk/gtk.h>
+#include "game.h"
+
+static Joueur* humain ;
+
+void he_is_the_human(Joueur* joueur) {
+  humain = joueur ;
+}
+
+gboolean cb_click_on_tile (GtkWidget *event_box,
+			   GdkEvent  *event,
+			   gpointer data) {
+  move_joueur(humain, event_box) ;
+  return TRUE ;
+}
+
+gboolean test_click_on_tile (GtkWidget *event_box,
+			       GdkEvent  *event,
+			       gpointer data) {
+  int x,y ;
+  GtkWidget
+    *stack = gtk_widget_get_parent (event_box),
+    *grid = gtk_widget_get_parent(stack) ;
+  GValue gval = G_VALUE_INIT ;
+
+  g_value_init (&gval, G_TYPE_INT);
+  
+  gtk_container_child_get_property ((GtkContainer*)grid,
+				    stack,
+				    "left-attach",
+				    &gval);
+  x = g_value_get_int (&gval);
+  gtk_container_child_get_property ((GtkContainer*)grid,
+				    stack,
+				    "top-attach",
+				    &gval);
+  y = g_value_get_int (&gval);
+  
+  printf("%d,%d,%c\n", x,y,*((char*)data)) ;
+
+  return TRUE ;
+}

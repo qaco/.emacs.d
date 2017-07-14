@@ -1,0 +1,149 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <time.h>
+#include <limits.h>
+
+#define ASCII_TO_INT 48
+#define SIZE_PATH 1024
+#define SIZE_DATE 19
+#define SIZE_YEAR 4
+#define SIZE_MONTH 2
+#define SIZE_DAY 2
+#define SIZE_HOUR 2
+#define S_TO_N 1000000000
+
+int puissance(int x, int exposant) {
+  int res = 1 ;
+  for (int i = 0 ; i < exposant ; i++)
+    res *= x ;
+  return res ;
+}
+
+int string_to_int(char* string) {
+  int res = 0 ;
+  int exp = strlen(string) - 1 ;
+  while (*string != '\0') {
+    res += (*string - ASCII_TO_INT) * puissance(10, exp) ;
+    exp-- ;
+    string++ ;
+  }
+  return res ;
+}
+
+void extract_date(char** source, int size,
+		  int* dest, int diff, int min, int max,
+		  int test_sep, char sep) {
+  char* extrait = malloc(sizeof(char)*SIZE_DATE) ;
+  strncpy(extrait, *source, size) ;
+  *source = *source + size ;
+  *dest = string_to_int(extrait) + diff ;
+  if (test_sep && **source != sep) {
+    perror("format : séparateur incorrect") ;
+    exit(EXIT_FAILURE) ;
+  }
+  else if (test_sep)
+    (*source)++ ;
+  if (*dest < min || *dest > max) {
+    perror("data : saisie hors des bornes autorisées") ;
+    exit(EXIT_FAILURE) ;
+  }
+
+  free(extrait) ;
+}
+  
+
+int main(int argc, char* argv[]) {
+  int descripteur ;
+  mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH ;
+  int a = 0, m = 0, d = 0 ;
+  struct timespec tab[2] ;
+  struct tm date ;
+  
+  argc-- ;
+  argv++ ;
+
+  while(argc > 0 && *argv[0] == '-') {
+    char const *temp = argv[0] + 1;
+    size_t i;
+    for (i = 0 ; temp[i] ; i++) {
+      switch(temp[i]) {
+      case 'a' :
+	a = 1 ;
+	break ;
+      case 'm' :
+	m = 1 ;
+	break ;
+      case 'd' :
+	d = 1 ;
+	break ;
+      default :
+	goto execution ;
+	break ;
+      }
+    }
+    argc-- ;
+    argv++ ;
+  }
+      
+ execution :
+  
+  if (d) {
+    char *temp = argv[0] ;
+    if (strlen(temp) != SIZE_DATE) {
+      perror("date : informations insuffisantes") ;
+      return EXIT_FAILURE ;
+    }
+    extract_date(&temp, SIZE_YEAR,
+		 &date.tm_year, -1900, INT_MIN, INT_MAX, 1, '-') ;
+    extract_date(&temp, SIZE_MONTH,
+		 &date.tm_mon, -1, 0, 11, 1, '-') ;
+    extract_date(&temp, SIZE_DAY,
+		 &date.tm_mday, 0, 1, 31, 1, 'T') ;
+    extract_date(&temp, SIZE_HOUR,
+		 &date.tm_hour, 0, 0, 23, 1, ':') ;
+    extract_date(&temp, SIZE_HOUR,
+		 &date.tm_min, 0, 0, 59, 1, ':') ;
+    extract_date(&temp, SIZE_HOUR,
+		 &date.tm_sec, 0, 0, 59, 0, ':') ;
+
+    date.tm_isdst = 0 ;
+
+    tab[0].tv_sec = mktime(&date) ;
+    tab[1].tv_sec = mktime(&date) ;
+  }
+  else {
+    tab[0].tv_nsec = UTIME_NOW ;
+    tab[1].tv_nsec = UTIME_NOW ;
+  }
+  
+  if (!a)
+    tab[0].tv_nsec = UTIME_OMIT ;
+  if (!m)
+    tab[1].tv_nsec = UTIME_OMIT ;
+
+  if (!argc) {
+    perror("touch: opérande de fichier manquant") ;
+    return EXIT_FAILURE ;
+  }
+  
+  while (argc) {
+    if(access(*(argv + argc - 1), F_OK)) { // n'existe pas
+      descripteur = creat(*(argv + argc - 1), mode) ;
+      futimens(descripteur, tab) ;
+      close(descripteur) ;
+    }
+
+    else { // existe 
+      utimensat(AT_FDCWD, *(argv + argc - 1), tab, 0) ;
+    }
+
+    argc-- ;
+    argv++ ;
+  }
+
+  return 0 ;
+}

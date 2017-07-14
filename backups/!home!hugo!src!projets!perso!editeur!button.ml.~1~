@@ -1,0 +1,50 @@
+open Graphics
+open String
+
+(* type origin = int*int *)
+(* type size = int*int *)
+(* type location = origin*size *)
+(* type button = location*string*bool *)
+
+let button_build myorigin mysize label =
+  ((myorigin, mysize), grey, label)
+
+let get_border_width button = match button with
+    ((_,(w,h)), _) -> (min w h)/5 
+
+let get_text_orig button = match button with
+    (((x,y),(w,h)), lab) ->
+    let b = get_border_width button in
+    let tsize = text_size lab in
+    let xoffset = (w - b - (fst tsize))/2 in
+    let yoffset = (h - b - (snd tsize))/2 in
+    if (xoffset > 0 && yoffset > 0) then (x + xoffset, y + yoffset)
+    else (x,y)                  (* exception *)
+                       
+let button_highlight button = match button with
+    (((x,y),(w,h)), lab) ->
+    set_color grey ;
+    let b = get_border_width button in
+    fill_rectangle x y w h ;
+    set_color white ;
+    fill_rectangle (x+b) (y+b) (w-b) (h-b) ;
+    set_color black ;
+    moveto (get_text_orig button) ;
+    draw_string lab
+
+let button_press button = match button with
+    (((x,y),(w,h)), lab) ->
+    set_color grey ;
+    fill_rectangle x y w h ;
+    set_color black ;
+    moveto (get_text_orig button) ;
+    draw_string lab
+
+let draw_button button = match button with
+    (((x,y),(w,h)), lab) ->
+    set_color grey ;
+    draw_rectangle x y w h ;
+    set_color black ;
+    moveto (get_text_orig button) ;
+    draw_string lab
+    

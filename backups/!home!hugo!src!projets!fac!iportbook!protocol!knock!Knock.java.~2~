@@ -1,0 +1,36 @@
+package protocol.knock ;
+
+public abstract class Knock {
+    protected byte lowest ;
+    protected byte highest ;
+
+    public Knock(int flows) {
+        // this.lowest = (byte) (flows & 0xFF) ;
+        // this.highest = (byte) ((flows >> 8) & 0xFF) ;
+        this.lowest = (byte) (flows) ;
+        this.highest = (byte) (flows >> 8) ;
+    }
+
+    public Knock(byte mylow, byte myhigh) {
+        this.lowest = mylow ;
+        this.highest = myhigh ;
+    }
+
+    public int getNumFlows() {
+        return lowest | highest << 8 ;
+    }
+        
+    public byte[] getArray() {
+        byte arr[] = { this.getCode(), this.lowest, this.highest } ;
+        return arr ;
+    }
+
+    public abstract byte getCode() ;
+    public abstract String popUp() ;
+
+    public void exec() {
+        System.out.println(this.popUp()) ;
+        System.out.println(String.valueOf(this.getNumFlows()) +
+                           " flows waiting.") ;
+    }
+}

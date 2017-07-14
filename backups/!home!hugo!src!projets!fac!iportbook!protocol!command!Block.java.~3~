@@ -1,0 +1,56 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.* ;
+import service.User ;
+import protocol.feedback.* ;
+import protocol.field.* ;
+import java.util.List ;
+import java.io.IOException ;
+
+public class Block implements Command {
+    private IdField id ;
+
+    public Block (byte[] myid) throws UnknownResultException {
+        this.id = new IdField(myid) ;
+    }
+    
+    public Block (String myid) {
+        this.id = new IdField(myid) ;
+    }
+
+    public void exec(User one, List<User> all) throws UnknownResultException,
+                                                      IOException {
+        if (!User.ListContainsUser(all, this.id.toString())) {
+            one.sendTCP(new BlockNO()) ;
+            throw new NotExecutableException("Block", this.id.toString() +
+                                             " does not exist");
+        }
+        else if (one.isBlocking(this.id.toString())) {
+            one.sendTCP(new BlockNO()) ;
+            throw new NotExecutableException("Block", this.id.toString() +
+                                             " blocked yet");
+        }
+        else {
+            User guy = User.getUserFromList(this.id.toString(), all) ;
+            one.block(guy) ;
+            one.sendTCP(new BlockOK()) ;
+            this.describeBlock(one.getId()) ;
+        }
+    }
+
+    public byte[] toBytes() {
+        Field[] fields = { this.id } ;
+        return Field.makeSentence(CommandVals.BLOCK, fields) ;
+    }
+    
+    public String toString() {
+        return
+            CommandVals.BLOCK + " " + this.id.toString() +
+            MainVals.EOF ;
+    }
+
+    private void describeBlock(String whoasks) {
+        MainVals.describe(this.id.toString()+" blocked by "+whoasks) ;
+    }
+}

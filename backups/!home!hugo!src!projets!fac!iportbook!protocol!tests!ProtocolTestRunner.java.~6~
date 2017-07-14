@@ -1,0 +1,17 @@
+package protocol.tests ;
+
+import java.util.List ;
+import java.util.LinkedList ;
+
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+
+public class ProtocolTestRunner {
+    public static List<Result> run() {
+        List<Result> r = new LinkedList<Result>() ;
+        r.add(JUnitCore.runClasses(CommandFactoryTest.class));
+        r.add(JUnitCore.runClasses(FeedbackFactoryTest.class));
+        r.add(JUnitCore.runClasses(FlowFactoryTest.class));
+        return r ;
+    }
+}

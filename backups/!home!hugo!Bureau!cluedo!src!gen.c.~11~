@@ -1,0 +1,95 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <gtk/gtk.h>
+#include <glib-object.h>
+#include "callback.h"
+
+#define TILEMAP_PATH "../ressources/images/allmap.jpg"
+#define TEXTMAP_PATH "../ressources/conf/map.cluedo"
+#define DEST_SIZE 20
+#define SRC_SIZE 37
+#define V_TILES  26
+#define H_TILES  24
+
+char** gen_text_map() {
+  char tmp ;
+  FILE* file = fopen(TEXTMAP_PATH, "r") ;
+  char** res = malloc(V_TILES*sizeof(char*)) ;
+  for (int i = 0 ; i < V_TILES ; i++)
+    *(res+i) = malloc(H_TILES*sizeof(char)+1) ;
+  int i = 0, j = 0 ;
+  do {
+    tmp = fgetc(file) ;
+    if (tmp == '\n') {
+      *(*(res + i) + j) = '\0' ;
+      i++ ;
+      j = 0 ;
+    }
+    else {
+      *(*(res + i) + j) = tmp ;
+      j++ ;
+    }
+  } while (i < V_TILES - 1 || j < H_TILES) ;
+  fclose(file) ;
+  
+  return res ;
+}
+
+GtkWidget* gen_tile_map(char*** data) {
+  GtkWidget
+    *grid = gtk_grid_new (),
+    *overlay, *event_box, *image ;
+  GError* gerror = NULL ;
+  GdkPixbuf
+    *all_tiles = gdk_pixbuf_new_from_file (TILEMAP_PATH, &gerror),
+    *tmp, *done ;
+
+  // On vérifie que le chargement du pixbuf s'est passé sans problème
+  if(!all_tiles) {
+    printf("error message: %s\n", gerror->message);
+    exit(1);
+  }
+  
+  for (int i = 0 ; i < V_TILES ; i++) {
+    for (int j = 0 ; j < H_TILES ; j++) {
+      /* On récupère, redimensionne et convertit en image chaque tile
+	 de la map */
+      tmp = gdk_pixbuf_new_subpixbuf (all_tiles,
+				      j*SRC_SIZE,
+				      i*SRC_SIZE,
+				      SRC_SIZE,
+				      SRC_SIZE);
+      done = gdk_pixbuf_scale_simple (tmp,
+				      DEST_SIZE,
+				      DEST_SIZE,
+				      GDK_INTERP_BILINEAR) ;
+      image = gtk_image_new_from_pixbuf(done) ;
+
+      /* On stocke l'image dans une eventbox, configurée pour appeler
+	 cb_click_on_tile au clic, en lui passant le caractère
+	 descripteur du tile */
+      event_box = gtk_event_box_new() ;
+      gtk_container_add (GTK_CONTAINER (event_box), image);
+      gtk_widget_set_events (event_box, GDK_BUTTON_PRESS_MASK);
+      g_signal_connect (event_box,
+			"button_press_event",
+			G_CALLBACK (cb_click_on_tile),
+			*(*data + i) + j);
+      
+      // On stocke l'eventbox dans un overlay, que l'on ajoute au grid
+      overlay = gtk_overlay_new() ;
+      gtk_container_add (GTK_CONTAINER (overlay), event_box);
+      gtk_grid_attach ((GtkGrid*)grid, overlay,
+		       j, i, 1, 1);
+      
+
+    }
+  }
+  return grid ;
+}
+
+void gen_joueur_coordinates(int personnage, int* x, int* y) {}
+
+joueur** gen_joueurs() {
+
+}

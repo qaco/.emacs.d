@@ -1,0 +1,11 @@
+JFLAGS = -cp /usr/share/java/junit4.jar
+JC = javac
+CODE = Protocol.java Registration.java Connection.java AskFriend.java FirstMessage.java SomeMessage.java FlooMessage.java Useless.java ProtocolFactory.java
+TCASES = ProtocolFactoryTest.java
+RUNNER = TestRunner.java
+
+tests: $(CODE) $(TCASES) $(RUNNER)
+	$(JC) $(JFLAGS) $^
+
+clean:
+	$(RM) *.class

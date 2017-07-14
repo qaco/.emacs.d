@@ -1,0 +1,33 @@
+public class Carte {
+    Signe signe ;
+    Valeur valeur ;
+
+    public Carte(String s, Valeur v) {
+	this.signe = Couleur.valueOf(s) ;
+	this.valeur = Valeur.valueOf(c) ;
+    }
+
+    public String getSigne() {
+	return signe ;
+    }
+
+    public int getValeur() {
+	return valeur.getValeur() ;
+    }
+
+    public boolean isFigure() {
+	return valeur.isFigure() ;
+    }
+
+    public boolean sameSigne(Carte c) {
+	return (signe.compareTo (c.getSigne()) == 0) ;
+    }
+
+    public boolean sameValeur(Carte c) {
+	return (getValeur() == c.getValeur()) ;
+    }
+
+    public boolean isCarteSpeciale() {
+	return getValeur() == 2 || getValeur() == 8 || getValeur() == 10 ;
+    }
+}

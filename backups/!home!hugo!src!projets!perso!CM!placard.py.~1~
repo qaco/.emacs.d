@@ -1,0 +1,116 @@
+#! /usr/bin/env python3
+
+import sys
+from abc import ABC, abstractmethod
+from math import sqrt
+from PIL import Image, ImageDraw, ImageFont
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+# Constantes image
+IMG_MAX_WIDTH = 1200
+IMG_MAX_HEIGHT = 630
+# OPACITY = 204
+MASK_OPACITY = 230
+PHI = (1+sqrt(5))/2
+FONT_PATH="fonts/Ubuntu-B.ttf"
+OFFSET_RATIO = 30
+# Constantes gtk
+WINDOW_WIDTH = 600
+WINDOW_HEIGHT = 400
+IMG_PANEL_WIDTH = int(WINDOW_WIDTH/PHI)
+PARAM_PANEL_WIDTH = WINDOW_WIDTH - IMG_PANEL_WIDTH
+
+class calc:
+    def __init__(self):
+        self.img = None
+        self.corner = None
+        self.size = None
+
+    def gen_img(self):
+        pass
+
+class mask(calc):
+    def __init__(self):
+        self.color = (0, 0, 0, MASK_OPACITY)
+
+    def bottomize_golden_ratio(self, upper_size):
+        self.corner = 0, int(upper_size[1]/PHI)
+        self.size = upper_size[0], upper_size[1] - self.corner[1]
+
+    def gen_img(self, virgin):
+        draw = ImageDraw.Draw(virgin, 'RGBA')
+        draw.rectangle([self.corner, self.size], self.color)
+        self.img = virgin
+        
+class slogan(calc):
+    def __init__(self, mycalc, mytext):
+        self.font = None
+        self.text = mytext
+        self.color = (255,255,255)
+        offset = max(mycalc.size[0], mycalc.size[1])/OFFSET_RATIO
+        self.corner = int(mycalc.corner[0] + offset), int(mycalc.corner[1] + offset)
+        self.size = int(mycalc.size[0] - offset*2), int(mycalc.size[1] - offset*2)
+
+    def write_biggest(self) :
+        img_tmp = Image.new('RGBA', (IMG_MAX_WIDTH, IMG_MAX_HEIGHT), self.color)
+        draw = ImageDraw.Draw(img_tmp, 'RGBA')
+        fontsize = 0
+        test = True
+        while test:
+            fontsize += 1
+            self.font = ImageFont.truetype(FONT_PATH, fontsize)
+            stringsize = draw.textsize(self.text, self.font)
+            test = stringsize[0] < self.size[0] and stringsize[1] < self.size[1]
+        stringsize = draw.textsize(self.text, self.font)
+            
+    def gen_img(self):
+        self.img = Image.new('RGBA', self.size, (0,0,0,0))
+        draw = ImageDraw.Draw(self.img, 'RGBA')
+        draw.text(self.corner, self.text, self.color, self.font)
+        
+class canvas:
+
+    def __init__(self):
+        self.img = None
+        self.onion = []
+        self.mask = -1
+        self.slogan = -1
+        
+    def set_img(self, path):
+        self.img = Image.open(path)
+        self.img.convert('RGBA')
+        size = (self.img.width, self.img.height)
+        while size[0] > IMG_MAX_WIDTH or size[1] > IMG_MAX_HEIGHT :
+            if size[0] > size[1] : size = IMG_MAX_WIDTH, size[1]
+            else : size = size[0], IMG_MAX_HEIGHT
+            self.main_img.thumbnail(size)
+            size = (self.main_img.width, self.main_img.height)
+
+    def set_mask(self):
+        self.onion.append(mask())
+        self.mask = len(self.onion) - 1
+        self.onion[self.mask].bottomize_golden_ratio(self.img.size)
+        self.onion[self.mask].gen_img(self.img.copy())
+
+    def set_slogan(self,mytext):
+        self.onion.append(slogan(self.onion[self.mask], mytext))
+        self.slogan = len(self.onion) - 1
+        self.onion[self.slogan] = slogan(self.onion[self.mask], mytext)
+        self.onion[self.slogan].write_biggest()
+        self.onion[self.slogan].gen_img(self.img.copy())
+
+    def merge_calcs(self) :
+        for calc in self.onion :
+            Image.alpha_composite(self.img, calc.img)
+        
+filename = sys.argv[1]
+im = canvas()
+im.set_img(filename)
+im.set_mask()
+# im.set_slogan("HELLO ÉVARISTE")
+im.merge_calcs()
+im.img.show()
+        
+    

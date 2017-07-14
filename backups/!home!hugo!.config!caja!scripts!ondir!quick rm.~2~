@@ -1,0 +1,4 @@
+#!/bin/bash
+param=$(zenity --entry --text="Saisir le motif à supprimer" --title="quick rm")
+output=$(mv --backup=numbered -f "$param" ~/.local/share/Trash/files)
+

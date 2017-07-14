@@ -1,0 +1,27 @@
+open Interaction;;
+
+
+;;
+
+(* Traite les arguments de la ligne de commandes. *)
+let main cmds =
+  (* Vérifie si une string désigne un entier. *)
+  let is_int s =
+    try ignore (int_of_string s); true
+    with _ -> false in
+  let istaxicab = ref true
+  and israndom = ref false
+  and howmany = ref 0 in
+  for i = 1 to (Array.length cmds) - 1 do
+    if (is_int cmds.(i)) then
+      begin
+        howmany := int_of_string cmds.(i) ;
+        israndom := true
+      end
+    else if (String.compare "e" cmds.(i) = 0) then
+      istaxicab := false
+  done ;
+  monitor !istaxicab !israndom !howmany 900
+;;
+
+  main Sys.argv ;;

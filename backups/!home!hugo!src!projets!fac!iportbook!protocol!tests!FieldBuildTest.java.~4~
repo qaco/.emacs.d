@@ -1,0 +1,200 @@
+package protocol.tests ;
+
+import exception.UnknownResultException ;
+import protocol.field.* ;
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+public class FieldBuildTest {
+
+    // MESS
+    
+    // PASS
+
+    @Test
+    public final void testSimplePassVal() {
+        PassField f = new PassField(530) ;
+        assertEquals(530, f.getInt()) ;
+    }
+
+    @Test
+    public final void testSimplePassSize() {
+        PassField f = new PassField(530) ;
+        byte b[] = f.toBytes() ;
+        assertEquals(2, b.length) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testTooBigPass() {
+        new PassField(100000) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testNegativePass() {
+        new PassField(-5) ;
+    }
+    
+    // IP
+
+    @Test
+    public final void testToJamIp() {
+        Field f = new IpDiffField("122.7") ;
+        assertTrue(f.toString().equals("122.7##########")) ;
+    }
+
+    @Test
+    public final void testToJamIpSize() {
+        Field f = new IpDiffField("122.7") ;
+        assertEquals(15, f.toString().length()) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testTooLongIp() {
+        new IpDiffField("111111111111111111") ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testIpWithLetters() {
+        new IpDiffField("aaa") ;
+    }
+    
+    // ID 
+
+    @Test
+    public final void testSimpleIdVal() {
+        Field f = new IdField("haha") ;
+        assertTrue(f.toString().equals("haha")) ;
+    }
+
+    @Test
+    public final void testSimpleIdSize() {
+        Field f = new IdField("hahahaha") ;
+        assertTrue(f.toString().length() <= 8) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testTooLongId() {
+        new IdField("hahaaaaaaaaaaaaaaaaa") ;
+    }
+
+    @Test
+    public final void testNotAsciiId() {
+        Field f = new IdField("héhé") ;
+        assertFalse(f.toString().equals("héhé")) ;
+    }
+
+    // PORT
+
+    @Test
+    public final void testSimplePortVal() {
+        NumStringField f = new PortField(723) ;
+        assertEquals(723, f.getInt()) ;
+    }
+
+    @Test
+    public final void testSimplePortSize() {
+        NumStringField f = new PortField(30) ;
+        byte a[] = f.toBytes() ;
+        assertEquals(4, a.length) ;
+    }
+
+    
+    @Test
+    public final void testToJamPort() {
+        NumStringField f = new PortField(30) ;
+        assertEquals("0030", f.toString()) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testNegativePort() {
+        new PortField(-5) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testTooBigPort() {
+        new PortField(10000) ;
+    }
+    
+    @Test(expected=UnknownResultException.class)
+    public final void testLettersInPort() throws UnknownResultException { 
+        byte b[] = { 97, 38 } ; 
+        new PortField(b) ;
+    }
+    
+    // NUM ITEM
+
+    @Test
+    public final void testSimpleNumItemVal() {
+        NumStringField f = new NumItemField(723) ;
+        assertEquals(723, f.getInt()) ;
+    }
+
+    @Test
+    public final void testSimpleNumItemSize() {
+        NumStringField f = new NumItemField(30) ;
+        byte a[] = f.toBytes() ;
+        assertEquals(3, a.length) ;
+    }
+
+    
+    @Test
+    public final void testToJamNumItem() {
+        NumStringField f = new NumItemField(30) ;
+        assertEquals("030", f.toString()) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testNegativeNumItem() {
+        new NumItemField(-5) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testTooBigNumItem() {
+        new NumItemField(1000) ;
+    }
+    
+    @Test(expected=UnknownResultException.class)
+    public final void testLettersInNumItem() throws UnknownResultException { 
+        byte b[] = { 97, 38 } ; 
+        new NumItemField(b) ;
+    }
+    
+    // NUM MESS
+    
+    @Test
+    public final void testSimpleNumMessVal() {
+        NumStringField f = new NumMessField(7230) ;
+        assertEquals(7230, f.getInt()) ;
+    }
+
+    @Test
+    public final void testSimpleNumMessSize() {
+        NumStringField f = new NumMessField(7230) ;
+        byte a[] = f.toBytes() ;
+        assertEquals(4, a.length) ;
+    }
+
+    
+    @Test
+    public final void testToJamNumMess() {
+        NumStringField f = new NumMessField(30) ;
+        assertEquals("0030", f.toString()) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testNegativeNumMess() {
+        new NumMessField(-5) ;
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public final void testTooBigNumMess() {
+        new NumMessField(10000) ;
+    }
+    
+    @Test(expected=UnknownResultException.class)
+    public final void testLettersInNumMess() throws UnknownResultException { 
+        byte b[] = { 97, 38 } ; 
+        new NumMessField(b) ;
+    }
+}

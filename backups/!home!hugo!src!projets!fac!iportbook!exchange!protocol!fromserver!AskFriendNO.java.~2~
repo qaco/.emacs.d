@@ -1,0 +1,7 @@
+package protocol.fromserver ;
+import protocol.* ;
+public class AskFriendNO implements Protocol {
+    public String toString() {
+        return "FRIE<+++" ;
+    }
+}

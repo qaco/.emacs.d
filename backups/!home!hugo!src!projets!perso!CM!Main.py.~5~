@@ -1,0 +1,18 @@
+#! /usr/bin/env python3
+
+import Misc, Make, View
+from PIL import Image
+
+imgpath = "images/lenin.jpg"
+shut_col = (0, 0, 0, 230)
+text = "VIVENT LES SOVIETS"
+font = "fonts/Ubuntu-B.ttf"
+logopath = "images/pcf2.png"
+work = Make.Canvas()
+
+work.create_img(imgpath)
+work.create_shutter(Misc.BOTTOM_SHUTTER, shut_col)
+work.create_slogan_on_shutter(Misc.NAIVE_SLOGAN, text, font, "white")
+work.create_logo_on_text(Misc.BOTTOM_SLOGAN, logopath)
+im = work.merge_calcs()
+im.show()

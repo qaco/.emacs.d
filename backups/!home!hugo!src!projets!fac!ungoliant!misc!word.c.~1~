@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "word.h"
+
+Word clone_word(const Word toclone)
+{
+  Word res ;
+  res.memory = malloc(sizeof(char)*(toclone.size)) ;
+  memcpy(res.memory,toclone.memory, toclone.size) ;
+  res.size = toclone.size ;
+  return res ;
+}
+
+Word construct_word(const char *src, const size_t n)
+{
+  Word res ;
+  res.memory = malloc(sizeof(char) * n) ;
+  memcpy(res.memory, src, sizeof(char)*n) ;
+  res.size = n ;
+  return res ;
+}
+
+Word construct_empty_word()
+{
+  Word res ;
+  res.memory = NULL ;
+  res.size = 0 ;
+  return res ;
+}
+
+char* get_cstring_word(const Word myword)
+{
+  char* res = malloc(sizeof(char)*(myword.size + 1)) ;
+  memcpy(res, myword.memory, myword.size) ;
+  *(res + myword.size) = '\0' ;
+  return res ;
+}
+
+int get_content_word(const Word src, const size_t nchars, char* dest)
+{
+  if (nchars > src.size || nchars < 0)
+    return EXIT_FAILURE ;
+  memcpy(dest, src.memory, nchars*sizeof(char)) ;
+  return EXIT_SUCCESS ;
+}
+
+size_t get_size_word(const Word myword)
+{
+  return myword.size ;
+}
+
+void add_chars_word(Word* dest, const char* seq, const size_t nb)
+{
+  dest->memory = realloc(dest->memory, dest->size + nb + 1) ;
+  memcpy(&(dest->memory[dest->size]), seq, nb);
+  dest->size += nb ;
+  dest->memory[dest->size] = 0;
+}
+
+void destruct_word(Word* myword)
+{
+  free(myword->memory) ;
+  myword->memory = NULL ;
+  myword->size = -1 ;
+}
+
+int print_word(const Word myword, FILE* stream)
+{
+  for (int i = 0 ; i < myword.size ; i++)
+    if (fprintf(stream, "%c", *(myword.memory + i)) < 0)
+      return EXIT_FAILURE ;
+  return EXIT_SUCCESS ;
+}

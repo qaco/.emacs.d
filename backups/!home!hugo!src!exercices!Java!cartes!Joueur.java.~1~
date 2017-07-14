@@ -1,0 +1,24 @@
+java.util.ArrayList ;
+
+public class Joueur {
+    private static int numJoueur = 0 ;
+    private int id ;
+    private Plateau plateau ;
+    private ArrayList<Case> main ;
+
+    public Joueur(Plateau p) {
+	this.id = numJoueur++ ;
+	this.plateau = p ;
+	main = new ArrayList<Case>() ;
+	for (int i = 0 ; i < 8 ; i++)
+	    main.add(plateau.piocher()) ;
+    }
+
+    public String toString() {
+	String s = "Joueur " + String.valueOf(id) + "\n" ;
+	for (Case tmp : main)
+	    s += " " + tmp.toString() + "," ;
+	return s ;
+    }
+}
+	

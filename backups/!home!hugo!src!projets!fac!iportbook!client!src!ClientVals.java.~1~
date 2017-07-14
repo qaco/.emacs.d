@@ -1,0 +1,16 @@
+package client.src ;
+    
+public class ClientVals {
+    public static final String DECONNEXION = "deconnexion";
+    public static final String FR_REQUEST = "friend request";
+    public static final String MESSAGE = "message to";
+    public static final String FLOOD = "flood";
+    public static final String LIST = "connected list";
+    public static final String FR_LIST = "friend list";
+    public static final String DIRECT = "direct";
+    public static final String CONSULTATION = "consultation";
+    public static final String BLOCK = "block";
+    public static final String UNBLOCK = "unblock";
+    public static final String FR_REMOVE = "remove friend";
+    public static final String UNSUB = "unsub";    
+}

@@ -1,0 +1,624 @@
+;; -*- coding: utf-8 -*-
+(("Mojang" "Mojang" "https://mojang.com/" (22610 22857 581 326000) feed 0 nil nil ((title nil "Mojang") (description nil "Mojang
+") (link nil "https://mojang.com/") (link ((href . "https://mojang.com/feed.xml") (rel . "self") (type . "application/rss+xml"))) (pubDate nil "Thu, 08 Dec 2016 00:01:00 +0100") (lastBuildDate nil "Thu, 08 Dec 2016 00:01:00 +0100") (generator nil "Jekyll") (item nil (title nil "Shouldn't you be on Minecraft.net right now?") (description nil "<p>Hey! </p>
+
+<p>This blog is no longer the go-to place for official Minecraft news! From now on we’ll be posting snapshots, updates, and lots, lots more on <a href=\"https://minecraft.net/en/\">Minecraft.net</a>. </p>
+
+<p><a href=\"https://minecraft.net/en/\">Minecraft.net</a>! Bookmark it! Make it your homepage! Print it on a t-shirt (don’t use our assets because you might get sued by our ruthless enforcement team). </p>
+
+<p>Why have we done this? Learn that and more on <a href=\"https://minecraft.net/en/\">Minecraft.net</a>!</p>
+
+<p>Note: we’ll still use this blog for any Mojang news that’s not relevant to Minecraft. There’s not a lot of that about right now but thought it was worth mentioning. </p>
+
+<p>Thanks! </p>
+
+<p>Owen - <a href=\"https://twitter.com/bopogamel\">@bopogamel</a> and Marsh - <a href=\"https://twitter.com/MarshDavies\">@marshdavies</a></p>
+") (pubDate nil "Thu, 08 Dec 2016 00:01:00 +0100") (link nil "https://mojang.com/2016/12/shouldnt-you-be-on-minecraftnet-right-now/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/12/shouldnt-you-be-on-minecraftnet-right-now/") (category nil "Mojang") (category nil "Minecraft") (category nil "Realms") (category nil "Story Mode") (category nil "Cobalt") (category nil "Scrolls") (category nil "MINECON")) (item nil (title nil "Fight in a fort or toss a tuber") (description nil "<p>Ah, Friday. For many, this signals the start of two free days to kick back and play their favorite games. To help you out with that, we’ve put some new maps on Minecraft Realms for PC, and have brought back some old favorites as well. Whether you’d like to quietly admire new builds by yourself, or frenetically compete with a group of friends, we’ve got something for everyone!</p>
+
+<h2 id=\"hot-potato-by-team-cryus\">Hot Potato by Team Cryus</h2>
+
+<div class=\"mojang-embed\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/Tpr-pzxPyso\" frameborder=\"0\" allowfullscreen=\"\"></iframe></div>
+
+<p>Gather your friends and grab a potato! Hot Potato is the kind of sport where you don’t want to be left holding the ball. Keep your eyes peeled for any agitators rushing you with a spud, and if you get hit, mash your mouse until you pass it off to someone else. These are exploding tubers, so toss them before they detonate!</p>
+
+<h2 id=\"vaslen-by-excessed\">Vaslen by Excessed</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/4a9b948c5eec2a6a3f96401e779092f37883808c/2016-12-01_14.47.33.png\" alt=\"\" /></p>
+
+<p>If you’d like to start a new survival game, but don’t want to stress over building up your farms, fire up this world template. In Vaslen, you’ll find a green mesa and five cozy shacks. Just be careful, this map starts at night!</p>
+
+<h2 id=\"fort-craft-by-gocreative\">Fort Craft by goCreative</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/41221ba1783bf436ba095f3215cf99f120166768/2016-12-01_12.20.22.png\" alt=\"\" /></p>
+
+<p>Zombies gather to attack, beginning their approach to your fort. The narrow canyon walls make it difficult for the creatures to move in groups, and from your perch in the guard tower, you line up the perfect shot. With a quiver of arrows and a bit of luck, the sun will be up before the monsters reach you.</p>
+
+<h2 id=\"other-additions\">Other additions</h2>
+
+<p>We have another round of 1.11 compatibility updates for you! If you haven’t played these before, give them a try. This week, the following maps make their return to Realms:</p>
+
+<ul>
+  <li><a href=\"https://www.youtube.com/watch?v=Q9pG-7ohljw\">Valley of Kings</a></li>
+  <li>Trick or Treat</li>
+  <li>Sunburn Phoenix</li>
+  <li><a href=\"https://www.youtube.com/watch?v=aqxAcekj5cw\">Makers Wars</a></li>
+</ul>
+
+<p>We also have a special mention, for anyone that didn’t catch the <a href=\"http://www.mojang.com/2016/11/share-your-real-life-minecraft-moments/\">Light Your Way Home blog post</a>. The map, aptly titled Light Your Way Home, is part of the #MinecraftIRL campaign, designed to blur the lines between the real world and the crafted world. You can grab this map on Realms, under the adventure map category.</p>
+
+<h2 id=\"winter-is-on-the-way\">Winter is… on the way</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/0fbd2a45c1b6b65908659bd353b68f2a84465689/2016-11-27_18.08.12.png\" alt=\"\" /></p>
+
+<p>Our next Realms content update, appropriately winter and/or holiday themed, is on December 16th! Make sure that you check in on that day for another blog post filled with all of the details.</p>
+
+<p>If you’re curious about how to get your own creations on Minecraft Realms, check out our updated guidelines over at <a href=\"https://www.reddit.com/r/realms/comments/5flvue/must_read_so_you_want_to_submit_your_map_to\">/r/Realms</a>.</p>
+
+<p>That’s all for now! See you next time!</p>
+
+<p>Marc - <a href=\"https://twitter.com/marc_IRL\">@Marc_IRL</a></p>
+") (pubDate nil "Fri, 02 Dec 2016 22:45:00 +0100") (link nil "https://mojang.com/2016/12/fight-in-a-fort-or-toss-a-tuber/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/12/fight-in-a-fort-or-toss-a-tuber/") (category nil "Realms")) (item nil (title nil "Pocket Edition is 5 years old! Have a trailer for 1.0!") (description nil "<p>What a long way we’ve come! At its inception, Pocket Edition was little more than an experiment by mega-brained Mojang coder, Aron Nieminen. It was pretty bare bones - just the most minimal Minecrafty features in mobile form, hammered together in a mere three months.</p>
+
+<p>As Aron says: “It wasn’t even supposed to have multiplayer at first, and the first internal version only had an ASCII renderer!”</p>
+
+<p>It’s since grown into one of our most popular versions of Minecraft, with over 40 million players, who are now able to enjoy the rich features of redstone, join each other on Realms, and across platforms, race each other on pigback, wail on witches and - with the upcoming Ender Update - battle the ultimate boss: The Ender Dragon.</p>
+
+<!--more-->
+
+<p>The Ender Update will bring the game version up to the big 1.0, in honour of introducing Minecraft’s complete ‘gameplay loop’, as the devs like to say. But even though we’ve brought you The End, we’re a long way from finished with Pocket Edition. We have all kinds of interesting and exciting things planned - you’ll see!</p>
+
+<p>In the meantime, prepare yourself for the showdown with the Ender Dragon by watching the trailer above, and get psyched about these other 1.0 features:</p>
+
+<ul>
+  <li>World Seed Library! We’re making it even easier for you to locate weird and wonderful worlds with this curated catalogue of superior seeds.</li>
+  <li>Polar bears! Snowy biomes will now be prowled by these majestic beasts - but take care around cubs. The parents are very protective.</li>
+  <li>Music! The original soundtrack finally arrives on mobile versions of the game, having already graced Windows 10. We don’t want our jams to jam up your internet pipes though, so it’s available to download separately from the main game.</li>
+  <li>Oculus Touch support! Windows 10 players now have the option to use special VR waggle sticks to control the game! It’s well sci-fi!</li>
+</ul>
+
+<p>Anyway, happy birthday, Pocket Edition! See you all in another five years!</p>
+
+<p>Cheerio!</p>
+
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>
+") (pubDate nil "Thu, 01 Dec 2016 17:00:00 +0100") (link nil "https://mojang.com/2016/12/pocket-edition-is-5-years-old-have-a-trailer-for-10/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/12/pocket-edition-is-5-years-old-have-a-trailer-for-10/") (category nil "Mojang") (category nil "Minecraft")) (item nil (title nil "Share your real-life Minecraft moments!") (description nil "<p>Hey!</p>
+
+<p>Minecraft can be a funny old game. Over the years, crafters have uncovered a wealth of secrets, and developed a bunch of unique ways to play. Dirt block towers, pigs with saddles, chests packed with mushroom stew - over time, these things have become almost… normal.</p>
+
+<!--more-->
+
+<p>For the near future, we’re celebrating some of the funkiest bits of Minecraft. Keen <a href=\"https://www.facebook.com/minecraft\">Facebook</a> and <a href=\"https://twitter.com/Minecraft/status/801233285028265984\">Twitter</a> users might have noticed that we’ve already created an LA installation that references the way shrewd Minecrafters use torches to light their way back home. We also uploaded a unique L.A. map to Minecraft Realms for Minecraft Java that features loads of mini-games themed around light. In case you don’t have access to a Realm we’ve also made it available to download <a href=\"https://aka.ms/lightyourwayhome\">here</a>.</p>
+
+<p><img src=\"https://media.mojang.com/blog-image/3af5eb64668f22f124af2548190d66512ec048a0/LWYH_MiniGameScreenCapture_SantaMonicaPier.jpeg\" alt=\"\" /></p>
+
+<p>When players at the installation complete the mini-games, a huge sign gets lit up. It’s so massive that airborne travellers can read it from the sky! It’s an awe-inspiring sight, and just one of the ways we’re championing the way you play.</p>
+
+<p>You’ll see a lot more of these things over the next few weeks. Follow us on Facebook or check our Twitter to keep up to date. Even better, get involved yourself! Think of some of your favorite things to do in Minecraft and re-create them in the real world. Of course, don’t do anything dangerous like putting a bucket full of lava in your backpack. That’s just dumb.</p>
+
+<p>Oh, and don’t forget Share your Minecraft IRL moments with the hashtag #MinecraftIRL so we can find them easily and retweet our faves!</p>
+
+<p>Have a great day, everyone!</p>
+
+<p>Owen - <a href=\"https://twitter.com/Bopogamel\">@bopogamel</a></p>
+") (pubDate nil "Wed, 23 Nov 2016 18:06:00 +0100") (link nil "https://mojang.com/2016/11/share-your-real-life-minecraft-moments/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/share-your-real-life-minecraft-moments/") (category nil "Mojang") (category nil "Minecraft") (category nil "Realms")) (item nil (title nil "Go googly-eyed! Cartoon textures on Pocket / Win 10!") (description nil "<p>Turn your world into a toon with the latest texture pack to arrive on Pocket and Windows 10 Edition! Give your pigs a higher derp factor - and resolution to boot. Reshape villagers’ noses! Make sheep look startled!</p>
+
+<!--more-->
+
+<p>Have a look at the screenshots below:</p>
+
+<p><img src=\"https://media.mojang.com/blog-image/038a034a2c8c45cfa620afa93989b25b3b03400b/cartoon_03.jpg\" alt=\"\" /></p>
+
+<p><img src=\"https://media.mojang.com/blog-image/d9d20da4f3a8e8e725a5683129bcea4b3b11f7f1/cartoon_04.jpg\" alt=\"\" /></p>
+
+<p><img src=\"https://media.mojang.com/blog-image/e3ebe577478235ec01e456df35315d1bf8966c1e/cartoon_02.jpg\" alt=\"\" /></p>
+
+<p>Enjoy!</p>
+
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>
+") (pubDate nil "Tue, 22 Nov 2016 18:00:00 +0100") (link nil "https://mojang.com/2016/11/googly-eyes-goofy-grins-cartoon-texture-pack-now-on-pocket-win-10/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/googly-eyes-goofy-grins-cartoon-texture-pack-now-on-pocket-win-10/") (category nil "Minecraft")) (item nil (title nil "On consoles this holiday: Elytra, End Cities & more") (description nil "<p>We’ve prepared a rather spectacular seasonal gift for Console Edition. As is traditional, you’ll have to wait until late December to open up the full package, but we’re happy to give you a teeny preview today - the digital equivalent of letting you sneak downstairs and give your gift-wrapped goodies a little inquisitive shake.</p>
+
+<!--more-->
+
+<p>That’s if you can even lift the box - this is the biggest update we’ve put out this year! There are new mobs, blocks, items, status effects and all manner of other tweaks. Here are a few of the things you might hear rattling round inside:</p>
+
+<ul>
+  <li>Elytra! Soar through The End on your freshly-minted insectoid glider, or, if you’d rather practice first, why not put your aerobatic skills to the test by generating a world with the new Amplified Terrain option?</li>
+  <li>End Cities, replete with End Ships, Chorus Plants, Chorus Flowers and Purpur blocks. Not all is as it seems, however - some blocks may conceal Shulkers, limpet-like enemies who fire homing rockets. Take a hit and you’ll take damage and experience something new, too: levitation! Elytra are essential to avoid an uncomfortable landing.</li>
+  <li>You can now use Dragon’s Breath to create Lingering Potions - throwable potions that leave a bubbling slick behind, ideal for ensnaring unwary pursuers.</li>
+</ul>
+
+<p>There’s quite a few other stocking-fillers in there, too - but you’ll just have to wait for the free update to launch to unwrap its other mysteries!</p>
+
+<p>Cheerio!</p>
+
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>
+
+<p><img src=\"https://media.mojang.com/blog-image/f742ac2a821c4b2288d2177f6a24f6aa37239f34/Release1-10b_Shot2.png\" alt=\"\" /></p>
+") (pubDate nil "Tue, 22 Nov 2016 15:00:00 +0100") (link nil "https://mojang.com/2016/11/on-consoles-this-holiday-elytra-end-cities-and-amped-up-terrain/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/on-consoles-this-holiday-elytra-end-cities-and-amped-up-terrain/") (category nil "Minecraft")) (item nil (title nil "Bop a buddy or journey through jungles") (description nil "<p>Welcome back, Minecrafters, to another Friday of PC Realms maps! Based on last week’s numbers, loads of you went nuts for <a href=\"http://www.mojang.com/2016/11/be-a-bear-or-duel-a-dragon/\">A Giant Quest</a>! We had fun stomping around and staring down the dragon as well.</p>
+
+<p>Let’s get into this week’s maps!</p>
+
+<h2 id=\"makers-punch-by-minemakers-team\">Makers Punch by MineMakers Team</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/ec514f148d569dc18c4f90f2d28bd854b104980c/2016-11-18_12.43.57.png\" alt=\"\" /></p>
+
+<p>Makers Punch was a natural choice for inclusion on Realms. It was a fun and error-free minigame from the start, and it reminded us of the fan favorite, Knockback Madness, seasoned with design elements from MineMakers Team’s Makers Spleef. The goal of knocking your enemies flying off the platform is simple, but learning the jumps and items will give you an advantage as you and your friends play this game over and over.</p>
+
+<!--more-->
+
+<h2 id=\"the-lost-civilization-by-blockception-and-mojang\">The Lost Civilization by Blockception and Mojang</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/9fd7348b9436bcfa9a26bb4a98fcd2b3cdbdc5de/AAD7AjR.png\" alt=\"\" /></p>
+
+<p>We occasionally reach out to build teams for special projects, such as the <a href=\"http://www.mojang.com/2016/11/watch-last-nights-halloween-stream-creepy-add-ons-abound\">House of Horrors</a> earlier this month. For Minecraft 1.11, we worked with Blockception to show you some of this version’s <a href=\"http://www.mojang.com/2016/11/seek-out-the-exploration-update-111-on-pc-mac-now/\">new features</a>, and it made sense to make it available through Realms as well. So far, it’s been very popular! You can find this map under the newly-renamed World Template heading.</p>
+
+<h2 id=\"hmm-upgrades\">Hmm, upgrades!</h2>
+
+<p>When Minecraft gets a big update, sometimes we have to retire old maps on Realms. However, through the tireless efforts of many mapmakers, a collection of adventure maps and minigames are already back! Here’s what you can play right now:</p>
+
+<p>TNT Run<br />
+Memory Battle<br />
+3D Minesweeper<br />
+<a href=\"https://www.youtube.com/watch?v=VO4DPGO9IQ4\">Blocked In Combat</a><br />
+<a href=\"https://www.youtube.com/watch?v=B3WVyiBUecU\">Makers Spleef</a><br />
+Wither’s Challenge<br />
+Clambering Cubes<br />
+<a href=\"https://www.youtube.com/watch?v=s7j3wsGgAqU\">Ludo</a><br />
+<a href=\"https://www.youtube.com/watch?v=zwW41Cop9lI\">Imperium</a><br />
+<a href=\"https://www.youtube.com/watch?v=t0JB5VZ-wuc\">Color Run</a><br />
+<a href=\"https://www.youtube.com/watch?v=TE1Y_MkRnOU\">Pumpkin Party</a><br />
+<a href=\"https://www.youtube.com/watch?v=DR4G6J4egdk\">Unsighted Shadow</a><br />
+The Dornenstein Estate<br />
+<a href=\"https://youtu.be/ndBYD9UBfrw\">Herobrine’s Mansion</a><br />
+<a href=\"https://www.youtube.com/watch?v=5PWZXXIRy7c\">Where Next?</a><br />
+<a href=\"https://www.youtube.com/watch?v=tIzLTk3a1Og\">Gray</a><br />
+<a href=\"https://www.youtube.com/watch?v=mA7S6QEMqYI\">Negentropy</a><br />
+<a href=\"https://www.youtube.com/watch?v=oqbwM8ghgAo\">The Present Factory</a><br />
+<a href=\"https://www.youtube.com/watch?v=YMv6pBblrTM\">Don’t Go Insane</a></p>
+
+<p>Like all of the other Realms content, you can find and load these maps by going into your Realms settings and clicking Reset World.</p>
+
+<h2 id=\"news-you-can-use\">News you can use</h2>
+
+<p>However you get your PC Realms news, we’ve added an even easier way to get here and stay up to date. From the main menu of Minecraft for PC, click on Minecraft Realms, then click on the new, fancy black and white newspaper icon.</p>
+
+<p>If you want to see the Realms content duo have adventures with coworkers and special guests, make sure that you follow our streams at <a href=\"https://www.twitch.tv/minecraft\">twitch.tv/Minecraft</a>, where you can catch our Friday broadcasts, as well as a bunch of previous videos.</p>
+
+<p>That’s all for now! See you next time!</p>
+
+<p>Marc - <a href=\"https://twitter.com/marc_IRL\">@Marc_IRL</a></p>
+") (pubDate nil "Fri, 18 Nov 2016 22:17:00 +0100") (link nil "https://mojang.com/2016/11/bop-a-buddy-or-journey-through-jungles/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/bop-a-buddy-or-journey-through-jungles/") (category nil "Realms")) (item nil (title nil "Got time to spare? Try our Hour of Code 2016 Edition!") (description nil "<p>What could you learn in one hour? A little maths? A smattering of English? Some “science”?</p>
+
+<p>Nothing of significance, basically. That’s why you should be delighted that we’ve created a second Hour of Code tutorial, designed to teach you the basics of coding in a mere 60 minutes. We introduce concepts of game design and computer science in easy-to-understand steps before giving insight into mob behavior and more. Of course, to be a master coder like Jens takes more than an hour’s training, but this is a great place to start.</p>
+
+<p>Last year’s hour of code has been played over 31 million times, making it the most popular on the <a href=\"http://Code.org\"><span data-auto-link=\"true\" data-href=\"http://Code.org\">Code.org</span></a> platform. Despite that, we’ve rebuilt the thing so it’s even better than last year’s.</p>
+
+<p>Both the 2015 and 2016 tutorials are now available at <a href=\"http://code.org/minecraft\"><span data-auto-link=\"true\" data-href=\"http://code.org/minecraft\">code.org/minecraft</span></a> so head over and give them a try. Oh, and if you’re still not convinced, watch the chirpy video below.</p>
+
+<div class=\"mojang-embed\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/KJZxmI-45Dg\" frameborder=\"0\" allowfullscreen=\"\"></iframe></div>
+
+<p>Thanks for reading, everyone! Enjoy your hour of code!</p>
+
+<p>Owen - <a href=\"https://twitter.com/Bopogamel\">@bopogamel</a></p>
+") (pubDate nil "Tue, 15 Nov 2016 15:29:00 +0100") (link nil "https://mojang.com/2016/11/got-time-to-spare-try-our-hour-of-code-2016-edition/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/got-time-to-spare-try-our-hour-of-code-2016-edition/") (category nil "Mojang") (category nil "Minecraft")) (item nil (title nil "Seek out the Exploration Update: 1.11 on PC / Mac now!") (description nil "<p>Treasure hunters, rejoice! Update 1.11, aka the Exploration Update, has now made the treacherous journey from snapshot to full release. Our intrepid developers have scaled mighty crags of code, ventured into untamed pre-release territory and battled bugs to bring you wondrous gaming goodies!</p>
+
+<p>If you haven’t got Minecraft for PC / Mac yet: <a href=\"https://minecraft.net/en/store/minecraft/?ref=m\">you can buy it here</a>! It’s fun and gets loads of massive, free updates like this one.</p>
+
+<!--more-->
+
+<p>Some of these goodies may help you on your own journeys, too. 1.11 introduces the Cartographer, a new type of Villager who will exchange your spare emeralds for a map, marking the spot of certain treasure caches. But these locations won’t give up their bounty so easily! Some maps may point you to mysterious Ocean Monuments, patrolled by spiny Guardians, others to Woodland Mansions - a new location, inhabited by the Villagers’ creepy cousins: the Illagers!</p>
+
+<p><img src=\"https://media.mojang.com/blog-image/74aa5ee459a7c408c748dce915b8fdd420403a21/woodlandmansion.png\" alt=\"\" /></p>
+
+<p>These mean and miserly folk do not welcome interlopers: watch out for spells which summon toothsome traps from the floor, or conjure nasty impish foes called Vexes. Survive that, and you’ll find that the Woodland Mansion contains a rather powerful prize: the Totem of Undying. With this trinket to hand, you can face any peril without fear. Fall, and the Totem of Undying will bring you back from the abyss of death itself! Phew!</p>
+
+<p>But how will you transport all your amazing loot? Perhaps saddled to a llama! These noble ruminants will form a caravan train that you lead across the land, and can be decked out with snazzy drapes. They’re pretty feisty, too, and chase off menaces with a hail of spitballs. Cool! Also, ew! Cewl?</p>
+
+<p>[<strong>Update!</strong> Clever Twitter user <a href=\"http://www.twitter.com/adhd_orc\">ADHD_orc</a> points out that llamas aren’t actually ruminants! They’re camelids. Top fact!]</p>
+
+<p>If their inventory is not enough to accommodate your needs, consider packing your chattels into a Shulker Box - a special chest that retains its contents even when knocked down. Handy!</p>
+
+<p>There’s loads more to discover! But you’re brave adventurers, right? Find it for yourself!</p>
+
+<p>Keen to put 1.11 through its paces? Why not begin your journey in <a href=\"https://aka.ms/mclostciv\">this Lost Civilisation map</a>, made to showcase the features of 1.11 by the cool folk at <a href=\"http://www.blockception.com\">Blockception</a>? You can <a href=\"https://aka.ms/mclostciv\">download it</a> or play it on <a href=\"https://minecraft.net/en/realms/\">Realms</a>!</p>
+
+<p>Cheerio!</p>
+
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>
+") (pubDate nil "Mon, 14 Nov 2016 15:00:00 +0100") (link nil "https://mojang.com/2016/11/seek-out-the-exploration-update-111-on-pc-mac-now/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/seek-out-the-exploration-update-111-on-pc-mac-now/") (category nil "Mojang") (category nil "Minecraft")) (item nil (title nil "Pocket and Win 10 getting 1.0 - The Ender Update soon!") (description nil "<p>There comes a time in every Minecraft edition’s life when they evolve from being a mere percentage into a fully fledged number. For Pocket Edition and Windows 10 that time is almost here. 1.0 - The Ender Update is coming!</p>
+
+<p>We didn’t pick that number for the lols. Our next update is packed with features but most significant is probably The End and its iconic inhabitant - The Ender Dragon. Though you can carry on playing after defeating the misunderstood beast, for many, taking it down is the ultimate goal in Minecraft. Something to aim for and achieve after hours of play. A tangible end-game for Survival players.</p>
+
+<!--more-->
+
+<p>Of course, we’ll continue to update Pocket Edition and the Windows 10 Edition beta after this update. There’s plenty more to come!</p>
+
+<p>Also, FYI, this is the update that the Apple TV Edition will ship with when it releases. Why not begin at The End, eh?</p>
+
+<p>Alongside The End we’re also increasing the world height to 256 blocks. If you ask me, a 256 block-high building is a silly, silly thing but I suffer from mild vertigo so take from that what you will. You also get the snazzy new Elytra, known to the average human as “wings”. They’ll give you a whole new perspective on your Minecraft worlds as you float around free as a bird. A bird who can’t fly upwards but is super good at gliding.</p>
+
+<p>There are a lot more features in the new update but we’re not going to go into those right now. We think it would be more fun if you find them out yourselves.</p>
+
+<p>Oh, and <strong>Android users get to test out the beta for themselves</strong>! If you’re playing on an Android device, <a href=\"https://play.google.com/apps/testing/com.mojang.minecraftpe\">sign up here</a> and get testing. Remember though - betas mean we’re still working on the update so expect bugs and weirdness. Tell us if you spot ‘em and let us know what you think <a href=\"https://feedback.minecraft.net/\">here</a>.</p>
+
+<p>Thanks for sticking with us, everyone, no matter which platform you play on! Big congratulations to Pocket and Windows 10 for reaching the big 1.0. And sorry for sending millions of grizzled players into your home, Ender D. We love you really.</p>
+
+<p>Owen - <a href=\"http://www.twitter.com/bopogamel\">@bopogamel</a></p>
+") (pubDate nil "Fri, 11 Nov 2016 17:00:00 +0100") (link nil "https://mojang.com/2016/11/pocket-and-win-10-getting-10-the-ender-update-soon/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/pocket-and-win-10-getting-10-the-ender-update-soon/") (category nil "Mojang") (category nil "Minecraft")))) ("Shouldn't you be on Minecraft.net right now?" "<p>Hey! </p>
+<p>This blog is no longer the go-to place for official Minecraft news! From now on we’ll be posting snapshots, updates, and lots, lots more on <a href=\"https://minecraft.net/en/\">Minecraft.net</a>. </p>
+<p><a href=\"https://minecraft.net/en/\">Minecraft.net</a>! Bookmark it! Make it your homepage! Print it on a t-shirt (don’t use our assets because you might get sued by our ruthless enforcement team). </p>
+<p>Why have we done this? Learn that and more on <a href=\"https://minecraft.net/en/\">Minecraft.net</a>!</p>
+<p>Note: we’ll still use this blog for any Mojang news that’s not relevant to Minecraft. There’s not a lot of that about right now but thought it was worth mentioning. </p>
+<p>Thanks! </p>
+<p>Owen - <a href=\"https://twitter.com/bopogamel\">@bopogamel</a> and Marsh - <a href=\"https://twitter.com/MarshDavies\">@marshdavies</a></p>" "https://mojang.com/2016/12/shouldnt-you-be-on-minecraftnet-right-now/" (22600 38060) new 1 nil nil ((title nil "Shouldn't you be on Minecraft.net right now?") (description nil "<p>Hey! </p>
+
+<p>This blog is no longer the go-to place for official Minecraft news! From now on we’ll be posting snapshots, updates, and lots, lots more on <a href=\"https://minecraft.net/en/\">Minecraft.net</a>. </p>
+
+<p><a href=\"https://minecraft.net/en/\">Minecraft.net</a>! Bookmark it! Make it your homepage! Print it on a t-shirt (don’t use our assets because you might get sued by our ruthless enforcement team). </p>
+
+<p>Why have we done this? Learn that and more on <a href=\"https://minecraft.net/en/\">Minecraft.net</a>!</p>
+
+<p>Note: we’ll still use this blog for any Mojang news that’s not relevant to Minecraft. There’s not a lot of that about right now but thought it was worth mentioning. </p>
+
+<p>Thanks! </p>
+
+<p>Owen - <a href=\"https://twitter.com/bopogamel\">@bopogamel</a> and Marsh - <a href=\"https://twitter.com/MarshDavies\">@marshdavies</a></p>
+") (pubDate nil "Thu, 08 Dec 2016 00:01:00 +0100") (link nil "https://mojang.com/2016/12/shouldnt-you-be-on-minecraftnet-right-now/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/12/shouldnt-you-be-on-minecraftnet-right-now/") (category nil "Mojang") (category nil "Minecraft") (category nil "Realms") (category nil "Story Mode") (category nil "Cobalt") (category nil "Scrolls") (category nil "MINECON"))) ("Fight in a fort or toss a tuber" "<p>Ah, Friday. For many, this signals the start of two free days to kick back and play their favorite games. To help you out with that, we’ve put some new maps on Minecraft Realms for PC, and have brought back some old favorites as well. Whether you’d like to quietly admire new builds by yourself, or frenetically compete with a group of friends, we’ve got something for everyone!</p>
+<h2 id=\"hot-potato-by-team-cryus\">Hot Potato by Team Cryus</h2>
+<div class=\"mojang-embed\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/Tpr-pzxPyso\" frameborder=\"0\" allowfullscreen=\"\"></iframe></div>
+<p>Gather your friends and grab a potato! Hot Potato is the kind of sport where you don’t want to be left holding the ball. Keep your eyes peeled for any agitators rushing you with a spud, and if you get hit, mash your mouse until you pass it off to someone else. These are exploding tubers, so toss them before they detonate!</p>
+<h2 id=\"vaslen-by-excessed\">Vaslen by Excessed</h2>
+<p><img src=\"https://media.mojang.com/blog-image/4a9b948c5eec2a6a3f96401e779092f37883808c/2016-12-01_14.47.33.png\" alt=\"\" /></p>
+<p>If you’d like to start a new survival game, but don’t want to stress over building up your farms, fire up this world template. In Vaslen, you’ll find a green mesa and five cozy shacks. Just be careful, this map starts at night!</p>
+<h2 id=\"fort-craft-by-gocreative\">Fort Craft by goCreative</h2>
+<p><img src=\"https://media.mojang.com/blog-image/41221ba1783bf436ba095f3215cf99f120166768/2016-12-01_12.20.22.png\" alt=\"\" /></p>
+<p>Zombies gather to attack, beginning their approach to your fort. The narrow canyon walls make it difficult for the creatures to move in groups, and from your perch in the guard tower, you line up the perfect shot. With a quiver of arrows and a bit of luck, the sun will be up before the monsters reach you.</p>
+<h2 id=\"other-additions\">Other additions</h2>
+<p>We have another round of 1.11 compatibility updates for you! If you haven’t played these before, give them a try. This week, the following maps make their return to Realms:</p>
+<ul>
+<li><a href=\"https://www.youtube.com/watch?v=Q9pG-7ohljw\">Valley of Kings</a></li>
+<li>Trick or Treat</li>
+<li>Sunburn Phoenix</li>
+<li><a href=\"https://www.youtube.com/watch?v=aqxAcekj5cw\">Makers Wars</a></li>
+</ul>
+<p>We also have a special mention, for anyone that didn’t catch the <a href=\"http://www.mojang.com/2016/11/share-your-real-life-minecraft-moments/\">Light Your Way Home blog post</a>. The map, aptly titled Light Your Way Home, is part of the #MinecraftIRL campaign, designed to blur the lines between the real world and the crafted world. You can grab this map on Realms, under the adventure map category.</p>
+<h2 id=\"winter-is-on-the-way\">Winter is… on the way</h2>
+<p><img src=\"https://media.mojang.com/blog-image/0fbd2a45c1b6b65908659bd353b68f2a84465689/2016-11-27_18.08.12.png\" alt=\"\" /></p>
+<p>Our next Realms content update, appropriately winter and/or holiday themed, is on December 16th! Make sure that you check in on that day for another blog post filled with all of the details.</p>
+<p>If you’re curious about how to get your own creations on Minecraft Realms, check out our updated guidelines over at <a href=\"https://www.reddit.com/r/realms/comments/5flvue/must_read_so_you_want_to_submit_your_map_to\">/r/Realms</a>.</p>
+<p>That’s all for now! See you next time!</p>
+<p>Marc - <a href=\"https://twitter.com/marc_IRL\">@Marc_IRL</a></p>" "https://mojang.com/2016/12/fight-in-a-fort-or-toss-a-tuber/" (22593 60252) new 2 nil nil ((title nil "Fight in a fort or toss a tuber") (description nil "<p>Ah, Friday. For many, this signals the start of two free days to kick back and play their favorite games. To help you out with that, we’ve put some new maps on Minecraft Realms for PC, and have brought back some old favorites as well. Whether you’d like to quietly admire new builds by yourself, or frenetically compete with a group of friends, we’ve got something for everyone!</p>
+
+<h2 id=\"hot-potato-by-team-cryus\">Hot Potato by Team Cryus</h2>
+
+<div class=\"mojang-embed\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/Tpr-pzxPyso\" frameborder=\"0\" allowfullscreen=\"\"></iframe></div>
+
+<p>Gather your friends and grab a potato! Hot Potato is the kind of sport where you don’t want to be left holding the ball. Keep your eyes peeled for any agitators rushing you with a spud, and if you get hit, mash your mouse until you pass it off to someone else. These are exploding tubers, so toss them before they detonate!</p>
+
+<h2 id=\"vaslen-by-excessed\">Vaslen by Excessed</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/4a9b948c5eec2a6a3f96401e779092f37883808c/2016-12-01_14.47.33.png\" alt=\"\" /></p>
+
+<p>If you’d like to start a new survival game, but don’t want to stress over building up your farms, fire up this world template. In Vaslen, you’ll find a green mesa and five cozy shacks. Just be careful, this map starts at night!</p>
+
+<h2 id=\"fort-craft-by-gocreative\">Fort Craft by goCreative</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/41221ba1783bf436ba095f3215cf99f120166768/2016-12-01_12.20.22.png\" alt=\"\" /></p>
+
+<p>Zombies gather to attack, beginning their approach to your fort. The narrow canyon walls make it difficult for the creatures to move in groups, and from your perch in the guard tower, you line up the perfect shot. With a quiver of arrows and a bit of luck, the sun will be up before the monsters reach you.</p>
+
+<h2 id=\"other-additions\">Other additions</h2>
+
+<p>We have another round of 1.11 compatibility updates for you! If you haven’t played these before, give them a try. This week, the following maps make their return to Realms:</p>
+
+<ul>
+  <li><a href=\"https://www.youtube.com/watch?v=Q9pG-7ohljw\">Valley of Kings</a></li>
+  <li>Trick or Treat</li>
+  <li>Sunburn Phoenix</li>
+  <li><a href=\"https://www.youtube.com/watch?v=aqxAcekj5cw\">Makers Wars</a></li>
+</ul>
+
+<p>We also have a special mention, for anyone that didn’t catch the <a href=\"http://www.mojang.com/2016/11/share-your-real-life-minecraft-moments/\">Light Your Way Home blog post</a>. The map, aptly titled Light Your Way Home, is part of the #MinecraftIRL campaign, designed to blur the lines between the real world and the crafted world. You can grab this map on Realms, under the adventure map category.</p>
+
+<h2 id=\"winter-is-on-the-way\">Winter is… on the way</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/0fbd2a45c1b6b65908659bd353b68f2a84465689/2016-11-27_18.08.12.png\" alt=\"\" /></p>
+
+<p>Our next Realms content update, appropriately winter and/or holiday themed, is on December 16th! Make sure that you check in on that day for another blog post filled with all of the details.</p>
+
+<p>If you’re curious about how to get your own creations on Minecraft Realms, check out our updated guidelines over at <a href=\"https://www.reddit.com/r/realms/comments/5flvue/must_read_so_you_want_to_submit_your_map_to\">/r/Realms</a>.</p>
+
+<p>That’s all for now! See you next time!</p>
+
+<p>Marc - <a href=\"https://twitter.com/marc_IRL\">@Marc_IRL</a></p>
+") (pubDate nil "Fri, 02 Dec 2016 22:45:00 +0100") (link nil "https://mojang.com/2016/12/fight-in-a-fort-or-toss-a-tuber/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/12/fight-in-a-fort-or-toss-a-tuber/") (category nil "Realms"))) ("Pocket Edition is 5 years old! Have a trailer for 1.0!" "<p>What a long way we’ve come! At its inception, Pocket Edition was little more than an experiment by mega-brained Mojang coder, Aron Nieminen. It was pretty bare bones - just the most minimal Minecrafty features in mobile form, hammered together in a mere three months.</p>
+<p>As Aron says: “It wasn’t even supposed to have multiplayer at first, and the first internal version only had an ASCII renderer!”</p>
+<p>It’s since grown into one of our most popular versions of Minecraft, with over 40 million players, who are now able to enjoy the rich features of redstone, join each other on Realms, and across platforms, race each other on pigback, wail on witches and - with the upcoming Ender Update - battle the ultimate boss: The Ender Dragon.</p>
+<!--more-->
+<p>The Ender Update will bring the game version up to the big 1.0, in honour of introducing Minecraft’s complete ‘gameplay loop’, as the devs like to say. But even though we’ve brought you The End, we’re a long way from finished with Pocket Edition. We have all kinds of interesting and exciting things planned - you’ll see!</p>
+<p>In the meantime, prepare yourself for the showdown with the Ender Dragon by watching the trailer above, and get psyched about these other 1.0 features:</p>
+<ul>
+<li>World Seed Library! We’re making it even easier for you to locate weird and wonderful worlds with this curated catalogue of superior seeds.</li>
+<li>Polar bears! Snowy biomes will now be prowled by these majestic beasts - but take care around cubs. The parents are very protective.</li>
+<li>Music! The original soundtrack finally arrives on mobile versions of the game, having already graced Windows 10. We don’t want our jams to jam up your internet pipes though, so it’s available to download separately from the main game.</li>
+<li>Oculus Touch support! Windows 10 players now have the option to use special VR waggle sticks to control the game! It’s well sci-fi!</li>
+</ul>
+<p>Anyway, happy birthday, Pocket Edition! See you all in another five years!</p>
+<p>Cheerio!</p>
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>" "https://mojang.com/2016/12/pocket-edition-is-5-years-old-have-a-trailer-for-10/" (22592 18688) new 3 nil nil ((title nil "Pocket Edition is 5 years old! Have a trailer for 1.0!") (description nil "<p>What a long way we’ve come! At its inception, Pocket Edition was little more than an experiment by mega-brained Mojang coder, Aron Nieminen. It was pretty bare bones - just the most minimal Minecrafty features in mobile form, hammered together in a mere three months.</p>
+
+<p>As Aron says: “It wasn’t even supposed to have multiplayer at first, and the first internal version only had an ASCII renderer!”</p>
+
+<p>It’s since grown into one of our most popular versions of Minecraft, with over 40 million players, who are now able to enjoy the rich features of redstone, join each other on Realms, and across platforms, race each other on pigback, wail on witches and - with the upcoming Ender Update - battle the ultimate boss: The Ender Dragon.</p>
+
+<!--more-->
+
+<p>The Ender Update will bring the game version up to the big 1.0, in honour of introducing Minecraft’s complete ‘gameplay loop’, as the devs like to say. But even though we’ve brought you The End, we’re a long way from finished with Pocket Edition. We have all kinds of interesting and exciting things planned - you’ll see!</p>
+
+<p>In the meantime, prepare yourself for the showdown with the Ender Dragon by watching the trailer above, and get psyched about these other 1.0 features:</p>
+
+<ul>
+  <li>World Seed Library! We’re making it even easier for you to locate weird and wonderful worlds with this curated catalogue of superior seeds.</li>
+  <li>Polar bears! Snowy biomes will now be prowled by these majestic beasts - but take care around cubs. The parents are very protective.</li>
+  <li>Music! The original soundtrack finally arrives on mobile versions of the game, having already graced Windows 10. We don’t want our jams to jam up your internet pipes though, so it’s available to download separately from the main game.</li>
+  <li>Oculus Touch support! Windows 10 players now have the option to use special VR waggle sticks to control the game! It’s well sci-fi!</li>
+</ul>
+
+<p>Anyway, happy birthday, Pocket Edition! See you all in another five years!</p>
+
+<p>Cheerio!</p>
+
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>
+") (pubDate nil "Thu, 01 Dec 2016 17:00:00 +0100") (link nil "https://mojang.com/2016/12/pocket-edition-is-5-years-old-have-a-trailer-for-10/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/12/pocket-edition-is-5-years-old-have-a-trailer-for-10/") (category nil "Mojang") (category nil "Minecraft"))) ("Share your real-life Minecraft moments!" "<p>Hey!</p>
+<p>Minecraft can be a funny old game. Over the years, crafters have uncovered a wealth of secrets, and developed a bunch of unique ways to play. Dirt block towers, pigs with saddles, chests packed with mushroom stew - over time, these things have become almost… normal.</p>
+<!--more-->
+<p>For the near future, we’re celebrating some of the funkiest bits of Minecraft. Keen <a href=\"https://www.facebook.com/minecraft\">Facebook</a> and <a href=\"https://twitter.com/Minecraft/status/801233285028265984\">Twitter</a> users might have noticed that we’ve already created an LA installation that references the way shrewd Minecrafters use torches to light their way back home. We also uploaded a unique L.A. map to Minecraft Realms for Minecraft Java that features loads of mini-games themed around light. In case you don’t have access to a Realm we’ve also made it available to download <a href=\"https://aka.ms/lightyourwayhome\">here</a>.</p>
+<p><img src=\"https://media.mojang.com/blog-image/3af5eb64668f22f124af2548190d66512ec048a0/LWYH_MiniGameScreenCapture_SantaMonicaPier.jpeg\" alt=\"\" /></p>
+<p>When players at the installation complete the mini-games, a huge sign gets lit up. It’s so massive that airborne travellers can read it from the sky! It’s an awe-inspiring sight, and just one of the ways we’re championing the way you play.</p>
+<p>You’ll see a lot more of these things over the next few weeks. Follow us on Facebook or check our Twitter to keep up to date. Even better, get involved yourself! Think of some of your favorite things to do in Minecraft and re-create them in the real world. Of course, don’t do anything dangerous like putting a bucket full of lava in your backpack. That’s just dumb.</p>
+<p>Oh, and don’t forget Share your Minecraft IRL moments with the hashtag #MinecraftIRL so we can find them easily and retweet our faves!</p>
+<p>Have a great day, everyone!</p>
+<p>Owen - <a href=\"https://twitter.com/Bopogamel\">@bopogamel</a></p>" "https://mojang.com/2016/11/share-your-real-life-minecraft-moments/" (22581 52344) new 4 nil nil ((title nil "Share your real-life Minecraft moments!") (description nil "<p>Hey!</p>
+
+<p>Minecraft can be a funny old game. Over the years, crafters have uncovered a wealth of secrets, and developed a bunch of unique ways to play. Dirt block towers, pigs with saddles, chests packed with mushroom stew - over time, these things have become almost… normal.</p>
+
+<!--more-->
+
+<p>For the near future, we’re celebrating some of the funkiest bits of Minecraft. Keen <a href=\"https://www.facebook.com/minecraft\">Facebook</a> and <a href=\"https://twitter.com/Minecraft/status/801233285028265984\">Twitter</a> users might have noticed that we’ve already created an LA installation that references the way shrewd Minecrafters use torches to light their way back home. We also uploaded a unique L.A. map to Minecraft Realms for Minecraft Java that features loads of mini-games themed around light. In case you don’t have access to a Realm we’ve also made it available to download <a href=\"https://aka.ms/lightyourwayhome\">here</a>.</p>
+
+<p><img src=\"https://media.mojang.com/blog-image/3af5eb64668f22f124af2548190d66512ec048a0/LWYH_MiniGameScreenCapture_SantaMonicaPier.jpeg\" alt=\"\" /></p>
+
+<p>When players at the installation complete the mini-games, a huge sign gets lit up. It’s so massive that airborne travellers can read it from the sky! It’s an awe-inspiring sight, and just one of the ways we’re championing the way you play.</p>
+
+<p>You’ll see a lot more of these things over the next few weeks. Follow us on Facebook or check our Twitter to keep up to date. Even better, get involved yourself! Think of some of your favorite things to do in Minecraft and re-create them in the real world. Of course, don’t do anything dangerous like putting a bucket full of lava in your backpack. That’s just dumb.</p>
+
+<p>Oh, and don’t forget Share your Minecraft IRL moments with the hashtag #MinecraftIRL so we can find them easily and retweet our faves!</p>
+
+<p>Have a great day, everyone!</p>
+
+<p>Owen - <a href=\"https://twitter.com/Bopogamel\">@bopogamel</a></p>
+") (pubDate nil "Wed, 23 Nov 2016 18:06:00 +0100") (link nil "https://mojang.com/2016/11/share-your-real-life-minecraft-moments/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/share-your-real-life-minecraft-moments/") (category nil "Mojang") (category nil "Minecraft") (category nil "Realms"))) ("Go googly-eyed! Cartoon textures on Pocket / Win 10!" "<p>Turn your world into a toon with the latest texture pack to arrive on Pocket and Windows 10 Edition! Give your pigs a higher derp factor - and resolution to boot. Reshape villagers’ noses! Make sheep look startled!</p>
+<!--more-->
+<p>Have a look at the screenshots below:</p>
+<p><img src=\"https://media.mojang.com/blog-image/038a034a2c8c45cfa620afa93989b25b3b03400b/cartoon_03.jpg\" alt=\"\" /></p>
+<p><img src=\"https://media.mojang.com/blog-image/d9d20da4f3a8e8e725a5683129bcea4b3b11f7f1/cartoon_04.jpg\" alt=\"\" /></p>
+<p><img src=\"https://media.mojang.com/blog-image/e3ebe577478235ec01e456df35315d1bf8966c1e/cartoon_02.jpg\" alt=\"\" /></p>
+<p>Enjoy!</p>
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>" "https://mojang.com/2016/11/googly-eyes-goofy-grins-cartoon-texture-pack-now-on-pocket-win-10/" (22580 31120) new 5 nil nil ((title nil "Go googly-eyed! Cartoon textures on Pocket / Win 10!") (description nil "<p>Turn your world into a toon with the latest texture pack to arrive on Pocket and Windows 10 Edition! Give your pigs a higher derp factor - and resolution to boot. Reshape villagers’ noses! Make sheep look startled!</p>
+
+<!--more-->
+
+<p>Have a look at the screenshots below:</p>
+
+<p><img src=\"https://media.mojang.com/blog-image/038a034a2c8c45cfa620afa93989b25b3b03400b/cartoon_03.jpg\" alt=\"\" /></p>
+
+<p><img src=\"https://media.mojang.com/blog-image/d9d20da4f3a8e8e725a5683129bcea4b3b11f7f1/cartoon_04.jpg\" alt=\"\" /></p>
+
+<p><img src=\"https://media.mojang.com/blog-image/e3ebe577478235ec01e456df35315d1bf8966c1e/cartoon_02.jpg\" alt=\"\" /></p>
+
+<p>Enjoy!</p>
+
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>
+") (pubDate nil "Tue, 22 Nov 2016 18:00:00 +0100") (link nil "https://mojang.com/2016/11/googly-eyes-goofy-grins-cartoon-texture-pack-now-on-pocket-win-10/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/googly-eyes-goofy-grins-cartoon-texture-pack-now-on-pocket-win-10/") (category nil "Minecraft"))) ("On consoles this holiday: Elytra, End Cities & more" "<p>We’ve prepared a rather spectacular seasonal gift for Console Edition. As is traditional, you’ll have to wait until late December to open up the full package, but we’re happy to give you a teeny preview today - the digital equivalent of letting you sneak downstairs and give your gift-wrapped goodies a little inquisitive shake.</p>
+<!--more-->
+<p>That’s if you can even lift the box - this is the biggest update we’ve put out this year! There are new mobs, blocks, items, status effects and all manner of other tweaks. Here are a few of the things you might hear rattling round inside:</p>
+<ul>
+<li>Elytra! Soar through The End on your freshly-minted insectoid glider, or, if you’d rather practice first, why not put your aerobatic skills to the test by generating a world with the new Amplified Terrain option?</li>
+<li>End Cities, replete with End Ships, Chorus Plants, Chorus Flowers and Purpur blocks. Not all is as it seems, however - some blocks may conceal Shulkers, limpet-like enemies who fire homing rockets. Take a hit and you’ll take damage and experience something new, too: levitation! Elytra are essential to avoid an uncomfortable landing.</li>
+<li>You can now use Dragon’s Breath to create Lingering Potions - throwable potions that leave a bubbling slick behind, ideal for ensnaring unwary pursuers.</li>
+</ul>
+<p>There’s quite a few other stocking-fillers in there, too - but you’ll just have to wait for the free update to launch to unwrap its other mysteries!</p>
+<p>Cheerio!</p>
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>
+<p><img src=\"https://media.mojang.com/blog-image/f742ac2a821c4b2288d2177f6a24f6aa37239f34/Release1-10b_Shot2.png\" alt=\"\" /></p>" "https://mojang.com/2016/11/on-consoles-this-holiday-elytra-end-cities-and-amped-up-terrain/" (22580 20320) new 6 nil nil ((title nil "On consoles this holiday: Elytra, End Cities & more") (description nil "<p>We’ve prepared a rather spectacular seasonal gift for Console Edition. As is traditional, you’ll have to wait until late December to open up the full package, but we’re happy to give you a teeny preview today - the digital equivalent of letting you sneak downstairs and give your gift-wrapped goodies a little inquisitive shake.</p>
+
+<!--more-->
+
+<p>That’s if you can even lift the box - this is the biggest update we’ve put out this year! There are new mobs, blocks, items, status effects and all manner of other tweaks. Here are a few of the things you might hear rattling round inside:</p>
+
+<ul>
+  <li>Elytra! Soar through The End on your freshly-minted insectoid glider, or, if you’d rather practice first, why not put your aerobatic skills to the test by generating a world with the new Amplified Terrain option?</li>
+  <li>End Cities, replete with End Ships, Chorus Plants, Chorus Flowers and Purpur blocks. Not all is as it seems, however - some blocks may conceal Shulkers, limpet-like enemies who fire homing rockets. Take a hit and you’ll take damage and experience something new, too: levitation! Elytra are essential to avoid an uncomfortable landing.</li>
+  <li>You can now use Dragon’s Breath to create Lingering Potions - throwable potions that leave a bubbling slick behind, ideal for ensnaring unwary pursuers.</li>
+</ul>
+
+<p>There’s quite a few other stocking-fillers in there, too - but you’ll just have to wait for the free update to launch to unwrap its other mysteries!</p>
+
+<p>Cheerio!</p>
+
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>
+
+<p><img src=\"https://media.mojang.com/blog-image/f742ac2a821c4b2288d2177f6a24f6aa37239f34/Release1-10b_Shot2.png\" alt=\"\" /></p>
+") (pubDate nil "Tue, 22 Nov 2016 15:00:00 +0100") (link nil "https://mojang.com/2016/11/on-consoles-this-holiday-elytra-end-cities-and-amped-up-terrain/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/on-consoles-this-holiday-elytra-end-cities-and-amped-up-terrain/") (category nil "Minecraft"))) ("Bop a buddy or journey through jungles" "<p>Welcome back, Minecrafters, to another Friday of PC Realms maps! Based on last week’s numbers, loads of you went nuts for <a href=\"http://www.mojang.com/2016/11/be-a-bear-or-duel-a-dragon/\">A Giant Quest</a>! We had fun stomping around and staring down the dragon as well.</p>
+<p>Let’s get into this week’s maps!</p>
+<h2 id=\"makers-punch-by-minemakers-team\">Makers Punch by MineMakers Team</h2>
+<p><img src=\"https://media.mojang.com/blog-image/ec514f148d569dc18c4f90f2d28bd854b104980c/2016-11-18_12.43.57.png\" alt=\"\" /></p>
+<p>Makers Punch was a natural choice for inclusion on Realms. It was a fun and error-free minigame from the start, and it reminded us of the fan favorite, Knockback Madness, seasoned with design elements from MineMakers Team’s Makers Spleef. The goal of knocking your enemies flying off the platform is simple, but learning the jumps and items will give you an advantage as you and your friends play this game over and over.</p>
+<!--more-->
+<h2 id=\"the-lost-civilization-by-blockception-and-mojang\">The Lost Civilization by Blockception and Mojang</h2>
+<p><img src=\"https://media.mojang.com/blog-image/9fd7348b9436bcfa9a26bb4a98fcd2b3cdbdc5de/AAD7AjR.png\" alt=\"\" /></p>
+<p>We occasionally reach out to build teams for special projects, such as the <a href=\"http://www.mojang.com/2016/11/watch-last-nights-halloween-stream-creepy-add-ons-abound\">House of Horrors</a> earlier this month. For Minecraft 1.11, we worked with Blockception to show you some of this version’s <a href=\"http://www.mojang.com/2016/11/seek-out-the-exploration-update-111-on-pc-mac-now/\">new features</a>, and it made sense to make it available through Realms as well. So far, it’s been very popular! You can find this map under the newly-renamed World Template heading.</p>
+<h2 id=\"hmm-upgrades\">Hmm, upgrades!</h2>
+<p>When Minecraft gets a big update, sometimes we have to retire old maps on Realms. However, through the tireless efforts of many mapmakers, a collection of adventure maps and minigames are already back! Here’s what you can play right now:</p>
+<p>TNT Run<br />
+Memory Battle<br />
+3D Minesweeper<br />
+<a href=\"https://www.youtube.com/watch?v=VO4DPGO9IQ4\">Blocked In Combat</a><br />
+<a href=\"https://www.youtube.com/watch?v=B3WVyiBUecU\">Makers Spleef</a><br />
+Wither’s Challenge<br />
+Clambering Cubes<br />
+<a href=\"https://www.youtube.com/watch?v=s7j3wsGgAqU\">Ludo</a><br />
+<a href=\"https://www.youtube.com/watch?v=zwW41Cop9lI\">Imperium</a><br />
+<a href=\"https://www.youtube.com/watch?v=t0JB5VZ-wuc\">Color Run</a><br />
+<a href=\"https://www.youtube.com/watch?v=TE1Y_MkRnOU\">Pumpkin Party</a><br />
+<a href=\"https://www.youtube.com/watch?v=DR4G6J4egdk\">Unsighted Shadow</a><br />
+The Dornenstein Estate<br />
+<a href=\"https://youtu.be/ndBYD9UBfrw\">Herobrine’s Mansion</a><br />
+<a href=\"https://www.youtube.com/watch?v=5PWZXXIRy7c\">Where Next?</a><br />
+<a href=\"https://www.youtube.com/watch?v=tIzLTk3a1Og\">Gray</a><br />
+<a href=\"https://www.youtube.com/watch?v=mA7S6QEMqYI\">Negentropy</a><br />
+<a href=\"https://www.youtube.com/watch?v=oqbwM8ghgAo\">The Present Factory</a><br />
+<a href=\"https://www.youtube.com/watch?v=YMv6pBblrTM\">Don’t Go Insane</a></p>
+<p>Like all of the other Realms content, you can find and load these maps by going into your Realms settings and clicking Reset World.</p>
+<h2 id=\"news-you-can-use\">News you can use</h2>
+<p>However you get your PC Realms news, we’ve added an even easier way to get here and stay up to date. From the main menu of Minecraft for PC, click on Minecraft Realms, then click on the new, fancy black and white newspaper icon.</p>
+<p>If you want to see the Realms content duo have adventures with coworkers and special guests, make sure that you follow our streams at <a href=\"https://www.twitch.tv/minecraft\">twitch.tv/Minecraft</a>, where you can catch our Friday broadcasts, as well as a bunch of previous videos.</p>
+<p>That’s all for now! See you next time!</p>
+<p>Marc - <a href=\"https://twitter.com/marc_IRL\">@Marc_IRL</a></p>" "https://mojang.com/2016/11/bop-a-buddy-or-journey-through-jungles/" (22575 28620) new 7 nil nil ((title nil "Bop a buddy or journey through jungles") (description nil "<p>Welcome back, Minecrafters, to another Friday of PC Realms maps! Based on last week’s numbers, loads of you went nuts for <a href=\"http://www.mojang.com/2016/11/be-a-bear-or-duel-a-dragon/\">A Giant Quest</a>! We had fun stomping around and staring down the dragon as well.</p>
+
+<p>Let’s get into this week’s maps!</p>
+
+<h2 id=\"makers-punch-by-minemakers-team\">Makers Punch by MineMakers Team</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/ec514f148d569dc18c4f90f2d28bd854b104980c/2016-11-18_12.43.57.png\" alt=\"\" /></p>
+
+<p>Makers Punch was a natural choice for inclusion on Realms. It was a fun and error-free minigame from the start, and it reminded us of the fan favorite, Knockback Madness, seasoned with design elements from MineMakers Team’s Makers Spleef. The goal of knocking your enemies flying off the platform is simple, but learning the jumps and items will give you an advantage as you and your friends play this game over and over.</p>
+
+<!--more-->
+
+<h2 id=\"the-lost-civilization-by-blockception-and-mojang\">The Lost Civilization by Blockception and Mojang</h2>
+
+<p><img src=\"https://media.mojang.com/blog-image/9fd7348b9436bcfa9a26bb4a98fcd2b3cdbdc5de/AAD7AjR.png\" alt=\"\" /></p>
+
+<p>We occasionally reach out to build teams for special projects, such as the <a href=\"http://www.mojang.com/2016/11/watch-last-nights-halloween-stream-creepy-add-ons-abound\">House of Horrors</a> earlier this month. For Minecraft 1.11, we worked with Blockception to show you some of this version’s <a href=\"http://www.mojang.com/2016/11/seek-out-the-exploration-update-111-on-pc-mac-now/\">new features</a>, and it made sense to make it available through Realms as well. So far, it’s been very popular! You can find this map under the newly-renamed World Template heading.</p>
+
+<h2 id=\"hmm-upgrades\">Hmm, upgrades!</h2>
+
+<p>When Minecraft gets a big update, sometimes we have to retire old maps on Realms. However, through the tireless efforts of many mapmakers, a collection of adventure maps and minigames are already back! Here’s what you can play right now:</p>
+
+<p>TNT Run<br />
+Memory Battle<br />
+3D Minesweeper<br />
+<a href=\"https://www.youtube.com/watch?v=VO4DPGO9IQ4\">Blocked In Combat</a><br />
+<a href=\"https://www.youtube.com/watch?v=B3WVyiBUecU\">Makers Spleef</a><br />
+Wither’s Challenge<br />
+Clambering Cubes<br />
+<a href=\"https://www.youtube.com/watch?v=s7j3wsGgAqU\">Ludo</a><br />
+<a href=\"https://www.youtube.com/watch?v=zwW41Cop9lI\">Imperium</a><br />
+<a href=\"https://www.youtube.com/watch?v=t0JB5VZ-wuc\">Color Run</a><br />
+<a href=\"https://www.youtube.com/watch?v=TE1Y_MkRnOU\">Pumpkin Party</a><br />
+<a href=\"https://www.youtube.com/watch?v=DR4G6J4egdk\">Unsighted Shadow</a><br />
+The Dornenstein Estate<br />
+<a href=\"https://youtu.be/ndBYD9UBfrw\">Herobrine’s Mansion</a><br />
+<a href=\"https://www.youtube.com/watch?v=5PWZXXIRy7c\">Where Next?</a><br />
+<a href=\"https://www.youtube.com/watch?v=tIzLTk3a1Og\">Gray</a><br />
+<a href=\"https://www.youtube.com/watch?v=mA7S6QEMqYI\">Negentropy</a><br />
+<a href=\"https://www.youtube.com/watch?v=oqbwM8ghgAo\">The Present Factory</a><br />
+<a href=\"https://www.youtube.com/watch?v=YMv6pBblrTM\">Don’t Go Insane</a></p>
+
+<p>Like all of the other Realms content, you can find and load these maps by going into your Realms settings and clicking Reset World.</p>
+
+<h2 id=\"news-you-can-use\">News you can use</h2>
+
+<p>However you get your PC Realms news, we’ve added an even easier way to get here and stay up to date. From the main menu of Minecraft for PC, click on Minecraft Realms, then click on the new, fancy black and white newspaper icon.</p>
+
+<p>If you want to see the Realms content duo have adventures with coworkers and special guests, make sure that you follow our streams at <a href=\"https://www.twitch.tv/minecraft\">twitch.tv/Minecraft</a>, where you can catch our Friday broadcasts, as well as a bunch of previous videos.</p>
+
+<p>That’s all for now! See you next time!</p>
+
+<p>Marc - <a href=\"https://twitter.com/marc_IRL\">@Marc_IRL</a></p>
+") (pubDate nil "Fri, 18 Nov 2016 22:17:00 +0100") (link nil "https://mojang.com/2016/11/bop-a-buddy-or-journey-through-jungles/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/bop-a-buddy-or-journey-through-jungles/") (category nil "Realms"))) ("Got time to spare? Try our Hour of Code 2016 Edition!" "<p>What could you learn in one hour? A little maths? A smattering of English? Some “science”?</p>
+<p>Nothing of significance, basically. That’s why you should be delighted that we’ve created a second Hour of Code tutorial, designed to teach you the basics of coding in a mere 60 minutes. We introduce concepts of game design and computer science in easy-to-understand steps before giving insight into mob behavior and more. Of course, to be a master coder like Jens takes more than an hour’s training, but this is a great place to start.</p>
+<p>Last year’s hour of code has been played over 31 million times, making it the most popular on the <a href=\"http://Code.org\"><span data-auto-link=\"true\" data-href=\"http://Code.org\">Code.org</span></a> platform. Despite that, we’ve rebuilt the thing so it’s even better than last year’s.</p>
+<p>Both the 2015 and 2016 tutorials are now available at <a href=\"http://code.org/minecraft\"><span data-auto-link=\"true\" data-href=\"http://code.org/minecraft\">code.org/minecraft</span></a> so head over and give them a try. Oh, and if you’re still not convinced, watch the chirpy video below.</p>
+<div class=\"mojang-embed\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/KJZxmI-45Dg\" frameborder=\"0\" allowfullscreen=\"\"></iframe></div>
+<p>Thanks for reading, everyone! Enjoy your hour of code!</p>
+<p>Owen - <a href=\"https://twitter.com/Bopogamel\">@bopogamel</a></p>" "https://mojang.com/2016/11/got-time-to-spare-try-our-hour-of-code-2016-edition/" (22571 7084) new 8 nil nil ((title nil "Got time to spare? Try our Hour of Code 2016 Edition!") (description nil "<p>What could you learn in one hour? A little maths? A smattering of English? Some “science”?</p>
+
+<p>Nothing of significance, basically. That’s why you should be delighted that we’ve created a second Hour of Code tutorial, designed to teach you the basics of coding in a mere 60 minutes. We introduce concepts of game design and computer science in easy-to-understand steps before giving insight into mob behavior and more. Of course, to be a master coder like Jens takes more than an hour’s training, but this is a great place to start.</p>
+
+<p>Last year’s hour of code has been played over 31 million times, making it the most popular on the <a href=\"http://Code.org\"><span data-auto-link=\"true\" data-href=\"http://Code.org\">Code.org</span></a> platform. Despite that, we’ve rebuilt the thing so it’s even better than last year’s.</p>
+
+<p>Both the 2015 and 2016 tutorials are now available at <a href=\"http://code.org/minecraft\"><span data-auto-link=\"true\" data-href=\"http://code.org/minecraft\">code.org/minecraft</span></a> so head over and give them a try. Oh, and if you’re still not convinced, watch the chirpy video below.</p>
+
+<div class=\"mojang-embed\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/KJZxmI-45Dg\" frameborder=\"0\" allowfullscreen=\"\"></iframe></div>
+
+<p>Thanks for reading, everyone! Enjoy your hour of code!</p>
+
+<p>Owen - <a href=\"https://twitter.com/Bopogamel\">@bopogamel</a></p>
+") (pubDate nil "Tue, 15 Nov 2016 15:29:00 +0100") (link nil "https://mojang.com/2016/11/got-time-to-spare-try-our-hour-of-code-2016-edition/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/got-time-to-spare-try-our-hour-of-code-2016-edition/") (category nil "Mojang") (category nil "Minecraft"))) ("Seek out the Exploration Update: 1.11 on PC / Mac now!" "<p>Treasure hunters, rejoice! Update 1.11, aka the Exploration Update, has now made the treacherous journey from snapshot to full release. Our intrepid developers have scaled mighty crags of code, ventured into untamed pre-release territory and battled bugs to bring you wondrous gaming goodies!</p>
+<p>If you haven’t got Minecraft for PC / Mac yet: <a href=\"https://minecraft.net/en/store/minecraft/?ref=m\">you can buy it here</a>! It’s fun and gets loads of massive, free updates like this one.</p>
+<!--more-->
+<p>Some of these goodies may help you on your own journeys, too. 1.11 introduces the Cartographer, a new type of Villager who will exchange your spare emeralds for a map, marking the spot of certain treasure caches. But these locations won’t give up their bounty so easily! Some maps may point you to mysterious Ocean Monuments, patrolled by spiny Guardians, others to Woodland Mansions - a new location, inhabited by the Villagers’ creepy cousins: the Illagers!</p>
+<p><img src=\"https://media.mojang.com/blog-image/74aa5ee459a7c408c748dce915b8fdd420403a21/woodlandmansion.png\" alt=\"\" /></p>
+<p>These mean and miserly folk do not welcome interlopers: watch out for spells which summon toothsome traps from the floor, or conjure nasty impish foes called Vexes. Survive that, and you’ll find that the Woodland Mansion contains a rather powerful prize: the Totem of Undying. With this trinket to hand, you can face any peril without fear. Fall, and the Totem of Undying will bring you back from the abyss of death itself! Phew!</p>
+<p>But how will you transport all your amazing loot? Perhaps saddled to a llama! These noble ruminants will form a caravan train that you lead across the land, and can be decked out with snazzy drapes. They’re pretty feisty, too, and chase off menaces with a hail of spitballs. Cool! Also, ew! Cewl?</p>
+<p>[<strong>Update!</strong> Clever Twitter user <a href=\"http://www.twitter.com/adhd_orc\">ADHD_orc</a> points out that llamas aren’t actually ruminants! They’re camelids. Top fact!]</p>
+<p>If their inventory is not enough to accommodate your needs, consider packing your chattels into a Shulker Box - a special chest that retains its contents even when knocked down. Handy!</p>
+<p>There’s loads more to discover! But you’re brave adventurers, right? Find it for yourself!</p>
+<p>Keen to put 1.11 through its paces? Why not begin your journey in <a href=\"https://aka.ms/mclostciv\">this Lost Civilisation map</a>, made to showcase the features of 1.11 by the cool folk at <a href=\"http://www.blockception.com\">Blockception</a>? You can <a href=\"https://aka.ms/mclostciv\">download it</a> or play it on <a href=\"https://minecraft.net/en/realms/\">Realms</a>!</p>
+<p>Cheerio!</p>
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>" "https://mojang.com/2016/11/seek-out-the-exploration-update-111-on-pc-mac-now/" (22569 50016) new 9 nil nil ((title nil "Seek out the Exploration Update: 1.11 on PC / Mac now!") (description nil "<p>Treasure hunters, rejoice! Update 1.11, aka the Exploration Update, has now made the treacherous journey from snapshot to full release. Our intrepid developers have scaled mighty crags of code, ventured into untamed pre-release territory and battled bugs to bring you wondrous gaming goodies!</p>
+
+<p>If you haven’t got Minecraft for PC / Mac yet: <a href=\"https://minecraft.net/en/store/minecraft/?ref=m\">you can buy it here</a>! It’s fun and gets loads of massive, free updates like this one.</p>
+
+<!--more-->
+
+<p>Some of these goodies may help you on your own journeys, too. 1.11 introduces the Cartographer, a new type of Villager who will exchange your spare emeralds for a map, marking the spot of certain treasure caches. But these locations won’t give up their bounty so easily! Some maps may point you to mysterious Ocean Monuments, patrolled by spiny Guardians, others to Woodland Mansions - a new location, inhabited by the Villagers’ creepy cousins: the Illagers!</p>
+
+<p><img src=\"https://media.mojang.com/blog-image/74aa5ee459a7c408c748dce915b8fdd420403a21/woodlandmansion.png\" alt=\"\" /></p>
+
+<p>These mean and miserly folk do not welcome interlopers: watch out for spells which summon toothsome traps from the floor, or conjure nasty impish foes called Vexes. Survive that, and you’ll find that the Woodland Mansion contains a rather powerful prize: the Totem of Undying. With this trinket to hand, you can face any peril without fear. Fall, and the Totem of Undying will bring you back from the abyss of death itself! Phew!</p>
+
+<p>But how will you transport all your amazing loot? Perhaps saddled to a llama! These noble ruminants will form a caravan train that you lead across the land, and can be decked out with snazzy drapes. They’re pretty feisty, too, and chase off menaces with a hail of spitballs. Cool! Also, ew! Cewl?</p>
+
+<p>[<strong>Update!</strong> Clever Twitter user <a href=\"http://www.twitter.com/adhd_orc\">ADHD_orc</a> points out that llamas aren’t actually ruminants! They’re camelids. Top fact!]</p>
+
+<p>If their inventory is not enough to accommodate your needs, consider packing your chattels into a Shulker Box - a special chest that retains its contents even when knocked down. Handy!</p>
+
+<p>There’s loads more to discover! But you’re brave adventurers, right? Find it for yourself!</p>
+
+<p>Keen to put 1.11 through its paces? Why not begin your journey in <a href=\"https://aka.ms/mclostciv\">this Lost Civilisation map</a>, made to showcase the features of 1.11 by the cool folk at <a href=\"http://www.blockception.com\">Blockception</a>? You can <a href=\"https://aka.ms/mclostciv\">download it</a> or play it on <a href=\"https://minecraft.net/en/realms/\">Realms</a>!</p>
+
+<p>Cheerio!</p>
+
+<p>Marsh - <a href=\"http://www.twitter.com/marshdavies\">@marshdavies</a></p>
+") (pubDate nil "Mon, 14 Nov 2016 15:00:00 +0100") (link nil "https://mojang.com/2016/11/seek-out-the-exploration-update-111-on-pc-mac-now/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/seek-out-the-exploration-update-111-on-pc-mac-now/") (category nil "Mojang") (category nil "Minecraft"))) ("Pocket and Win 10 getting 1.0 - The Ender Update soon!" "<p>There comes a time in every Minecraft edition’s life when they evolve from being a mere percentage into a fully fledged number. For Pocket Edition and Windows 10 that time is almost here. 1.0 - The Ender Update is coming!</p>
+<p>We didn’t pick that number for the lols. Our next update is packed with features but most significant is probably The End and its iconic inhabitant - The Ender Dragon. Though you can carry on playing after defeating the misunderstood beast, for many, taking it down is the ultimate goal in Minecraft. Something to aim for and achieve after hours of play. A tangible end-game for Survival players.</p>
+<!--more-->
+<p>Of course, we’ll continue to update Pocket Edition and the Windows 10 Edition beta after this update. There’s plenty more to come!</p>
+<p>Also, FYI, this is the update that the Apple TV Edition will ship with when it releases. Why not begin at The End, eh?</p>
+<p>Alongside The End we’re also increasing the world height to 256 blocks. If you ask me, a 256 block-high building is a silly, silly thing but I suffer from mild vertigo so take from that what you will. You also get the snazzy new Elytra, known to the average human as “wings”. They’ll give you a whole new perspective on your Minecraft worlds as you float around free as a bird. A bird who can’t fly upwards but is super good at gliding.</p>
+<p>There are a lot more features in the new update but we’re not going to go into those right now. We think it would be more fun if you find them out yourselves.</p>
+<p>Oh, and <strong>Android users get to test out the beta for themselves</strong>! If you’re playing on an Android device, <a href=\"https://play.google.com/apps/testing/com.mojang.minecraftpe\">sign up here</a> and get testing. Remember though - betas mean we’re still working on the update so expect bugs and weirdness. Tell us if you spot ‘em and let us know what you think <a href=\"https://feedback.minecraft.net/\">here</a>.</p>
+<p>Thanks for sticking with us, everyone, no matter which platform you play on! Big congratulations to Pocket and Windows 10 for reaching the big 1.0. And sorry for sending millions of grizzled players into your home, Ender D. We love you really.</p>
+<p>Owen - <a href=\"http://www.twitter.com/bopogamel\">@bopogamel</a></p>" "https://mojang.com/2016/11/pocket-and-win-10-getting-10-the-ender-update-soon/" (22565 60160) new 10 nil nil ((title nil "Pocket and Win 10 getting 1.0 - The Ender Update soon!") (description nil "<p>There comes a time in every Minecraft edition’s life when they evolve from being a mere percentage into a fully fledged number. For Pocket Edition and Windows 10 that time is almost here. 1.0 - The Ender Update is coming!</p>
+
+<p>We didn’t pick that number for the lols. Our next update is packed with features but most significant is probably The End and its iconic inhabitant - The Ender Dragon. Though you can carry on playing after defeating the misunderstood beast, for many, taking it down is the ultimate goal in Minecraft. Something to aim for and achieve after hours of play. A tangible end-game for Survival players.</p>
+
+<!--more-->
+
+<p>Of course, we’ll continue to update Pocket Edition and the Windows 10 Edition beta after this update. There’s plenty more to come!</p>
+
+<p>Also, FYI, this is the update that the Apple TV Edition will ship with when it releases. Why not begin at The End, eh?</p>
+
+<p>Alongside The End we’re also increasing the world height to 256 blocks. If you ask me, a 256 block-high building is a silly, silly thing but I suffer from mild vertigo so take from that what you will. You also get the snazzy new Elytra, known to the average human as “wings”. They’ll give you a whole new perspective on your Minecraft worlds as you float around free as a bird. A bird who can’t fly upwards but is super good at gliding.</p>
+
+<p>There are a lot more features in the new update but we’re not going to go into those right now. We think it would be more fun if you find them out yourselves.</p>
+
+<p>Oh, and <strong>Android users get to test out the beta for themselves</strong>! If you’re playing on an Android device, <a href=\"https://play.google.com/apps/testing/com.mojang.minecraftpe\">sign up here</a> and get testing. Remember though - betas mean we’re still working on the update so expect bugs and weirdness. Tell us if you spot ‘em and let us know what you think <a href=\"https://feedback.minecraft.net/\">here</a>.</p>
+
+<p>Thanks for sticking with us, everyone, no matter which platform you play on! Big congratulations to Pocket and Windows 10 for reaching the big 1.0. And sorry for sending millions of grizzled players into your home, Ender D. We love you really.</p>
+
+<p>Owen - <a href=\"http://www.twitter.com/bopogamel\">@bopogamel</a></p>
+") (pubDate nil "Fri, 11 Nov 2016 17:00:00 +0100") (link nil "https://mojang.com/2016/11/pocket-and-win-10-getting-10-the-ender-update-soon/") (guid ((isPermaLink . "true")) "https://mojang.com/2016/11/pocket-and-win-10-getting-10-the-ender-update-soon/") (category nil "Mojang") (category nil "Minecraft"))))

@@ -1,0 +1,6 @@
+package com.protocol.fromserver ;
+public class MessageNotTransmitted implements Protocol {
+    public String toString() {
+        return "MESS<+++" ;
+    }
+}

@@ -1,0 +1,34 @@
+package protocol ;
+
+import exception.* ;
+
+public class AbstractPub {
+    protected byte ip[] = new byte[4] ;
+    protected int port ;
+    protected String message ;
+
+    public AbstractPub(byte[] i,int p,String m) throws UnknownResultException{
+        this.ip = i ;
+        this.port = p ;
+        this.message = m ;
+        this.checkRules() ;
+    }
+
+    public AbstractPub(String i, String p, String m) throws UnknownResultException {
+        try {
+            this.ip = myip.getBytes() ;
+            this.port = Integer.parseInt(myport) ;
+        } catch (NumberFormatException e) {
+            throw new WrongTypeException() ;
+        }
+        this.message = mymess ;
+        this.checkRules() ;
+    }
+
+    private void checkRules() throws RuleBrokenException {
+        if((this.ip.length != 4 && this.ip.length != 16) ||
+           this.message.size() > MainVals.PUB_SIZE)
+            throw new RuleBrokenException() ;
+    }
+}
+            

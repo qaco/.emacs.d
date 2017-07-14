@@ -1,0 +1,21 @@
+CC=gcc
+CFLAGS=-std=c99 -Wall
+EXEC=main
+SRC=mirroir.c main.c
+OBJ=$(SRC:.c=.o)
+
+all : $(EXEC)
+
+main : $(OBJ)
+	$(CC) -o $@ $^
+
+main.o : mirroir.h
+
+%.o: %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+clean :
+	rm -rf *.o
+
+mrproper : clean
+	rm -rf $(EXEC)

@@ -1,0 +1,8 @@
+#ifndef WORD_TESTS
+#define WORD_TESTS
+
+#include <check.h>
+
+TCase* word_case(void) ;
+
+#endif

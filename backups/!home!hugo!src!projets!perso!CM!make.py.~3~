@@ -1,0 +1,105 @@
+#! /usr/bin/env python3
+
+import sys,abstract, misc
+from PIL import Image, ImageDraw, ImageFont
+
+class bottom_shutter(abstract.shutter):
+    def __init__(self, upper_size):
+        super().__init__(upper_size)
+        
+    def set_in_space(self):
+        self.corner = 0, int(self.upper_size[1]/misc.PHI)
+        self.size = self.upper_size[0], self.upper_size[1] - self.corner[1]
+            
+class logo(abstract.mobile):
+    def __init__(self, logo_path, myframe):
+        super().__init__(myframe, misc.LOGO_RATIO)
+        self.raw_logo = Image.open(logo_path)
+
+    def process_offset(self):
+        offset = min(self.frame.size[0], self.frame.size[1])/self.offset_ratio
+        self.corner = int(self.frame.corner[0] + offset), int(self.frame.corner[1] + offset)
+        self.size = int(self.frame.size[0] - offset*2), int(self.frame.size[1] - offset*2)
+
+    def set_in_space(self):
+        misc.minimize_image(self.raw_logo, self.size)
+        self.size = self.raw_logo.size
+        self.center()
+
+    def process_img(self):
+        self.img = Image.new('RGBA', self.frame.upper_size, misc.TRANSPARENCY)
+        self.img.paste(self.raw_logo, self.corner)
+
+class biggest_slogan(abstract.slogan):
+    def __init__(self, myframe):
+        super().__init__(myframe)
+
+    def set_in_space(self):
+        self.process_offset()
+        max_size = self.size
+        tmp_img = Image.new('RGBA', self.frame.upper_size, misc.TRANSPARENCY)
+        draw = ImageDraw.Draw(tmp_img, 'RGBA')
+        font, istoosmall = None, True
+        while istoosmall:
+            tmp_fontsize = self.fontsize + 1
+            tmp_font = ImageFont.truetype(self.sfont, tmp_fontsize)
+            tmp_size = draw.textsize(self.text, tmp_font)
+            istoosmall = tmp_size[0] < max_size[0] and tmp_size[1] < max_size[1]
+            if istoosmall :
+                self.fontsize = tmp_fontsize
+                font = tmp_font
+                self.size = tmp_size
+        self.center()
+
+class canvas:
+    def __init__(self):
+        self.img = None
+        self.onion = []
+        self.shutteri = -1
+        self.slogani = -1
+        self.logoi = -1
+        
+    def set_img(self, path):
+        self.img = Image.open(path)
+        self.img = self.img.convert('RGBA')
+        misc.minimize_image(self.img, (misc.IMG_MAX[0], misc.IMG_MAX[1]))
+
+    def set_slogan(self,mytext):
+        myshutter = self.onion[self.shutteri]
+        myslogan = biggest_slogan(myshutter.writeable)
+        self.onion.append(myslogan)
+        self.slogani = len(self.onion) - 1
+        myslogan.set_text(mytext)
+        myslogan.process_img()
+
+    def set_shutter(self):
+        myshutter = bottom_shutter(self.img.size)
+        self.onion.append(myshutter)
+        self.shutteri = len(self.onion) - 1
+        myshutter.set_in_space()
+        myshutter.process_img()
+        if self.slogani > -1 :
+            set_slogan(self.onion[self.slogani].text)
+
+    def set_logo(self,slogo):
+        myshutter = self.onion[self.shutteri]
+        myshutter.switch_logo()
+        mylogo = logo(slogo, myshutter.logo_place)
+        self.onion.append(mylogo)
+        self.logoi = len(self.onion) - 1
+        mylogo.set_in_space()
+        mylogo.process_img()
+        
+    def merge_calcs(self) :
+        for calc in self.onion :
+            self.img = Image.alpha_composite(self.img, calc.img)
+
+text = "BONJOUR, ÇA VA ?"
+filename = misc.IMG_PATH
+im = canvas()
+im.set_img(filename)
+im.set_shutter()
+im.set_logo(misc.LOGO_PATH)
+im.set_slogan(text)
+im.merge_calcs()
+im.img.show()

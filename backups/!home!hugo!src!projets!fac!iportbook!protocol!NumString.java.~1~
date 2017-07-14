@@ -1,0 +1,28 @@
+package protocol ;
+
+public abstract class NumStringField {
+
+    public NumStringField(byte[] myfield) throws UnknownResultException {
+        super(myfield) ;
+    }
+
+    public NumStringField(int myfield, int size) {
+        String tmp = String.valueOf(myfield) ;
+        StringBuffer refined = new StringBuffer() ;
+        if (tmp.length() > size)
+            throw new RuleBrokenException("NumString", "too long") ;
+        else if (tmp.length() < size) {
+            for (int i = 0 ; i < size - tmp.length() ; i++)
+                refined.append(ProtocolVals.JAM_NUMSTRING) ;
+        }
+        refined.append(tmp) ;
+        try {
+            super(refined.toString()) ;
+        } catch (UnknownResultExcception e) {
+            throw new IllegalArgumentException() ;
+        }
+    }
+
+    public int getInt() {
+        return Integer.valueOf(this.toString()) ;
+    }

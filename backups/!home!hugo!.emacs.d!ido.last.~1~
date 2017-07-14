@@ -1,0 +1,61 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/hugo/" . "Téléchargements/")
+ ("/home/" . "hugo/")
+ ("/" . "home/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/hugo/src/officiel/coreutils-8.23/src/"
+ "/home/hugo/src/exercices/TPC2/"
+ "/home/hugo/Téléchargements/"
+ "/home/hugo/src/projets/route/"
+ "/home/hugo/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "system.h"
+ "strinfo.c"
+ "strtests.h"
+ "strtests.c"
+ "wc2.c"
+ "intToTab.c"
+ "Kaprekar.c"
+ "communs.c"
+ "tp2.pdf"
+ "readme.txt"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/hugo/src/officiel/coreutils-8.23/src/" (21449 40473 0 0) "tr.c" "ls-dir.c" "find-mount-point.h" "chown-core.h" "./" "../" "chown.c" "uname-uname.c" "stty.c" "ptx.c" "join.c" "fold.c" "printf.c" "rmdir.c" "operand2sig.c" "du.c" "expr.c" "relpath.h" "nice.c" "ls-ls.c" "kill.c" "touch.c" "fmt.c" "yes.c" "mv.c" "dirname.c" "env.c" "runcon.c" "stdbuf.c" "tail.c" "df.c" "pwd.c" "timeout.c" "nohup.c" "tee.c" "head.c" "chmod.c" "coreutils-vdir.c" "fs.h" "find-mount-point.c" "users.c" "operand2sig.h" "mktemp.c" "remove.c" "pr.c" "tsort.c" "ls-vdir.c" "cut.c" "tac.c" "local.mk" "unexpand.c" "id.c" "dircolors.c" "selinux.h" "group-list.h" "dircolors.h" "truncate.c" "c99-to-c89.diff" "ls.h" "nl.c" "nproc.c" "cp-hash.c" "md5sum.c" "fs-is-local.h" "ioblksize.h" "who.c" "remove.h" "groups.c" "readlink.c" "rm.c" "coreutils-arch.c" "cat.c" "uname-arch.c" "whoami.c" "selinux.c" "extent-scan.c" "hostname.c" "uname.h" "echo.c" "system.h" "ls.c" "dircolors.hin" "single-binary.mk" "dcgen" "getlimits.c" "sum.c" "mkdir.c" "numfmt.c" "link.c" "cp-hash.h" "prog-fprintf.h" "cp.c" "extract-magic" "install.c" "csplit.c" "shred.c" "date.c" "paste.c" "sort.c" "copy.h" "comm.c" "true.c" "chown-core.c" "group-list.c" "fiemap.h" "expand.c" "uniq.c" "dd.c" "mknod.c" "sync.c" "test.c" "primes.h" "cksum.c" "relpath.c" "od.c" "pinky.c" "factor.c" "realpath.c" "chcon.c" "false.c" "prog-fprintf.c" "seq.c" "split.c" "libstdbuf.c" "unlink.c" "coreutils.c" "wc.c" "hostid.c" "lbracket.c" "sleep.c" "printenv.c" "shuf.c" "logname.c" "copy.c" "base64.c" "uptime.c" "basename.c" "pathchk.c" "ln.c" "tty.c" "stat.c" "mkfifo.c" "tac-pipe.c" "extent-scan.h" "longlong.h" "coreutils-dir.c" "chgrp.c" "chroot.c" "make-prime-list.c" "uname.c" "cu-progs.mk")
+
+ ("/home/hugo/Téléchargements/" (22510 27320 708462 435000) "serveimage.jpg" "logo_de_la_republique_francaise_0_0.png" "flexslider/" "mes commentaires à vif 27 09 2016.docx" "Article Laicité et droit des femmes.doc" "01.09.2016 - Lettre Laureen GENTHON - r�sidence Logis  Transport.pdf" "librairies drupal/" "LP SIL.pdf" "Game.of.Thrones.S06.VOSTFR.HDTV.x264-ARK01.torrent" "Circuit-vélo-Normandie.doc" "Scream.Queens.2015.S02E01.FASTSUB.VOSTFR.HDTV.x264-ARK01.mp4" "SCREAM.QUEENS.2015.COMPLETE S01.FASTSUB.VOSTFR.HDTV.XviD/" "web-pma-affiche-pcf-dugudus-lgbt.jpg" "Game.Of.Thrones.S04.VOSTFR.DvDRiP.XviD-GKS.torrent" "woothemes-FlexSlider-622f7fd/" "themes drupal/" "SCREAM.QUEENS.2015.COMPLETE S01.FASTSUB.VOSTFR.HDTV.XviD.torrent" "lettre.docx" "2014_Iraq_DisplacedYezidi.jpg" "Formation-SPM-Révolution.docx" "13043423_10209408639476448_6622849397229630933_n.jpg" "o-ABDULLAH-OCALAN-facebook.jpg" "13557834_10153780474372613_5928260608453012952_n.jpg" "attentatistanbul.jpg" "forum-de-la-mixite-142254_w1000.jpg" "android-sdk_r24.4.1-linux.tgz" "[FLAC] Angus & Julia Stone - Down The Way + Red Berries (Bonus Disc)/" "Game.Of.Thrones.S04.VOSTFR.DvDRiP.XviD-GKS/" "Angus & Julia Stone - A Book Like This.torrent" "DSC01781.JPG" "Juana azurduy.jpg" "linuxmint-18-mate-64bit.iso.part" "Game Of Thrones S02 VOSTFR DVDRIP/" "Scream.Queens.2015.S02E01.FASTSUB.VOSTFR.HDTV.x264-ARK01.mp4.torrent" "Angus & Julia Stone - Angus & Julia Stone (2014) [FLAC 24]/" "linuxmint-18-mate-32bit.iso" "GENTHON-Laureen.pdf" "linuxmint-18-mate-64bit.iso.torrent" "pma.png" "Une votation citoyenne à Nanterre pour les législatives de 2017.ppt" "u25_crea202_1.jpg" "startupgrowth-lite-master.zip" "10481987_10205199654928129_4856673079034160097_o.jpg" "YazidiSoldier.jpg" "cours1.pdf" "drupal8/" "laïcité.jpg" "laurence.jpg" "femme-cafe.jpg" "modules drupal/" "01.08.2016 - Trad femmes Yezidi.odt" "groult.png" "MarxismFeminism-Conference_Preliminary Programme .rtf" "web-pma-affiche-pcf-dugudus-lgbt (1).jpg" "Introduction pour les AG CN 24 sept 2016.docx" "13528527_1043860719035161_5703929648659889003_o.jpg" "work_img.jpg" "Intro SPM Révolution.docx" "proposition bulletin mars.doc" "azurduy2.jpg" "Introduction pour les AG CN 24 sept 2016 (1).docx" "drupal-7.44.tar.gz" "14202579_747952415387555_7803118219585205993_n.png" "woothemes-FlexSlider-2.6.1-0-g622f7fd.zip" "Rapport CN 24 sept 2016.docx" "linuxmint-18-mate-32bit.iso.torrent" "work_slide.png" "Familles Apocalypse Package S01-12.12 [Greenthumb].torrent" "How I Met Your Mother Saison 4 VOSTFR.torrent" "How I Met Your Mother Saison 4 VOSTFR/" "o-FEMME-LIBERTE-MAROC-facebook.jpg" "proposition appel.doc" "Game.of.Thrones.S06.VOSTFR.HDTV.x264-ARK01/" "thumb_640.jpg" "Game of Thrones S03 VOSTFR DVDRIP/" "proposition appel (1).doc" "o-YEZIDI-facebook.jpg" "01.08.2016 - Trad femmes Yezidi (1).odt" "14508697_10210471146325642_513889178_n.jpg" "homena1.jpg" "hommefemme_0.jpg" "une.jpg" "tp2.pdf" "[FLAC] Angus & Julia Stone - Down The Way + Red Berries (Bonus Disc).torrent" "Angus & Julia Stone - A Book Like This/" "drupal-7.44.fr.po" "e448e61f708d0feab5861bb4c6ec2604.jpg" "Game.of.Thrones.S05.VOSTFR.WEB-DL.XviD-DESTiNY/" "Formation-SPM-Révolution (2).docx" "HIMYM-Saison 5/" "21446138934_7a61a62a1e_b.jpg" "Sans nom 1 (1).odt" "debian-8.5.0-amd64-netinst.iso.torrent" "debian-8.5.0-amd64-netinst.iso" "14291827_1161130513930484_2470768643733912272_n.jpg" "HIMYM-Saison 5.torrent" "writing.jpg" "Sans nom 1.odt" "2016.08.23.LC.EDITO WEB Magazine.docx" "Logo_de_la_République_française_(1999).svg" "giphy.gif" "Mode d'emploi Congrès PGE déc. 2016.odt" "Planning semaine de rentrée 2016 V7.pdf" "female-fighters-of-the-kurdish-people-s-protection-units-carry-their-weapons-as-they-talk-along-a-road-in-qamishli_5134009.jpg" "linux-firmware/" "writing2.jpg" "introag.odt" "bootia32.efi" "Relevé de décisions CN 24 25 sept 2016.doc" "Game of Thrones S03 VOSTFR DVDRIP.torrent" "4nvICeP (1).jpg" "Article-progressistes-2016.odt" "images site/" "Caussarieu Morgane - Dans les veines.epub" "Angus & Julia Stone - Angus & Julia Stone (2014) [FLAC 24].torrent" "Familles Apocalypse Package S01-12.12 [Greenthumb]/" "Sommes (1).docx" "Game.of.Thrones.S05.VOSTFR.WEB-DL.XviD-DESTiNY.torrent" "startupgrowth-lite-master/" "FlexSlider-master.zip" "Relevé de décisions CN 24 25 sept 2016 (1).doc" "introag.doc" "article genre et espace public.doc" "drupal-7.44/" "Game Of Thrones S02 VOSTFR DVDRIP.torrent" "drupal-8.1.3.tar.gz" "../" "./")
+
+ ("/home/hugo/src/exercices/TPC2/" (22510 27046 780458 5000) "./" "../" "Kaprekar" "calculatrice.c" "calculatrice" "intToTab" "strtests.h" "intToTab.c" "Kaprekar.c" "communs" "strtests.c" "communs.c" "wc2" "wc2.c")
+
+ ("/home/hugo/src/projets/route/" (22509 33412 710296 384000) "./" "../" "ActionIllegaleException.java" "Robot.java" "Route.java" "Case.java" "Ville.java" "readme.txt" "Humain.java" "Joueur.java" "Coordinates.java" "Main.java" "Plateau.java" "NoRouteException.java" "Data.java" "MauvaiseSaisieException.java")
+
+ ("/home/hugo/" (22509 63294 179984 308000) "./" "../" "Bureau/" ".Xauthority" ".thumbnails/" ".gksu.lock" "Documents/" ".mozilla/" ".dmrc" ".local/" ".gstreamer-0.10/" ".bash_history" "src/" "Public/" ".gnupg/" ".mysql_history" ".cache/" ".gconf/" ".profile" ".emacs~" "Modèles/" ".bashrc~" "Musique/" "bin/" ".dbus/" "Téléchargements/" ".bashrc" ".emacs" ".themes/" ".bash_logout" "Livres/" ".gtk-bookmarks" ".aptitude/" ".xsession-errors.old" "Images/" ".pki/" ".icons/" ".config/" ".xsession-errors" ".android/" ".ICEauthority" ".emacs.d/" "Vidéos/" ".gimp-2.8/")
+
+ ("/home/hugo/src/" (22501 63944 385755 552000) "./" "../" "kernel/" "exercices/" "projets/")
+
+ ("/home/hugo/src/exercices/" (22509 64808 868008 806000) "./" "../" "TPC2/" "TPC1.tar" "TPC1/" "test/")
+
+ ("/home/" (22389 36407 867318 741000) "./" "../" "hugo/" "lost+found/")
+
+ ("/media/" (22389 36557 486185 640000) "../" "./" "hugo/" "cdrom0/" "cdrom/")
+
+ ("/media/hugo/" (22392 51892 628487 905000) "../" "./" "USB DISK/")
+
+ ("/media/hugo/USB DISK/" (22392 52139 0 0) "System Volume Information/" "Game of Thrones - S02-E02 - Les contrées nocturnes.avi" "bkp/" "kernel/" "Game of Thrones - S02-E01 - Le Nord se souvient.avi" "../" "./")
+
+ ("/media/hugo/USB DISK/bkp/" (22392 51944 0 0) ".emacs" ".emacs.d/" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

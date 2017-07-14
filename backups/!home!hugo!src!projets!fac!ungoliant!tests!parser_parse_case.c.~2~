@@ -1,0 +1,85 @@
+#include <stdlib.h>
+#include <check.h>
+#include "../misc/word.h"
+#include "../misc/wordlist.h"
+#include "../parse/parser.h"
+#include "../crawl/crawler.h"
+
+Word *goodurl, *badurl ;
+Word *goodhtml, *badhtml ;
+Word *goodurl_in, *badurl_in ;
+Word *goodword_in, *badword_in ;
+WordList *urllist, *wordslist ;
+WordList *goodurllist, *goodwordslist ;
+WordList *badurllist, *badwordslist ;
+
+void parse_setup(void) {
+    goodurl = construct_word(strlen("www.example.com"), 
+			     "www.example.com") ; 
+    badurl = construct_word(strlen("www.qq"), "www.qq") ;
+
+    goodhtml = construct_word(0, NULL) ;
+    crawl_to_ram(goodurl, goodhtml) ;
+    badhtml = construct_word(strlen("<a ddd"), "<a ddd") ;
+
+    urllist = build_empty_wordlist() ; 
+    wordslist = build_empty_wordlist() ; 
+
+    goodurllist = build_empty_wordlist() ;
+    goodurl_in = construct_word(strlen("http://www.iana.org/domains/example"), 
+				"http://www.iana.org/domains/example") ;
+    add_word_wordlist(goodurllist, goodurl_in) ;
+
+    goodwordslist = build_empty_wordlist() ;
+    goodword_in = construct_word(strlen("Example"), "Example") ;
+    add_word_wordlist(goodwordslist, goodword_in) ;
+
+    badurllist = build_empty_wordlist() ;
+    badurl_in = construct_word(strlen("www.no.com"), "www.no.com") ;
+    add_word_wordlist(badurllist, badurl_in) ;
+
+    badwordslist = build_empty_wordlist() ;
+    badword_in = construct_word(strlen("not"), "not") ;
+    add_word_wordlist(badwordslist, badword_in) ;
+
+}
+
+void parse_teardown(void) {
+    destruct_word(goodurl) ;
+    destruct_word(badurl) ;
+    destruct_word(goodhtml) ;
+    destruct_word(badhtml) ;
+    destruct_word(goodurl_in) ;
+    destruct_word(badurl_in) ;
+    destruct_word(goodword_in) ; 
+    destruct_word(badword_in) ;
+    destruct_wordlist(urllist) ;
+    destruct_wordlist(wordslist) ;
+    destruct_wordlist(goodurllist) ;
+    destruct_wordlist(badwordslist) ;
+    destruct_wordlist(badurllist) ; 
+    destruct_wordlist(goodwordslist) ;
+
+}
+
+START_TEST(test_parsing_good) {
+    int ret;
+
+    ret = parse(goodhtml, goodurl, wordslist, urllist) ;
+
+    print_wordlist(wordslist, stdout);
+    print_wordlist(urllist, stdout);
+
+    ck_assert_int_eq(ret, EXIT_SUCCESS) ;
+}
+END_TEST
+
+TCase* parser_parse_case(void) {
+    TCase *tc_parse ;
+
+    tc_parse = tcase_create("Parse");
+    tcase_add_checked_fixture(tc_parse, parse_setup, parse_teardown) ;
+    tcase_add_test(tc_parse, test_parsing_good) ;
+
+    return tc_parse ;
+}

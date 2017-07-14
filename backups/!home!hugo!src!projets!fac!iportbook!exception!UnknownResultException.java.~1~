@@ -1,0 +1,12 @@
+package exception ;
+
+public class IncorrectOperationException extends Exception {
+
+  public SaisieErroneeException() {
+    super();
+  }
+
+  public SaisieErroneeException(String s) {
+    super(s);
+  }
+}

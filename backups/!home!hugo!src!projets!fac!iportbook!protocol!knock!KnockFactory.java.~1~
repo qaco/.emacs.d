@@ -1,0 +1,16 @@
+package knock ;
+
+import exception.UnknownResultException ;
+
+public class KnockFactory {
+    
+    public Knock create (byte[] notif) throws UnknownResultException {
+        if (!notif.length == KnockVals.NUM_BYTES)
+            throw new UnknownResultException() ;
+        switch(notif[0]) {
+        case KnockVals.FRIENDSHIP_CODE :
+            return new FriendShipKnock(notif[1], notif[2]) ;
+        default : throw new UnknownResultException() ;
+        }
+    }
+}

@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+
+#define T_IN "HELO"
+#define T_PINGIN "OKOK"
+#define T_OUT "BYEE"
+#define T_PINGOUT "BYEE"
+#define T_PUBLIC "BCST"
+#define T_PRIVE "PRVT"
+#define T_LIST "LIST"
+#define T_SHUT "SHUT"
+#define T_ADMIN "DEBG"
+
+#define NB_SIZE 4
+
+char* int_to_string(int nb)
+{
+  char* tmp = malloc(sizeof(char)*(NB_SIZE+1)) ;
+  char* res = malloc(sizeof(char)*(NB_SIZE+1)) ;
+  int size ;
+  
+  sprintf(tmp,"%d",nb) ;
+  size = strlen(tmp) ;
+  for (int i = 0 ; i < NB_SIZE - size ; i++)
+    *(res + i) = '0' ;
+  strcpy(res + size, tmp) ;
+  free(tmp) ;
+  return res ;
+}
+
+char* add_a_string (char** init, char *toadd)
+{
+  int issize = strlen(toadd) ;
+  char* ssize = int_to_string(issize) ;
+
+  *init = realloc(*init, strlen(*init) + NB_SIZE + issize + 1) ;
+  strcat(*init, ssize) ;
+  strcat(*init, toadd) ;
+
+  free(ssize) ;
+  return *init ;
+}
+  
+char* build_msg(char* typem, ...)
+{
+  va_list va ;
+  int
+    is_in = strcmp(typem, T_IN) == 0,
+    is_public = strcmp(typem, T_PUBLIC) == 0,
+    is_private = strcmp(typem, T_PRIVE) == 0,
+    is_admin = strcmp(typem, T_ADMIN) == 0 ;
+  int total_size ;
+  char* res = malloc(sizeof(char)*(strlen(typem) + 1)) ;
+  char* new_res ;
+
+  strcpy(res,typem) ;
+  va_start(va,typem) ;
+
+  if (!is_admin && !is_in)
+    {
+      int iid = va_arg(va,int) ;
+      char* sid = int_to_string(iid) ;
+      
+      res = realloc(res, sizeof(char)*(strlen(res) +
+                                 NB_SIZE + 1)) ;
+      strcat(res,sid) ;
+      free(sid) ;
+    }
+
+  if (is_private || is_in)
+    add_a_string(&res, va_arg(va, char*)) ;
+  if (is_public || is_private || is_in)
+    add_a_string(&res, va_arg(va, char*)) ;
+
+  total_size = strlen(res) + NB_SIZE ;
+  printf("%d\n", total_size) ;
+  printf("%s\n", res) ;
+  new_res = int_to_string(total_size) ;
+  add_a_string (&new_res, res) ;
+
+  free(res) ;
+
+  return new_res ;
+}
+
+int main(int argc, char* argv[]) {
+  char* test = build_msg(T_PRIVE, 12, "laureen", "bonjour ça va") ;
+  printf("%s\n", test) ;
+  printf("%d\n", (int) strlen(test)) ;
+}

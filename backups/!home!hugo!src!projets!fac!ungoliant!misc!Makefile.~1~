@@ -1,0 +1,15 @@
+SOURCES = word.c wordlist.c
+OBJS = $(SOURCES:%.c=%.o)
+CC = gcc
+CFLAGS = -std=gnu99 -Wall -Werror -g
+
+all : $(OBJS)
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $<
+
+word.o : word.h
+wordlist.o : wordlist.h
+
+clean : 	
+	rm -f $(OBJS)

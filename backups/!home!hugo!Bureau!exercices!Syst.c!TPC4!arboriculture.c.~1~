@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+typedef struct {
+  arbre* gauche ;
+  arbre* droite ;
+} arbre ;
+
+void arroser(arbre* my_tree) {
+  arbre nouv_gauche ;
+  arbre nouv_droite ;
+  if (my_tree->gauche == NULL && my_tree->droite == NULL) {
+    my_tree->gauche = & nouv_gauche ;
+    my_tree->droite = & nouv_droite ;
+  }
+  else {
+    if (my_tree-> gauche != NULL)
+      arroser(my_tree -
+    
+    
+}

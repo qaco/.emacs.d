@@ -1,0 +1,22 @@
+package protocol.flow ;
+
+import protocol.AbstractPub ;
+
+
+public class PubFlow extends AbstractPub implements Flow {
+    public PubFlow(byte[] myip, int myport, String mymess) {
+        super(myip, myport, mymess) ;
+    }
+
+    public PubFlow(String myip, String myport, String mymess) {
+        super(myip, myport, mymess) ;
+    }
+
+    public String toString() {
+        return
+            FlowVals.PUB + FlowVals.SEP +
+            new String(this.ip) + FlowVals.SEP +
+            String.valueOf(this.port) + FlowVals.SEP +
+            this.message + FlowVals.EOF ;
+    }
+}

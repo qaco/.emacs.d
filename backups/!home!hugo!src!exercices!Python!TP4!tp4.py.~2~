@@ -1,0 +1,6 @@
+def listeversdico(l):
+    return dict( [ (i, v) for i,v in enumerate(l) ] )
+
+def chars(w):
+    mydict = dict()
+    

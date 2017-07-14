@@ -1,0 +1,18 @@
+public class WindowBouton extends JFrame {
+    private JPanel container = new Jpanel() ;
+    private Compteur compt ;
+
+    public WindowBouton(Compteur c) {
+	this.compt = c ;
+	this.setTitle("Bouton");
+	this.setSize(300, 300);
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.setLocationRelativeTo(null);
+ 
+	container.setBackground(Color.white);
+	// container.setLayout(new BorderLayout());
+	
+	this.setContentPane(container);
+	this.setVisible(true);
+
+    }

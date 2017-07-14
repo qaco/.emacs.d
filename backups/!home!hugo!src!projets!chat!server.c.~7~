@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include "aux.h"
+
+int main(int argc, char* argv[]) {
+  char *pseudo, *input ;
+  int server, client ;
+
+  /* Connexion (test formatté pour le pseudo hugo et le tube client hugo) */
+
+  if (access("patron", F_OK )) 
+    mkfifo("patron", S_IRWXU | S_IRWXG | S_IRWXO) ;
+  pseudo = malloc(sizeof(char)*1000) ;
+  server = open("patron", O_RDONLY) ;
+  client = open("hugo", O_WRONLY) ;
+  read(server, pseudo, 24) ;
+  close(server) ;
+  *(pseudo + 24) = '\0' ;
+  write(client, "0012OKOK0003",12) ;
+
+  /* Envoi de message (godmode : tu tapes directement le message que tu
+     veux depuis le serveur, mais il doit respecter le protocole)
+     ex de message : 0031PRVT0008toto0015hello ca va
+  */
+
+  while(1)
+    {
+      close(client) ;
+      input = get_input("# ") ;
+      client = open("hugo", O_WRONLY) ;
+      write(client, input, strlen(input) + 1) ;
+    }
+
+  /* Réception de message (test formatté pour le message bonjour) */
+  
+  /* 
+  sleep(1) ;
+  server = open("patron", O_RDONLY) ;
+  read(server, pseudo, 23) ;
+  *(pseudo + 23) = '\0' ;
+  printf("%s\n", pseudo) ;
+  */
+
+  
+}

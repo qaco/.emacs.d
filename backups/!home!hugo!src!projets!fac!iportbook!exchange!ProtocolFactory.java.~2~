@@ -1,0 +1,35 @@
+public class ProtocolFactory {
+    public Protocol create(String text) {
+        String cmds[] = text.split(" ") ;
+        Protocol res ;
+        try {
+            switch (cmds[0]) {
+            case "REGIS" :
+                res = new Registration (cmds[1], cmds[2], cmds[3]) ;
+                break ;
+            case "CONNE" :
+                res = new Connnection(cmds[1], cmds[2]) ;
+                break ;
+            case "FRIE?" :
+                res = new AskFriend(cmds[1]) ;
+                break ;
+            case "MESS?" :
+                res = new FirstMessage(cmds[1], cmds[2]) ;
+                break ;
+            case "MENUM" :
+                res = new SomeMessage(cmds[1], cmds[2]) ;
+                break ;
+            case "FLOO?" :
+                res = new FlooMessage(cmds[1]) ;
+                break ;
+            default :
+                res = new Useless(text) ;
+                break ;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            res = new Useless(text) ;
+        }
+        return res ;
+    }
+}
+

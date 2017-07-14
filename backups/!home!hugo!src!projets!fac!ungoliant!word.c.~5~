@@ -1,0 +1,147 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Word {
+  char *memory;
+  size_t size;
+  size_t allocated ;
+} Word ;
+
+Word construct_word(const char *src, size_t n)
+{
+  Word res ;
+
+  res.memory = malloc(sizeof(char)*n) ;
+  memcpy(res.memory, src, sizeof(char)*n) ;
+  res.size = n ;
+  res.allocated = n ;
+
+  return res ;
+}
+
+Word construct_empty_word()
+{
+  Word res ;
+
+  res.memory = malloc(sizeof(char)) ;
+  res.size = 0 ;
+  res.allocated = 1 ;
+
+  return res ;
+}
+
+int destruct_word(Word* myword)
+{
+  free(myword->memory) ;
+  myword->size = 0 ;
+  myword->allocated = 0 ;
+
+  return 0 ;
+}
+
+int add_char_word(Word* myword, const char mychar)
+{
+  int ret = 0 ;
+  
+  if (myword->size >= myword->allocated) {
+    myword->memory = realloc(myword->memory, myword->allocated*2) ;
+    myword->allocated *= 2 ;
+  }
+  if (myword->memory) {
+    *(myword->memory + myword->size) = mychar ;
+    myword->size++ ;
+  }
+  else
+    ret++ ;
+
+  return ret ;
+}
+
+int insert_char_word(Word* myword, const char mychar, const int index)
+{
+  int res = -1 ;
+  char *tmp ;
+
+  if (index >= myword->size)
+    goto end ;
+  
+  if (myword->size >= myword->allocated) {
+    tmp = malloc(myword->allocated*2) ;
+    myword->allocated *= 2 ;
+  }
+  else
+    tmp = malloc(myword->allocated) ;
+
+    memcpy(tmp, myword->memory, sizeof(char)*index) ;
+    *(tmp + index) = mychar ;
+    memcpy(tmp + index + 1,
+           myword->memory + index,
+           myword->size - sizeof(char)*(index-1)) ;
+    free(myword->memory) ;
+    myword->memory = tmp ;
+    myword->size++ ;
+    res = 0 ;
+
+ end:
+  return res ;
+}
+
+int remove_char_word(Word* myword, const int index)
+{
+  int res = -1 ;
+  char* tmp ;
+
+  if (index >= myword->size)
+    goto end ;
+
+  if (myword->size <= myword->allocated/4) {
+    tmp = malloc(myword->allocated/2) ;
+    myword->allocated /= 2 ;
+  }
+  else
+    tmp = malloc(myword->allocated) ;
+
+  memcpy(tmp, myword->memory, sizeof(char)*index) ;
+  memcpy(tmp + index,
+         myword->memory + index + 1,
+         myword->size - sizeof(char)*(index + 1)) ;
+  free(myword->memory) ;
+  myword->memory = tmp ;
+  myword->size-- ;
+  res = 0 ;
+
+ end:
+  return res ;
+}
+
+char* get_content_word(const Word myword)
+{
+  return myword.memory ;
+}
+
+char get_char_word(const Word myword, const int index)
+{
+  char res ;
+  
+  if (index < myword.size)
+    res = *(myword.memory + index) ;
+  else
+    res = -1 ;
+
+  return res ;
+}
+
+int get_size_word(const Word myword)
+{
+  return myword.size ;
+}
+
+int print_word(Word myword, FILE* stream)
+{
+  for (int i = 0 ; i < myword.size ; i++)
+    if (fprintf(stream, "%c", *(myword.memory + i)) < 0)
+      return -1 ;
+  fprintf(stream, "\n") ;
+  return 0 ;
+}

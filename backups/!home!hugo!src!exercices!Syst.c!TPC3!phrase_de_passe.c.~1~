@@ -1,0 +1,3 @@
+#include <stdio.h>
+
+char* toString (int taille, char* chaines[]) {

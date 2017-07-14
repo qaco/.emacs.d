@@ -1,0 +1,27 @@
+CC=gcc
+CFLAGS=-std=c99 -Wall
+GTKLINK=`pkg-config --cflags --libs gtk+-2.0`
+EXEC=editeur
+SRC=error.c callbacks.c editeur.c
+OBJ=$(SRC:.c=.o)
+
+all : $(EXEC)
+
+$(EXEC) : $(OBJ)
+	$(CC) -o $@ $^ $(GTKLINK)
+
+check-syntax:
+	gcc -o nul -S ${CHK_SOURCES}
+
+editeur.o: callbacks.h
+
+callbacks.o: error.h
+
+%.o: %.c
+	$(CC) -o $@ -c $< $(CFLAGS) $(GTKLINK)
+
+clean :
+	rm -rf *.o
+
+mrproper : clean
+	rm -rf $(EXEC)

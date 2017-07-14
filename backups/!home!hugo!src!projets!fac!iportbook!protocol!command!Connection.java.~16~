@@ -1,0 +1,97 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.* ;
+import service.User ;
+import protocol.feedback.Hello ;
+import protocol.feedback.Goodbye ;
+import java.net.Socket ;
+import java.util.List ;
+import java.io.OutputStream ;
+import java.io.OutputStreamWriter ;
+import java.io.Writer ;
+import java.io.IOException ;
+
+public class Connection implements Anon {
+
+    private String id ;
+    private int mdp ;
+
+    public Connection (String i, String m) throws UnknownResultException {
+        this.id = i ;
+        try {
+            this.mdp = Integer.parseInt(m) ;
+        } catch (NumberFormatException e) {
+            throw new WrongTypeException("password", m, "int") ;
+        }
+        this.checkRules() ;
+    }
+
+    public Connection (String i, int m) throws UnknownResultException {
+        this.id = i ;
+        this.mdp = m ;
+        try {
+            this.checkRules() ;
+        } catch (RuleBrokenException e) {
+            throw new IllegalArgumentException() ;
+        }
+    }
+
+    public String getId() {
+        return this.id ;
+    }
+    
+    public void
+        exec(Socket so, List<User> allusers) throws UnknownResultException,
+                                                    IOException {
+        
+        boolean unfound = true ;
+        for (User guy : allusers) {
+            if (this.id.equals(guy.getId())) { 
+                if(this.mdp == guy.getPassword()) {
+                    guy.setSocket(so) ;
+                    guy.sendTCP(new Hello()) ;
+                    unfound = false ;
+                    this.describeConnectionSuccess() ;
+                }
+                else {
+                    this.deconnectRoutine(so) ;            
+                    throw new NotExecutableException("Connnection",
+                                                     "wrong password") ;
+                }
+            }
+        }
+        if (unfound) {
+            this.deconnectRoutine(so) ;            
+            throw new NotExecutableException("Connection",
+                                             this.id +" not registered") ;
+        }
+    }
+    
+    public String toString() {
+        String mymdp = String.valueOf(this.mdp) ;
+        return
+            AnonVals.CONNECTION + " " +
+            this.id + " " + mymdp + MainVals.EOF ;
+    }
+
+    private void checkRules() throws RuleBrokenException {
+        if (this.mdp > MainVals.MAX_MDP)
+            throw new RuleBrokenException("Connection", "password too big") ;
+        if (this.id.length() > MainVals.MAX_ID_SIZE)
+            throw new RuleBrokenException("Connection", "id > 8") ;
+    }
+
+    private void deconnectRoutine(Socket so) throws IOException {
+        Writer w = new OutputStreamWriter(so.getOutputStream()) ;
+        w.write((new Goodbye()).toString()) ;
+        w.flush() ;
+        so.close() ;
+    }
+    
+    private void describeConnectionSuccess() {
+        MainVals.describe("Connection success : [id:" + this.id +
+                          "] [password:" + String.valueOf(this.mdp) + "]") ;
+    }
+}
+        

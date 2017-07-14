@@ -1,0 +1,192 @@
+package client.src;
+
+import exception.UnknownResultException ;
+import java.util.Scanner;
+import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.ConnectException;
+import main.MainVals ;
+
+import protocol.feedback.Feedback;
+import protocol.feedback.FeedbackFactory;
+import protocol.command.Connection;
+import protocol.command.Registration;
+
+public class ConnexionRequest {
+
+    private String id ;
+    private int udp, mdp;
+    private boolean status;
+    private int serverSocket = MainVals.serverport;
+    private String serverAddr = "localhost";
+    private Socket so;
+    private Scanner sc;
+    private InputStream is;
+    private PrintWriter pw;
+
+    public ConnexionRequest() throws IOException {
+	this.status = false;
+	this.sc = new Scanner(System.in);
+	try {
+	    this.so = new Socket(serverAddr, serverSocket);
+	    this.pw = new PrintWriter(so.getOutputStream());
+	    this.is = so.getInputStream();
+	} catch (ConnectException e) {
+	    System.out.println("[Connection au serveur impossible.]");
+	}
+    }
+
+    private String byteToString(byte[] mdp) {
+	String mdp_ = new String();
+	for (int i = 0; i < mdp.length; i++) {
+	    Byte b = mdp[i];
+	    mdp_ += b.toString();
+	}
+	return mdp_;
+    }
+
+    public boolean client_connexion() throws IOException {
+	if (this.so == null ) {
+	    return false ;
+	} else {
+	    try {
+		Connexion con = new Connexion();
+		con.exec();
+		this.id = con.getId();
+		this.mdp = con.getMdp();
+		this.udp = con.getUdp();
+		Connection connect = new Connection(this.id, this.mdp);
+		this.pw.write(connect.toString()) ;
+		this.pw.flush() ;
+		FeedbackFactory fbackfactory = new FeedbackFactory();
+		Feedback fback = fbackfactory.create(this.is);
+		fback.exec(this);	    
+		if (this.status == false) {
+		    this.so.close();
+		    this.pw.close();
+		    this.is.close();
+		}
+		return this.status;
+	    } catch (UnknownResultException e) {
+		System.out.println("[Requête inconnue du serveur.]");
+	    } 	
+	    this.pw.close();
+	    this.is.close();
+	    this.so.close();
+	    return false;
+	}
+    }
+
+    public boolean client_register() throws IOException {
+	if (this.so == null ) {
+	    return false ;
+	} else {
+	    try {
+		Connexion con = new Connexion();
+		con.exec();
+		this.id = con.getId();
+		this.mdp = con.getMdp();
+		this.udp = con.getUdp();
+		Registration regis = new Registration(this.id, this.udp, this.mdp);
+		System.out.println(regis.toString());
+		this.pw.write(regis.toString()) ;
+		this.pw.flush() ;
+	    
+		FeedbackFactory fbackfactory = new FeedbackFactory();
+		Feedback fback = fbackfactory.create(this.is);
+		fback.exec(this);
+		if (this.status == false) {
+		    this.so.close();
+		    this.pw.close();
+		    this.is.close();
+		}
+		return this.status;
+	    } catch (UnknownResultException e) {
+		System.out.println("[Requête inconnue du serveur.]");
+	    }
+	    this.pw.close();	
+	    this.is.close();
+	    this.so.close();
+	    return false;
+	}
+    }
+    
+    public boolean automated_registration(int i) throws IOException {
+	String[] ids = {"hugo", "pepito", "tango"};
+	int[] mdps = {1,2,3};
+
+	if (this.so == null ) {
+	    return false ;
+	} else {
+	
+	    this.id = ids[i];
+	    this.mdp = mdps[i];
+	    Connexion c = new Connexion();
+	    this.udp = c.getUDPPort(this.id);
+	
+	    try {
+
+		Registration regis = new Registration(this.id, this.udp, this.mdp);
+		this.pw.write(regis.toString()) ;
+		this.pw.flush() ;
+	    
+		FeedbackFactory fbackfactory = new FeedbackFactory();
+		Feedback fback = fbackfactory.create(this.is);
+		fback.exec(this);
+		return this.status;
+	    } catch (UnknownResultException e) {
+		System.out.println("[Requête inconnue du serveur.]");
+	    }
+	    return false;
+	}
+    }
+    
+    public boolean automated_connexion(int i) throws IOException {
+	String[] ids = {"hugo", "pepito", "tango"};
+	int[] mdps = {1,2,3};
+
+	if (this.so == null ) {
+	    return false ;
+	} else {
+	
+	    this.id = ids[i];
+	    this.mdp = mdps[i];
+	    Connexion c = new Connexion();
+	    this.udp = c.getUDPPort(this.id);
+	
+	    try {
+		Connection connect = new Connection(this.id, this.mdp);
+		this.pw.write(connect.toString()) ;
+		this.pw.flush() ;
+
+		FeedbackFactory fbackfactory = new FeedbackFactory();
+		Feedback fback = fbackfactory.create(this.is);
+		fback.exec(this);
+		return this.status;
+	    } catch (UnknownResultException e) {
+		System.out.println("[Requête inconnue du serveur.]");
+	    }
+	    return false;
+	}
+    }
+
+    public void setStatus(boolean b) {
+	this.status = b;
+    }
+
+    public String getId() {
+	return this.id;
+    }
+    public int getUdp() {
+	return this.udp;
+    }
+    public int getMdp() {
+	return this.mdp;
+    }
+    public Socket getSo() {
+	return this.so;
+    }
+}

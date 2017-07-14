@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int strcmp_tune(void const *a, void const *b) {
+  printf("passage\n") ;
+  return strcmp(a,b) ;
+}
+
+int main(int argc, char* argv[]) {
+  int (*p1)(void const*,  void const*) ;
+  int croissant ;
+  --argc;
+  ++argv;
+
+  while (argc > 0 && *argv[0] == '-')
+    {
+      char const *temp = argv[0] + 1;
+      size_t i;
+
+      for (i = 0; temp[i]; i++)
+	switch (temp[i])
+	  {
+	  case 't':      
+	    break;
+	  default:
+	    goto execution;
+	  }
+
+      if (i == 0)
+	goto execution;
+
+      while (*temp)
+	switch (*temp++)
+	  {
+	  case 't':
+	    croissant = 1;
+	    break;
+	  }
+
+      argc--;
+      argv++;
+    }
+
+ execution:
+  if (croissant) {
+    p1 =  strcmp_tune ;
+    qsort(argv, (size_t)argc, sizeof(argv), p1) ;
+    while(argc--)
+      printf("%s\n", *(argv+argc)) ;
+  }
+  else {
+    p1 =  strcmp_tune ;
+    qsort(argv, (size_t)argc, sizeof(argv), p1) ;
+    while(argc--)
+      printf("%s\n", *(argv++)) ;
+  }
+}
+    
+
+      
+      

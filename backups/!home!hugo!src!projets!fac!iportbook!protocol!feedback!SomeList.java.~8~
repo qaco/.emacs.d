@@ -1,0 +1,26 @@
+package protocol.feedback ;
+import client.src.ServerRequest;
+import client.src.ConnexionRequest;
+import exception.* ;
+import main.MainVals ;
+
+public class SomeList implements Feedback {
+    String id ;
+
+    public SomeList(String myid) throws UnknownResultException {
+        this.id = myid ;
+        if (this.id.length() > MainVals.MAX_ID_SIZE)
+            throw new RuleBrokenException("SomeList", "id > 8") ;
+    }
+    
+    public String toString() {
+        return
+            FeedbackVals.SOME_LIST + MainVals.SEP +
+            this.id + MainVals.EOF ;
+    }
+
+    public void exec(ServerRequest c) {
+	System.out.println("[- "+this.id+"]");
+    }
+    public void exec(ConnexionRequest c) {}  
+}

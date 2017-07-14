@@ -1,0 +1,7 @@
+#ifndef GEN
+#define GEN
+
+char** gen_text_map(const int cote) ;
+GtkWidget*** gen_tile_map(const int num_cells, char** map) ;
+
+#endif

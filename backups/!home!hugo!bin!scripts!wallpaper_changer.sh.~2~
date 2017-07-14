@@ -1,0 +1,6 @@
+#!/bin/bash
+
+DIR="/home/hugo/Images/Wallpapers/Favoris"  
+PIC=$(ls $DIR | shuf -n1)  
+CMPL=$DIR/$PIC
+gconftool-2 -t string -s /desktop/mate/background/picture_filename "'$CMPL'"

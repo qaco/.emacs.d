@@ -1,0 +1,15 @@
+package protocol.command ;
+
+import exception.UnknownResultException ;
+import java.io.IOException ;
+import service.User ;
+import java.net.Socket ;
+import java.util.List ;
+
+public interface Anon {
+    public void
+        exec(Socket so, List<User> allusers) throws UnknownResultException,
+                                                    IOException ;
+
+    public String getId() ;
+}

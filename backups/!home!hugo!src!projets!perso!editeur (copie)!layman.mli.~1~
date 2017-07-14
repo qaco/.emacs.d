@@ -1,0 +1,30 @@
+type location = (int * int) * (int * int)
+type fieldtext = int * string * string
+type raw_component = Fieldtext of fieldtext
+type component = location * raw_component
+type container =
+    ((int * int) * (int * int)) * Graphics.color * component list
+val add_comp : 'a * 'b * 'c list -> 'c -> 'a * 'b * 'c list
+val remove_component :
+  'a * 'b * ('c * 'd) list -> 'c * 'e -> 'a * 'b * ('c * 'd) list
+val refresh_cont :
+  'a * 'b * ('c * 'd) list -> 'c * 'd -> 'a * 'b * ('c * 'd) list
+val get_component :
+  'a * 'b * (((int * int) * (int * int)) * 'c) list ->
+  int * int -> ((int * int) * (int * int)) * 'c
+val draw_container :
+  ((int * int) * (int * int)) * Graphics.color *
+  (((int * int) * (int * int)) * raw_component) list -> unit
+val container_build : 'a -> 'b -> ('a * 'b) * Graphics.color * 'c list
+val add_fieldtext :
+  'a * 'b * (('c * ('d * int)) * raw_component) list ->
+  'c -> 'd -> string -> 'a * 'b * (('c * ('d * int)) * raw_component) list
+val remove_at_coord :
+  'a * 'b * (((int * int) * (int * int)) * 'c) list ->
+  int * int -> 'a * 'b * (((int * int) * (int * int)) * 'c) list
+val container_interaction :
+  ((int * int) * (int * int)) * Graphics.color *
+  (((int * int) * (int * int)) * raw_component) list ->
+  (((int * int) * (int * int)) * Graphics.color *
+   (((int * int) * (int * int)) * raw_component) list) *
+  (int * int)

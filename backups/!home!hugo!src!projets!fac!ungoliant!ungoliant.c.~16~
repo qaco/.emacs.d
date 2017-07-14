@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "crawl/crawler.h"
+#include "query/query_engine.h"
+
+#define URL "https://en.wikipedia.org/wiki/Hippocampus"
+#define KEY "cortisol"
+#define DEPTH 1
+
+int main (int argc, char* argv[])
+{
+  int ret ;
+
+  argc-- ;
+  argv++ ;
+
+  if (argc >= 2 || !argc) {
+    char *first, *second ;
+    if (argc >=2) {
+      first = *argv ;
+      second = *(argv + 1) ;
+    }
+    else {
+      second = malloc(sizeof(char)*strlen(KEY)) ;
+      strcpy(second, KEY) ;
+      *(second + strlen(KEY)) = '\0' ;
+      first = malloc(sizeof(char)*strlen(URL)) ;
+      strcpy(first, URL) ;
+      *(first + strlen(URL)) = '\0' ;
+    }
+    if (strcmp(first, "-c") == 0) {
+      ret = crawl(second, DEPTH) ;
+    }
+    else if (strcmp(first, "-q") == 0) {
+      ret = queries_manager(second) ;
+      ret = 0 ;
+    }
+    else {
+      ret = crawl(first, DEPTH) ;
+      if (ret == 0)
+        ret = queries_manager(second) ;
+    }
+  }
+  else
+    fprintf(stderr, "Ungoliant doit prendre deux arguments en ligne de commande.\n") ;
+
+  return ret ;
+}

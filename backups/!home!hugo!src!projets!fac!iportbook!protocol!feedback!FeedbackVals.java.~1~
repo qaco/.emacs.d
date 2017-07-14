@@ -1,0 +1,3 @@
+public class FeedbackVals {
+    public static final String ASK_OK = "FRIE>" ;
+    public static final String ASK_NO = "FRIE<" ;

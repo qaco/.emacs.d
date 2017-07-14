@@ -1,0 +1,74 @@
+type value = Int of int | Bool of bool
+				    
+and var_id = string
+
+and unop = Not | Succ
+		   
+and binop = Plus | Times | Et | Or | Eq | Leq | Minus
+
+and expression =
+  | Const of value
+  | Unop of unop*expression
+  | Binop of binop*expression*expression
+  | If of expression*expression*expression
+  | Var of var_id
+  | Let of var_id*expression*expression
+  | Caseof of expression*(value*expression) list*expression
+						       
+let exp1 = Binop(Et,
+                 Binop(Eq,
+                       Binop(Plus,
+                             Const(Int(1)),
+                             Const(Int(2))),
+                       Const(Int(3))),
+                 Const(Bool(true)))
+                
+let exp2 = Binop(Or,
+                 Binop(Et,
+                       Binop(Eq,
+                             Const(Int(2)),
+                             Const(Int(3))),
+                       Const(Bool(false))),
+                 Binop(Eq,
+                       Binop(Plus,
+                             Const(Int(3)),
+                             Const(Int(4))),
+                       Binop(Plus,
+                             Const(Int(1)),
+                             Const(Int(6)))))
+                       
+let exp3 = Let("x",
+               Const(Int(3)),
+               Let("y",
+                   Binop(Plus,
+                         Var("x"),
+                         Const(Int(1))),
+                   Let("x",
+                       Binop(Eq,
+                             Var("x"),
+                             Const(Int(3))),
+                       If(Var("x"),
+                          Var("y"),
+                          Const(Int(3))))))
+  
+let exp4 = Let("x",
+               Binop(Leq,
+                     Const(Int(3)),
+                     Const(Int(4))),
+               If(
+                   If(Var("x"),
+                      Const(Bool(false)),
+                      Const(Bool(true))),
+                   Const(Int(3)),
+                   Const(Int(4))))
+
+let excase1 = Let("b",
+                  Const(Int(23)),
+                  Caseof(
+                      Binop(Leq,
+                            Var("b"),
+                            Const(Int(0))),
+                      [ (Bool(true), Binop(Minus,
+                                           Const(Int(0)),
+                                           Var("b"))) ],
+                      Var("b")))

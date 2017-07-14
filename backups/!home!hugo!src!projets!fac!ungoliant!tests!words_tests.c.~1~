@@ -1,0 +1,2 @@
+#include <check.h>
+#include "../misc.word.h"

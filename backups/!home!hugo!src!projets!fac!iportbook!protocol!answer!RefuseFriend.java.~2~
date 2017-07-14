@@ -1,0 +1,16 @@
+package protocol.answer ;
+
+import service.User ;
+import java.util.List ;
+import java.io.IOException ;
+
+public class RefuseFriend implements Answer {
+    
+    public void exec(User myuser, List<User> allusers) throws IOException {
+	// TODO
+    }
+
+    public String toString() {
+        return CommandVals.NO_FRIEND + CommandVals.EOF ;
+    }
+}

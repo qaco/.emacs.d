@@ -1,0 +1,147 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include "aux.h"
+
+#define T_IN "HELO"
+#define SUCCESS "OKOK"
+#define FAILURE "BADD"
+#define T_OUT "BYEE"
+#define T_PUBLIC "BCST"
+#define T_PRIVE "PRVT"
+#define T_LIST "LIST"
+#define T_SHUT "SHUT"
+#define T_ADMIN "DEBG"
+#define CMD_QUIT "quit"
+#define CMD_PRIVATE "private to"
+#define CMD_SHUT "shut"
+#define CMD_DBG "debg"
+#define CMD_LIST "list"
+#define NB_SIZE 4
+#define TYPE_SIZE 4
+
+char* build_msg(char* typem, ...)
+{
+  va_list va ;
+  int
+    is_in = strcmp(typem, T_IN) == 0,
+    is_public = strcmp(typem, T_PUBLIC) == 0,
+    is_private = strcmp(typem, T_PRIVE) == 0,
+    is_admin = strcmp(typem, T_ADMIN) == 0 ;
+  int total_size ;
+  char* res = malloc(sizeof(char)*(strlen(typem) + 1)) ;
+  char* new_res ;
+  
+  strcpy(res,typem) ;
+  va_start(va,typem) ;
+
+  if (!is_admin && !is_in)
+    {
+      int iid = va_arg(va,int) ;
+      char* sid = int_to_string(NB_SIZE,iid) ;
+      
+      res = realloc(res, sizeof(char)*(strlen(res) +
+                                       NB_SIZE + 1)) ;
+      strcat(res,sid) ;
+      free(sid) ;
+    }
+
+  if (is_private || is_in)
+    add_a_string(&res, NB_SIZE, va_arg(va, char*)) ;
+  if (is_public || is_private || is_in)
+    add_a_string(&res, NB_SIZE, va_arg(va, char*)) ;
+
+  total_size = strlen(res) + NB_SIZE ;
+  new_res = int_to_string(NB_SIZE,total_size) ;
+  new_res = realloc(new_res, strlen(new_res) + strlen(res)) ;
+  strcat(new_res,res) ;
+  free(res) ;
+  res = new_res ;
+
+  return new_res ;
+}
+
+void receive_msg (char* mypseudo, int fd_read)
+{
+  char* offset = malloc(sizeof(char)*(NB_SIZE + 1)) ;
+  char* msg ;
+  int total_size ;
+
+  read(fd_read, offset, NB_SIZE) ;
+  total_size = atoi(offset) - NB_SIZE ;
+  msg = malloc(sizeof(char)*(total_size + 1)) ;
+  read(fd_read, msg, total_size) ;
+  *(msg + total_size) = '\0' ;
+
+  if (strcmp(msg, FAILURE) == 0)
+    printf("Échec\n") ;
+  else if (memcmp(msg, T_OUT, strlen(T_OUT)) == 0)
+      printf("Bye %s\n", mypseudo) ; // Todo : gestion de la déconnexion
+  else {
+    int
+      is_public = memcmp(msg, T_PUBLIC, strlen(T_PUBLIC)) == 0,
+      is_prive = memcmp(msg, T_PRIVE, strlen(T_PRIVE)) == 0,
+      is_list = memcmp(msg, T_LIST, strlen(T_LIST)) == 0,
+      is_shut = memcmp(msg, T_SHUT, strlen(T_SHUT)) == 0 ;
+    char* pseudo ;
+
+    msg += TYPE_SIZE ;
+    if (is_list)
+      msg += NB_SIZE ;
+    pseudo = extract_string(&msg, NB_SIZE) ;
+    
+    if (is_public || is_prive)
+      {
+        char* text = extract_string(&msg, NB_SIZE) ;
+        if (is_public)
+          printf("[%s] %s\n", pseudo, text) ;
+        else
+          printf("[%s --> %s] %s\n", pseudo, mypseudo, text) ;
+        free(text) ;
+      }
+    else if (is_list)
+      printf("[%s]\n", pseudo) ;
+    else if (is_shut)
+      {
+        printf("Serveur éteint par %s\n", pseudo) ;
+        exit(EXIT_SUCCESS) ;
+      }
+    free(pseudo) ;
+  }
+}
+    
+void send_msg(char* pseudo, int id, int fd_write)
+{
+  char* input = get_input() ;
+  char* msg ;
+
+  if(strcmp(input, CMD_QUIT) == 0)
+    msg = build_msg(T_OUT, id) ;
+  else if (memcmp(input, CMD_PRIVATE, strlen(CMD_PRIVATE)) == 0)
+    {
+      int start = strlen(CMD_PRIVATE) + 1 ;
+      char* location = strchr(input + start, ' ') ;
+      int end = location - input ;
+      char* friend_pseudo = malloc(sizeof(char)*(end-start)) ;
+
+      memcpy(friend_pseudo, input + start, end - start) ;
+      *(friend_pseudo + end - start) = '\0' ;
+      msg = build_msg(T_PRIVE, id, friend_pseudo, input + end + 1) ;
+      free(friend_pseudo) ;
+    }
+  else if(strcmp(input, CMD_SHUT)==0)
+    msg = build_msg(T_SHUT, id) ;
+  else if(strcmp(input, CMD_DBG)==0)
+    msg = build_msg(T_ADMIN) ;
+  else if(strcmp(input, CMD_LIST)==0)
+    msg = build_msg(T_LIST, id) ;
+  else
+    msg = build_msg(T_PUBLIC, id, input) ;
+
+  write(fd_write, msg, strlen(msg)) ;
+  free(input) ;
+  free(msg) ;
+}
+

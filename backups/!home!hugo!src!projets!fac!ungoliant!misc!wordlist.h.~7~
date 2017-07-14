@@ -1,0 +1,22 @@
+#ifndef WORDLIST
+#define WORDLIST
+
+#include "word.h"
+
+typedef struct WordList WordList ;
+
+WordList* build_empty_wordlist() ;
+WordList* clone_wordlist(const WordList* toclone) ;
+void clear_wordlist(WordList *mylist) ;
+size_t get_length_wordlist(const WordList* mylist) ;
+int get_word_wordlist(Word* dest, const WordList* mylist, const int index) ;
+int pop_word_wordlist(Word* dest, WordList* mylist) ;
+void add_word_wordlist(WordList* dest, const Word* myword) ;
+void add_charseq_wordlist(WordList* dest,
+                          const char* charseq, const size_t size) ;
+void addall_wordlist(WordList* dest, WordList* src) ;
+int compare_wordlist(WordList* list1, WordList* list2) ;
+void destruct_wordlist(WordList* mylist) ;
+int print_wordlist(const WordList* mylist, FILE* stream) ;
+
+#endif

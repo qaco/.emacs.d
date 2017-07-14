@@ -1,0 +1,15 @@
+import java.io.Writer ;
+import java.io.IOException ;
+
+public interface Protocol {
+    public String toString() ;
+    public default void print(Writer w) {
+        String s = this.toString() ;
+        try {
+            w.write(s) ;
+        } catch (IOException e) {
+            e.printStackTrace() ;
+        }
+    }
+}
+    

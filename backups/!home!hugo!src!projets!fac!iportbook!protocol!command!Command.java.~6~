@@ -1,0 +1,8 @@
+package protocol.command ;
+
+import server.User ;
+import java.util.List ;
+
+public interface Command {
+    public default void exec(User myuser, List<User> allusers) {}
+}

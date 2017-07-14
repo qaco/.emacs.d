@@ -1,0 +1,36 @@
+package protocol.answer ;
+
+import exception.* ;
+import protocol.ProtocolFactory ;
+import java.util.Arrays ;
+import java.io.Reader ;
+import java.io.IOException ;
+import main.MainVals ;
+
+public class AnswerFactory extends ProtocolFactory {
+
+    public Answer create(Reader in) throws UnknownResultException,
+                                           IOException {
+        String p = ProtocolFactory.readStream(in) ;
+        return this.create(p) ;
+    }
+    
+    public Answer create(String text) throws UnknownResultException {
+        String cmds[] ;
+        
+        if (!this.isSuffixRight(text))
+            throw new BadSuffixException() ;
+        
+        cmds = this.getCmds(text) ;
+        
+        switch (cmds[0]) {
+        case AnswerVals.OK_FRIEND :
+            return new AcceptFriend() ;
+        case AnswerVals.NO_FRIEND :
+            return new RefuseFriend() ;
+        default :
+            throw new UnknownCommandException(cmds[0], "answer") ;
+        }
+    }
+}
+

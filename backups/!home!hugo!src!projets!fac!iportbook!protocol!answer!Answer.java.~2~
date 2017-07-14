@@ -1,0 +1,12 @@
+package protocol.answer ;
+
+import service.User ;
+import exception.UnknownResultException ;
+import java.util.List ;
+import java.io.IOException ;
+
+public interface Answer {
+    // one : celui qui répond
+    public void exec(User one, List<User> all) throws UnknownResultException,
+                                                      IOException ;
+}

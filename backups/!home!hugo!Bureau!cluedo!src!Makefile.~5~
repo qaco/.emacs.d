@@ -1,0 +1,29 @@
+CC=gcc
+CFLAGS=-std=c99 -Wall
+GTKLINK=`pkg-config --cflags --libs gtk+-2.0`
+EXEC=cluedo
+SRC=load_media.c view.c gen.c cluedo.c
+OBJ=$(SRC:.c=.o)
+
+all : $(EXEC)
+
+$(EXEC) : $(OBJ)
+	$(CC) -o $@ $^ $(GTKLINK)
+
+cluedo.o : cluedo.c gen.h view.h
+	$(CC) $(CFLAGS) -o $@ -c $< $(GTKLINK)
+
+gen.o : gen.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+view.o : view.c load_media.h
+	$(CC) -o $@ -c $< $(CFLAGS) $(GTKLINK)
+
+load_media.o : load_media.c
+	$(CC) -o $@ -c $< $(CFLAGS) $(GTKLINK)	
+
+clean :
+	rm -rf *.o
+
+mrproper : clean
+	rm -rf $(EXEC)

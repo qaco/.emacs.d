@@ -1,0 +1,28 @@
+package protocol.command ;
+
+import main.MainVals ;
+import java.io.IOException ;
+import service.User ;
+import protocol.feedback.Goodbye ;
+import java.util.List ;
+
+public class Deconnection implements Protocol {
+
+    public void exec(User myuser, List<User> allusers) throws IOException {
+        myuser.sendTCP(new Goodbye()) ;
+        myuser.disconnect() ;
+    }
+
+    public byte[] toBytes() {
+        return Field.makeSentence(CommandVals.DECONNECTION, new byte[0]) ;
+    }
+    
+    public String toString() {
+        return CommandVals.DECONNECTION + MainVals.EOF ;
+    }
+
+    private void describeDeconnectionSuccess() {
+        MainVals.describe("Deconnection success") ;
+    }
+}
+        

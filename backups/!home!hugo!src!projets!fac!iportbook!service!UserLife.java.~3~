@@ -1,0 +1,109 @@
+package service ;
+
+import java.io.InputStream ;
+import java.io.InputStreamReader ;
+import java.io.IOException ;
+import java.net.Socket ;
+import java.io.Reader ;
+import java.lang.Runnable ;
+import java.util.List ;
+
+import main.MainVals ;
+import exception.UnknownResultException ;
+import protocol.ProtocolFactory ;
+import protocol.command.AnonFactory ;
+import protocol.command.Anon ;
+import protocol.command.CommandFactory ;
+import protocol.command.Command ;
+
+class UserLife implements Runnable {
+
+    private static int idc = 1 ;
+    private Socket so ;
+    private List<User> allusers ;
+    private int id ;
+
+    public UserLife(Socket s, List<User> all) {
+        synchronized(all) {
+            this.id = ++UserLife.idc ;
+        }
+        this.so = s ;
+        this.allusers = all ;
+    }
+        
+    public void run() {
+        try {
+            Reader r = new InputStreamReader(this.so.getInputStream()) ;
+            User user = this.connectionLoop(r) ;
+            this.interactionLoop(user) ;
+        } catch (IOException e) {
+            this.describeAbort(this.id) ;
+        }
+    }
+
+    private User connectionLoop(Reader r) throws IOException {
+        User user = null ;
+        boolean firststep = true ;
+        AnonFactory af = new AnonFactory() ;
+        while (firststep) {
+            Anon a = null ;
+            boolean badcommand = true ;
+            while (badcommand) {
+                String text = ProtocolFactory.readStream(r) ;
+                synchronized(allusers) {
+                    try {
+                        a = af.create(text) ;
+                        a.exec(this.so, allusers) ;
+                        badcommand = false ;
+                    } catch (UnknownResultException e) {
+                        System.out.println(e.getMessage()) ;
+                    }
+                }
+            }
+            if (User.ListContainsUser(allusers, a.getId()))
+                firststep = false ;
+        }
+        return user ;
+    }
+
+    private void interactionLoop(User user) throws IOException {
+        boolean userhere = true ;
+        Reader r = user.getReader() ;
+
+        while (userhere) {
+            CommandFactory cf = new CommandFactory() ;
+            String text = ProtocolFactory.readStream(r) ;
+            // this.describeStringReceived(text) ;
+            synchronized(allusers) {
+                try {
+                    Command cmd = cf.create(text) ;
+                    cmd.exec(user, allusers) ;
+                    userhere = user.isConnected() ;
+                } catch (UnknownResultException e) {
+                    e.printStackTrace() ;
+                    this.describeIllegalCommand(user.getId()) ;
+                }
+            }
+        }
+    }
+
+    private void describeAbort(int idcom) {
+        MainVals.describe("Com with user " +
+                          String.valueOf(idcom) + " aborted") ;
+    }
+        
+    private void describeIllegalCommand(int idcom) {
+        MainVals.describe("Illegal command with user " +
+                          String.valueOf(idcom)) ;
+    }
+
+    private void describeIllegalCommand(String iduser) {
+        MainVals.describe("Illegal command from " + iduser) ;
+    }
+
+    private void describeStringReceived(String s) {
+        MainVals.describe("Received : " + s) ;
+    }
+
+  
+}

@@ -1,0 +1,120 @@
+import gi, Make, Shutter
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk, GdkPixbuf, GLib
+from PIL import Image, ImageColor
+
+INVISIBLE = (255, 255, 255, 0)
+
+def colgdk_to_tuple(col):
+    f_triple = col.to_floats()
+    r = int(f_triple[0]*255)
+    g = int(f_triple[1]*255)
+    b = int(f_triple[2]*255)
+    return (r, g, b)
+
+class Motherboard:
+    def __init__(self, cmd_shut, shut_col, shut_alpha,
+                 cmd_text, text_col, fontdict):
+        self.window = None
+        self.canvas = None
+        self.cmd_shut = cmd_shut
+        self.shut_col = shut_col
+        self.shut_alpha = shut_alpha
+        self.cmd_text = cmd_text
+        self.text_col = text_col
+        self.fonts_dict = fontdict
+        self.fonts_list = sorted(list(self.fonts_dict.keys()))
+        self.visible_bg = False
+        self.visible_text = True
+
+    def substitute_img(self):
+        w = self.window.get_size()[0] - self.window.param_width - 50
+        h = self.window.get_size()[1] - 50
+        paint = self.canvas.merge_calcs()
+        paint = paint.convert('RGB')
+        if paint.size[0] > w or paint.size[1] > h:
+            paint.thumbnail((w, h))
+        w, h = paint.size[0], paint.size[1]
+        data = paint.tobytes()
+        data = GLib.Bytes.new(data)
+        pix = GdkPixbuf.Pixbuf.new_from_bytes(data, GdkPixbuf.Colorspace.RGB,
+                                              False, 8, w, h, w * 3)
+        self.window.img.set_from_pixbuf(pix)
+            
+    def open_image_clicked(self, button):
+        dialog = Gtk.FileChooserDialog("Choisir une image", self.window,
+            Gtk.FileChooserAction.OPEN,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+
+        filter_text = Gtk.FileFilter()
+        filter_text.set_name("Images")
+        filter_text.add_pattern("*.jpg")
+        filter_text.add_pattern("*.png")
+        dialog.add_filter(filter_text)
+
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            path = dialog.get_filename()
+            font = self.fonts_list[0]
+            fontpath = self.fonts_dict[font]
+            shutcol = INVISIBLE
+            self.canvas = Make.Canvas(path, self.cmd_shut, INVISIBLE,
+                                      self.cmd_text, fontpath, self.text_col)
+            self.substitute_img()
+            self.window.link_param_widgets(self)
+            
+        dialog.destroy()
+
+    def change_text_typed(self, textbuffer):
+        if self.visible_text:
+            self.canvas.slogan.set_text(textbuffer.props.text)
+            self.canvas.slogan.process_position()
+            self.substitute_img()
+        
+    def font_changed(self, combobox):
+        if self.visible_text:
+            font = combobox.get_active_text()
+            self.canvas.slogan.sfont = self.fonts_dict[font]
+            self.canvas.slogan.process_position()
+            self.substitute_img()
+
+    def switch_text_clicked(self, button):
+        if self.visible_text:
+            self.visible_text = False
+            self.canvas.slogan.set_text("")
+            self.substitute_img()
+        else:
+            self.visible_text = True
+            self.change_text_typed(self.window.text_buf)
+            
+    def textcolor_changed(self, button):
+        if self.visible_text:
+            textcol_gdk = button.get_color()
+            textcol = colgdk_to_tuple(textcol_gdk)
+            self.canvas.slogan.color = textcol
+            self.substitute_img()
+
+    def texttoright_clicked(self, button):
+        self.canvas.change_orientation(Shutter.RIGHT_SHUTTER)
+        self.substitute_img()
+            
+    def bgcolor_changed(self, button):
+        if self.visible_bg:
+            bgcol_gdk = self.window.bgcol_but.get_color()
+            bgcol = colgdk_to_tuple(bgcol_gdk)
+            alpha = self.window.bg_spin.get_value_as_int()
+            alpha = int((alpha/100)*255)
+            self.canvas.shutter.color = bgcol[0], bgcol[1], bgcol[2], alpha
+            self.substitute_img()
+
+    def switch_bg_clicked(self, button):
+        if self.visible_bg:
+            self.visible_bg = False
+            self.canvas.shutter.color = INVISIBLE
+            self.substitute_img()
+        else:
+            self.visible_bg = True
+            self.bgcolor_changed(self.window.bgcol_but)
+
+

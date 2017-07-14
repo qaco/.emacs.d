@@ -1,0 +1,56 @@
+import protocol.feedback.* ;
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+public class FlowFactoryTest {
+
+    private FlowFactory pf ;
+
+    @Before
+    public final void setFlowFactoryUp() {
+        this.pf = new FlowFactory() ;
+    }
+
+    @Test
+    public final void testAskFriendFlowBuild() {
+        String tmp = "EIRF> hugo+++" ;
+        Flow p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testFirstMessageFlowBuild() {
+        String tmp = "SSEM> hugo 12+++" ;
+        Flow p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testFirstMessageFlowBuild() {
+        String tmp = "MUNEM 5 hello how are you+++" ;
+        Flow p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testFlooMessageFlowBuild() {
+        String tmp = "OOLF> hugo hello how are you+++" ;
+        Flow p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testFriendshipNOBuild() {
+        String tmp = "NOFRI hugo+++" ;
+        Flow p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testFriendshipOKBuild() {
+        String tmp = "FRIEN hugo+++" ;
+        Flow p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+}

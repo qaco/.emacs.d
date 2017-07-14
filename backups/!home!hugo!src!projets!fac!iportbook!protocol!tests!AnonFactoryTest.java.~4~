@@ -1,0 +1,39 @@
+package protocol.tests ;
+
+import exception.UnknownResultException ;
+import protocol.command.* ;
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+public class AnonFactoryTest {
+
+    private AnonFactory pf ;
+
+    @Before
+    public final void setCommandFactoryUp() {
+        this.pf = new  AnonFactory() ;
+    }
+
+    @Test
+    public final void testConnectionBuild() {
+        String tmp = "CONNE hugo 25+++" ;
+        try {
+            Anon p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+
+    @Test
+    public final void testRegistrationBuild() {
+        String tmp = "REGIS hugo 12 25+++" ;
+        try {
+            Anon p = this.pf.create(tmp) ;
+            assertEquals(tmp, p.toString()) ;
+        } catch (UnknownResultException e) {
+            fail() ;
+        }
+    }
+}

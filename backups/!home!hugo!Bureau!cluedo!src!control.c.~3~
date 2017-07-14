@@ -1,0 +1,54 @@
+#include <gtk/gtk.h>
+
+
+void on_destroy(GtkWidget *pWidget, gpointer pData) {
+    gtk_main_quit();
+}
+
+gboolean on_click (GtkWidget *widget, GdkEvent  *event, gpointer user_data) {
+  int x,y ;
+  GValue gval = G_VALUE_INIT ;
+  g_value_init (&gval, G_TYPE_INT);
+  GtkWidget* parent = gtk_widget_get_parent (widget);
+  gtk_container_child_get_property ((GtkContainer*)parent,
+				    widget,
+				    "left-attach",
+				    &gval);
+  x = g_value_get_int (&gval);
+  gtk_container_child_get_property ((GtkContainer*)parent,
+				    widget,
+				    "top-attach",
+				    &gval);
+  y = g_value_get_int (&gval);
+  printf("%d,%d\n", x,y) ;
+
+  return TRUE ;
+}
+
+void link_window(GtkWidget* window) {
+  g_signal_connect(G_OBJECT(window),
+		   "destroy", G_CALLBACK(on_destroy), NULL);
+}
+
+void link_tiles(GtkWidget* window,
+		const int num_cells, GtkWidget*** tiles) {
+  GValue gval = G_VALUE_INIT ;
+  g_value_init (&gval, G_TYPE_INT);
+  GtkWidget* table = gtk_table_new (num_cells, num_cells, TRUE) ;
+  GtkWidget* event_box ;
+  for (int i = 0 ; i < num_cells ; i++) {
+    for (int j = 0 ; j < num_cells ; j++) {
+      event_box = gtk_event_box_new() ;
+      gtk_container_add (GTK_CONTAINER (event_box), *(*(tiles + i) + j));
+      gtk_table_attach_defaults((GtkTable*)table, event_box, 
+	 j, j+1, i, i+1) ;
+      gtk_widget_set_events (event_box, GDK_BUTTON_PRESS_MASK);
+      gtk_signal_connect (GTK_OBJECT(event_box),
+      			  "button_press_event",
+      			  GTK_SIGNAL_FUNC (on_click), NULL);
+    }
+  }
+  gtk_container_add (GTK_CONTAINER (window), table);
+}
+
+

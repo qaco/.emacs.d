@@ -1,0 +1,43 @@
+package protocol.command ;
+
+import exception.UnknownResultException ;
+import main.MainVals ;
+import service.User ;
+import protocol.field.Field ;
+import protocol.feedback.FirstList ;
+import protocol.feedback.SomeList ;
+import java.util.List ;
+import java.util.LinkedList ;
+import java.io.IOException ;
+
+public class SeeFriends implements Command {
+
+    public void exec(User myuser, List<User> allusers) throws IOException,
+                                                              UnknownResultException {
+        List<User> effective = myuser.getFriends() ;
+        myuser.sendTCP(new FirstList(effective.size())) ;
+        for (int i = 0 ; i < effective.size() ; i++) {
+            myuser.sendTCP(new SomeList(effective.get(i).getId())) ;
+            this.describePartSent(i+1, effective.size()) ;
+        }
+        this.describeCompleteListSent() ;
+    }
+
+    public byte[] toBytes() {
+        return Field.makeSentence(CommandVals.SEE_FRIENDS, new Field[0]) ;
+    }
+    
+    public String toString() {
+        return CommandVals.SEE_FRIENDS + MainVals.EOF ;
+    }
+
+    private void describePartSent(int p, int t) {
+        MainVals.describe("Part " + String.valueOf(p) +
+                          "/" + String.valueOf(t) + " sent") ;
+    }
+    
+    private void describeCompleteListSent() {
+        MainVals.describe("Complete list sent") ;
+    }
+}
+        

@@ -1,0 +1,34 @@
+public class Main {
+    public static void main(String[] args) {
+	Plateau p = new Plateau() ;
+	Joueur truc = new Joueur(p) ;
+	Joueur bidule = new Joueur(p) ;
+	Joueur courant = truc ;
+	boolean win = false ;
+	boolean notyet = false ;
+	int c = 0 ;
+	while (!win) {
+	    System.out.println(p) ;
+	    if (!notyet) {
+		if (c == 0) {
+		    courant = truc ;
+		    c++ ;
+		}
+		else {
+		    courant = bidule ;
+		    c-- ;
+		}
+	    }
+
+	    System.out.println("Tour de " + courant.getId()) ;
+	    try {
+		courant.tour() ;
+		notyet = false ;
+	    } catch (ActionIllegaleException e) {
+		System.out.println(e.getMessage()) ;
+		notyet = true ;
+		}
+	}
+    }
+}
+

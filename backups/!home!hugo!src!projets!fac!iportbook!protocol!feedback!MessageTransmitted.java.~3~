@@ -1,0 +1,16 @@
+package protocol.feedback ;
+
+import main.MainVals ;
+import client.src.ServerRequest;
+import client.src.ConnexionRequest;
+
+public class MessageTransmitted implements Feedback {
+    public String toString() {
+        return FeedbackVals.MESS_TRANSMIT + MainVals.EOF ;
+    }
+
+    public void exec(ServerRequest sr) {
+	System.out.println("[Le message a été transmis.]");
+    }
+    public void exec(ConnexionRequest cr) {}
+}

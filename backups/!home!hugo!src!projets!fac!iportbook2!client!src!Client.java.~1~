@@ -1,0 +1,68 @@
+package client.src;
+
+import java.util.Scanner;
+import java.net.Socket;
+import java.io.IOException ;
+
+public class Client {
+
+    public void deconnected_prompt() throws IOException {
+	Scanner sc = new Scanner(System.in);
+	boolean status = true;
+	String input = "";
+	ConnexionRequest request;
+	
+	while(status) {
+	    System.out.println("[Entrez 'connexion','register' ou 'quitter']");
+	    System.out.print(":");
+	    input = sc.nextLine();
+	    
+	    switch(input) {
+	    case "test1" :
+		automated_client(0) ; 
+		break;
+	    case "test2" :
+		automated_client(1) ; 
+		break;
+	    case "test3" :
+		automated_client(2) ; 
+		break;
+	    case "connexion" : 
+		request = new ConnexionRequest();
+		if(request.client_connexion())
+		    start_request(request);
+		break;
+	    case "register" :
+		request = new ConnexionRequest();
+		request.client_register() ;
+		break;
+	    case "quitter" : status = false; break; 
+	    default : deconnected_prompt(); break;
+	    }
+	}
+    }
+
+    public void start_request(ConnexionRequest cr) throws IOException {
+	ServerRequest sr = build_sr(cr);
+	sr.run();
+    }
+
+    public void automated_client(int i) throws IOException {
+	ConnexionRequest cr1 = new ConnexionRequest();
+	if (cr1.automated_registration(i)) {
+	    ConnexionRequest cr2 = new ConnexionRequest();
+	    if (cr2.automated_connexion(i)) {
+		start_request(cr2);
+	    }
+	}
+    }
+
+    public ServerRequest build_sr(ConnexionRequest cr) throws IOException {
+	String id, udp;
+	id = cr.getId();
+	udp = cr.getUdp();
+	Socket so = cr.getSo();
+	
+	return new ServerRequest(id, udp, so);
+    }
+}

@@ -1,0 +1,24 @@
+package protocol.flow ;
+
+import exception.* ;
+import main.MainVals ;
+import client.src.ServerRequest;
+import java.io.IOException ;
+
+public class FriendshipOK implements Flow {
+    private String id ;
+
+    public FriendshipOK(String myid) throws UnknownResultException {
+        this.id = myid ;
+        if (this.id.length() > MainVals.ID_SIZE)
+            throw new RuleBrokenException() ;
+    }
+    
+    public void exec(ServerRequest c) throws IOException { 
+	System.out.println("["+this.id+" a accepté votre demande d'amitié.]");
+    }
+
+    public String toString() {
+        return FlowVals.FRIENDSHIP_OK + " " + this.id + MainVals.EOF ;
+    }
+}

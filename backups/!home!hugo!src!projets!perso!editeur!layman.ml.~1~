@@ -1,0 +1,65 @@
+open Graphics
+open Geom
+open Fieldtext
+
+type component = None | Fieldtext of fieldtext
+type container = ((int*int)*(int*int))*color*component list
+(* let container_build w h = *)
+(*   make_matrix w h None *)
+
+let remove_component cont comp = match comp with
+  | None -> cont
+  | Fieldtext(f) -> match cont with
+                      begin
+                      | (loc, back, comps) -> let orig = get_origin field in
+                                              let new_comps = remove_assoc orig comps in
+                                              (loc, back, new_comps)
+                      end
+               
+let add_field cont field = match cont with
+  | (loc, back, comps) -> let orig = get_origin field in
+                           (size, back, ((orig,field)::cont))
+
+let get_compononent cont coord = match cont with
+  | (_, _, comps) ->
+     try
+       assoc coord comps
+     with | Not_found -> None
+
+let replace_compononent cont comp
+
+let draw_container cont =
+  let rec draw_compononents l_components = match l_components with
+    | [] -> ()
+    | h::t -> match h with
+                begin
+                | None -> draw_components t (* exception *)
+                | Fieldtext(f) -> fieldtext_draw f false ; draw_components t
+                end in
+  match cont with
+  | (((x,y),(w,h)), back, comps) ->
+     set_color back ;
+     fill_rect x y w h ;
+     let l = map (fun pair -> snd pair) comps in
+     draw_compononents l
+  
+let rec container_interaction cont =
+  let rec select_comp cont coord =
+    let comp = get_component cont coord in
+    match comp with
+    | None -> coord
+    | Fieldtext(f) -> let new_coord = fieldtext_interaction f in
+                      select_comp cont new_coord in
+  let stat = wait_next_event [Button_up] in
+  match cont with
+  | (loc, _, _) -> let final_coord = select_comp cont (stat.mouse_x, stat.mouse_y) in
+                   if coord_is_in final_coord loc then
+                     container_interaction cont
+                   else
+                     final_coord
+           
+  
+
+  
+
+                                   

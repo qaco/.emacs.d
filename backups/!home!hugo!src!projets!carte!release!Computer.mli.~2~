@@ -1,0 +1,24 @@
+module Variables :
+  sig
+    type t = int * Graphics.color
+    val compare : 'a * 'b -> 'a * 'b -> int
+  end
+module Sat :
+  sig
+    type literal = bool * Variables.t
+    val solve : literal list list -> literal list option
+  end
+val array_to_list : Builder.color_option array -> Graphics.color list
+val extract_colors : Builder.voronoi -> Builder.color_option array
+val existence :
+  int ->
+  Builder.color_option array ->
+  Graphics.color list -> (bool * (int * Graphics.color)) list list
+val unicity : 'a array -> 'b list -> (bool * (int * 'b)) list list
+val adjacence : 'a list -> bool array array -> (bool * (int * 'a)) list list
+val produce_constraints :
+  Builder.color_option array ->
+  bool array array -> (bool * (int * Graphics.color)) list list
+val affectation_to_vor :
+  (bool * (int * Graphics.color)) list -> Builder.voronoi -> Builder.voronoi
+val get_result : Sat.literal list list -> Sat.literal list

@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <math.h>
+
+int characters_in_int(int num) {
+  return (int)((ceil(log10(num))+1)*sizeof(char)) ;
+}
+
+char* int_to_string(int num) {
+  int size = characters_in_int(num) ;
+  char *str = malloc(size) ;
+  sprintf(str, "%d", num);
+  return str ;
+}
+
+char* build_path(char* root, int num, char* ext) {
+  char* indice = int_to_string(indice) ;
+  int size = strlen(root) + strlen(indice) + strlen(ext) ;
+  char* res = malloc(sizeof(char)*(size + 1)) ;
+  strcpy(res,root) ;
+  strcat(res,indice);
+  strcat(res,ext) ;
+  free(indice) ;
+  return res ;
+}

@@ -1,0 +1,91 @@
+#include <check.h>
+#include <stdlib.h>
+#include "../misc/word.h"
+
+START_TEST(test_construct_word) {
+  Word* myword ;
+  char* temoin = malloc(sizeof(char)*(strlen("hello") + 1)) ;
+  char* buffer ;
+  
+  strcpy(temoin, "hello") ;
+  myword = construct_word(strlen(temoin), temoin) ;
+  buffer = malloc(sizeof(char)*(get_size_word(myword) + 1)) ;
+  get_content_word(myword, buffer) ;
+
+  ck_assert_int_eq(get_size_word(myword), strlen(temoin)) ;
+  ck_assert_str_eq(buffer, temoin) ;
+
+  destruct_word(myword) ;
+  free(temoin) ;
+  free(buffer) ;
+}
+END_TEST
+
+START_TEST(test_compare_word_gt) {
+  Word *first, *second ;
+  int greater ;
+
+  first = construct_word(strlen("hello"), "hello") ;
+  second = construct_word(strlen("bye"), "bye") ;
+  greater = compare_word(first, second) ;
+
+  ck_assert_int_gt(greater, 0) ;
+
+  destruct_word(first) ;
+  destruct_word(second) ;
+}
+END_TEST
+
+START_TEST(test_compare_word_lt) {
+  Word *first, *second ;
+  int smaller ;
+
+  first = construct_word(strlen("hello"), "hello") ;
+  second = construct_word(strlen("bye"), "bye") ;
+
+  smaller = compare_word(second, first) ;
+  ck_assert_int_lt(smaller, 0) ;
+
+  destruct_word(first) ;
+  destruct_word(second) ;
+}
+END_TEST
+
+START_TEST(test_compare_word_eq) {
+  Word *first, *second ;
+  int greater, smaller, equal ;
+
+  first = construct_word(strlen("hello"), "hello") ;
+  second = construct_word(strlen("bye"), "bye") ;
+
+  greater = compare_word(first, second) ;
+  smaller = compare_word(second, first) ;
+  equal = compare_word(second, second) ;
+
+  ck_assert_int_gt(greater, 0) ;
+  ck_assert_int_lt(smaller, 0) ;
+  ck_assert_int_eq(equal, 0) ;
+
+  destruct_word(first) ;
+  destruct_word(second) ;
+}
+END_TEST
+
+START_TEST(test_cut_sub_word) {
+  Word *whole,  *isin, *isnotin ;
+  int actual, wrong ;
+
+  whole = construct_word(strlen("hello you"), "hello you") ;
+  isin = construct_word(strlen("you"), "you") ;
+  isnotin = construct_word(strlen("bye"), "bye") ;
+
+  actual = cut_sub_word(whole, isin) ;
+  wrong = cut_sub_word(whole, isnotin) ;
+
+  ck_assert_int_eq(actual, 6) ;
+  ck_assert_int_eq(wrong, -1) ;
+
+  destruct_word(whole) ;
+  destruct_word(isin) ;
+  destruct_word(isnotin) ;
+}END_TEST

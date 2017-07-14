@@ -1,0 +1,38 @@
+type seed = { c : Graphics.color option; x : int; y : int; }
+type voronoi = { dim : int * int; seeds : seed array; }
+
+(* Fonction calculant la distance euclidienne entre deux points. *)
+val euclide : int -> int -> int -> int -> int
+
+(* Fonction calculant la distance taxicab entre deux points. *)
+val taxicab : int -> int -> int -> int -> int
+
+(* À partir d'une fonction calculant la distance et d'un diagramme, *)
+(* calcule une matrice des régions indiquant, pour chaque pixel, le *)
+(* germe (représenté par son indice dans le tableau diagramme.seeds) *)
+(* dont il est le plus proche. *)
+val regions_voronoi :
+  (int -> int -> int -> int -> int) -> voronoi -> int array array
+  
+(* À partir de la matrice des régions (ie matrice de pixels) et du *)
+(* diagramme, affiche à l'écran le diagramme colorié. La fenêtre *)
+(* graphique doit être lancée avant. *)
+val draw_voronoi : int array array -> voronoi -> unit
+
+(* À partir d'un diagramme et de sa matrice des régions, calcule sa matrice *)
+(* d'adjacence, c'est à dire une matrice indiquant, pour les seeds *)
+(* numérotés i et j, s'ils sont adjacents. *)
+val adjacences_voronoi : voronoi -> int array array -> bool array array
+
+(* À partir du diagramme, d'une seed désignée par son indice et de sa *)
+(* matrice d'adjacence, retourne les seeds adjacentes. *)
+val get_adjacentes : int -> bool array array -> voronoi -> seed list
+
+(* Vérifie s'il est légal de colorier dans la couleur donnée la seed *)
+(* désignée par son indice. *)
+val is_coloriage_legal :
+  int -> bool array array -> voronoi -> Graphics.color option -> bool
+
+(* À partir d'un diagramme et de sa matrice d'adjacence, résoud le *)
+(* diagramme et renvoie le diagramme résolu. *)
+val compute : voronoi -> bool array array -> voronoi

@@ -1,0 +1,12 @@
+package protocol.feedback ;
+
+public class MessageTransmitted implements Feedback {
+    public String toString() {
+        return "MESS>+++" ;
+    }
+
+    public default boolean exec() {
+	System.out.println("[Le message a été transmis.]");
+	return true;
+    }  
+}

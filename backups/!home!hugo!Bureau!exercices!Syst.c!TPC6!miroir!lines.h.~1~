@@ -1,0 +1,5 @@
+#include <stdlib.h>
+
+int characters_in_int(int num) ;
+char* int_to_string(int num) ;
+int how_many_lines(FILE* cobaye) ;

@@ -1,0 +1,65 @@
+import Root
+from math import sqrt
+from PIL import Image, ImageDraw
+
+TOP_SHUTTER="top"
+BOTTOM_SHUTTER="bottom"
+LEFT_SHUTTER="left"
+RIGHT_SHUTTER="right"
+PHI = (1+sqrt(5))/2
+
+def factory(cmd, upper_size, color):
+    options = { TOP_SHUTTER : TopShutter,
+                BOTTOM_SHUTTER : BottomShutter,
+                LEFT_SHUTTER : LeftShutter,
+                RIGHT_SHUTTER : RightShutter,
+            }
+    return options[cmd](upper_size, color)
+
+class AbstractShutter(Root.Place):
+    def __init__(self, planesize, color):
+        super().__init__(planesize)
+        self.color = color
+    
+    def stamp_img(self, img):
+        tostamp = img.copy()
+        calc = Image.new('RGBA', tostamp.size, (255, 255, 255, 0))
+        draw = ImageDraw.Draw(calc, 'RGBA')
+        o_point = self.point[0] + self.size[0], self.point[1] + self.size[1]
+        draw.rectangle([self.point, o_point], self.color)
+        tostamp = Image.alpha_composite(tostamp, calc)
+        return tostamp
+
+class TopShutter(AbstractShutter):
+    def __init__(self, upper_size, color):
+        super().__init__(upper_size, color)
+        
+    def process_position(self):
+        gold = int(self.plane_size[1]/PHI)
+        self.point = 0, 0
+        self.size = self.plane_size[0], self.plane_size[1] - gold
+    
+class BottomShutter(AbstractShutter):
+    def __init__(self, upper_size, color):
+        super().__init__(upper_size, color)
+        
+    def process_position(self):
+        self.point = 0, int(self.plane_size[1]/PHI)
+        self.size = self.plane_size[0], self.plane_size[1] - self.point[1]
+
+class LeftShutter(AbstractShutter):
+    def __init__(self, plane_size, color):
+        super().__init__(plane_size, color)
+
+    def process_position(self):
+        gold = int(self.plane_size[0]/PHI)
+        self.point = 0,0
+        self.size = self.plane_size[0] - gold, self.plane_size[1]
+        
+class RightShutter(AbstractShutter):
+    def __init__(self, plane_size, color):
+        super().__init__(plane_size, color)
+
+    def process_position(self):
+        self.point = int(self.plane_size[0]/PHI),0
+        self.size = self.plane_size[0] - self.point[0], self.plane_size[1]

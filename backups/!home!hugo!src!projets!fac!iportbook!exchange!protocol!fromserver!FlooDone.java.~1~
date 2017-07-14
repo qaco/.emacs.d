@@ -1,0 +1,6 @@
+package com.protocol.fromserver ;
+public class FlooDone implements Protocol {
+    public String toString() {
+        return "FLOO>+++" ;
+    }
+}

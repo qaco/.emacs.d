@@ -1,0 +1,24 @@
+type joueur = Croix | Rond ;;
+type case = Nil | Marque of joueur ;;
+type ligne = Ctr of case*case*case ;;
+type grille = Ltr of ligne*grille*grille ;;
+
+let init =
+  let iligne =
+    let icase = Nil in
+    icase, icase, icase in
+  iligne, iligne, iligne ;;
+
+let stringCase c = match c with
+  | Nil -> " "
+  | Marque(j) -> match j with
+		 | Croix -> "X"
+		 | Rond -> "O"
+;;
+let afficheCase c = print_string (stringCase c) ;;
+let stringLigne l = match l with
+  | Ctr(c,d,e) -> (stringCase c) ^ (stringCase d) ^ (stringCase e) ;;
+let afficheLigne l = print_string (stringLigne l) ;;
+let afficheGrille g = match g with
+  | Ltr(l,m,n) -> print_endline l
+;;

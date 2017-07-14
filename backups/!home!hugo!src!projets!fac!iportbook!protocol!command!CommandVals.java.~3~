@@ -1,0 +1,17 @@
+package protocol.command ;
+
+public class CommandVals {
+    public static final String REGISTRATION = "REGIS" ;
+    public static final String CONNECTION = "CONNE" ;
+    public static final String ASK_FRIEND = "FRIE?" ;
+    public static final String OK_FRIEND = "OKIRF" ;
+    public static final String NO_FRIEND = "NOKRF" ;
+    public static final String FIRST_MESSAGE = "MESS?" ;
+    public static final String SOME_MESSAGE = "MENUM" ;
+    public static final String FLOO_MESSAGE = "FLOO?" ;
+    public static final String SEE_LIST = "LIST?" ;
+    public static final String CONSULTATION = "CONSU" ;
+    public static final String DECONNECTION = "IQUIT" ;
+    public static final String EOF = "+++" ;
+    public static final String SEP = " " ;
+}

@@ -1,0 +1,31 @@
+public class Case {
+    private Coordinates loc ;
+    private Route[] spots = new Route[Data.NBROADS] ;
+
+    public Case (int x, int y) {
+	this.loc = new Coordinates(x,y) ;
+    }
+
+    public Route getRoute(int id) throws NoRouteException {
+	if (spots[id] == null)
+	    throw new NoRouteException() ;
+	else
+	    return spots[id] ;
+    }
+    
+     public boolean isFree(int position, int id) {
+	int c = 0 ;
+	for (Route r : this.spots)
+	    if ((r != null) && id != r.getOwner())
+		c++ ;
+	return (c < 2) && (this.spots[position] == null) ;
+    }
+
+    public void put(int position, int player) {
+	this.spots[position] = new Route(player) ;
+    }
+
+    public String toString() {
+	return "o" ;
+    }
+}

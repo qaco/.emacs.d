@@ -1,0 +1,33 @@
+package protocol.knock ;
+
+import exception.UnknownResultException ;
+import protocol.field.* ;
+
+public abstract class Knock {
+    protected PassField num ;
+
+    public Knock(int flows) {
+        this.num = new PassField(flows) ;
+    }
+
+    public Knock(byte[] flows) {
+        this.num = new PassField(flows) ;
+    }
+    
+    public int getNumFlows() {
+        return this.num.getInt() ;
+    }
+        
+    public byte[] getArray() {
+        return this.num.toBytes() ;
+    }
+
+    protected abstract byte getCode() ;
+    protected abstract String popUp() ;
+
+    public void exec() {
+        System.out.println(this.popUp()) ;
+        System.out.println(String.valueOf(this.getNumFlows()) +
+                           " flows waiting.") ;
+    }
+}

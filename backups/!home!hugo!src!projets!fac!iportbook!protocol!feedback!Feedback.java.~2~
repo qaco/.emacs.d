@@ -1,0 +1,6 @@
+package protocol.feedback ;
+
+public interface Feedback {
+    public default boolean exec() {}    
+    public default int exec() {}    
+}

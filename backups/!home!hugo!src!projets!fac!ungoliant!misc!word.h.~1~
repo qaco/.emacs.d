@@ -1,0 +1,22 @@
+#ifndef WORD
+#define WORD
+
+#include <stdio.h>
+
+typedef struct Word {
+  char *memory;
+  size_t size;
+} Word ;
+
+Word clone_word(const Word toclone) ;
+Word construct_word(const char *src, const size_t n) ;
+Word construct_empty_word() ;
+char* get_cstring_word(const Word myword) ;
+int get_content_word(const Word src, const size_t nchars, char* dest) ;
+size_t get_size_word(const Word myword) ;
+void add_char_word(Word* myword, const char mychar) ;
+void add_chars_word(Word* dest, const char* seq, const size_t nb) ;
+void destruct_word(Word* myword) ;
+int print_word(const Word myword, FILE* stream) ;
+
+#endif

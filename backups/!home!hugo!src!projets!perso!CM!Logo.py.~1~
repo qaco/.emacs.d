@@ -1,0 +1,4 @@
+import Root
+
+class Logo(Root.AbstractCalc):
+    def __init__(self, logo_path, myframe):

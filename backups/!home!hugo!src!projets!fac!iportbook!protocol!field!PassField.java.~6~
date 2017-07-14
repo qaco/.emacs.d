@@ -1,0 +1,39 @@
+package protocol.field ;
+
+import exception.UnknownResultException ;
+import exception.RuleBrokenException ;
+
+public class PassField extends Field {
+
+    public PassField (byte[] mypass) throws UnknownResultException {
+        this.field = mypass ;
+        this.checkRules() ;
+    }
+    
+    public PassField(int mypass) {
+        if (mypass > FieldVals.MAX_MDP_SIZE)
+            throw new IllegalArgumentException() ;
+        this.field = new byte[FieldVals.PASS_SIZE] ;
+        this.field[0] = (byte) (mypass) ;
+        this.field[1] = (byte) (mypass >> 8) ;
+        try { this.checkRules() ; } catch (UnknownResultException e) {
+            throw new IllegalArgumentException() ;
+        }
+    }
+
+    public int getInt() {
+        return this.field[0] | this.field[1] << 8 ;
+    }
+
+    public String toString() {
+        return String.valueOf(this.getInt()) ;
+    }
+    
+    protected void checkRules() throws UnknownResultException {
+        int n = this.getInt() ;
+        this.checkSize(FieldVals.IPDIFF_SIZE) ;
+        if (n < 0)
+            throw new RuleBrokenException("PassField",
+                                          String.valueOf(n) + " < 0") ;
+    }
+}

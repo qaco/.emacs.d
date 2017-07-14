@@ -1,0 +1,15 @@
+import client.src.Client ;
+
+import java.io.IOException ;
+
+public class MainClient {
+    public static void main(String[] args) {
+        try {
+            System.out.println("[Bienvenue sur iPortBook.]");
+	    new Client().deconnected_prompt();
+	    System.out.println("[Vous quittez iPortbook.]");
+        } catch (IOException e) {
+            e.printStackTrace() ;
+        }
+    }
+}

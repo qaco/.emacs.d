@@ -1,0 +1,224 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "word.h"
+#include "wordlist.h"
+
+struct WordList {
+    Word **sequence ;
+    size_t length ;
+    size_t allocated ;
+} ;
+
+WordList* build_empty_wordlist()
+{
+    WordList *newlist = malloc(sizeof(WordList)) ;
+    newlist->allocated = 1 ;
+    newlist->sequence = malloc(sizeof(Word*)*newlist->allocated) ;
+    newlist->length = 0 ;
+    return newlist ;
+}
+
+WordList* clone_wordlist(const WordList *toclone) {
+    WordList *res = malloc(sizeof(WordList)) ;
+    res->length = toclone->length ;
+    res->allocated = toclone->allocated ;
+    res->sequence = malloc(sizeof(Word*)*res->allocated) ;
+    for (int i = 0 ; i < toclone->length ; i++)
+	*(res->sequence + i) = clone_word(*(toclone->sequence + i)) ;
+    return res ;
+}
+
+void clear_wordlist(WordList *mylist)
+{
+    for (int i = 0 ; i < mylist->length ; i++)
+	destruct_word(*(mylist->sequence + i)) ;
+    free(mylist->sequence) ;
+    mylist->allocated = 1 ;
+    mylist->sequence = malloc(sizeof(Word*)*mylist->allocated) ;
+    mylist->length = 0 ;
+}
+
+size_t get_length_wordlist(const WordList *mylist)
+{
+    return mylist->length ;
+}
+
+int get_word_wordlist(Word* dest, const WordList *mylist, const int index)
+{
+    if (index < 0 || index >= mylist->length)
+	return EXIT_FAILURE ;
+    clear_word(dest) ;
+    append_word(dest, *(mylist->sequence + index)) ;
+    /* dest = clone_word(*(mylist->sequence + index)) ; */
+    return EXIT_SUCCESS ;
+}
+
+int pop_word_wordlist(Word* dest, WordList* mylist)
+{
+    if (mylist->length <= 0)
+	return EXIT_FAILURE ;
+    /* Récupération du 1e Word et destruction de la tête de liste. */
+    clear_word(dest) ;
+    append_word(dest, *(mylist->sequence)) ;
+    destruct_word(*mylist->sequence) ;
+    /* Décalage de la liste vers la gauche. */
+    memmove(mylist->sequence,
+	    mylist->sequence + 1,
+	    sizeof(Word*)*(mylist->length - 1)) ;
+    mylist->length-- ;
+    /* Màj de l'espace mémoire pour en utiliser le moins possible. */
+    if (mylist->length < mylist->allocated/4) {
+	mylist->allocated /= 2 ;
+	mylist->sequence = realloc(mylist->sequence,
+				   sizeof(Word*)*mylist->allocated/2) ;
+    }
+    return EXIT_SUCCESS ;
+}
+
+void add_word_wordlist(WordList* dest, const Word* myword)
+{
+    /* Màj de l'espace mémoire pour être sur de ne pas déborder. */
+    if (dest->length >= dest->allocated - 1) {
+	dest->sequence = realloc(dest->sequence,
+				 sizeof(Word*)*(dest->allocated*2)) ;
+	dest->allocated *= 2 ;
+    }
+    /* Ajout de l'élément en fin de liste. */
+    *(dest->sequence + dest->length) = clone_word(myword) ;
+    dest->length++ ;
+}
+
+void add_charseq_wordlist(WordList* dest,
+                          const char* charseq, const size_t size)
+{
+  Word* myword = construct_word(charseq, size) ;
+    add_word_wordlist(dest, myword) ;
+}
+
+void addall_wordlist(WordList* dest, WordList* src)
+{
+    Word *tmp = construct_empty_word() ;
+    for (int i = 0 ; i < src->length ; i++) {
+	get_word_wordlist(tmp, src, i) ;
+	add_word_wordlist(dest, tmp) ;
+    }
+    destruct_word(tmp) ;
+}
+
+int compare_wordlist(WordList* list1, WordList* list2)
+{
+    int size1, size2, mainsize, ret, end ;
+    Word *left = construct_empty_word() ;
+    Word *right = construct_empty_word() ;
+
+    end = 0 ;
+    size1 = get_length_wordlist(list1) ;
+    size2 = get_length_wordlist(list2) ;
+    if (size1 <= size2)
+	mainsize = size1 ;
+    else
+	mainsize = size2 ;
+
+    for (int i = 0 ; i < mainsize && !end ; i++) {
+	int test ;
+	get_word_wordlist(left, list1, i) ;
+	get_word_wordlist(right, list2, i) ;
+	test = compare_word(left, right) ;
+	if (test < 0) {
+	    ret = -1 ;
+	    end = 1 ;
+	}
+	else if (test > 0) {
+	    ret = 1 ;
+	    end = 1 ;
+	}
+    }
+
+    if (!end && size1 < size2)
+	ret = -1 ;
+    else if (!end && size1 > size2)
+	ret = 1 ;
+    else if (!end)
+	ret = 0 ;
+
+    return ret ;
+}
+
+WordList* split_word(const Word* myword, const Word* sep)
+{
+    WordList *res = build_empty_wordlist() ;
+    int partstart = 0 ;
+    int sepstart ;
+    do {
+	Word* part = construct_empty_word() ;
+	int partend ;
+	sepstart = locate_sub_word(myword, sep, partstart) ;
+	if (sepstart == -1)
+	    /* partend = get_size_word(myword) - 1 ; */
+	    partend = get_size_word(myword) ;
+	else
+	    /* partend = sepstart - 1 ; */
+	    partend = sepstart ;
+	get_sub_word(part, myword, partstart, partend) ;
+	add_word_wordlist(res, part) ;
+	partstart = sepstart + get_size_word(sep) ;
+	destruct_word(part) ;
+    } while (sepstart != -1) ;
+    return res ;
+}
+
+void destruct_wordlist(WordList *mylist)
+{
+    for (int i = 0 ; i < mylist->length ; i++)
+	destruct_word(*(mylist->sequence + i)) ;
+    free(mylist->sequence) ;
+    free(mylist) ;
+}
+
+int print_wordlist(const WordList *mylist, FILE* stream)
+{
+    if(fprintf(stream, "- ") < 0)
+	return EXIT_FAILURE ;
+    for (int i = 0 ; i < mylist->length ; i++) {
+	int ret = print_word(*(mylist->sequence + i), stream) ;
+	if (ret == EXIT_FAILURE ||
+	    (i < mylist->length - 1 && fprintf(stream, "\n- ") < 0))
+	    return EXIT_FAILURE ;
+    }
+    if(fprintf(stream, "\n") < 0)
+	return EXIT_FAILURE ;
+    return EXIT_SUCCESS ;
+}
+
+int isin_wordlist(const Word *w, WordList *mylist)
+{
+    for (int i = 0 ; i < mylist->length ; i++)
+	if (compare_word(*(mylist->sequence + i), w) == 0)
+	    return i ;
+    return -1 ;    
+}
+
+WordList* intersect(WordList *l1, WordList *l2)
+{
+    WordList *res = build_empty_wordlist() ;
+    for (int i = 0 ; i < l1->length ; i++) {
+	Word *wo = *(l1->sequence + i) ;
+	if (isin_wordlist(wo, l2) != -1)
+	    add_word_wordlist(res, wo) ;
+    }
+    return res ;
+}
+
+WordList* union_(WordList *l1, WordList *l2)
+{
+    WordList *res = build_empty_wordlist() ;
+    addall_wordlist(res, l1);
+    for (int i = 0 ; i < l2->length ; i++) {
+	Word *wo = *(l2->sequence + i) ;
+	if (isin_wordlist(wo, res) == -1)
+	    add_word_wordlist(res, wo) ;
+    }
+    return res ;
+}    

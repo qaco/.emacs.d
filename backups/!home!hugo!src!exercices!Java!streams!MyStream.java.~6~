@@ -1,0 +1,52 @@
+import java.util.List ;
+import java.util.ArrayList ;
+import java.util.function.Function ;
+import java.util.function.Predicate ;
+
+public interface MyStream<T> {
+
+    List<T> toList() ;
+
+    static <T> MyStream<T> makeStream(List<T> liste) {
+	return new MyStream<T>() {
+	    public List<T> toList() { return liste ; }} ;
+    }
+    
+default MyStream<T> skip(int n) {
+    List<T> init = this.toList() ;
+    return new MyStream<T> () {
+	public List<T> toList() {
+	    List<T> res = new ArrayList<T>() ;
+	    for (int i = 0 ; i < init.size() ; i++)
+		if (i > n)
+		    res.add(init.get(i)) ;
+	    return res ;
+	}
+    } ;
+}
+    
+default MyStream<T> filter(Predicate<T> p) {
+    List<T> init = this.toList() ;
+    return new MyStream<T> () {
+	public List<T> toList() {
+    	    List<T> res = new ArrayList<T>() ;
+    	    for (T tmp : init)
+		if (p.test(tmp))
+    		    res.add(tmp) ;
+    	    return res ;
+    	}
+        } ;
+    }
+
+default <U> MyStream<U> map (Function<T,U> f) {
+    List<T> init = this.toList() ;
+    return new MyStream<U> () {
+	public List<U> toList() {
+    	    List<U> res = new ArrayList<U>() ;
+	    for (T tmp : init)
+		res.add(f.apply(tmp)) ;
+    	    return res ;
+    	}
+    } ;
+}
+}

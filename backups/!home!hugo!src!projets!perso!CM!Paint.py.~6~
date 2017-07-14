@@ -1,0 +1,22 @@
+import Root
+from PIL import Image
+
+class Logo(Root.Place):
+    def __init__(self, myframe, logo_path):
+        super().__init__(myframe.plane_size, myframe.point, myframe.size)
+        self.path = logo_path
+
+    def process_position(self):
+        raw_logo = Image.open(self.path)
+        raw_logo.thumbnail(self.size)
+        xcorn = self.point[0] + (self.size[0] - raw_logo.size[0])/2
+        ycorn = self.point[1] + (self.size[1] - raw_logo.size[1])/2
+        self.point = int(xcorn), int(ycorn)
+        self.size = raw_logo.size
+
+    def stamp_img(self, img):
+        tostamp = img.copy()
+        raw_logo = Image.open(self.path)
+        raw_logo.thumbnail(self.size)
+        tostamp.paste(raw_logo, self.point)
+        return tostamp

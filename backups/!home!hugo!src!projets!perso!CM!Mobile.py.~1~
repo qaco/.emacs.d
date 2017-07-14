@@ -1,0 +1,87 @@
+import misc
+from PIL import Image
+
+class abstract_mobile(misc.abstract_calc):
+    def __init__(self, myframe, offset_ratio):
+        super().__init__()
+        self.frame = myframe
+        self.offset_ratio = offset_ratio
+        self.process_offset()
+        print("corner frame:"+str(self.frame.corner)+" size frame:"+str(self.frame.size))
+        print("corner:"+str(self.corner)+" size:"+str(self.size))
+
+    def process_offset(self):
+        raise NotImplementedError()
+    
+    def center(self):
+        xcorn = self.frame.corner[0] + (self.frame.size[0] - self.size[0])/2
+        ycorn = self.frame.corner[1] + (self.frame.size[1] - self.size[1])/2
+        self.corner = int(xcorn), int(ycorn)
+
+
+class abstract_slogan(abstract_mobile):
+    def __init__(self, myframe):
+        super().__init__(myframe, misc.TEXT_RATIO)
+        self.text = misc.INIT_TEXT
+        self.sfont = misc.FONT_PATH
+        self.fontsize = misc.INIT_FONTSIZE
+        self.color = (255,255,255)
+
+    def process_offset(self):
+        offset = max(self.frame.size[0], self.frame.size[1])/self.offset_ratio
+        self.corner = int(self.frame.corner[0] + offset), int(self.frame.corner[1] + offset)
+        self.size = int(self.frame.size[0] - offset*2), int(self.frame.size[1] - offset*2)
+        
+    def set_text(self, mytext):
+        self.text = mytext
+        self.set_in_space()
+
+    def set_font(self, myfont):
+        self.sfont = myfont
+        self.set_in_space()
+
+    def process_img(self):
+        font = ImageFont.truetype(self.sfont, self.fontsize)
+        self.img = Image.new('RGBA', self.frame.upper_size, misc.TRANSPARENCY)
+        draw = ImageDraw.Draw(self.img, 'RGBA')
+        draw.text(self.corner, self.text, self.color, font)
+
+class biggest_slogan(abstract_slogan):
+    def __init__(self, myframe):
+        super().__init__(myframe)
+
+    def set_in_space(self):
+        self.process_offset()
+        max_size = self.size
+        tmp_img = Image.new('RGBA', self.frame.upper_size, misc.TRANSPARENCY)
+        draw = ImageDraw.Draw(tmp_img, 'RGBA')
+        font, istoosmall = None, True
+        while istoosmall:
+            tmp_fontsize = self.fontsize + 1
+            tmp_font = ImageFont.truetype(self.sfont, tmp_fontsize)
+            tmp_size = draw.textsize(self.text, tmp_font)
+            istoosmall = tmp_size[0] < max_size[0] and tmp_size[1] < max_size[1]
+            if istoosmall :
+                self.fontsize = tmp_fontsize
+                font = tmp_font
+                self.size = tmp_size
+                self.center()
+
+class logo(abstract_mobile):
+    def __init__(self, logo_path, myframe):
+        super().__init__(myframe, misc.LOGO_RATIO)
+        self.raw_logo = Image.open(logo_path)
+
+    def process_offset(self):
+        offset = min(self.frame.size[0], self.frame.size[1])/self.offset_ratio
+        self.corner = int(self.frame.corner[0] + offset), int(self.frame.corner[1] + offset)
+        self.size = int(self.frame.size[0] - offset*2), int(self.frame.size[1] - offset*2)
+
+    def set_in_space(self):
+        misc.minimize_image(self.raw_logo, self.size)
+        self.size = self.raw_logo.size
+        self.center()
+
+    def process_img(self):
+        self.img = Image.new('RGBA', self.frame.upper_size, misc.TRANSPARENCY)
+        self.img.paste(self.raw_logo, self.corner)

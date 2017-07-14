@@ -1,0 +1,7 @@
+#ifndef CONTROL
+#define CONTROL
+
+void link_tiles(GtkWidget* window,
+		const int num_cells, GtkWidget*** tiles) ;
+
+#endif CONTROL

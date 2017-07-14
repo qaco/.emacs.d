@@ -1,0 +1,45 @@
+import java.util.LinkedList ;
+
+public class Pioche {
+    private LinkedList<Carte> tas = new LinkedList<Carte>() ;
+
+    public Pioche() {
+	int c = 0 ;
+	String signe ;
+	while (c != 4) {
+	    switch (c) {
+	    case 0 :
+		signe = "PIQUE" ;
+		break ;
+	    case 1 :
+		signe = "TREFLE" ;
+		break ;
+	    case 2 :
+		signe = "COEUR" ;
+		break ;
+	    case 3 :
+		signe = "CARREAU" ;
+		break ;
+	    }
+
+	    for (int i = 1 ; i < 14 ; i++)
+		tas.push(new Carte(signe, i)) ;
+	    
+	    c++ ;
+	}
+    }
+
+    public void melanger() {
+	Collections.shuffle(this.tas) ;
+    }
+
+    public Carte piocher() {
+	tas.pop() ;
+    }
+
+    public void rangerEnFin(Carte c) {
+	tas.add(c) ;
+    }
+}
+	
+	    

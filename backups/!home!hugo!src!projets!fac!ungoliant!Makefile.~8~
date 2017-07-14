@@ -1,0 +1,31 @@
+CC = gcc
+CFLAGS = -std=gnu99 -Wall -Werror -g
+LIBS = -lcurl -ldb -lxml2
+NAME = ungoliant
+SOURCES = ungoliant.c
+OBJS = $(SOURCES:%.c=%.o)
+OBJS2 = db/db_manager.o misc/word.o misc/wordlist.o parse/parser.o crawl/crawler.o query/query_engine.o
+
+all:
+	make -C misc
+	make -C db
+	make -C query
+	make -C parse
+	make -C crawl
+	make $(NAME)
+
+$(NAME) : $(OBJS) $(OBJS2)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
+
+ungoliant.o: ./crawl/crawler.h
+
+clean :
+	make -C query clean
+	make -C misc clean
+	make -C db clean
+	make -C crawl clean
+	make -C parse clean
+	rm -f $(NAME) $(OBJS)

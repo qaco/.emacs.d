@@ -1,0 +1,8 @@
+package exception ;
+
+public class NotExcutableException extends UnknownResultException {
+
+    public BadSuffixException(String descr) {
+        super(ExceptionVals.NOT_EXCUTABLE + " : " + descr);
+    }
+}

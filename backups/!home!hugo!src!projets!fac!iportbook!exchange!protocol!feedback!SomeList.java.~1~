@@ -1,0 +1,13 @@
+package protocol.feedback ;
+
+public class SomeList implements Feedback {
+    String id ;
+
+    public FirstList(String myid) {
+        this.id = myid ;
+    }
+    
+    public String toString() {
+        return "LINUM " + this.id + "+++" ;
+    }
+}

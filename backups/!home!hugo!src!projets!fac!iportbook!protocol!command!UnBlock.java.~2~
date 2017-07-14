@@ -1,0 +1,49 @@
+package protocol.command ;
+
+import main.MainVals ;
+import exception.* ;
+import service.User ;
+import protocol.feedback.* ;
+import protocol.field.* ;
+import java.util.List ;
+import java.io.IOException ;
+
+public class UnBlock implements Command {
+    private IdField id ;
+
+    public UnBlock (byte[] myid) throws UnknownResultException {
+        this.id = new IdField(myid) ;
+    }
+    
+    public UnBlock (String myid) {
+        this.id = new IdField(myid) ;
+    }
+
+    public void exec(User one, List<User> all) throws UnknownResultException,
+                                                      IOException {
+        if (one.isBlocking(this.id.toString())) {
+            one.sendTCP(new UnBlockNO()) ;
+            throw new NotExecutableException("UnBlock", this.id.toString() +
+                                             " is not blocked");
+        }
+        else {
+            one.sendTCP(new UnBlockOK()) ;
+            one.unblock(this.id.toString()) ;
+        }
+    }
+
+    public byte[] toBytes() {
+        Field[] fields = { this.id } ;
+        return Field.makeSentence(CommandVals.UNBLOCK, fields) ;
+    }
+    
+    public String toString() {
+        return
+            CommandVals.UNBLOCK + " " + this.id.toString() +
+            MainVals.EOF ;
+    }
+
+    private void describeUnBlock(String whoasks) {
+        MainVals.describe(this.id.toString()+" unblocked by "+whoasks) ;
+    }
+}

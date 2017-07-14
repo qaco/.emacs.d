@@ -1,0 +1,2 @@
+public class MainVals {
+    public static final int MAX_ID_SIZE  8 ;

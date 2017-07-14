@@ -1,0 +1,25 @@
+CC = gcc
+CFLAGS = -std=gnu99 -Wall -Werror -g
+LIBS = $(shell pkg-config --libs check) -lcurl -ldb -lxml2
+NAME = tests
+SOURCES = word_construction_case.c word_subword_case.c word_comparison_case.c wordlist_accessor_case.c wordlist_comparison_case.c wordlist_split_case.c worddict_accessor_case.c worddict_dot_case.c crawler_crawl_case.c crawler_graphdot_case.c parser_parse_case.c all_tests.c
+OBJS = $(SOURCES:%.c=%.o)
+OBJS2 = ../misc/word.o ../misc/wordlist.o ../misc/worddict.o ../dataprocess/dataprocess.o ../parse/parser.o ../crawl/crawler.o ../misc/data_container.o ../db/db_manager.o
+
+all:
+	make -C ../misc word.o wordlist.o worddict.o data_container.o
+	make -C ../dataprocess dataprocess.o	
+	make -C ../parse parser.o	
+	make -C ../crawl crawler.o
+	make -C ../db db_manager.o
+	make $(NAME)
+
+$(NAME) : $(OBJS) $(OBJS2)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	make -C ../misc clean
+	rm -f $(NAME) $(OBJS)

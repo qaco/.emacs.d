@@ -1,0 +1,1 @@
+void set_tiles_events(GtkWidget*** tiles) {

@@ -1,0 +1,175 @@
+import gi, Make, Shutter
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk, GdkPixbuf, GLib
+from PIL import Image, ImageColor
+
+INVISIBLE = (255, 255, 255, 0)
+
+def img_to_pixbuf(src, size_max):
+    if src.size[0] > size_max[0] or src.size[1] > size_max[1]:
+        src.thumbnail(size_max)
+    back = Image.new('RGBA', src.size, (255,255,255))
+    src = Image.alpha_composite(back, src)
+    src = src.convert('RGB')
+    w, h = src.size[0], src.size[1]
+    data = src.tobytes()
+    data = GLib.Bytes.new(data)
+    pix = GdkPixbuf.Pixbuf.new_from_bytes(data, GdkPixbuf.Colorspace.RGB,
+                                          False, 8, w, h, w * 3)
+    return pix
+
+def colgdk_to_tuple(col):
+    f_triple = col.to_floats()
+    r = int(f_triple[0]*255)
+    g = int(f_triple[1]*255)
+    b = int(f_triple[2]*255)
+    return (r, g, b)
+
+def get_img_filter():
+    filter_text = Gtk.FileFilter()
+    filter_text.set_name("Images")
+    filter_text.add_pattern("*.jpg")
+    filter_text.add_pattern("*.png")
+    return filter_text
+
+class Motherboard:
+    def __init__(self, cmd_shut, shut_col, shut_alpha,
+                 cmd_text, text_col, fontdict):
+        self.window = None
+        self.canvas = None
+        self.cmd_shut = cmd_shut
+        self.shut_col = shut_col
+        self.shut_alpha = shut_alpha
+        self.cmd_text = cmd_text
+        self.text_col = text_col
+        self.fonts_dict = fontdict
+        self.fonts_list = sorted(list(self.fonts_dict.keys()))
+        self.img_loaded = False
+        self.visible_bg = False
+        self.visible_text = True
+        self.logo_loaded = False
+        self.logo_path = None
+
+    def refresh_img(self):
+        w = self.window.get_size()[0] - self.window.param_width - 50
+        h = self.window.get_size()[1] - 50
+        paint = self.canvas.merge_calcs()
+        pix = img_to_pixbuf(paint, (w,h))
+        self.window.img.set_from_pixbuf(pix)
+
+    def refresh_logo(self):
+        w = int(self.window.param_width/2)
+        h = w
+        logo = Image.open(self.logo_path)
+        logo = logo.convert('RGBA')
+        pix = img_to_pixbuf(logo, (w,h))
+        self.window.logo.set_from_pixbuf(pix)
+            
+    def open_image_clicked(self, button):
+        dialog = Gtk.FileChooserDialog("Choisir une image", self.window,
+            Gtk.FileChooserAction.OPEN,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        dialog.add_filter(get_img_filter())
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            path = dialog.get_filename()
+            font = self.fonts_list[0]
+            fontpath = self.fonts_dict[font]
+            shutcol = INVISIBLE
+            self.canvas = Make.Canvas(path, self.cmd_shut, INVISIBLE,
+                                      self.cmd_text, fontpath, self.text_col)
+            self.img_loaded = True
+            self.refresh_img()
+        dialog.destroy()
+
+    def change_text_typed(self, textbuffer):
+        if self.visible_text and self.img_loaded :
+            self.canvas.change_text(textbuffer.props.text)
+            self.refresh_img()
+        
+    def font_changed(self, combobox):
+        if self.img_loaded:
+            font = combobox.get_active_text()
+            self.canvas.change_font(self, self.fonts_dict[font])
+            if self.visible_text : self.refresh_img()
+
+    def switch_text_clicked(self, button):
+        if self.img_loaded: 
+            if self.visible_text:
+                self.visible_text = False
+                self.canvas.slogan.set_text("")
+            else:
+                self.visible_text = True
+                textcol_gdk = self.window.fontcol_but.get_color()
+                textcol = colgdk_to_tuple(textcol_gdk)
+                self.canvas.slogan.color = textcol
+                self.canvas.slogan.set_text(self.window.text_buf.props.text)
+                self.canvas.slogan.process_position()
+            self.refresh_img()
+            
+    def textcolor_changed(self, button):
+        if self.img_loaded: 
+            textcol_gdk = self.window.fontcol_but.get_color()
+            textcol = colgdk_to_tuple(textcol_gdk)
+            self.canvas.slogan.color = textcol
+            if self.visible_text: self.refresh_img()
+
+    def texttoup_clicked(self, button):
+        if self.img_loaded: 
+            self.canvas.change_orientation(Shutter.TOP_SHUTTER)
+            if self.visible_text: self.refresh_img()
+            
+    def texttodown_clicked(self, button):
+        if self.img_loaded: 
+            self.canvas.change_orientation(Shutter.BOTTOM_SHUTTER)
+            if self.visible_text: self.refresh_img()
+
+    def texttoleft_clicked(self, button):
+        if self.img_loaded: 
+            self.canvas.change_orientation(Shutter.LEFT_SHUTTER)
+            if self.visible_text: self.refresh_img()
+            
+    def texttoright_clicked(self, button):
+        if self.img_loaded: 
+            self.canvas.change_orientation(Shutter.RIGHT_SHUTTER)
+            if self.visible_text: self.refresh_img()
+            
+    def bgcolor_changed(self, button):
+        if self.img_loaded and self.visible_bg:
+            bgcol_gdk = self.window.bgcol_but.get_color()
+            bgcol = colgdk_to_tuple(bgcol_gdk)
+            alpha = self.window.bg_spin.get_value_as_int()
+            alpha = int((alpha/100)*255)
+            self.canvas.shutter.color = bgcol[0], bgcol[1], bgcol[2], alpha
+            self.refresh_img()
+
+    def switch_bg_clicked(self, button):
+        if self.img_loaded: 
+            if self.visible_bg:
+                self.visible_bg = False
+                self.canvas.shutter.color = INVISIBLE
+                self.refresh_img()
+            else:
+                self.visible_bg = True
+                self.bgcolor_changed(self.window.bgcol_but)
+
+    def open_logo_clicked(self, button):
+        dialog = Gtk.FileChooserDialog("Choisir un logo", self.window,
+            Gtk.FileChooserAction.OPEN,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        dialog.add_filter(get_img_filter())
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            self.logo_path = dialog.get_filename()
+            self.logo_loaded = True
+            self.refresh_logo()
+        dialog.destroy()
+
+    def logotodown_clicked(self, button):
+        if self.logo_loaded and self.img_loaded:
+            self.canvas.sign_text_bottom(self.logo_path)
+            self.refresh_img()
+
+

@@ -1,0 +1,10 @@
+public class Data {
+    public static int NBROADS = 4 ;
+    public static int NBCASES = 15 ;
+    public static int TOP = 0 ;
+    public static int BOTTOM = 1 ;
+    public static int LEFT = 2 ;
+    public static int RIGHT = 3 ;
+    public static int PLAYER1 = 1 ;
+    public static int PLAYER2 = 2 ;
+}

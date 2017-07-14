@@ -1,0 +1,12 @@
+import sys, misc, make
+from PIL import Image
+
+text = sys.argv[1]
+filename = misc.IMG_PATH
+im = make.canvas()
+im.set_img(filename)
+im.set_shutter()
+im.set_logo(misc.LOGO_PATH)
+im.set_slogan(text)
+im.merge_calcs()
+im.img.show()

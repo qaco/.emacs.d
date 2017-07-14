@@ -1,0 +1,8 @@
+package exception ;
+
+public class IntExceptedException extends UnknownResultException {
+
+    public IntExceptedException() {
+        super(ExceptionVals.INT_EXCEPTED);
+    }
+}

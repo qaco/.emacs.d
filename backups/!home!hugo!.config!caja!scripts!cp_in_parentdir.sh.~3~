@@ -1,0 +1,4 @@
+cur_dir = ${PWD##*/}
+mv * ../
+cd ..
+rmdir "$cur_dir"

@@ -1,0 +1,210 @@
+#include <db.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include "db_manager.h"
+#include "word.h"
+#include "wordlist.h"
+
+
+#define DB_ENV_CREATE_FLAGS 0
+
+#define DB_ENV_DIR "database"
+#define DB_ENV_OPEN_FLAGS \
+    DB_CREATE | DB_INIT_LOCK | DB_INIT_MPOOL | DB_INIT_TXN | DB_THREAD
+
+/* #define DB_CREATE_ENV NULL */
+#define DB_CREATE_FLAGS 0
+
+#define DB1_OPEN_NAME "words.db"
+#define DB2_OPEN_NAME "urls.db"
+#define DB_OPEN_TXN NULL
+#define DB_OPEN_DATABASE NULL
+#define DB_OPEN_DTYPE DB_BTREE
+#define DB_OPEN_FLAGS DB_CREATE | DB_AUTO_COMMIT | DB_THREAD
+#define DB_OPEN_FRIGHTS 0664
+
+#define DB_CLOSE_FLAGS 0
+
+/* checker ca plus tard */
+/* hashcreate hashtable hashdestroy */
+unsigned long hash(unsigned char *str)
+{
+    unsigned long hash = 5381;
+    int c;
+    while (c = *str++)
+        hash = ((hash << 5) + hash) + c;
+    return hash;
+}
+
+int opendb(DbId *id, char *db_fname)
+{
+    DB_ENV *dbenv;
+    DB *dbp;
+    int ret, t_ret;
+
+    // Create and open handle for DB
+    if ((ret = db_env_create(&dbenv, DB_ENV_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_env_create: %s\n", db_strerror(ret));
+        exit(ret);
+    }
+
+    /*
+     * Place to configure database
+     */
+
+    if ((ret = dbenv->open(dbenv, DB_ENV_DIR, DB_ENV_OPEN_FLAGS)) != 0) {
+        fprintf(stderr, "db_env_open: %s\n", db_strerror(ret));
+        exit(ret);
+    }
+
+    // Create and open handle for table 1
+    if ((ret = db_create(&dbp, dbenv, DB_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_create: %s\n", db_strerror(ret));
+        exit(ret);
+    }
+
+    /*
+     * Place to configure 1st table
+     */
+
+    if ((ret = dbp->open(dbp, DB_OPEN_TXN, DB1_OPEN_NAME, DB_OPEN_DATABASE,
+                         DB_OPEN_DTYPE, DB_OPEN_FLAGS, DB_OPEN_FRIGHTS)) != 0) {
+        dbp->err(dbp, ret, "%s", DATABASE);
+        if ((t_ret = dbp->close(dbp, 0)) != 0 && ret == 0)
+            ret = t_ret;
+        exit(ret);
+    }
+
+    // Create and open handle for table 2
+    if ((ret = db_create(&dbp, dbenv, DB_CREATE_FLAGS)) != 0) {
+        fprintf(stderr, "db_create: %s\n", db_strerror(ret));
+        exit(ret);
+    }
+
+    /*
+     * Place to configure 2nd table
+     */
+
+    if ((ret = dbp->open(dbp, DB_OPEN_TXN, DB2_OPEN_NAME, DB_OPEN_DATABASE,
+                         DB_OPEN_DTYPE, DB_OPEN_FLAGS, DB_OPEN_FRIGHTS)) != 0) {
+        dbp->err(dbp, ret, "%s", DATABASE);
+        if ((t_ret = dbp->close(dbp, 0)) != 0 && ret == 0)
+            ret = t_ret;
+        exit(ret);
+    }
+    id->dbp = dbp;
+    return 0;
+}
+
+int closedb(DbId *id)
+{
+    int ret;
+    if ((ret = id->dbp->close(id->dbp, DB_CLOSE_FLAGS)) != 0)
+        exit(ret);
+    return 0;
+}
+
+/* TODO Il faut changer cette fonction pour qu'elle cree une liste d'urls et */
+/* non pas une url simple */
+/* Check ca bb */
+/* http://docs.oracle.com/cd/E17276_01/html/programmer_reference/am_misc_struct.html */
+int add_pair(DbId *id, Word *word, Word *url)
+{
+    DB *dbp = id->dbp;
+    DBT key, data;
+    int ret;
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+    key.data = word->memory;
+    key.size = word->size;
+    data.data = url->memory;
+    data.size = url->size;
+    if ((ret = dbp->put(dbp, NULL, &key, &data, 0)) == 0)
+        printf("db: %s: key stored.\n", (char *)key.data);
+    else {
+        dbp->err(dbp, ret, "DB->put");
+        exit(ret);
+    }
+    return 0;
+}
+
+/* TODO Il faut changer cette fonction pour qu'elle cree une liste d'urls et */
+/* non pas une url simple */
+int get_pair(DbId *id, Word *word, WordList *urlList)
+{
+    DB *dbp = id->dbp;
+    DBT key, data;
+    int ret;
+    Word res;
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+    key.data = word->memory;
+    key.size = word->size;
+    if ((ret = dbp->get(dbp, NULL, &key, &data, 0)) == 0)
+        printf("db: %s: key retrieved: data was %s.\n", (char *)key.data,
+               (char *)data.data);
+    else {
+        dbp->err(dbp, ret, "DB->get");
+        exit(ret);
+    }
+    res = construct_word(data.data, data.size);
+    *url = res;
+    return 0;
+}
+
+/* TODO */
+int remove_pair(DbId *id, Word *word) {
+    return 1;
+}
+
+/* TODO Ca a l'air complique du supprimer une url sachant que ce n'est pas
+   une key */
+int remove_url(DbId *id, Word *url) {
+    return 1;
+}
+
+int display(DbId *id)
+{
+    DB *dbp = id->dbp;
+    DBC *dbcp;
+    DBT key, data;
+    int close_db, close_dbc, ret;
+    Word w;
+
+    close_db = close_dbc = 0;
+
+
+    /* Acquire a cursor for the database. */
+    if ((ret = dbp->cursor(dbp, NULL, &dbcp, 0)) != 0) {
+        dbp->err(dbp, ret, "DB->cursor");
+        goto err;
+    }
+
+
+    /* Initialize the key/data return pair. */
+    memset(&key, 0, sizeof(key));
+    memset(&data, 0, sizeof(data));
+
+
+    /* Walk through the database and print out the key/data pairs. */
+    while((ret = dbcp->c_get(dbcp, &key, &data, DB_NEXT)) == 0) {
+        w = construct_word(data.data, data.size);
+        print_word(w, stdout);
+        /* printf("%.*s : %.*s\n", */
+        /*        (int)key.size, (char *)key.data, */
+        /*        (int)data.size, (char *)data.data); */
+    }
+    if (ret != DB_NOTFOUND) {
+        dbp->err(dbp, ret, "DBcursor->get");
+        goto err;
+    }
+
+
+ err:	if (close_dbc && (ret = dbcp->c_close(dbcp)) != 0)
+        dbp->err(dbp, ret, "DBcursor->close");
+    if (close_db && (ret = dbp->close(dbp, 0)) != 0)
+        exit(1);
+    return 0;
+}

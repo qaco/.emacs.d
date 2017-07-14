@@ -1,0 +1,80 @@
+package service.tests ;
+
+import java.net.Socket ;
+import java.util.List ;
+import service.User ;
+import protocol.flow.* ;
+
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+
+public class UserAccessorsTest {
+
+    private User myuser ;
+    private String errmess ;
+
+    @Before
+    public final void setUserUp() {
+        this.myuser = new User(new Socket(), "hugo", 25) ;
+        this.errmess = "Not implemented yet !" ;
+    }
+
+    @Test
+    public final void testSocketNotConnected() {
+        assertFalse(this.myuser.isConnected()) ;
+    }
+
+    @Test
+    public final void testSocketConnected() {
+        fail(this.errmess) ;
+    }
+
+    @Test
+    public final void testGetPassword() {
+        assertEquals(25, this.myuser.getPassword()) ;
+    }
+    
+    @Test
+    public final void testFriendsAccessors() {
+        List<User> friends ;
+        User myfriend1 = new User(new Socket(), "jojo", 12) ;
+        User myfriend2 = new User(new Socket(), "riri", 15) ;
+        User myfriend3 = new User(new Socket(), "fifi", 25) ;
+        this.myuser.addFriend(myfriend1) ;
+        this.myuser.addFriend(myfriend2) ;
+        this.myuser.addFriend(myfriend3) ;
+        this.myuser.removeFriend("fifi") ;
+        assertTrue(this.myuser.isAFriend("jojo")) ;
+        assertTrue(this.myuser.isAFriend("riri")) ;
+        assertFalse(this.myuser.isAFriend("fifi")) ;
+        assertEquals(2, this.myuser.howManyFriends()) ;
+    }
+
+    @Test
+    public final void testAddTwiceAFriend() {
+        User myfriend = new User(new Socket(), "jojo", 12) ;
+        boolean b ;
+        this.myuser.addFriend(myfriend) ;
+        b = this.myuser.addFriend(myfriend) ;
+        assertFalse(b) ;
+        assertEquals(this.myuser.howManyFriends(), 1) ;
+    }
+
+    @Test
+    public final void testEquality() {
+        User guy = new User(new Socket(), "hugo", 12) ;
+        boolean b = this.myuser.equals(guy) ;
+        assertTrue(b) ;
+    }
+
+    @Test
+    public final void testInequality() {
+        User guy = new User(new Socket(), "jojo", 12) ;
+        boolean b = this.myuser.equals(guy) ;
+        assertFalse(b) ;
+    }
+}
+        
+    

@@ -1,0 +1,220 @@
+open Sat_solver;;
+open Array;;
+open Voronoi;;
+open Graphics;;
+open Random;;
+
+self_init ();
+
+open_graph " 900x900" ;;
+(* let example = List.hd Examples.examples ;; *)
+
+(* let regions = regions_voronoi taxicab example ;; *)
+
+(* draw_voronoi regions example ;; *)
+
+(* let adj = adjacences_voronoi example regions ;; *)
+
+(* let result = compute example adj ;; *)
+
+(* let display = regions_voronoi taxicab result ;; *)
+
+(* (\* draw_voronoi display result ;; *\) *)
+(* wait_next_event [Button_down ; Button_up] ;; *)
+
+(* Prend une liste et retourne une autre liste melangee *)
+let shuffle l =
+  let nl = List.map (fun c -> (Random.bits (), c)) l in
+  let sond = List.sort compare nl in
+  List.map snd sond
+
+(* Prend un String et une couleur et appelle draw_string a une certaine *)
+(* position en fonction de la couleur *)
+let dd s c =
+  set_color white;
+  begin
+    match c with
+    | col when c = black ->
+      fill_rect 0 850 900 50;
+      moveto 50 (size_y () - 40);
+      set_color black
+    | col when c = red ->
+      fill_rect 0 800 900 50;
+      moveto 100 (size_y () - 80);
+      set_color red
+    | _ -> clear_graph ()
+  end;
+  draw_string s
+
+
+
+
+let reset_colors r_ex col_array_i  =
+  for i = 0 to (length col_array_i) - 1 do
+    (!r_ex).seeds.(i) <- {c = col_array_i.(i);
+                          x = (!r_ex).seeds.(i).x;
+                          y = (!r_ex).seeds.(i).y;}
+  done
+
+
+(* let show_solution r_ex adj col_array_init = *)
+(*   let col_arr = extract_color_array !r_ex in *)
+(*   let constraints = produce_constraints col_arr adj in *)
+(*   let result = Sat.solve constraints in *)
+(*   dd "Affichage d'une solution" black; *)
+(*   match result with *)
+(*   | Some a -> *)
+(*     let final_res = get_result result in *)
+(*     r_ex := solve_vor final_res !r_ex; *)
+(*     (\* Il faut voir si cette ligne est importante *\) *)
+(*     (\* draw_voronoi matrix !r_ex *\) *)
+(*   | None -> *)
+(*     dd "Cet carte n'a pas de solution. On retourne a la carte de base" red; *)
+(*     reset_colors r_ex col_array_init; *)
+(*     let col_arr_i = extract_color_array !r_ex in *)
+(*     let constraints_i = produce_constraints col_arr_i adj in *)
+(*     let result_i = Sat.solve constraints_i in *)
+(*     let final_res_i = get_result result_i in *)
+(*     r_ex := solve_vor final_res_i !r_ex *)
+(* Il faut voir si cette ligne est importante *)
+(* draw_voronoi matrix !r_ex *)
+
+
+let rec choose_color r_ex matrix col_array_init =
+  let rec get_col () =
+    dd "Cliquez sur une case qui possede la couleur que vous voulez \
+        utiliser" black;
+    let em = wait_next_event[Button_down] in
+    let ex = em.mouse_x and ey = em.mouse_y in
+    let mx, my = match !r_ex.dim with a, b -> a, b in
+    if (ex < mx && ey < my) then
+      let seed_num = matrix.(ey).(ex) in
+      match (!r_ex).seeds.(seed_num).c with
+      | Some col -> Some col
+      | None ->
+        dd "Une couleur vide n'est pas une couleur" red;
+        get_col ()
+    else
+      begin
+        dd "Vous ne pouvez pas choisir une couleur a l'exterieur du cadre" red;
+        get_col ()
+      end
+  in
+  let col = get_col () in
+  dd "Cliquez sur la region a colorier" black;
+  let em = wait_next_event[Button_down] in
+  let x = em.mouse_x and y = em.mouse_y in
+  (* let print_shit = print_int x; print_string ", "; print_int y in *)
+  let seed_num = matrix.(y).(x) in
+  if (col_array_init.(seed_num) = None) then
+    (* print_shit; *)
+    begin
+      (!r_ex).seeds.(seed_num) <- {c = col;
+                                   x = (!r_ex).seeds.(seed_num).x;
+                                   y = (!r_ex).seeds.(seed_num).y};
+    end
+  else
+    dd "Vous ne pouvez pas recolorier une couleur de base" red
+
+let rec erase_color r_ex matrix col_array_init =
+  dd "Choisissez une region a supprimer (cliquez)" black;
+  let em = wait_next_event[Button_down] in
+  let x = em.mouse_x and y = em.mouse_y in
+  let seed_num = matrix.(y).(x) in
+  if (col_array_init.(seed_num) = None) then
+    begin
+      (!r_ex).seeds.(seed_num) <- {c = None;
+                                   x = (!r_ex).seeds.(seed_num).x;
+                                   y = (!r_ex).seeds.(seed_num).y};
+      dd "Region supprimer" red
+    end
+  else
+    begin
+      dd "Vous ne pouvez pas supprimer une couleur qui existe de base" red;
+      erase_color r_ex matrix col_array_init
+    end
+
+
+let rec choose_action r_ex matrix adj col_array_init =
+  (* TODO Modifier cette partie pour que ce soit seulement visuel. cliquable *)
+  (* Bon j'ai trop de chose a changer pour ce que ca va apporter... *)
+  (* Je vais pas le faire. Vas y si t'es motiver mais je pense que ca *)
+  (* vaut pas trop le coup *)
+  dd "Choisissez une action : 'c' pour colorier une case; 'd' pour \
+      supprimer une case coloriez; 's' pour afficher une solution" black;
+  let ek = wait_next_event[Key_pressed] in
+  match ek.key with
+  | 'c' -> choose_color r_ex matrix col_array_init
+  | 'd' -> erase_color r_ex matrix col_array_init
+  | 's' -> compute r_ex adj
+  | _ -> choose_action r_ex matrix adj col_array_init
+
+
+(* let is_complete r_ex adj = *)
+(*   let col_arr = extract_color_array !r_ex in *)
+(*   let constraints = produce_constraints col_arr adj in *)
+(*   let result = Sat.solve constraints in *)
+(*   let final_res = get_result result in *)
+(*   let new_vor = solve_vor final_res !r_ex in *)
+(*   let new_col_arr = extract_color_array new_vor in *)
+(*   let comp = ref true in *)
+(*   for i = 0 to (length col_arr) - 1 do *)
+(*     if not (new_col_arr.(i) = col_arr.(i)) then *)
+(*       comp := false *)
+(*   done; *)
+(*   !comp *)
+
+
+let play_one ex =
+  let r_ex = ref ex in
+  let col_array_init = extract_color_array !r_ex in
+  match (!r_ex).dim with
+  | x, y ->
+    (* open_graph(" "^(string_of_int x)^"x"^(string_of_int y)); *)
+    dd "Calcul de la matrice des regions" black;
+    let matrix = regions_voronoi taxicab !r_ex in
+    dd "Calcul de la matrice d'adjacences" black;
+    let adj = adjacences_voronoi !r_ex matrix in
+    while not (is_complete r_ex adj) do
+      draw_voronoi matrix !r_ex;
+      choose_action r_ex matrix adj col_array_init;
+      dd "" red
+    done;
+    draw_voronoi matrix !r_ex
+
+
+
+let rec play_again () =
+  dd "Voulez vous rejouer ? (y/n)" black;
+  let ek = wait_next_event[Key_pressed] in
+  match ek.key with
+  | 'y' -> true
+  | 'n' -> false
+  | _ ->
+    dd "Vous devez appuyer sur 'y' ou 'n' (oui ou non)" red;
+    play_again ()
+
+
+let rec play_all exs = match exs with
+  | [] ->
+    dd "Partie finie !" black;
+    let _ = wait_next_event [Button_down; Key_pressed] in
+    close_graph ();
+  | ex::l ->
+    play_one ex;
+    dd "Carte terminee" red;
+    if play_again () then
+      if not (l = []) then
+        begin
+          clear_graph ();
+          play_all l
+        end
+      else close_graph ()
+;;
+
+
+
+
+play_all (shuffle examples);
+
+close_graph ();;

@@ -1,0 +1,6 @@
+public class SomeMessage {
+
+    private int num ;
+    private String mess ;
+
+    public SomeMessage (String mynum, String mymess

@@ -1,0 +1,360 @@
+;; -*- coding: utf-8 -*-
+(("Lazy Game Reviews" nil nil (22610 22746 210381 822000) feed 0 nil nil ((link ((rel . "self") (href . "http://www.youtube.com/feeds/videos.xml?user=phreakindee"))) (id nil "yt:channel:UCLx053rWZxCiYWsBETgdKrQ") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "Lazy Game Reviews") (link ((rel . "alternate") (href . "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2006-03-09T16:31:14+00:00") (entry nil (id nil "yt:video:Pwgae-dFLPg") (videoId nil "Pwgae-dFLPg") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - PC Games at Sam's Club/Walmart in 2016") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=Pwgae-dFLPg"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-12T13:22:02+00:00") (updated nil "2016-12-15T08:42:55+00:00") (group nil (title nil "LGR - PC Games at Sam's Club/Walmart in 2016") (content ((url . "https://www.youtube.com/v/Pwgae-dFLPg?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i1.ytimg.com/vi/Pwgae-dFLPg/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Since I talked about these stores recently and how they used to sell big box PC games, I figured I'd show how it looks today.
+
+Here's the video this one is referencing: https://www.youtube.com/watch?v=QhZkmAscdw0
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+https://www.facebook.com/LazyGameReviews
+
+● Background music credit:
+\"Not That Serious 2\"
+https://www.epidemicsound.com") (community nil (starRating ((count . "3770") (average . "4.95") (min . "1") (max . "5"))) (statistics ((views . "64433")))))) (entry nil (id nil "yt:video:QhZkmAscdw0") (videoId nil "QhZkmAscdw0") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - The 'Final' Big Box PC Games Released") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=QhZkmAscdw0"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-09T18:54:18+00:00") (updated nil "2016-12-15T08:29:46+00:00") (group nil (title nil "LGR - The 'Final' Big Box PC Games Released") (content ((url . "https://www.youtube.com/v/QhZkmAscdw0?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i2.ytimg.com/vi/QhZkmAscdw0/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Taking an unscripted look at some of the last big box PC games! Several of these ended up hitting Sam's Club shelves from 2003 to 2005 alongside their smaller counterparts. A fun oddity to collect!
+
+● Try the image-stabilized version of this video if you want:
+https://www.youtube.com/watch?v=dQXgFTSeDGk
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+https://www.facebook.com/LazyGameReviews
+
+● Link to the camera glasses I use:
+http://www.amazon.com/iVUE-Horizon-Camera-Recording-Sunglasses/dp/B00NAI092S
+
+● Music used in order of appearance:
+\"Parkside Lane 1,\" \"City Jungle 3\"
+https://www.epidemicsound.com") (community nil (starRating ((count . "3243") (average . "4.90") (min . "1") (max . "5"))) (statistics ((views . "85513")))))) (entry nil (id nil "yt:video:BsgBccPpYiI") (videoId nil "BsgBccPpYiI") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - The Sims 4 Vintage Glamour Stuff Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=BsgBccPpYiI"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-07T13:00:00+00:00") (updated nil "2016-12-15T07:57:11+00:00") (group nil (title nil "LGR - The Sims 4 Vintage Glamour Stuff Review") (content ((url . "https://www.youtube.com/v/BsgBccPpYiI?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i3.ytimg.com/vi/BsgBccPpYiI/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Gameplay and overview of the ninth stuff pack for The Sims 4. What old-school items and clothing does it have? How much of your stuff do butlers steal? Let's find out!
+-- This review was made using code provided by EA.
+
+● Please consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Twitter and Facebook:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Check out my other Sims 4 reviews:
+https://www.youtube.com/playlist?list=PLbBZM9aUMsjH0ugWCCkcFxNPtvqRoi9la
+
+● Download the sims shown in this video:
+http://bit.ly/1wbFB7R
+
+● Download the custom LGR shirt shown:
+https://drive.google.com/file/d/0B7-cJK68JK-3NkZXNzVqWXpzSEk
+
+● My PC Specs:
+http://lazygamereviews.wordpress.com/2011/02/10/pc-specs/
+
+● Music used in order of appearance:
+\"Epic Trailer 4,\" \"The Need For Speed OST,\" \"SimCity 3000 OST,\" \"The Sims OST,\" \"City Fashion 3\"
+http://www.epidemicsound.com") (community nil (starRating ((count . "6294") (average . "4.95") (min . "1") (max . "5"))) (statistics ((views . "99496")))))) (entry nil (id nil "yt:video:28TyIsCwkQo") (videoId nil "28TyIsCwkQo") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Elf Bowling - PC Game Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=28TyIsCwkQo"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-05T14:35:21+00:00") (updated nil "2016-12-15T06:12:34+00:00") (group nil (title nil "LGR - Elf Bowling - PC Game Review") (content ((url . "https://www.youtube.com/v/28TyIsCwkQo?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i3.ytimg.com/vi/28TyIsCwkQo/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Somehow, Elf Bowling was once one of the most-played games around! As far as mainstream media was concerned, the big three in PC gaming were Doom, Quake... and Elf Bowling.
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Download the original Elf Bowling here:
+http://bit.ly/2gHwwHy
+
+● Source for that news interview footage:
+https://www.youtube.com/watch?v=pD3nBXwPjRg
+
+● Music used in order of appearance:
+\"Bloxonius,\" \"Christmas Time 16\"
+https://www.youtube.com/watch?v=4w1zzrgo1Tg
+http://www.epidemicsound.com") (community nil (starRating ((count . "4186") (average . "4.96") (min . "1") (max . "5"))) (statistics ((views . "73069")))))) (entry nil (id nil "yt:video:hKWxO4GFS-4") (videoId nil "hKWxO4GFS-4") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Cities: Skylines Natural Disasters Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=hKWxO4GFS-4"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-02T14:19:03+00:00") (updated nil "2016-12-15T07:55:12+00:00") (group nil (title nil "LGR - Cities: Skylines Natural Disasters Review") (content ((url . "https://www.youtube.com/v/hKWxO4GFS-4?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i1.ytimg.com/vi/hKWxO4GFS-4/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Taking a look at the third expansion pack to Cities Skylines! How disastrous are the disasters and is it worth the asking price? Find out in this overview of the Natural Disasters pack!
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+https://www.facebook.com/LazyGameReviews
+
+● My PC Specs:
+http://lazygamereviews.wordpress.com/2011/02/10/pc-specs/
+
+● Download the cities shown in the video:
+http://steamcommunity.com/id/phreakindee/myworkshopfiles/?appid=255710
+
+● Music used in order of appearance:
+\"Last Ride Home 2,\" \"City Fashion 3\"
+http://www.epidemicsound.com") (community nil (starRating ((count . "4299") (average . "4.94") (min . "1") (max . "5"))) (statistics ((views . "97207")))))) (entry nil (id nil "yt:video:sMWg9hN4zN8") (videoId nil "sMWg9hN4zN8") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Thrifts [Ep.30] Gone With The Wind") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=sMWg9hN4zN8"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-28T14:13:53+00:00") (updated nil "2016-12-15T08:31:45+00:00") (group nil (title nil "LGR - Thrifts [Ep.30] Gone With The Wind") (content ((url . "https://www.youtube.com/v/sMWg9hN4zN8?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i4.ytimg.com/vi/sMWg9hN4zN8/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Join me as I go out thrifting, in search of games and interesting goods at various discount shops! Thirty episodes, wow. Let's see what we can find this windy November day!
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Link to the camera glasses I use:
+http://www.amazon.com/iVUE-Horizon-Camera-Recording-Sunglasses/dp/B00NAI092S
+
+Music is all royalty-free. Tracks used in order of appearance:
+\"Branches\", \"Mining By Moonlight\", and \"Spy Groove\"
+http://www.danosongs.com/#music
+https://incompetech.com/music/royalty-free/full_list.php") (community nil (starRating ((count . "5202") (average . "4.98") (min . "1") (max . "5"))) (statistics ((views . "83624")))))) (entry nil (id nil "yt:video:m8vltu1xLnU") (videoId nil "m8vltu1xLnU") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - RollerCoaster Tycoon World Is Sad [A Review]") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=m8vltu1xLnU"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-25T14:30:52+00:00") (updated nil "2016-12-15T07:55:57+00:00") (group nil (title nil "LGR - RollerCoaster Tycoon World Is Sad [A Review]") (content ((url . "https://www.youtube.com/v/m8vltu1xLnU?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i2.ytimg.com/vi/m8vltu1xLnU/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Welp. After twelve years of anticipation waiting for another mainline Roller Coaster Tycoon game on the PC, this is the result. And yeah, it is a bit of a downer for long-time fans.
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● My PC Specs:
+http://lazygamereviews.wordpress.com/2011/02/10/pc-specs/
+
+● Music used in order of appearance:
+\"Parkside Lane 3,\" \"Parkside Lane 1,\" \"Walk Break 2\"
+http://www.epidemicsound.com") (community nil (starRating ((count . "6434") (average . "4.96") (min . "1") (max . "5"))) (statistics ((views . "191522")))))) (entry nil (id nil "yt:video:VhbxJCWcsVM") (videoId nil "VhbxJCWcsVM") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Sid Meier's Civilization VI Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=VhbxJCWcsVM"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-23T15:42:24+00:00") (updated nil "2016-12-15T02:20:01+00:00") (group nil (title nil "LGR - Sid Meier's Civilization VI Review") (content ((url . "https://www.youtube.com/v/VhbxJCWcsVM?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i3.ytimg.com/vi/VhbxJCWcsVM/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Commentary and gameplay on the Windows PC game Sid Meier's Civ 6! Is it an improvement over its predecessors? As a long-time fan of the series, I was psyched to find out.
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Music used in order of appearance:
+\"Back In Town\" and \"Howling\"
+https://www.youtube.com/audiolibrary/music") (community nil (starRating ((count . "3177") (average . "4.96") (min . "1") (max . "5"))) (statistics ((views . "83467")))))) (entry nil (id nil "yt:video:0XNqJW_8z58") (videoId nil "0XNqJW_8z58") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Planet Coaster Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=0XNqJW_8z58"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-21T13:31:05+00:00") (updated nil "2016-12-15T08:01:03+00:00") (group nil (title nil "LGR - Planet Coaster Review") (content ((url . "https://www.youtube.com/v/0XNqJW_8z58?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i1.ytimg.com/vi/0XNqJW_8z58/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Taking a look at Frontier Development's theme park management sim, Planet Coaster! Is it the spiritual successor to RollerCoaster Tycoon 3 fans wanted? Time to find out.
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● My PC Specs:
+http://lazygamereviews.wordpress.com/2011/02/10/pc-specs/
+
+Music used is from the Planet Coaster soundtrack.") (community nil (starRating ((count . "8137") (average . "4.93") (min . "1") (max . "5"))) (statistics ((views . "230430")))))) (entry nil (id nil "yt:video:csIyJ94Zugk") (videoId nil "csIyJ94Zugk") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Serious Sam The First Encounter Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=csIyJ94Zugk"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-18T13:26:29+00:00") (updated nil "2016-12-15T06:51:15+00:00") (group nil (title nil "LGR - Serious Sam The First Encounter Review") (content ((url . "https://www.youtube.com/v/csIyJ94Zugk?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i4.ytimg.com/vi/csIyJ94Zugk/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "This first Serious Sam game is still such a rush! Non-stop action, tons of enemies, satisfying weapons, and plenty of 
+\"AAAAAAAAAAAAAAAAAAAA!!!!!\"
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+Music used is from the Serious Sam TFE soundtrack.") (community nil (starRating ((count . "4566") (average . "4.98") (min . "1") (max . "5"))) (statistics ((views . "98783")))))) (entry nil (id nil "yt:video:NxPoan-Xjtc") (videoId nil "NxPoan-Xjtc") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "Planet Coaster - Teacup Hell") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=NxPoan-Xjtc"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-17T18:52:53+00:00") (updated nil "2016-12-15T00:34:39+00:00") (group nil (title nil "Planet Coaster - Teacup Hell") (content ((url . "https://www.youtube.com/v/NxPoan-Xjtc?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i3.ytimg.com/vi/NxPoan-Xjtc/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Adviser said my teacup ride needed more decorations. Found the solution.
+
+I've got a review incoming, but I'm having too much fun just screwing around with the game right now, haha.") (community nil (starRating ((count . "2887") (average . "4.95") (min . "1") (max . "5"))) (statistics ((views . "59594")))))) (entry nil (id nil "yt:video:q-6tHL0iMI4") (videoId nil "q-6tHL0iMI4") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Hori TAC Pro - PS4 Keyboard & Mouse Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=q-6tHL0iMI4"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-14T16:07:18+00:00") (updated nil "2016-12-15T06:51:44+00:00") (group nil (title nil "LGR - Hori TAC Pro - PS4 Keyboard & Mouse Review") (content ((url . "https://www.youtube.com/v/q-6tHL0iMI4?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i2.ytimg.com/vi/q-6tHL0iMI4/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Unit supplied by Hori USA for review. Taking a look at their Tactical Assault Commander Pro keyboard and mouse controller for the PlayStation 3 and 4! Does it provide PC-like control on consoles?
+
+● Here's a link to the Amazon product page:
+https://www.amazon.com/Tactical-Assault-Commander-Controller-Officially-Licensed/dp/B01JTOWU0K/
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Music used in order of appearance:
+\"Blue Night Bossa 2,\" \"Not That Serious 2\"
+http://www.epidemicsound.com") (community nil (starRating ((count . "2997") (average . "4.95") (min . "1") (max . "5"))) (statistics ((views . "81290")))))) (entry nil (id nil "yt:video:0j-mguqnRNk") (videoId nil "0j-mguqnRNk") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Crazy Taxi - PC Game Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=0j-mguqnRNk"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-11T16:44:06+00:00") (updated nil "2016-12-15T01:29:23+00:00") (group nil (title nil "LGR - Crazy Taxi - PC Game Review") (content ((url . "https://www.youtube.com/v/0j-mguqnRNk?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i1.ytimg.com/vi/0j-mguqnRNk/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "This is one of those timeless arcade classics, and yes, it had a PC release back in 2002. Shame that this version wasn't very well-optimized but YA YA YA YA YA!
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+Music used is from the Crazy Taxi OSTs") (community nil (starRating ((count . "3889") (average . "4.97") (min . "1") (max . "5"))) (statistics ((views . "88103")))))) (entry nil (id nil "yt:video:O_C4hMEyP_o") (videoId nil "O_C4hMEyP_o") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Duke's Sushi Death [The Sims 4]") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=O_C4hMEyP_o"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-09T19:30:14+00:00") (updated nil "2016-12-15T04:47:03+00:00") (group nil (title nil "LGR - Duke's Sushi Death [The Sims 4]") (content ((url . "https://www.youtube.com/v/O_C4hMEyP_o?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i4.ytimg.com/vi/O_C4hMEyP_o/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Always thought the music in the game sounded like a sitcom, so I added a laugh track to go along with it... cut to SimDuke's pufferfish sushi death, hehe.") (community nil (starRating ((count . "3499") (average . "4.91") (min . "1") (max . "5"))) (statistics ((views . "68716")))))) (entry nil (id nil "yt:video:KewPxEQ31Po") (videoId nil "KewPxEQ31Po") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Batter Up! - First PC Baseball Game I Played") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=KewPxEQ31Po"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-07T16:47:41+00:00") (updated nil "2016-12-14T01:35:12+00:00") (group nil (title nil "LGR - Batter Up! - First PC Baseball Game I Played") (content ((url . "https://www.youtube.com/v/KewPxEQ31Po?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i4.ytimg.com/vi/KewPxEQ31Po/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "This is a shareware educational baseball game for MS-DOS from 1992! I have strange yet fond memories of this, but haven't been able to find a fully-working copy of v2.0 online. My backup copy has long since gone corrupt, although I was recently able to get it mostly working so I figured I'd show it here!
+
+Here's my own corrupted backup copy if you'd like to try it:
+https://mega.nz/#!Wd4nRQqR!L6LkXLHRMGm7JRATz8C2Z7zGcrnDAv-YgweaIPyiGm4") (community nil (starRating ((count . "1764") (average . "4.93") (min . "1") (max . "5"))) (statistics ((views . "50092")))))))) ("LGR - PC Games at Sam's Club/Walmart in 2016" nil "http://www.youtube.com/watch?v=Pwgae-dFLPg" (22610 22415) old 1 nil nil ((guid nil "yt:video:Pwgae-dFLPg") (id nil "yt:video:Pwgae-dFLPg") (videoId nil "Pwgae-dFLPg") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - PC Games at Sam's Club/Walmart in 2016") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=Pwgae-dFLPg"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-12T13:22:02+00:00") (updated nil "2016-12-15T08:42:55+00:00") (group nil (title nil "LGR - PC Games at Sam's Club/Walmart in 2016") (content ((url . "https://www.youtube.com/v/Pwgae-dFLPg?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i1.ytimg.com/vi/Pwgae-dFLPg/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Since I talked about these stores recently and how they used to sell big box PC games, I figured I'd show how it looks today.
+
+Here's the video this one is referencing: https://www.youtube.com/watch?v=QhZkmAscdw0
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+https://www.facebook.com/LazyGameReviews
+
+● Background music credit:
+\"Not That Serious 2\"
+https://www.epidemicsound.com") (community nil (starRating ((count . "3770") (average . "4.95") (min . "1") (max . "5"))) (statistics ((views . "64433"))))))) ("LGR - The 'Final' Big Box PC Games Released" nil "http://www.youtube.com/watch?v=QhZkmAscdw0" (22610 21626) old 2 nil nil ((guid nil "yt:video:QhZkmAscdw0") (id nil "yt:video:QhZkmAscdw0") (videoId nil "QhZkmAscdw0") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - The 'Final' Big Box PC Games Released") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=QhZkmAscdw0"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-09T18:54:18+00:00") (updated nil "2016-12-15T08:29:46+00:00") (group nil (title nil "LGR - The 'Final' Big Box PC Games Released") (content ((url . "https://www.youtube.com/v/QhZkmAscdw0?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i2.ytimg.com/vi/QhZkmAscdw0/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Taking an unscripted look at some of the last big box PC games! Several of these ended up hitting Sam's Club shelves from 2003 to 2005 alongside their smaller counterparts. A fun oddity to collect!
+
+● Try the image-stabilized version of this video if you want:
+https://www.youtube.com/watch?v=dQXgFTSeDGk
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+https://www.facebook.com/LazyGameReviews
+
+● Link to the camera glasses I use:
+http://www.amazon.com/iVUE-Horizon-Camera-Recording-Sunglasses/dp/B00NAI092S
+
+● Music used in order of appearance:
+\"Parkside Lane 1,\" \"City Jungle 3\"
+https://www.epidemicsound.com") (community nil (starRating ((count . "3243") (average . "4.90") (min . "1") (max . "5"))) (statistics ((views . "85513"))))))) ("LGR - The Sims 4 Vintage Glamour Stuff Review" nil "http://www.youtube.com/watch?v=BsgBccPpYiI" (22610 19671) new 3 nil nil ((guid nil "yt:video:BsgBccPpYiI") (id nil "yt:video:BsgBccPpYiI") (videoId nil "BsgBccPpYiI") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - The Sims 4 Vintage Glamour Stuff Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=BsgBccPpYiI"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-07T13:00:00+00:00") (updated nil "2016-12-15T07:57:11+00:00") (group nil (title nil "LGR - The Sims 4 Vintage Glamour Stuff Review") (content ((url . "https://www.youtube.com/v/BsgBccPpYiI?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i3.ytimg.com/vi/BsgBccPpYiI/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Gameplay and overview of the ninth stuff pack for The Sims 4. What old-school items and clothing does it have? How much of your stuff do butlers steal? Let's find out!
+-- This review was made using code provided by EA.
+
+● Please consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Twitter and Facebook:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Check out my other Sims 4 reviews:
+https://www.youtube.com/playlist?list=PLbBZM9aUMsjH0ugWCCkcFxNPtvqRoi9la
+
+● Download the sims shown in this video:
+http://bit.ly/1wbFB7R
+
+● Download the custom LGR shirt shown:
+https://drive.google.com/file/d/0B7-cJK68JK-3NkZXNzVqWXpzSEk
+
+● My PC Specs:
+http://lazygamereviews.wordpress.com/2011/02/10/pc-specs/
+
+● Music used in order of appearance:
+\"Epic Trailer 4,\" \"The Need For Speed OST,\" \"SimCity 3000 OST,\" \"The Sims OST,\" \"City Fashion 3\"
+http://www.epidemicsound.com") (community nil (starRating ((count . "6294") (average . "4.95") (min . "1") (max . "5"))) (statistics ((views . "99496"))))))) ("LGR - Elf Bowling - PC Game Review" nil "http://www.youtube.com/watch?v=28TyIsCwkQo" (22610 13394) new 4 nil nil ((guid nil "yt:video:28TyIsCwkQo") (id nil "yt:video:28TyIsCwkQo") (videoId nil "28TyIsCwkQo") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Elf Bowling - PC Game Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=28TyIsCwkQo"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-05T14:35:21+00:00") (updated nil "2016-12-15T06:12:34+00:00") (group nil (title nil "LGR - Elf Bowling - PC Game Review") (content ((url . "https://www.youtube.com/v/28TyIsCwkQo?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i3.ytimg.com/vi/28TyIsCwkQo/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Somehow, Elf Bowling was once one of the most-played games around! As far as mainstream media was concerned, the big three in PC gaming were Doom, Quake... and Elf Bowling.
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Download the original Elf Bowling here:
+http://bit.ly/2gHwwHy
+
+● Source for that news interview footage:
+https://www.youtube.com/watch?v=pD3nBXwPjRg
+
+● Music used in order of appearance:
+\"Bloxonius,\" \"Christmas Time 16\"
+https://www.youtube.com/watch?v=4w1zzrgo1Tg
+http://www.epidemicsound.com") (community nil (starRating ((count . "4186") (average . "4.96") (min . "1") (max . "5"))) (statistics ((views . "73069"))))))) ("LGR - Cities: Skylines Natural Disasters Review" nil "http://www.youtube.com/watch?v=hKWxO4GFS-4" (22610 19552) new 5 nil nil ((guid nil "yt:video:hKWxO4GFS-4") (id nil "yt:video:hKWxO4GFS-4") (videoId nil "hKWxO4GFS-4") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Cities: Skylines Natural Disasters Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=hKWxO4GFS-4"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-12-02T14:19:03+00:00") (updated nil "2016-12-15T07:55:12+00:00") (group nil (title nil "LGR - Cities: Skylines Natural Disasters Review") (content ((url . "https://www.youtube.com/v/hKWxO4GFS-4?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i1.ytimg.com/vi/hKWxO4GFS-4/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Taking a look at the third expansion pack to Cities Skylines! How disastrous are the disasters and is it worth the asking price? Find out in this overview of the Natural Disasters pack!
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+https://www.facebook.com/LazyGameReviews
+
+● My PC Specs:
+http://lazygamereviews.wordpress.com/2011/02/10/pc-specs/
+
+● Download the cities shown in the video:
+http://steamcommunity.com/id/phreakindee/myworkshopfiles/?appid=255710
+
+● Music used in order of appearance:
+\"Last Ride Home 2,\" \"City Fashion 3\"
+http://www.epidemicsound.com") (community nil (starRating ((count . "4299") (average . "4.94") (min . "1") (max . "5"))) (statistics ((views . "97207"))))))) ("LGR - Thrifts [Ep.30] Gone With The Wind" nil "http://www.youtube.com/watch?v=sMWg9hN4zN8" (22610 21745) old 6 nil nil ((guid nil "yt:video:sMWg9hN4zN8") (id nil "yt:video:sMWg9hN4zN8") (videoId nil "sMWg9hN4zN8") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Thrifts [Ep.30] Gone With The Wind") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=sMWg9hN4zN8"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-28T14:13:53+00:00") (updated nil "2016-12-15T08:31:45+00:00") (group nil (title nil "LGR - Thrifts [Ep.30] Gone With The Wind") (content ((url . "https://www.youtube.com/v/sMWg9hN4zN8?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i4.ytimg.com/vi/sMWg9hN4zN8/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Join me as I go out thrifting, in search of games and interesting goods at various discount shops! Thirty episodes, wow. Let's see what we can find this windy November day!
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Link to the camera glasses I use:
+http://www.amazon.com/iVUE-Horizon-Camera-Recording-Sunglasses/dp/B00NAI092S
+
+Music is all royalty-free. Tracks used in order of appearance:
+\"Branches\", \"Mining By Moonlight\", and \"Spy Groove\"
+http://www.danosongs.com/#music
+https://incompetech.com/music/royalty-free/full_list.php") (community nil (starRating ((count . "5202") (average . "4.98") (min . "1") (max . "5"))) (statistics ((views . "83624"))))))) ("LGR - RollerCoaster Tycoon World Is Sad [A Review]" nil "http://www.youtube.com/watch?v=m8vltu1xLnU" (22610 19597) new 7 nil nil ((guid nil "yt:video:m8vltu1xLnU") (id nil "yt:video:m8vltu1xLnU") (videoId nil "m8vltu1xLnU") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - RollerCoaster Tycoon World Is Sad [A Review]") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=m8vltu1xLnU"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-25T14:30:52+00:00") (updated nil "2016-12-15T07:55:57+00:00") (group nil (title nil "LGR - RollerCoaster Tycoon World Is Sad [A Review]") (content ((url . "https://www.youtube.com/v/m8vltu1xLnU?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i2.ytimg.com/vi/m8vltu1xLnU/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Welp. After twelve years of anticipation waiting for another mainline Roller Coaster Tycoon game on the PC, this is the result. And yeah, it is a bit of a downer for long-time fans.
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● My PC Specs:
+http://lazygamereviews.wordpress.com/2011/02/10/pc-specs/
+
+● Music used in order of appearance:
+\"Parkside Lane 3,\" \"Parkside Lane 1,\" \"Walk Break 2\"
+http://www.epidemicsound.com") (community nil (starRating ((count . "6434") (average . "4.96") (min . "1") (max . "5"))) (statistics ((views . "191522"))))))) ("LGR - Sid Meier's Civilization VI Review" nil "http://www.youtube.com/watch?v=VhbxJCWcsVM" (22609 64977) new 8 nil nil ((guid nil "yt:video:VhbxJCWcsVM") (id nil "yt:video:VhbxJCWcsVM") (videoId nil "VhbxJCWcsVM") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Sid Meier's Civilization VI Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=VhbxJCWcsVM"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-23T15:42:24+00:00") (updated nil "2016-12-15T02:20:01+00:00") (group nil (title nil "LGR - Sid Meier's Civilization VI Review") (content ((url . "https://www.youtube.com/v/VhbxJCWcsVM?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i3.ytimg.com/vi/VhbxJCWcsVM/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Commentary and gameplay on the Windows PC game Sid Meier's Civ 6! Is it an improvement over its predecessors? As a long-time fan of the series, I was psyched to find out.
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Music used in order of appearance:
+\"Back In Town\" and \"Howling\"
+https://www.youtube.com/audiolibrary/music") (community nil (starRating ((count . "3177") (average . "4.96") (min . "1") (max . "5"))) (statistics ((views . "83467"))))))) ("LGR - Planet Coaster Review" nil "http://www.youtube.com/watch?v=0XNqJW_8z58" (22610 19903) old 9 nil nil ((guid nil "yt:video:0XNqJW_8z58") (id nil "yt:video:0XNqJW_8z58") (videoId nil "0XNqJW_8z58") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Planet Coaster Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=0XNqJW_8z58"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-21T13:31:05+00:00") (updated nil "2016-12-15T08:01:03+00:00") (group nil (title nil "LGR - Planet Coaster Review") (content ((url . "https://www.youtube.com/v/0XNqJW_8z58?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i1.ytimg.com/vi/0XNqJW_8z58/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Taking a look at Frontier Development's theme park management sim, Planet Coaster! Is it the spiritual successor to RollerCoaster Tycoon 3 fans wanted? Time to find out.
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● My PC Specs:
+http://lazygamereviews.wordpress.com/2011/02/10/pc-specs/
+
+Music used is from the Planet Coaster soundtrack.") (community nil (starRating ((count . "8137") (average . "4.93") (min . "1") (max . "5"))) (statistics ((views . "230430"))))))) ("LGR - Serious Sam The First Encounter Review" nil "http://www.youtube.com/watch?v=csIyJ94Zugk" (22610 15715) new 10 nil nil ((guid nil "yt:video:csIyJ94Zugk") (id nil "yt:video:csIyJ94Zugk") (videoId nil "csIyJ94Zugk") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Serious Sam The First Encounter Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=csIyJ94Zugk"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-18T13:26:29+00:00") (updated nil "2016-12-15T06:51:15+00:00") (group nil (title nil "LGR - Serious Sam The First Encounter Review") (content ((url . "https://www.youtube.com/v/csIyJ94Zugk?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i4.ytimg.com/vi/csIyJ94Zugk/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "This first Serious Sam game is still such a rush! Non-stop action, tons of enemies, satisfying weapons, and plenty of 
+\"AAAAAAAAAAAAAAAAAAAA!!!!!\"
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+Music used is from the Serious Sam TFE soundtrack.") (community nil (starRating ((count . "4566") (average . "4.98") (min . "1") (max . "5"))) (statistics ((views . "98783"))))))) ("Planet Coaster - Teacup Hell" nil "http://www.youtube.com/watch?v=NxPoan-Xjtc" (22609 58655) new 11 nil nil ((guid nil "yt:video:NxPoan-Xjtc") (id nil "yt:video:NxPoan-Xjtc") (videoId nil "NxPoan-Xjtc") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "Planet Coaster - Teacup Hell") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=NxPoan-Xjtc"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-17T18:52:53+00:00") (updated nil "2016-12-15T00:34:39+00:00") (group nil (title nil "Planet Coaster - Teacup Hell") (content ((url . "https://www.youtube.com/v/NxPoan-Xjtc?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i3.ytimg.com/vi/NxPoan-Xjtc/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Adviser said my teacup ride needed more decorations. Found the solution.
+
+I've got a review incoming, but I'm having too much fun just screwing around with the game right now, haha.") (community nil (starRating ((count . "2887") (average . "4.95") (min . "1") (max . "5"))) (statistics ((views . "59594"))))))) ("LGR - Hori TAC Pro - PS4 Keyboard & Mouse Review" nil "http://www.youtube.com/watch?v=q-6tHL0iMI4" (22610 15744) new 12 nil nil ((guid nil "yt:video:q-6tHL0iMI4") (id nil "yt:video:q-6tHL0iMI4") (videoId nil "q-6tHL0iMI4") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Hori TAC Pro - PS4 Keyboard & Mouse Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=q-6tHL0iMI4"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-14T16:07:18+00:00") (updated nil "2016-12-15T06:51:44+00:00") (group nil (title nil "LGR - Hori TAC Pro - PS4 Keyboard & Mouse Review") (content ((url . "https://www.youtube.com/v/q-6tHL0iMI4?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i2.ytimg.com/vi/q-6tHL0iMI4/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Unit supplied by Hori USA for review. Taking a look at their Tactical Assault Commander Pro keyboard and mouse controller for the PlayStation 3 and 4! Does it provide PC-like control on consoles?
+
+● Here's a link to the Amazon product page:
+https://www.amazon.com/Tactical-Assault-Commander-Controller-Officially-Licensed/dp/B01JTOWU0K/
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+● Music used in order of appearance:
+\"Blue Night Bossa 2,\" \"Not That Serious 2\"
+http://www.epidemicsound.com") (community nil (starRating ((count . "2997") (average . "4.95") (min . "1") (max . "5"))) (statistics ((views . "81290"))))))) ("LGR - Crazy Taxi - PC Game Review" nil "http://www.youtube.com/watch?v=0j-mguqnRNk" (22609 61939) new 13 nil nil ((guid nil "yt:video:0j-mguqnRNk") (id nil "yt:video:0j-mguqnRNk") (videoId nil "0j-mguqnRNk") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Crazy Taxi - PC Game Review") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=0j-mguqnRNk"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-11T16:44:06+00:00") (updated nil "2016-12-15T01:29:23+00:00") (group nil (title nil "LGR - Crazy Taxi - PC Game Review") (content ((url . "https://www.youtube.com/v/0j-mguqnRNk?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i1.ytimg.com/vi/0j-mguqnRNk/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "This is one of those timeless arcade classics, and yes, it had a PC release back in 2002. Shame that this version wasn't very well-optimized but YA YA YA YA YA!
+
+● Consider supporting LGR on Patreon:
+http://www.patreon.com/LazyGameReviews
+
+● Social links:
+https://twitter.com/lazygamereviews
+http://www.facebook.com/LazyGameReviews
+
+Music used is from the Crazy Taxi OSTs") (community nil (starRating ((count . "3889") (average . "4.97") (min . "1") (max . "5"))) (statistics ((views . "88103"))))))) ("LGR - Duke's Sushi Death [The Sims 4]" nil "http://www.youtube.com/watch?v=O_C4hMEyP_o" (22610 8263) new 14 nil nil ((guid nil "yt:video:O_C4hMEyP_o") (id nil "yt:video:O_C4hMEyP_o") (videoId nil "O_C4hMEyP_o") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Duke's Sushi Death [The Sims 4]") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=O_C4hMEyP_o"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-09T19:30:14+00:00") (updated nil "2016-12-15T04:47:03+00:00") (group nil (title nil "LGR - Duke's Sushi Death [The Sims 4]") (content ((url . "https://www.youtube.com/v/O_C4hMEyP_o?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i4.ytimg.com/vi/O_C4hMEyP_o/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "Always thought the music in the game sounded like a sitcom, so I added a laugh track to go along with it... cut to SimDuke's pufferfish sushi death, hehe.") (community nil (starRating ((count . "3499") (average . "4.91") (min . "1") (max . "5"))) (statistics ((views . "68716"))))))) ("LGR - Batter Up! - First PC Baseball Game I Played" nil "http://www.youtube.com/watch?v=KewPxEQ31Po" (22608 41424) new 15 nil nil ((guid nil "yt:video:KewPxEQ31Po") (id nil "yt:video:KewPxEQ31Po") (videoId nil "KewPxEQ31Po") (channelId nil "UCLx053rWZxCiYWsBETgdKrQ") (title nil "LGR - Batter Up! - First PC Baseball Game I Played") (link ((rel . "alternate") (href . "http://www.youtube.com/watch?v=KewPxEQ31Po"))) (author nil (name nil "Lazy Game Reviews") (uri nil "http://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ")) (published nil "2016-11-07T16:47:41+00:00") (updated nil "2016-12-14T01:35:12+00:00") (group nil (title nil "LGR - Batter Up! - First PC Baseball Game I Played") (content ((url . "https://www.youtube.com/v/KewPxEQ31Po?version=3") (type . "application/x-shockwave-flash") (width . "640") (height . "390"))) (thumbnail ((url . "https://i4.ytimg.com/vi/KewPxEQ31Po/hqdefault.jpg") (width . "480") (height . "360"))) (description nil "This is a shareware educational baseball game for MS-DOS from 1992! I have strange yet fond memories of this, but haven't been able to find a fully-working copy of v2.0 online. My backup copy has long since gone corrupt, although I was recently able to get it mostly working so I figured I'd show it here!
+
+Here's my own corrupted backup copy if you'd like to try it:
+https://mega.nz/#!Wd4nRQqR!L6LkXLHRMGm7JRATz8C2Z7zGcrnDAv-YgweaIPyiGm4") (community nil (starRating ((count . "1764") (average . "4.93") (min . "1") (max . "5"))) (statistics ((views . "50092"))))))))

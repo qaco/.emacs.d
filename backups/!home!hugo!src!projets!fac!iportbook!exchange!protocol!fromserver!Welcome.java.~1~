@@ -1,0 +1,6 @@
+package com.protocol.fromserver ;
+public class Welcome implements Protocol {
+    public String toString() {
+        return "WELCO+++" ;
+    }
+}

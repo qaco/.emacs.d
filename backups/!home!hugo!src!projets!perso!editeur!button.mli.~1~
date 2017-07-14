@@ -1,0 +1,7 @@
+val grey : Graphics.color
+val button_build : 'a -> 'b -> 'c -> ('a * 'b) * Graphics.color * 'c
+val get_border_width : ('a * (int * int)) * 'b -> int
+val get_text_orig : ((int * int) * (int * int)) * string -> int * int
+val button_highlight : ((int * int) * (int * int)) * string -> unit
+val button_press : ((int * int) * (int * int)) * string -> unit
+val draw_button : ((int * int) * (int * int)) * string -> unit

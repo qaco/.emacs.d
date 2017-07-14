@@ -1,0 +1,7 @@
+public class Route {
+    private int owner ;
+
+    public Route(int o) {
+	this.owner = o ;
+    }
+}

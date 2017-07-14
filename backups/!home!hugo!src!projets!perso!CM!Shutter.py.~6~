@@ -1,0 +1,33 @@
+import Misc, Root
+from PIL import Image, ImageDraw
+
+def factory(cmd, upper_size, mycolor):
+    options = { Misc.BOTTOM_SHUTTER : BottomShutter,
+                Misc.RIGHT_SHUTTER : RightShutter }
+    return options[cmd](upper_size, mycolor)
+
+class AbstractShutter(Root.AbstractCalc):
+    def __init__(self, upper_size, mycolor):
+        super().__init__(upper_size)
+        self.color = mycolor
+    
+    def generate_img(self):
+        self.img = Image.new('RGBA', self.upper_size, Misc.TRANSPARENCY)
+        draw = ImageDraw.Draw(self.img, 'RGBA')
+        draw.rectangle([self.corner, self.img.size], self.color)
+
+class BottomShutter(AbstractShutter):
+    def __init__(self, upper_size, mycolor):
+        super().__init__(upper_size, mycolor)
+        
+    def process_position(self):
+        self.corner = 0, int(self.upper_size[1]/Misc.PHI)
+        self.size = self.upper_size[0], self.upper_size[1] - self.corner[1]
+
+class RightShutter(AbstractShutter):
+    def __init__(self, upper_size, mycolor):
+        super().__init__(upper_size, mycolor)
+
+    def process_position(self):
+        self.corner = int(self.upper_size[0]/Misc.PHI),0
+        self.size = self.upper_size[0] - self.corner[0], self.upper_size[1]

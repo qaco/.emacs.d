@@ -1,0 +1,104 @@
+#include <stdlib.h>
+#include <check.h>
+#include "../misc/word.h"
+#include "../misc/wordlist.h"
+#include "../parse/parser.h"
+#include "../crawl/crawler.h"
+
+#define URL "www.example.com"
+#define PARSED_URL "http://www.iana.org/domains/example"
+#define PARSED_WORD "Example"
+#define BAD_URL "www.qq"
+#define BAD_HTML "<a ddd"
+
+Word *goodurl, *badurl ;
+Word *goodhtml, *badhtml ;
+Word *good_parsedurl, *good_parsedword ;
+Word *null_word, *null_url ;
+WordList *null_list ; 
+WordList *urllist, *wordslist ;
+
+void parse_setup(void) {
+    goodurl = construct_word(strlen(URL), URL) ; 
+    badurl = construct_word(strlen(BAD_URL), BAD_URL) ;
+
+    goodhtml = construct_word(0, NULL) ;
+    crawl_to_ram(goodurl, goodhtml) ;
+    badhtml = construct_word(strlen(BAD_HTML), BAD_HTML) ;
+
+    good_parsedurl = construct_word(strlen(PARSED_URL), PARSED_URL) ; 
+    good_parsedword = construct_word(strlen(PARSED_WORD), PARSED_WORD) ;
+
+    null_word = construct_word(0, NULL) ; 
+    null_url = construct_word(0, NULL) ; 
+    null_list = build_empty_wordlist() ;
+    urllist = build_empty_wordlist() ;
+    wordslist = build_empty_wordlist() ;
+}
+
+void parse_teardown(void) {
+    destruct_word(goodurl) ;
+    destruct_word(badurl) ;
+    destruct_word(goodhtml) ;
+    destruct_word(badhtml) ;
+    destruct_word(good_parsedurl) ;
+    destruct_word(good_parsedword) ;
+    destruct_word(null_word) ;
+    destruct_word(null_url) ;
+    destruct_wordlist(null_list) ;
+    destruct_wordlist(urllist) ;
+    destruct_wordlist(wordslist) ;
+
+}
+
+START_TEST(test_valid_input) {
+    int ret_parse, ret_url, ret_word ;
+
+    ret_parse = parse(goodhtml, goodurl, wordslist, urllist) ;
+    get_word_wordlist(null_word, wordslist, 0) ;
+    get_word_wordlist(null_url, urllist, 0) ;
+    ret_word = compare_word(null_word, good_parsedword) ;
+    ret_url = compare_word(null_url, good_parsedurl) ;
+    ck_assert_int_eq(ret_parse, EXIT_SUCCESS) ;
+    ck_assert_int_eq(ret_word, 0) ;
+    ck_assert_int_eq(ret_url, 0) ;
+}
+END_TEST
+
+START_TEST(test_invalid_input) {
+    int ret_parse, ret_urls, ret_words ;
+
+    ret_parse = parse(badhtml, badurl, wordslist, urllist) ;
+    ret_urls = compare_wordlist(urllist, null_list) ;
+    ret_words = compare_wordlist(wordslist, null_list) ;
+    ck_assert_int_eq(ret_parse, EXIT_SUCCESS) ;
+    ck_assert_int_eq(ret_urls, 0) ;
+    ck_assert_int_eq(ret_words, 0) ;
+}
+END_TEST
+
+START_TEST(test_invalid_output) {
+    int ret_parse, ret_url, ret_word ;
+
+    ret_parse = parse(goodhtml, goodurl, wordslist, urllist) ;
+    get_word_wordlist(null_word, wordslist, 0) ;
+    get_word_wordlist(null_url, urllist, 0) ;
+    ret_word = compare_word(null_word, badurl) ;
+    ret_url = compare_word(null_url, badhtml) ;
+    ck_assert_int_eq(ret_parse, EXIT_SUCCESS) ;
+    ck_assert_int_ne(ret_word, 0) ;
+    ck_assert_int_ne(ret_url, 0) ;
+}
+END_TEST
+
+TCase* parser_parse_case(void) {
+    TCase *tc_parse ;
+
+    tc_parse = tcase_create("Parse");
+    tcase_add_checked_fixture(tc_parse, parse_setup, parse_teardown) ;
+    tcase_add_test(tc_parse, test_valid_input) ;
+    tcase_add_test(tc_parse, test_invalid_input) ;
+    tcase_add_test(tc_parse, test_invalid_output) ;
+
+    return tc_parse ;
+}

@@ -1,0 +1,10 @@
+import java.io.Writer ;
+
+public interface Protocol {
+    public String toString() ;
+    public default void print(Writer w) {
+        String s = this.toString() ;
+        w.write(s) ;
+    }
+}
+    

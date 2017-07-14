@@ -1,0 +1,44 @@
+package protocol.flow ;
+import main.MainVals ;
+import java.io.InputStreamReader ;
+import java.io.IOException ;
+import protocol.AbstractFirstMessage ;
+import exception.UnknownResultException ;
+import client.src.ServerRequest;
+
+public class FirstMessageFlow extends AbstractFirstMessage implements Flow {
+
+    public FirstMessageFlow (byte[] myid, byte[] mynum)
+        throws UnknownResultException {
+        super(myid, mynum) ;
+    }
+    
+    public FirstMessageFlow (String myid, String mynum) {
+        super(myid, mynum) ;
+    }
+
+    public FirstMessageFlow (String myid, int mynum) {
+        super(myid, mynum) ;
+    }
+    
+    public void exec(ServerRequest c) throws IOException { 
+	try {
+	    System.out.println("[Vous avez reçu "+this.num+
+                               " messages de "+this.id+".]");
+	    FlowFactory ffactory = new FlowFactory();
+	    for(int i = 0; i < this.num.getInt() - 1; i++) {
+		Flow flow = ffactory.create(new InputStreamReader(c.getIs()));
+		flow.exec(c);
+	    }
+	} catch (UnknownResultException e) {
+	    System.out.println("[Problème à la lecture des messages.]");
+	} 
+    }
+
+    public String toString() {
+        String mynum = String.valueOf(this.num) ;
+        return
+            FlowVals.FIRST_MESSAGE + " " +
+            this.id + " " + mynum + MainVals.EOF ;
+    }
+}

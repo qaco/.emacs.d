@@ -1,0 +1,65 @@
+package protocol.tests ;
+
+import protocol.command.* ;
+import static org.junit.Assert.* ;
+import org.junit.Test;
+import org.junit.Before;
+
+public class CommandFactoryTest {
+
+    private CommandFactory pf ;
+
+    @Before
+    public final void setCommandFactoryUp() {
+        this.pf = new  CommandFactory() ;
+    }
+
+    @Test
+    public final void testAskFriendBuild() {
+        String tmp = "FRIE? toto+++" ;
+        Command p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testFirstMessageBuild() {
+        String tmp = "MESS? toto 12+++" ;
+        Command p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testSomeMessageBuild() {
+        String tmp = "MENUM 2 hello how are you+++" ;
+        SomeMessage p = new SomeMessage(2, "hello how are you") ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testFlooMessageBuild() {
+        String tmp = "FLOO? hello how are you+++" ;
+        Command p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testSeeListBuild() {
+        String tmp = "LIST?+++" ;
+        Command p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+
+    @Test
+    public final void testConsultationBuild() {
+        String tmp = "CONSU+++" ;
+        Command p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+    
+    @Test
+    public final void testDeconnectionBuild() {
+        String tmp = "IQUIT+++" ;
+        Command p = this.pf.create(tmp) ;
+        assertEquals(tmp, p.toString()) ;
+    }
+}

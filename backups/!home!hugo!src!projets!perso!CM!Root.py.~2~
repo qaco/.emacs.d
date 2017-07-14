@@ -1,0 +1,16 @@
+class Frame:
+    def __init__(self, upper_size=None,corner=None, size=None):
+        self.upper_size = upper_size
+        self.corner = corner
+        self.size = size
+        
+class AbstractCalc(Frame):
+    def __init__(self, upper_size=None,corner=None, size=None):
+        super().__init__(self, upper_size, corner, size)
+        self.img = None
+
+    def set_in_space(self):
+        raise NotImplementedError()
+    
+    def process_img(self):
+        raise NotImplementedError()

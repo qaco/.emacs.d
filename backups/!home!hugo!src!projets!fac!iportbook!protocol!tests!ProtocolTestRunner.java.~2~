@@ -1,0 +1,43 @@
+package protocol.tests ;
+
+import protocol.command.CommandFactory ;
+import protocol.feedback.FeedbackFactory ;
+import protocol.flow.FlowFactory ;
+import java.util.List ;
+import java.util.LinkedList ;
+
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+
+public class ProtocolTestRunner {
+    public static List<Result> run() {
+        List<Result> r = new LinkedList<Result> ;
+        r.add(JUnitCore.runClasses(CommandFactoryTest.class));
+        r.add(JUnitCore.runClasses(FeedbackFactoryTest.class));
+        r.add(JUnitCore.runClasses(FlowFactoryTest.class));
+        return r ;
+    }
+}
+        
+   public static void main(String[] args) {
+       Result result ;
+
+       result = JUnitCore.runClasses(CommandFactoryTest.class);
+       System.out.println("CommandFactory") ;
+       for (Failure failure : result.getFailures()) {
+           System.out.println(failure.toString());
+       }
+
+       result = JUnitCore.runClasses(FeedbackFactoryTest.class);
+       System.out.println("FeedbackFactory") ;
+       for (Failure failure : result.getFailures()) {
+           System.out.println(failure.toString());
+       }
+       
+       result = JUnitCore.runClasses(FlowFactoryTest.class);
+       System.out.println("FlowFactory") ;
+       for (Failure failure : result.getFailures()) {
+           System.out.println(failure.toString());
+       }
+   }
+}

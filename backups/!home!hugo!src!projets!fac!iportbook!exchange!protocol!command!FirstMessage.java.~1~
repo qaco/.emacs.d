@@ -1,0 +1,22 @@
+package protocol.command ;
+import protocol.* ;
+public class FirstMessage extends FromClient {
+
+    private String id ;
+    private int num ;
+
+    public FirstMessage (String myid, String mynum) {
+        this.id = myid ;
+        this.num = Integer.parseInt(mynum) ;
+    }
+
+    public FirstMessage (String myid, int mynum) {
+        this.id = myid ;
+        this.num = mynum ;
+    }
+
+    public String toString() {
+        String mynum = String.valueOf(this.num) ;
+        return "MESS? " + this.id + " " + mynum + "+++" ;
+    }
+}

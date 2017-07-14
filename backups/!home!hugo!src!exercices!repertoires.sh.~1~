@@ -1,0 +1,2 @@
+#!/bin/bash
+ls $0 | grep $1

@@ -1,0 +1,30 @@
+open Graphics;;
+open Random;;
+open Examples;;
+open Interaction;;
+open Voronoi;;
+  
+(* Prend une liste et retourne une autre liste melangee *)
+let shuffle l =
+  let nl = List.map (fun c -> (Random.bits (), c)) l in
+  let sond = List.sort compare nl in
+  List.map snd sond
+;;
+
+let main cmds =
+  self_init() ;
+  try
+    open_graph " 900x900" ;
+    (if (Array.length cmds = 2) then
+       let nb_seeds = int_of_string (cmds.(1)) in
+       dd "Generation du nouveau diagramme" black ;
+       let other = gen_correct_voronoi nb_seeds 800 800 in
+       play_one other
+     else
+       play_all (shuffle examples)) ;
+    close_graph() ;
+  with
+  | Graphic_failure(s) -> print_string "On abandonne ?\n"
+;;
+
+  main Sys.argv ;;

@@ -1,0 +1,22 @@
+package protocol.knock ;
+
+import exception.UnknownResultException ;
+
+public class MessageKnock extends Knock {
+    
+    public MessageKnock(int flows) throws UnknownResultException {
+        super(flows) ;
+    }
+
+    public MessageKnock(byte mylow, byte myhigh) throws UnknownResultException {
+        super(mylow, myhigh) ;
+    }
+
+    protected byte getCode() {
+        return KnockVals.MESSAGE_CODE ;
+    }
+
+    protected String popUp() {
+        return KnockVals.MESSAGE_MESS;
+    }
+}

@@ -1,0 +1,4 @@
+public class CoupInterditException extends Exception {
+    public CoupInterditException() { super() ; }
+    public CoupInterditException(String message) { super(message) ; }
+}

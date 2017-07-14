@@ -1,0 +1,20 @@
+package protocol.knock ;
+
+public class FlooKnock extends Knock {
+    
+    public FlooKnock(int flows) {
+        super(flows) ;
+    }
+
+    public FlooKnock(byte mylow, byte myhigh) {
+        super(mylow, myhigh) ;
+    }
+
+    public byte getCode() {
+        return KnockVals.FLOO_CODE ;
+    }
+
+    public String popUp() {
+        return KnockVals.FLOO_MESS;
+    }
+}

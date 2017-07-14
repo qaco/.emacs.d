@@ -1,0 +1,15 @@
+package protocol.feedback ;
+import client.src.ServerRequest;
+import client.src.ConnexionRequest;
+import main.MainVals ;
+
+public class AskFriendNO implements Feedback {
+    public String toString() {
+        return FeedbackVals.ASK_NO + MainVals.EOF ;
+    }
+
+    public void exec(ServerRequest c) {
+	System.out.println("[La demande d'amitié a échoué.]");
+    }
+    public void exec(ConnexionRequest cr) {}
+}

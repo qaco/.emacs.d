@@ -1,0 +1,20 @@
+package protocol.field ;
+
+import exception.* ;
+
+public class NumItemField extends NumStringField {
+
+    public NumItemField(byte[] myport) throws UnknownResultException {
+        super(myport) ;
+    }
+
+    public NumItemField(int myport) {
+        super(myport, FieldVals.NUMITEM_SIZE) ;
+    }
+
+    protected void checkRules() throws UnknownResultException {
+        this.checkSize(FieldVals.NUMITEM_SIZE) ;
+        this.checkRange(0, FieldVals.MAX_NUMCLIENT) ;
+    }
+}
+        

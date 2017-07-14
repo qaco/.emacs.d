@@ -1,0 +1,3 @@
+#include <check.h>
+
+TCase* worddict_accessor_case(void) ;

@@ -1,0 +1,26 @@
+package protocol.command ;
+
+public class Registration implements Command {
+    
+    private String id ;
+    private int port ;
+    private int mdp ;
+    
+    public Registration (String myid, String myport, String mymdp) {
+        this.id = myid ;
+        this.port = Integer.parseInt(myport) ;
+        this.mdp = Integer.parseInt(mymdp) ;
+    }
+
+    public Registration (String myid, int myport, int mymdp) {
+        this.id = myid ;
+        this.port = myport ;
+        this.mdp = mymdp ;
+    }
+
+    public String toString() {
+        String myport = String.valueOf(this.port) ;
+        String mymdp = String.valueOf(this.mdp) ;
+        return "REGIS " + this.id + " " + myport + " " + mymdp + "+++" ;
+    }
+}

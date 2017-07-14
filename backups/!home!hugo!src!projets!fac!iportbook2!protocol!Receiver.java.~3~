@@ -1,0 +1,72 @@
+package protocol ;
+
+import exception.* ;
+import java.util.Arrays ;
+import exception.UnknownResultException ;
+import java.nio.charset.Charset ;
+import main.MainVals ;
+
+public class Receiver {
+    protected byte[] raw ;
+    protected byte sep = MainVals.BSEP ;
+    protected byte[] suffix = MainVals.BEOF ;
+
+    public Receiver() { super() ; }
+    
+    public Receiver(byte[] data) {
+        super() ;
+        this.raw = data ;
+    }
+
+    public byte[] getData() {
+        return this.raw ;
+    }
+
+    public byte[] nthArgToEnd(int num) throws UnknownResultException {
+        int counter = 0 ;
+        for (int i = 0 ; i < this.raw.length ; i++) {
+            if (this.raw[i] == this.sep)
+                counter++ ;
+            if (counter == num)
+                return Arrays.copyOfRange(this.raw, i+1, raw.length) ;
+        }
+        throw new TooFewArgsException("mess",
+                                      String.valueOf(raw.length)) ;
+    }
+            
+    
+    public String extractCode() {
+        byte[][] cmd = this.splitInput() ;
+        return new String(cmd[0], Charset.forName("US-ASCII")) ;
+    }
+    
+    public byte[][] splitInput() {
+
+        // combien de sep
+        int numsp = 0 ;
+        for (int i = 0 ; i < this.raw.length ; i++)
+            if (this.raw[i] == this.sep)
+                numsp++ ;
+
+        // où sont les sep (en comptant la fin de chaine)
+        int spi[] = new int[numsp+1] ;
+        int spcount = 0 ;
+        for (int i = 0 ; i < this.raw.length ; i++)
+            if (this.raw[i] == this.sep)
+                spi[spcount++] = i ;
+        spi[numsp] = this.raw.length ; // fin de chaine
+        
+        // récupération de chaque champ
+        byte[][] res = new byte[numsp+1][] ;
+        int start = 0 ;
+        for (int i = 0 ; i < spi.length ; i++) {
+            res[i] = Arrays.copyOfRange(this.raw, start, spi[i]) ;
+            start = spi[i] + 1 ;
+        }
+        return res ;
+    }
+
+    public String toString() {
+        return new String(this.raw, Charset.forName("US-ASCII")) ;
+    }
+}

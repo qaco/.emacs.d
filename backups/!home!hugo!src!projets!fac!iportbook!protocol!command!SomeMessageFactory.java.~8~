@@ -1,0 +1,40 @@
+package protocol.command ;
+
+import exception.* ;
+import protocol.* ;
+import java.util.Arrays ;
+import java.io.InputStream ;
+import java.io.IOException ;
+import main.MainVals ;
+
+public class SomeMessageFactory extends ProtocolFactory {
+
+    public SomeMessage create(InputStream in) throws UnknownResultException,
+                                                IOException {
+        Receiver r = new BlockingReceiver(in) ;
+        r.receive() ;
+        return this.create(r.getData()) ;
+    }
+    
+    private SomeMessage create(byte[] raw_arr)
+        throws UnknownResultException {
+        Receiver r = new Receiver(raw_arr) ;
+        String code = r.extractCode(raw_arr) ;
+        byte[][] params = r.splitInput() ;
+        byte[] mess ;
+
+        try {
+            switch (code) {
+            case CommandVals.SOME_MESSAGE:
+                mess = this.nthArgToEnd(2) ;
+                return new SomeMessage(params[1], mess) ;
+            default :
+                throw new UnknownCommandException("somemessage", code) ;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new TooFewArgsException(code,
+                                          String.valueOf(params.length)) ;
+        }
+    }
+}
+

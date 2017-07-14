@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#define T_IN "HELO"
+#define T_PINGIN_SUCCESS "OKOK"
+#define T_PINGIN_FAILURE "BADD"
+#define T_OUT "BYEE"
+#define T_PINGOUT "BYEE"
+#define T_PUBLIC "BCST"
+#define T_PRIVE "PRVT"
+#define T_LIST "LIST"
+#define T_SHUT "SHUT"
+#define T_ADMIN "DEBG"
+#define INVIT "> "
+
+/* Renvoie la représentation en n = offset caractères de l'entier nb */
+char* int_to_string(int offset, int nb)
+{
+  char* res = malloc(sizeof(char)*(offset+1)) ;
+  char* tmp = malloc(sizeof(char)*(offset+1)) ;
+  int zeros ;
+
+  sprintf(tmp,"%d",nb) ;
+  zeros = offset - strlen(tmp) ;
+  for (int i = 0 ; i < zeros ; i++)
+    *(res + i) = '0' ;
+  strcpy(res + zeros, tmp) ;
+  free(tmp) ;
+  return res ;
+}
+
+/* Encode toadd et l'ajoute à la queue de init */
+char* add_a_string (char** init, int offset, char *toadd)
+{
+  int issize = strlen(toadd) ;
+  char* ssize = int_to_string(offset,issize) ;
+
+  *init = realloc(*init, strlen(*init) + offset + issize + 1) ;
+  strcat(*init, ssize) ;
+  strcat(*init, toadd) ;
+
+  free(ssize) ;
+  return *init ;
+}
+
+/* Decode *string suivant la taille d'offset et place le pointeur au
+   début de la chaîne suivante */
+char* extract_string (char** string, int offset)
+{
+  char* res ;
+  char* ssize = malloc(sizeof(char)*(offset + 1)) ;
+  int isize ;
+
+  /* Extraction du nombre */
+  strncpy(ssize, *string, offset) ;
+  *string += offset ;
+  isize = atoi(ssize) ;
+
+  /* Extraction de la chaîne */
+  res = malloc(sizeof(char)*(isize + 1)) ;
+  strncpy(res, *string + offset, isize) ;
+  *string += isize ;
+  
+  free(ssize) ;
+  
+  return res ;
+}
+
+/* Stocke dans *string la chaîne reçue par fd_read et renvoie sa taille
+   totale. */
+int wait_for_string(char** string, int fd_read, int offset)
+{
+  char* preffix = malloc(sizeof(char)*(offset + 1)) ;
+  char *suffix ;
+  int total_size ;
+  
+  read(fd_read, preffix, offset) ;
+  *(preffix + offset) = '\0' ;
+  total_size = atoi(preffix) ;
+  suffix = malloc(sizeof(char)*(total_size - offset + 1)) ;
+  read(fd_read, suffix, total_size - offset) ;
+  *(suffix + total_size - offset) = '\0' ;
+  *string = malloc(sizeof(char)*(total_size + 1)) ;
+  strcpy(*string, preffix) ;
+  strcat(*string, suffix) ;
+
+  free(preffix) ;
+  free(suffix) ;
+
+  return total_size ;
+}
+
+/* Saisit une chaîne finissant par \n */
+char* get_input (char* invit)
+{
+  int size_buffer = 1 ;
+  char* input = malloc(sizeof(char)*size_buffer) ;
+  int i ;
+  char tmp ;
+
+  printf("%s", invit) ;
+
+  tmp = getchar() ;
+  
+  for (i = 0 ; tmp != '\n' && tmp != EOF ; i++)
+    {
+      if (size_buffer >= i)
+        {
+          size_buffer *= 2 ;
+          input = realloc(input, sizeof(char)*(size_buffer + 1)) ;
+        }
+      *(input + i) = tmp ;
+      tmp = getchar() ;
+    }
+  *(input + i) = '\0' ;
+
+  return input ;
+}
+
+

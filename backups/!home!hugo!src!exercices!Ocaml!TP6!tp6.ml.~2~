@@ -1,0 +1,5 @@
+type 'a stack = { mutable ptr:'a list ref } ;;
+
+let create () = ref [];;
+let empty st = (!(st.contents) = []) ;;
+  empty (create()) ;;

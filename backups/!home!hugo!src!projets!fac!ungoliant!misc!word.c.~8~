@@ -1,0 +1,165 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "word.h"
+/* #include "wordlist.h" */
+
+struct Word {
+  char *memory;
+  size_t size;
+} ;
+
+Word* clone_word(const Word* toclone)
+{
+  Word* res = malloc(sizeof(Word)) ;
+  res->memory = malloc(sizeof(char)*(toclone->size)) ;
+  memcpy(res->memory,toclone->memory, toclone->size) ;
+  res->size = toclone->size ;
+  return res ;
+}
+
+Word* construct_word(const size_t n, const char* src)
+{
+  Word* res = malloc(sizeof(Word)) ;
+  if (!n)
+    res->memory = NULL ;
+  else {
+    res->memory = malloc(sizeof(char) * n) ;
+    memcpy(res->memory, src, sizeof(char)*n) ;
+  }
+  res->size = n ;
+  return res ;
+}
+
+int clear_word(Word* myword)
+{
+  if (myword->size > 0) {
+    free(myword->memory) ;
+    myword->memory = NULL ;
+    myword->size = 0 ;
+    return EXIT_SUCCESS ;
+  }
+  else
+    return EXIT_FAILURE ;
+}
+
+int get_content_word(const Word* src, char* dest)
+{
+    memcpy(dest, src->memory, src->size*sizeof(char)) ;
+    return EXIT_SUCCESS ;
+}
+
+size_t get_size_word(const Word* myword)
+{
+  return myword->size ;
+}
+
+int compare_word(const Word* word1, const Word* word2)
+{
+  /* Le nombre de caractères qui seront testés, c'est à dire la taille du
+     mot le plus court. */
+  size_t length ;
+  if (word1->size >= word2->size)
+    length = word2->size ;
+  else
+    length = word1->size ;
+  /* Le test des caractères. */
+  for (int i = 0 ; i < length ; i++) {
+    char leftchar = *(word1->memory + i) ;
+    char rightchar = *(word2->memory + i) ;
+    
+    if (leftchar < rightchar)
+      return -1 ;
+    else if (leftchar > rightchar)
+      return 1 ;
+  }
+  /* Si les caractères testés ne permettent pas de décider, soit le mot le
+     plus long est le plus grand est le plus long, soit ils sont de même
+     longueur et sont donc égaux. */
+  if (word1->size < word2->size)
+    return -1 ;
+  else if (word1->size > word2->size)
+    return 1 ;
+  else
+    return 0 ;
+}
+
+int get_sub_word(Word* dest, const Word* src, const int start, const int end)
+{
+  if (start < 0 || end > src->size || start > end)
+  /* if (start < 0 || end > src->size - 1 || start > end) */
+    return EXIT_FAILURE ;
+  else {
+    int new_size = end - start ;
+    char* raw_sub = malloc(sizeof(char)*new_size) ;
+    memcpy(raw_sub, src->memory + start, sizeof(char)*new_size) ;
+    clear_word(dest) ;
+    add_chars_word(dest, raw_sub, new_size) ;
+    free(raw_sub) ;
+    return EXIT_SUCCESS ;
+  }
+}
+
+int locate_sub_word(const Word* myword, const Word* sub, const int start)
+{
+  if (sub->size <= myword->size - start) {
+    Word* tmp = construct_word(0, NULL) ;
+    for (int i = start ; i < myword->size - sub->size ; i++) {
+      int test ;
+      get_sub_word(tmp, myword, i, i + sub->size) ;
+      test = compare_word(sub, tmp) == 0 ;
+
+      clear_word(tmp) ;
+      if (test)
+        return i ;
+    }
+    destruct_word(tmp) ;
+  }
+  return -1 ;
+}
+
+int cut_sub_word(Word *myword, const Word *sub)
+{
+  int count = 0 ;
+  int start = 0 ;
+  while (start >= 0 && start + sub->size < myword->size) {
+    int index = locate_sub_word(myword, sub, 0) ;
+    if (index >= 0) {
+      memmove(myword->memory + start + index,
+              myword->memory + start + index + sub->size,
+              myword->size - start - index - sub->size) ;
+      myword->size -= sub->size ;
+      count++ ;
+    }
+    start = index ;
+  }
+  return count ;
+}
+
+void add_chars_word(Word* dest, const char* seq, const size_t nb)
+{
+  dest->memory = realloc(dest->memory, dest->size + nb + 1) ;
+  memcpy(&(dest->memory[dest->size]), seq, nb);
+  dest->size += nb ;
+  dest->memory[dest->size] = 0;
+}
+
+void append_word(Word* dest, Word* src)
+{
+  add_chars_word(dest, src->memory, src->size) ;
+}
+
+void destruct_word(Word* myword)
+{
+  free(myword->memory) ;
+  free(myword) ;
+}
+
+int print_word(const Word* myword, FILE* stream)
+{
+  for (int i = 0 ; i < myword->size ; i++)
+    if (fprintf(stream, "%c", *(myword->memory + i)) < 0)
+      return EXIT_FAILURE ;
+  return EXIT_SUCCESS ;
+}

@@ -1,0 +1,9 @@
+#ifndef GEN
+#define GEN
+
+char** gen_text_map() ;
+GtkWidget* gen_tile_map(char*** data) ;
+Joueur** gen_joueurs(Perso humain, GtkWidget* grid) ;
+
+
+#endif
