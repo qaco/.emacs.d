@@ -1,5 +1,0 @@
-#ifndef MEDIA
-#define MEDIA
-
-GtkWidget* get_tile_img(const char* path, const int size) ;
-#endif

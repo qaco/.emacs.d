@@ -1,8 +1,0 @@
-package exception ;
-
-public class UnknownCommandException extends UnknownResultException {
-
-    public UnknownCommandException() {
-        super(ExceptionVals.UNKNOWN_COMMAND);
-    }
-}

@@ -1,6 +1,0 @@
-*.o
-ungoliant
-test*
-database
-*.html
-netgraph.dot

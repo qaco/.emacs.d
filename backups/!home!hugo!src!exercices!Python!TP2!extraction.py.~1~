@@ -1,6 +1,0 @@
-#! /usr/bin/env python3
-
-source = open("emargement.csv", "r")
-lines = source.readlines()
-[ oneline.split(";")[3] for oneline in lines ]
-source.close()

@@ -1,5 +1,0 @@
-type ’a amort stack = {head : ’a list; tail : ’a list} ;;
-
-  (1,2,3) ;;
-
-                        

@@ -1,6 +1,0 @@
-package com.protocol.fromserver ;
-public class Hello implements Protocol {
-    public String toString() {
-        return "HELLO+++" ;
-    }
-}

@@ -1,7 +1,0 @@
-let mycont = container_build (0,0) (900,800) ;;
-let myfield = fieldtext_build (400,400) 50 "bisou" ;;
-let mynewcont = add_comp mycont Fieldtext(myfield) ;;
-  open_graph " 900x900" ;;
-  draw_container mynewcont ;;
-    ignore (container_interaction mynewcont) ;;
-      clear_graph ;;

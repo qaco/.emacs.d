@@ -1,8 +1,0 @@
-package exception ;
-
-public class WrongTypeException extends UnknownResultException {
-
-    public WrongTypeException(String p, String typedest) {
-        super(p + "can'be casto to " +  typedest);
-    }
-}

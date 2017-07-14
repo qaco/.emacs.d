@@ -1,8 +1,0 @@
-package exception ;
-
-public class RuleBrokenException extends UnknownResultException {
-
-    public RuleBrokenException(String param, String cmd) {
-        super(param + " " + ExceptionVals.RULE_BROKEN + " " + cmd);
-    }
-}

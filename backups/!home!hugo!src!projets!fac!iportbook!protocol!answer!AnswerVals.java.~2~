@@ -1,8 +1,0 @@
-package protocol.answer ;
-
-public class AnswerVals {
-    public static final String OK_FRIEND = "OKIRF" ;
-    public static final String NO_FRIEND = "NOKRF" ;
-    public static final String EOF = "+++" ;
-    public static final String SEP = " " ;
-}

@@ -1,4 +1,0 @@
-open Mv ;;
-
-let mystate = init ex7 ;;
-  exec mystate ;;

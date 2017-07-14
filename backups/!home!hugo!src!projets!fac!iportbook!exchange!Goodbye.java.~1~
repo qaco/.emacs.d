@@ -1,5 +1,0 @@
-public class GoodBye implements Protocol {
-    public String ToString() {
-        return "GOBYE+++" ;
-    }
-}

@@ -1,4 +1,0 @@
-#include "wordlist.h"
-#include "word.h"
-
-int main() {

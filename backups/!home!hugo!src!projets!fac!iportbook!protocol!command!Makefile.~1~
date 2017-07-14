@@ -1,5 +1,0 @@
-TOP_DIR = $(shell pwd)/..
-PACKAGE_DIR = protocol
-PACKAGE_NAME = protocol
-
-include $(TOP_DIR)/Makefile.include

@@ -1,4 +1,0 @@
-package protocol.Flow ;
-
-public interface Flow {
-}    

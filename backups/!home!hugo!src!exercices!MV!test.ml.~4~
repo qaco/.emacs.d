@@ -1,7 +1,0 @@
-open Mv ;;
-
-(* let mystate = init ex7 ;; *)
-  (*   exec mystate ;; *)
-
-let octcode = assemble ex4 ;;
-  print_bytes(octcode) ;;

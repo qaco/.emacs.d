@@ -1,7 +1,0 @@
-package protocol.feedback ;
-
-public class FlooDone implements feedback {
-    public String toString() {
-        return "FLOO>+++" ;
-    }
-}

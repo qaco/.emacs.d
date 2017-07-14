@@ -1,6 +1,0 @@
-#ifndef VIEW
-#define VIEW
-
-GtkWidget* fill_window(GtkWidget* window, const int num_cells, char** map) ;
-GtkWidget* conf_window(const int num_cells) ;
-#endif 

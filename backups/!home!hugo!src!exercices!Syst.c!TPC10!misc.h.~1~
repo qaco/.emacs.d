@@ -1,3 +1,0 @@
-int characters_in_int(int num) ;
-int file_to_int(FILE *fic) ;
-void int_to_file(int entier, FILE* fic) ;

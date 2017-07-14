@@ -1,9 +1,0 @@
-public class Robot extends Joueur {
-
-    public Robot(Plateau p) {
-	super(p) ;
-    }
-
-    public void tour() {}
-
-}

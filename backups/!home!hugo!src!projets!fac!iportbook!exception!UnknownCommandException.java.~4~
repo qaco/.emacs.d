@@ -1,8 +1,0 @@
-package exception ;
-
-public class UnknownCommandException extends UnknownResultException {
-
-    public UnknownCommandException(String type, String cmd) {
-        super("Unknown command : Wait " + type + ", get " + cmd);
-    }
-}

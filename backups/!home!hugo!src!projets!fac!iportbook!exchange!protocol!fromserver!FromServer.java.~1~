@@ -1,6 +1,0 @@
-package protocol.fromserver ;
-import protocol.* ;
-
-public abstract class FromServer extends FromServer {
-
-}

@@ -1,5 +1,0 @@
-#use "RealBuilder.ml" ;;
-
-let matrix = RealBuilder.regions_voronoi taxicab test ;;
-
-let adj = RealBuilder.adjacences_voronoi test matrix ;;

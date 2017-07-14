@@ -1,4 +1,0 @@
-#include <gtk/gtk.h>
-
-GtkWidget* get_floor_img() ;
-GtkWidget* get_blank_img() ;

@@ -1,6 +1,0 @@
-package com.protocol.fromserver ;
-public class GoodBye implements Protocol {
-    public String toString() {
-        return "GOBYE+++" ;
-    }
-}

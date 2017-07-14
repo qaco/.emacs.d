@@ -1,6 +1,0 @@
-package protocol.flow ;
-import client.src.ServerRequest;
-
-public interface Flow {
-    public default void exec(ServerRequest c) {}    
-}    

@@ -1,7 +1,0 @@
-import java.io.Writer ;
-
-public interface Protocol {
-    public String getRepresentation() ;
-    public void print(Writer w) ;
-}
-    

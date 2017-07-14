@@ -1,3 +1,0 @@
-interface Chainable {
-    val suivant: Chainable?
-}

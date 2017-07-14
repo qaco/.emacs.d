@@ -1,7 +1,0 @@
-#include <check.h>
-#include "../misc.word.h"
-
-START_TEST(test_construct_word) {
-  Word myword = construct_word("hello"
-  
-  

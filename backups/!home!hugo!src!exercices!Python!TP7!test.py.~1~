@@ -1,7 +1,0 @@
-#! /usr/bin/env python3
-
-import tp7
-
-m = tp7.messagerie()
-m.ajoute(tp7.SMS(555,"Salut"))
-m.ajoute(tp7.SMS(555,"Bonjour"))

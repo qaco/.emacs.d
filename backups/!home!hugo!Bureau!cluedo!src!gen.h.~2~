@@ -1,6 +1,0 @@
-#ifndef GEN
-#define GEN
-
-char** map(const int cote) ;
-
-#endif

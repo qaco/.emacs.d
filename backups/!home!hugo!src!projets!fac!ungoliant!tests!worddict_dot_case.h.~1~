@@ -1,6 +1,0 @@
-#ifndef WORDLIST_SPLIT
-#define WORDLIST_SPLIT
-
-#include <check.h>
-
-TCase* wordlist_split_case(void) ;

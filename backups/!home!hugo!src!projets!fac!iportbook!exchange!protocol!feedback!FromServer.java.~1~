@@ -1,6 +1,0 @@
-package protocol.feedback ;
-import protocol.* ;
-
-public abstract class FromServer implements Protocol {
-
-}

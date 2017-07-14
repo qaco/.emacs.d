@@ -1,7 +1,0 @@
-package protocol.feedback ;
-
-public class AskFriendOK implements feedback {
-    public String toString() {
-        return "FRIE>+++" ;
-    }
-}

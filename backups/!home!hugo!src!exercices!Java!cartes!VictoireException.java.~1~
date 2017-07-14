@@ -1,4 +1,0 @@
-public class VictoireException.java extends Exception {
-    public VictoireException.java() { super() ; }
-    public VictoireException.java(String message) { super(message) ; }
-}

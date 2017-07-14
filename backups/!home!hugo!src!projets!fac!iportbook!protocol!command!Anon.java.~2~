@@ -1,9 +1,0 @@
-package protocol.command ;
-
-import server.User ;
-import java.io.Socket ;
-import java.util.List ;
-
-public interface Anon {
-    public User exec(Socket so, List<User> allusers) ;
-}

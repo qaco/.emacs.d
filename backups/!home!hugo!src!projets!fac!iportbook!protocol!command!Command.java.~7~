@@ -1,9 +1,0 @@
-package protocol.command ;
-
-import service.User ;
-import java.util.List ;
-import java.io.IOException ;
-
-public interface Command {
-    public void exec(User myuser, List<User> allusers) throws IOException ;
-}

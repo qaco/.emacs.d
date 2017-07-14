@@ -1,9 +1,0 @@
-class Place:
-    def __init__(self, planesize, mypoint=(0,0), mysize=None):
-        self.plane_size = planesize
-        self.point = mypoint
-        if mysize == None: self.size = planesize
-        else: self.size = mysize
-
-    def clone_place(self):
-        return Place(self.plane_size, self.point, self.size)

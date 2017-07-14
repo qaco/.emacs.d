@@ -1,9 +1,0 @@
-package protocol.command ;
-
-public class Deconnection implements Command {
-
-    public String toString() {
-        return CommandVals.DECONNECTION + CommandVals.EOF ;
-    }
-}
-        

@@ -1,6 +1,0 @@
-public class ListeAmortie<E> implements List<E> {
-
-    public boolean add (E e) {}
-    public void add (int index, E element) {}
-    
-}

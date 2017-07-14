@@ -1,7 +1,0 @@
-package protocol.feedback ;
-import protocol.* ;
-public class MessageTransmitted implements feedback {
-    public String toString() {
-        return "MESS>+++" ;
-    }
-}

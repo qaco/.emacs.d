@@ -1,9 +1,0 @@
-package protocol.field ;
-
-public class SepField extends Field {
-
-    public SepField() {
-        this.field = new byte[1] ;
-        this.field[0] = 32 ;
-    }
-}

@@ -1,5 +1,0 @@
-public class AskFriendOK implements Protocol {
-    public String ToString() {
-        return "FRIE>+++" ;
-    }
-}

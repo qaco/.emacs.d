@@ -1,8 +1,0 @@
-#!/bin/bash
-path=$CAJA_SCRIPT_SELECTED_FILE_PATHS
-path=${path%?}
-quoted="file://$path"
-param=$(zenity --entry --text="Saisir le motif à chercher" --title="quick grep")
-output=$(cat "$@" | grep "$param")
-zenity --info --text="$output"
-

@@ -1,7 +1,0 @@
-val extract_colors : Builder.voronoi -> Builder.color_option array
-val produce_constraints :
-  Builder.color_option array ->
-  bool array array -> (bool * (int * Graphics.color)) list list
-val affectation_to_vor :
-  (bool * (int * Graphics.color)) list -> Builder.voronoi -> Builder.voronoi
-val get_result : Sat.literal list list -> Sat.literal list

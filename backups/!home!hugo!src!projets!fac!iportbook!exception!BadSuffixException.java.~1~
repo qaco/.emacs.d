@@ -1,8 +1,0 @@
-package exception ;
-
-public class BadSuffixException extends UnknownResultException {
-
-    public BadSuffixException() {
-        super(ExceptionVals.BAD_SUFFIX);
-    }
-}

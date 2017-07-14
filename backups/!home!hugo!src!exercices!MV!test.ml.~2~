@@ -1,2 +1,0 @@
-let mystate = init ex1 ;;
-  exec mystate ;;

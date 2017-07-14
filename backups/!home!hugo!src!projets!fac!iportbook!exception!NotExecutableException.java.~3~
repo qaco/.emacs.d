@@ -1,8 +1,0 @@
-package exception ;
-
-public class NotExecutableException extends UnknownResultException {
-
-    public NotExecutableException (String cmd, String descr) {
-        super(cmd + " not executable : " + descr);
-    }
-}

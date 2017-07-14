@@ -1,9 +1,0 @@
-#ifndef MESSAGES
-
-#define MESSAGES
-
-char* build_msg(char* typem, ...) ;
-void receive_msg (char* mypseudo, int fd_read) ;
-void send_msg(char* pseudo, int id, int fd_write) ;
-
-#endif MESSAGES

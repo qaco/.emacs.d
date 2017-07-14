@@ -1,8 +1,0 @@
-package protocol.feedback ;
-import client.src.ServerRequest;
-import client.src.ConnexionRequest;
-
-public interface Feedback {
-    public default void exec(ServerRequest c) {}    
-    public default void exec(ConnexionRequest cr) {}    
-}

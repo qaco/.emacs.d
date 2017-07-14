@@ -1,7 +1,0 @@
-package protocol.feedback ;
-import protocol.* ;
-public class FlooDone implements FeedBack {
-    public String toString() {
-        return "FLOO>+++" ;
-    }
-}

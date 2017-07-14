@@ -1,6 +1,0 @@
-package com.protocol.fromserver ;
-public class AskFriendOK implements Protocol {
-    public String toString() {
-        return "FRIE>+++" ;
-    }
-}

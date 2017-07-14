@@ -1,5 +1,0 @@
-package main ;
-
-public class MainVals {
-    public static boolean verbose = true ;
-}
