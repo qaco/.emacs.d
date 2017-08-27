@@ -169,7 +169,21 @@
 (fset 'yes-or-no-p 'y-or-n-p)                     ; yes-or-no remplace y-or-n
 
 (set-face-attribute 'default nil :height 100)     ; taille de police
-
+(setq-default word-wrap t)                        ; coupe après le mot
+(setq-default fringe-indicator-alist
+              '((truncation left-arrow right-arrow)
+                (continuation nil nil) ;; left-curly-arrow & right-curly-arrow
+                (overlay-arrow . right-triangle)
+                (up . up-arrow)
+                (down . down-arrow)
+                (top top-left-angle top-right-angle)
+                (bottom
+                 bottom-left-angle bottom-right-angle
+                 top-right-angle top-left-angle)
+                (top-bottom
+                 left-bracket right-bracket top-right-angle top-left-angle)
+                (empty-line . empty-line)
+                (unknown . question-mark)))
 ;; ===========================================================================
 ;; INFORMATIONS À AFFICHER
 ;; ===========================================================================
@@ -367,5 +381,6 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "C-<f5>") 'fci-mode)
 (global-set-key (kbd "<f6>") 'delete-window)
 
-(global-set-key (kbd "<f8>") 'toggle-frame-maximized)
-(global-set-key (kbd "C-<f8>") 'toggle-frame-fullscreen)
+(global-set-key (kbd "<f9>") 'switch-moving-way)
+(global-set-key (kbd "<f11>") 'toggle-frame-maximized)
+(global-set-key (kbd "C-<f11>") 'toggle-frame-fullscreen)
