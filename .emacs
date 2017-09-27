@@ -191,7 +191,7 @@
 (display-time-mode 1)                             ; afficher horloge
 (column-number-mode 1)                            ; afficher numéro de colonne
 (line-number-mode 1)                              ; afficher numéro de ligne
-;; (global-linum-mode t)                          ; num toutes les lignes
+(global-linum-mode t)                             ; num toutes les lignes
 (global-hl-line-mode t)                           ; highlight ligne courante
 (show-paren-mode t)                               ; matching des parentheses
 
@@ -315,14 +315,7 @@ point reaches the beginning or end of the buffer, stop there."
    (if mark-active (list (region-beginning)
                          (region-end))
      (list (line-beginning-position)
-           ;; (line-beginning-position 2)))))
            (line-end-position)))))
-
-(defun indent-yanked ()
-  (interactive)
-  (let ((inhibit-message t))
-    (save-excursion
-      (indent-region (mark) (point) nil))))
 
 ;; ===========================================================================
 ;; MODIFIER FONCTIONS
@@ -332,8 +325,6 @@ point reaches the beginning or end of the buffer, stop there."
 (advice-add 'split-window-vertically :after #'balance-windows)
 (advice-add 'delete-window :after #'balance-windows)
 (advice-add 'copy-region-as-kill :before #'region-or-line)
-;; (advice-add 'yank :after #'indent-yanked)
-;; (advice-add 'yank-pop :after #'indent-yanked)
 
 ;; ===========================================================================
 ;; BINDINGS
