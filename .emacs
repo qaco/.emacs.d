@@ -11,13 +11,14 @@
 ;; flycheck                            C-f2
 ;; next-error                          f3
 ;; flycheck-next-error                 C-f3
-;; make mrproper                       f4
+;; make clean                          f4
 ;;
 ;; split-horizontally                  f5
 ;; regle                               C-f5
 ;; delete-window                       f6
-;; maximize                            f8
-;; fullscreen                          C-f8
+
+;; maximize                            f11
+;; fullscreen                          C-f11
 ;;
 ;; ===========================================================================
 ;; DOCUMENTATION
@@ -61,6 +62,7 @@
 ;; centrer l'écran                      C-l
 ;; goto-line                            M-g M-g
 ;; scroll other window                  M-C-V/M-C-v
+;; select other window                  S-<arrow>
 ;;
 ;; ===========================================================================
 ;; RECHERCHE
@@ -105,14 +107,7 @@
 ;; ===========================================================================
 
 (setq browse-url-browser-function (quote browse-url-generic)
-      browse-url-generic-program "chromium"
       backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
-
-
-(setenv "PATH"                                    ; exécutables accessibles
-        (concat
-         "/home/hugo/bin/kotlinc/bin:"
-         (getenv "PATH")))
 
 ;; ===========================================================================
 ;; LOAD
@@ -127,34 +122,11 @@
 
 (package-initialize)                    
 
-(setq my-must-have-packages
-      '(expand-region
-        buffer-move
-        fill-column-indicator
-        flycheck
-        gruvbox-theme
-        ido-vertical-mode
-        smex
-        kotlin-mode
-        javadoc-lookup))
-
-(let ((refreshed nil))
-  (when (not package-archive-contents)
-    (package-refresh-contents)
-    (setq refreshed t))
-  (dolist (pkg my-must-have-packages)
-    (when (and (not (package-installed-p pkg))
-               (assoc pkg package-archive-contents))
-      (unless refreshed
-        (package-refresh-contents)
-        (setq refreshed t))
-      (package-install pkg))))
-
 ;; ===========================================================================
 ;; INTERFACE DISTRACTION-FREE
 ;; ===========================================================================
 
-(load-theme 'gruvbox t)                           ; charger theme
+(load-theme 'base16-google-dark t)                ; charger theme
 
 (menu-bar-mode -1)                                ; cacher barre de menu
 (tool-bar-mode -1)                                ; cacher outils
@@ -184,6 +156,7 @@
                  left-bracket right-bracket top-right-angle top-left-angle)
                 (empty-line . empty-line)
                 (unknown . question-mark)))
+
 ;; ===========================================================================
 ;; INFORMATIONS À AFFICHER
 ;; ===========================================================================
@@ -191,8 +164,8 @@
 (display-time-mode 1)                             ; afficher horloge
 (column-number-mode 1)                            ; afficher numéro de colonne
 (line-number-mode 1)                              ; afficher numéro de ligne
-(global-linum-mode t)                             ; num toutes les lignes
-(global-hl-line-mode t)                           ; highlight ligne courante
+;; (global-linum-mode t)                          ; num toutes les lignes
+;; (global-hl-line-mode t)                        ; highlight ligne courante
 (show-paren-mode t)                               ; matching des parentheses
 
 (setq-default fill-column 80                      ; largeur de page : 80 char
@@ -209,7 +182,6 @@
 (add-to-list 'default-frame-alist '(height . 30)) ; hauteur par défaut
 (add-to-list 'default-frame-alist '(width . 81))  ; largeur par défaut
 
-(windmove-default-keybindings)                    ; S-<arrow> navig fenetres
 
 ;; ===========================================================================
 ;; COMPORTEMENT DES COMMANDES
@@ -221,6 +193,9 @@
 (setq scroll-step 1)                              ; scrolling ligne par ligne
 (setq-default indent-tabs-mode nil)               ; pas de tabs
 (setq case-fold-search t)                         ; search ignore la casse
+
+(ac-config-default)
+(setq ac-use-quick-help nil)
 
 ;; ===========================================================================
 ;; COMPILATION
@@ -261,25 +236,12 @@
   (setq compile-command nveau))
 
 (defun clean()
-  "Launch make mrproper from the current directory."
+  "Launch make clean from the current directory."
   (interactive)
   (shell-command "make clean"))
-
-(defun copy-and-comment-region (beg end &optional arg)
-  "Duplicate the region and comment-out the copied text.
-See `comment-region' for behavior of a prefix arg."
-  (interactive "r\nP")
-  (if mark-active
-      (progn
-        (copy-region-as-kill beg end)
-        (goto-char end)
-        (yank)
-        (comment-region beg end arg))
-    (beginning-of-line)
-    (set-mark (line-end-position))
-    (call-interactively 'copy-and-comment-region)))
     
-(defun smarter-move-beginning-of-line (arg)       ; Sebastian Wiesner
+(defun smarter-move-beginning-of-line (arg)
+  ;; Sebastian Wiesner
   "Move point back to indentation of beginning of line.
 
 Move point to the first non-whitespace character on this line.
@@ -301,21 +263,28 @@ point reaches the beginning or end of the buffer, stop there."
 
 (defun kill-region-or-line ()
   (interactive)
-  (if mark-active (kill-region (region-beginning)
-                               (region-end))
-    (beginning-of-line)
-    (if (= (current-indentation)
-           ( - (line-end-position) (line-beginning-position)))
-        (kill-line)
-      (kill-line)
-      (delete-char 1))))
+  (if mark-active
+      (call-interactively 'kill-region)
+    (call-interactively 'kill-whole-line)))
 
-(defun region-or-line (beg end)
-  (interactive
-   (if mark-active (list (region-beginning)
-                         (region-end))
-     (list (line-beginning-position)
-           (line-end-position)))))
+(defun copy-region-or-line ()
+  (interactive)
+  (if mark-active
+      (call-interactively 'copy-region-as-kill)
+    (kill-ring-save (line-beginning-position)
+                    (line-beginning-position 2))))
+
+(defun copy-and-comment-region ()
+  (interactive)
+  (if mark-active
+      (progn
+        (call-interactively 'copy-region-as-kill)
+        (call-interactively 'comment-region))
+    (progn
+      (kill-ring-save (line-beginning-position)
+                      (line-beginning-position 2))
+      (comment-region (line-beginning-position)
+                      (line-end-position)))))
 
 ;; ===========================================================================
 ;; MODIFIER FONCTIONS
@@ -324,7 +293,6 @@ point reaches the beginning or end of the buffer, stop there."
 (advice-add 'split-window-horizontally :after #'balance-windows)
 (advice-add 'split-window-vertically :after #'balance-windows)
 (advice-add 'delete-window :after #'balance-windows)
-(advice-add 'copy-region-as-kill :before #'region-or-line)
 
 ;; ===========================================================================
 ;; BINDINGS
@@ -336,7 +304,8 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "C-a") 'smarter-move-beginning-of-line)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "M-w") 'copy-region-as-kill)
+(global-set-key (kbd "M-w") 'copy-region-or-line)
+(windmove-default-keybindings)                    ; S-<arrow> navig fenetres
 
 ;; Remap
 
@@ -372,6 +341,5 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "C-<f5>") 'fci-mode)
 (global-set-key (kbd "<f6>") 'delete-window)
 
-(global-set-key (kbd "<f9>") 'switch-moving-way)
 (global-set-key (kbd "<f11>") 'toggle-frame-maximized)
 (global-set-key (kbd "C-<f11>") 'toggle-frame-fullscreen)
