@@ -142,20 +142,20 @@
 
 (set-face-attribute 'default nil :height 100)     ; taille de police
 (setq-default word-wrap t)                        ; coupe après le mot
-(setq-default fringe-indicator-alist
-              '((truncation left-arrow right-arrow)
-                (continuation nil nil) ;; left-curly-arrow & right-curly-arrow
-                (overlay-arrow . right-triangle)
-                (up . up-arrow)
-                (down . down-arrow)
-                (top top-left-angle top-right-angle)
-                (bottom
-                 bottom-left-angle bottom-right-angle
-                 top-right-angle top-left-angle)
-                (top-bottom
-                 left-bracket right-bracket top-right-angle top-left-angle)
-                (empty-line . empty-line)
-                (unknown . question-mark)))
+;; (setq-default fringe-indicator-alist
+;;               '((truncation left-arrow right-arrow)
+;;                 (continuation nil nil) ;; left-curly-arrow & right-curly-arrow
+;;                 (overlay-arrow . right-triangle)
+;;                 (up . up-arrow)
+;;                 (down . down-arrow)
+;;                 (top top-left-angle top-right-angle)
+;;                 (bottom
+;;                  bottom-left-angle bottom-right-angle
+;;                  top-right-angle top-left-angle)
+;;                 (top-bottom
+;;                  left-bracket right-bracket top-right-angle top-left-angle)
+;;                 (empty-line . empty-line)
+;;                 (unknown . question-mark)))
 
 ;; ===========================================================================
 ;; INFORMATIONS À AFFICHER
@@ -165,7 +165,7 @@
 (column-number-mode 1)                            ; afficher numéro de colonne
 (line-number-mode 1)                              ; afficher numéro de ligne
 ;; (global-linum-mode t)                          ; num toutes les lignes
-;; (global-hl-line-mode t)                        ; highlight ligne courante
+(global-hl-line-mode t)                        ; highlight ligne courante
 (show-paren-mode t)                               ; matching des parentheses
 
 (setq-default fill-column 80                      ; largeur de page : 80 char
@@ -193,9 +193,6 @@
 (setq scroll-step 1)                              ; scrolling ligne par ligne
 (setq-default indent-tabs-mode nil)               ; pas de tabs
 (setq case-fold-search t)                         ; search ignore la casse
-
-(ac-config-default)
-(setq ac-use-quick-help nil)
 
 ;; ===========================================================================
 ;; COMPILATION
