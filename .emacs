@@ -43,10 +43,6 @@
 ;; elisp interpreter                    M-:
 ;; Définir macro                        C-x ( / C-x )
 ;; Exécuter la dernière macro           C-x e
-;; [ocaml]
-;; toplevel ocaml                       M-x run-ocaml
-;; evaluate ocaml                       C-c C-e
-;; [shell]
 ;; commande UNIX                        M-!
 ;;
 ;; ===========================================================================
@@ -101,6 +97,27 @@
 ;; undo/redo                            C-_
 ;; remonter undo-ring                   M-_
 ;; undo/redo window configuration       C-c <left>/C-c <right>
+;;
+;; ===========================================================================
+;; OCAML (TUAREG/MERLIN)
+;; ===========================================================================
+;;
+;; toplevel                             M-x run-ocaml
+;; evaluate                             C-c C-e
+;; get type of expression               C-c C-t
+;; go to definition of identifier       C-c C-l
+
+;;
+;; ===========================================================================
+;; MAGIT
+;; ===========================================================================
+;;
+;; lancer magit                         C-x g
+;; stage files                          s
+;; commit                               c c (then C-c C-c)
+;; switch to another branch             b b
+;; push                                 P u
+;; pull                                 F u
 
 ;; ===========================================================================
 ;; VARIABLES D'ENVIRONNEMENT
@@ -120,7 +137,15 @@
  '("melpa" . "http://melpa.org/packages/")
  t)
 
-(package-initialize)                    
+(package-initialize)
+
+(let ((opam-share (ignore-errors
+                    (car (process-lines "opam" "config" "var" "share")))))
+  (when (and opam-share (file-directory-p opam-share))
+  (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
+  (autoload 'merlin-mode "merlin" nil t nil)
+  (add-hook 'tuareg-mode-hook 'merlin-mode t)
+  (add-hook 'caml-mode-hook 'merlin-mode t)))
 
 ;; ===========================================================================
 ;; INTERFACE DISTRACTION-FREE
@@ -190,7 +215,11 @@
 (delete-selection-mode t)                         ; overwrite region
 ;; (global-aggressive-indent-mode 1)
 
-(setq scroll-step 1)                              ; scrolling ligne par ligne
+; scroll sans jumps
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
+(setq auto-window-vscroll nil)
+
 (setq-default indent-tabs-mode nil)               ; pas de tabs
 (setq case-fold-search t)                         ; search ignore la casse
 
@@ -323,6 +352,7 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "<C-S-down>")   'buf-move-down)
 (global-set-key (kbd "<C-S-left>")   'buf-move-left)
 (global-set-key (kbd "<C-S-right>")  'buf-move-right)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; F-keys
 
@@ -338,5 +368,5 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "C-<f5>") 'fci-mode)
 (global-set-key (kbd "<f6>") 'delete-window)
 
-(global-set-key (kbd "<f11>") 'toggle-frame-maximized)
-(global-set-key (kbd "C-<f11>") 'toggle-frame-fullscreen)
+(global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
+(global-set-key (kbd "C-<f11>") 'toggle-frame-maximized)
