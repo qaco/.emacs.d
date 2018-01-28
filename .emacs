@@ -17,8 +17,8 @@
 ;; regle                               C-f5
 ;; delete-window                       f6
 
-;; maximize                            f11
-;; fullscreen                          C-f11
+;; maximize                            C-f11
+;; fullscreen                          f11
 ;;
 ;; ===========================================================================
 ;; DOCUMENTATION
@@ -106,10 +106,9 @@
 ;; evaluate                             C-c C-e
 ;; get type of expression               C-c C-t
 ;; go to definition of identifier       C-c C-l
-
 ;;
 ;; ===========================================================================
-;; MAGIT
+;; FICHIERS
 ;; ===========================================================================
 ;;
 ;; lancer magit                         C-x g
@@ -118,6 +117,8 @@
 ;; switch to another branch             b b
 ;; push                                 P u
 ;; pull                                 F u
+;;
+;; fichiers récents                     C-x r
 
 ;; ===========================================================================
 ;; VARIABLES D'ENVIRONNEMENT
@@ -230,7 +231,7 @@
 (setq compile-command "")
 
 ;; ===========================================================================
-;; IDO
+;; EXPLORATEUR DE FICHIERS
 ;; ===========================================================================
 
 (ido-mode 1)                                      ; active ido
@@ -240,6 +241,10 @@
       ido-everywhere t                            ; tous les buffers/fichiers
       ido-create-new-buffer 'always               ; nveau quand pas trouvé
       ido-auto-merge-work-directories-length -1)  ; pas ds les autres dossiers
+
+(require 'recentf)
+(setq recentf-max-saved-items 50)                 ; se souvient des 50 derniers
+(recentf-mode 1)                                  ; fichiers
 
 ;; ===========================================================================
 ;; INTÉGRITÉ DES DONNÉES
@@ -312,6 +317,13 @@ point reaches the beginning or end of the buffer, stop there."
       (comment-region (line-beginning-position)
                       (line-end-position)))))
 
+(defun ido-recentf-open ()
+  "Use `ido-completing-read' to \[find-file] a recent file"
+  (interactive)
+  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+      (message "Opening file...")
+    (message "Aborting")))
+
 ;; ===========================================================================
 ;; MODIFIER FONCTIONS
 ;; ===========================================================================
@@ -353,6 +365,7 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "<C-S-left>")   'buf-move-left)
 (global-set-key (kbd "<C-S-right>")  'buf-move-right)
 (global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 
 ;; F-keys
 
