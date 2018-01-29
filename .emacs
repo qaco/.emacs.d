@@ -1,125 +1,3 @@
-;; elisp built-in files :
-;;
-;; /usr/local/share/emacs/$VERSION/
-
-;; ===========================================================================
-;; F-KEYS
-;; ===========================================================================
-;; compile                             f1
-;; new-compile-cmd                     C-f1
-;; recompile                           f2
-;; flycheck                            C-f2
-;; next-error                          f3
-;; flycheck-next-error                 C-f3
-;; make clean                          f4
-;;
-;; split-horizontally                  f5
-;; regle                               C-f5
-;; delete-window                       f6
-
-;; maximize                            C-f11
-;; fullscreen                          f11
-;;
-;; ===========================================================================
-;; DOCUMENTATION
-;; ===========================================================================
-;; 
-;; [emacs/elisp]
-;; describe-function                    C-h f 
-;; describe-variable                    C-h v
-;; describe-bindings                    C-h b
-;; describe-key                         C-h k 
-;; recherche commande                   C-h a
-;; view-emacs-problems                  C-h C-p
-;; view-emacs-todo                      C-h C-t
-;; [shell/C]
-;; man UNIX                             M-x man
-
-;; ===========================================================================
-;; EVAL
-;; ===========================================================================
-;; 
-;; [elisp]
-;; elisp interpreter                    M-:
-;; Définir macro                        C-x ( / C-x )
-;; Exécuter la dernière macro           C-x e
-;; commande UNIX                        M-!
-;;
-;; ===========================================================================
-;; NAVIGATION
-;; ===========================================================================
-;; 
-;; caractère                            C-b/C-f
-;; mot                                  M-b/M-f
-;; ligne                                C-p/C-n
-;; fin/début de ligne                   C-a/C-e
-;; fin/début de fonction                C-M-a/C-M-e
-;; écran suivant/précédent              C-v/M-v
-;; centrer l'écran                      C-l
-;; goto-line                            M-g M-g
-;; scroll other window                  M-C-V/M-C-v
-;; select other window                  S-<arrow>
-;;
-;; ===========================================================================
-;; RECHERCHE
-;; ===========================================================================
-;;
-;; rechercher                           C-s/C-r
-;; chercher et remplacer                M-%
-;; completion                           C-:
-;;
-;; ===========================================================================
-;; KILL/DEL/COMMENT
-;; ===========================================================================
-;; 
-;; comment current line                 C-x C-;
-;; copy and comment                     C-;
-;; supprimer caractère                  DEL/C-d
-;; supprimer mot                        M-DEL/M-d
-;; kill phrase                          M-k
-;; kill sexp                            C-M-k
-;; zap-to-char                          M-z
-;; naviguer kill-ring                   M-y
-;;
-;; ===========================================================================
-;; RÉGION
-;; ===========================================================================
-;;
-;; marquer le paragraphe                M-h
-;; marquer la fonction                  C-M-h
-;; marquer le buffer                    C-x h
-;; étendre région                       C-=
-;;
-;; ===========================================================================
-;; UNDO/REDO
-;; ===========================================================================
-;;
-;; undo/redo                            C-_
-;; remonter undo-ring                   M-_
-;; undo/redo window configuration       C-c <left>/C-c <right>
-;;
-;; ===========================================================================
-;; OCAML (TUAREG/MERLIN)
-;; ===========================================================================
-;;
-;; toplevel                             M-x run-ocaml
-;; evaluate                             C-c C-e
-;; get type of expression               C-c C-t
-;; go to definition of identifier       C-c C-l
-;;
-;; ===========================================================================
-;; FICHIERS
-;; ===========================================================================
-;;
-;; lancer magit                         C-x g
-;; stage files                          s
-;; commit                               c c (then C-c C-c)
-;; switch to another branch             b b
-;; push                                 P u
-;; pull                                 F u
-;;
-;; fichiers récents                     C-x r
-
 ;; ===========================================================================
 ;; VARIABLES D'ENVIRONNEMENT
 ;; ===========================================================================
@@ -168,20 +46,6 @@
 
 (set-face-attribute 'default nil :height 100)     ; taille de police
 (setq-default word-wrap t)                        ; coupe après le mot
-;; (setq-default fringe-indicator-alist
-;;               '((truncation left-arrow right-arrow)
-;;                 (continuation nil nil) ;; left-curly-arrow & right-curly-arrow
-;;                 (overlay-arrow . right-triangle)
-;;                 (up . up-arrow)
-;;                 (down . down-arrow)
-;;                 (top top-left-angle top-right-angle)
-;;                 (bottom
-;;                  bottom-left-angle bottom-right-angle
-;;                  top-right-angle top-left-angle)
-;;                 (top-bottom
-;;                  left-bracket right-bracket top-right-angle top-left-angle)
-;;                 (empty-line . empty-line)
-;;                 (unknown . question-mark)))
 
 ;; ===========================================================================
 ;; INFORMATIONS À AFFICHER
@@ -190,8 +54,7 @@
 (display-time-mode 1)                             ; afficher horloge
 (column-number-mode 1)                            ; afficher numéro de colonne
 (line-number-mode 1)                              ; afficher numéro de ligne
-;; (global-linum-mode t)                          ; num toutes les lignes
-(global-hl-line-mode t)                        ; highlight ligne courante
+(global-hl-line-mode t)                           ; highlight ligne courante
 (show-paren-mode t)                               ; matching des parentheses
 
 (setq-default fill-column 80                      ; largeur de page : 80 char
@@ -214,7 +77,6 @@
 ;; ===========================================================================
 
 (delete-selection-mode t)                         ; overwrite region
-;; (global-aggressive-indent-mode 1)
 
 ; scroll sans jumps
 (setq scroll-step 1)

@@ -1,0 +1,151 @@
+* Keybinds
+** F-keys
+
+compile                             f1   
+new-compile-cmd                     C-f1 
+recompile                           f2   
+flycheck                            C-f2 
+next-error                          f3   
+flycheck-next-error                 C-f3 
+make clean                          f4   
+                                         
+split-horizontally                  f5   
+regle                               C-f5 
+delete-window                       f6   
+                                         
+maximize                            C-f11
+fullscreen                          f11
+
+** Built-in documentation
+
+*** Emacs/Elisp
+
+describe-function                    C-h f  
+describe-variable                    C-h v  
+describe-bindings                    C-h b  
+describe-key                         C-h k  
+recherche commande                   C-h a  
+view-emacs-problems                  C-h C-p
+view-emacs-todo                      C-h C-t
+
+*** UNIX
+
+man UNIX                             M-x man
+
+** Commandes
+
+Définir macro                        C-x ( / C-x )
+Exécuter la dernière macro           C-x e
+Évaluer                              C-c C-e
+Commande UNIX                        M-!
+Elisp Interpreter
+
+** Navigation
+
+caractère                            C-b/C-f    
+mot                                  M-b/M-f    
+ligne                                C-p/C-n    
+fin/début de ligne                   C-a/C-e    
+fin/début de fonction                C-M-a/C-M-e
+écran suivant/précédent              C-v/M-v    
+centrer l'écran                      C-l        
+goto-line                            M-g M-g    
+scroll other window                  M-C-V/M-C-v
+select other window                  S-<arrow>
+rechercher                           C-s/C-r
+zap-to-char                          M-z
+
+** Édition
+
+*** Édition intelligente
+
+chercher et remplacer                M-%
+completion                           C-:
+
+*** Supprimer/commenter
+
+comment current line                 C-x C-;  
+copy and comment                     C-;      
+supprimer caractère                  DEL/C-d  
+supprimer mot                        M-DEL/M-d
+kill phrase                          M-k      
+kill sexp                            C-M-k    
+naviguer kill-ring                   M-y
+
+*** Marquer 
+
+marquer le paragraphe                M-h  
+marquer la fonction                  C-M-h
+marquer le buffer                    C-x h
+étendre région                       C-=
+
+*** Undo/Redo
+
+undo/redo                            C-_                   
+remonter undo-ring                   M-_                   
+undo/redo window configuration       C-c <left>/C-c <right>
+
+** Fichiers
+
+*** Local
+
+fichiers récents                     C-x r             
+
+*** Magit
+
+lancer magit                         C-x g             
+stage files                          s                 
+commit                               c c (then C-c C-c)
+switch to another branch             b b               
+push                                 P u               
+pull                                 F u               
+                                                       
+** OCaml
+
+*** Tuareg
+
+toplevel                             M-x run-ocaml
+
+*** Merlin
+
+get type of expression               C-c C-t
+go to definition of identifier       C-c C-l
+* Locations
+** Elisp files
+
+elisp built-in files : /usr/local/share/emacs/$VERSION/
+
+* Configuration snippets
+** Indentation
+*** Indentation agressive
+
+#+BEGIN_SRC emacs-lisp
+(global-aggressive-indent-mode 1)
+#+END_SRC
+
+** Informations à afficher
+*** Numérotation des lignes
+
+#+BEGIN_SRC emacs-lisp
+(global-linum-mode t)
+#+END_SRC
+
+*** Indicateur de coupure de la ligne
+
+#+BEGIN_SRC emacs-lisp
+(setq-default fringe-indicator-alist                                       
+              '((truncation left-arrow right-arrow)                        
+                (continuation nil nil) ;; left-curly-arrow & right-curly-ar
+                (overlay-arrow . right-triangle)                           
+                (up . up-arrow)                                            
+                (down . down-arrow)                                        
+                (top top-left-angle top-right-angle)                       
+                (bottom                                                    
+                 bottom-left-angle bottom-right-angle                      
+                 top-right-angle top-left-angle)                           
+                (top-bottom                                                
+                 left-bracket right-bracket top-right-angle top-left-angle)
+                (empty-line . empty-line)                                  
+                (unknown . question-mark)))
+
+#+END_SRC
