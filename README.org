@@ -11,7 +11,8 @@ make clean                          f4
                                          
 split-horizontally                  f5   
 regle                               C-f5 
-delete-window                       f6   
+split-vertically                    f6   
+delete-window                       f8   
                                          
 maximize                            C-f11
 fullscreen                          f11
@@ -55,9 +56,14 @@ select other window                  S-<arrow>
 rechercher                           C-s/C-r
 zap-to-char                          M-z
 
-** Édition
+** Affichage
 
-*** Édition intelligente
+nombre de lignes                     M-l
+lignes                               C-x l
+
+** édition
+
+*** édition intelligente
 
 chercher et remplacer                M-%
 completion                           C-:
@@ -85,9 +91,9 @@ undo/redo                            C-_
 remonter undo-ring                   M-_                   
 undo/redo window configuration       C-c <left>/C-c <right>
 
-** Fichiers
+** fichiers
 
-*** Local
+*** local
 
 fichiers récents                     C-x r             
 
@@ -100,7 +106,7 @@ switch to another branch             b b
 push                                 P u               
 pull                                 F u               
                                                        
-** OCaml
+** ocaml
 
 *** Tuareg
 

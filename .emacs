@@ -1,12 +1,5 @@
 ;; ===========================================================================
-;; VARIABLES D'ENVIRONNEMENT
-;; ===========================================================================
-
-(setq browse-url-browser-function (quote browse-url-generic)
-      backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
-
-;; ===========================================================================
-;; LOAD
+;; PACKAGES
 ;; ===========================================================================
 
 (require 'package)
@@ -18,16 +11,22 @@
 
 (package-initialize)
 
-(let ((opam-share (ignore-errors
-                    (car (process-lines "opam" "config" "var" "share")))))
-  (when (and opam-share (file-directory-p opam-share))
-  (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
-  (autoload 'merlin-mode "merlin" nil t nil)
-  (add-hook 'tuareg-mode-hook 'merlin-mode t)
-  (add-hook 'caml-mode-hook 'merlin-mode t)))
+;; ===========================================================================
+;; BACKUPS
+;; ===========================================================================
+
+(setq browse-url-browser-function (quote browse-url-generic)
+      backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
+
+(setq vc-make-backup-files t                      ; on fait des backups
+      version-control t                           ; vérification des versions
+      kept-new-versions 10                        ; on garde 10 backups
+      kept-old-versions 0                         ; rien de plus ancien
+      delete-old-versions t                       ; suppr vieilles versions
+      backup-by-copying t)                        ; bkp = cpy
 
 ;; ===========================================================================
-;; INTERFACE DISTRACTION-FREE
+;; AFFICHAGE
 ;; ===========================================================================
 
 (load-theme 'base16-google-dark t)                ; charger theme
@@ -47,10 +46,6 @@
 (set-face-attribute 'default nil :height 100)     ; taille de police
 (setq-default word-wrap t)                        ; coupe après le mot
 
-;; ===========================================================================
-;; INFORMATIONS À AFFICHER
-;; ===========================================================================
-
 (display-time-mode 1)                             ; afficher horloge
 (column-number-mode 1)                            ; afficher numéro de colonne
 (line-number-mode 1)                              ; afficher numéro de ligne
@@ -62,77 +57,20 @@
 
 (setq display-time-24hr-format t)                 ; horloge format 24h
 
-;; ===========================================================================
-;; FENETRES
-;; ===========================================================================
-
-(winner-mode 1)                                   ; undo/redo fenetres
-
-(add-to-list 'default-frame-alist '(height . 30)) ; hauteur par défaut
-(add-to-list 'default-frame-alist '(width . 81))  ; largeur par défaut
-
+(global-set-key (kbd "C-x l") 'linum-mode)
+(global-set-key (kbd "M-l") 'count-lines-page)
 
 ;; ===========================================================================
-;; COMPORTEMENT DES COMMANDES
+;; NAVIGATION
 ;; ===========================================================================
-
-(delete-selection-mode t)                         ; overwrite region
 
 ; scroll sans jumps
 (setq scroll-step 1)
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
 
-(setq-default indent-tabs-mode nil)               ; pas de tabs
 (setq case-fold-search t)                         ; search ignore la casse
 
-;; ===========================================================================
-;; COMPILATION
-;; ===========================================================================
-
-(setq compile-command "")
-
-;; ===========================================================================
-;; EXPLORATEUR DE FICHIERS
-;; ===========================================================================
-
-(ido-mode 1)                                      ; active ido
-(ido-vertical-mode 1)                             ; disposition verticale
-
-(setq ido-enable-flex-matching t                  ; souplesse du matching
-      ido-everywhere t                            ; tous les buffers/fichiers
-      ido-create-new-buffer 'always               ; nveau quand pas trouvé
-      ido-auto-merge-work-directories-length -1)  ; pas ds les autres dossiers
-
-(require 'recentf)
-(setq recentf-max-saved-items 50)                 ; se souvient des 50 derniers
-(recentf-mode 1)                                  ; fichiers
-
-;; ===========================================================================
-;; INTÉGRITÉ DES DONNÉES
-;; ===========================================================================
-
-(setq vc-make-backup-files t                      ; on fait des backups
-      version-control t                           ; vérification des versions
-      kept-new-versions 10                        ; on garde 10 backups
-      kept-old-versions 0                         ; rien de plus ancien
-      delete-old-versions t                       ; suppr des vieilles versions
-      backup-by-copying t)                        ; bkp = cpy
-
-;; ===========================================================================
-;; FONCTIONS
-;; ===========================================================================
-
-(defun new-compile-cmd (nveau)
-  "Change the compile command without compiling."
-  (interactive "sNew compile command: ")
-  (setq compile-command nveau))
-
-(defun clean()
-  "Launch make clean from the current directory."
-  (interactive)
-  (shell-command "make clean"))
-    
 (defun smarter-move-beginning-of-line (arg)
   ;; Sebastian Wiesner
   "Move point back to indentation of beginning of line.
@@ -153,6 +91,66 @@ point reaches the beginning or end of the buffer, stop there."
     (back-to-indentation)
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
+
+(global-set-key (kbd "C-a") 'smarter-move-beginning-of-line)
+
+;; ===========================================================================
+;; FENETRES
+;; ===========================================================================
+
+(winner-mode 1)                                   ; undo/redo fenetres
+
+(add-to-list 'default-frame-alist '(height . 30)) ; hauteur par défaut
+(add-to-list 'default-frame-alist '(width . 81))  ; largeur par défaut
+(windmove-default-keybindings)                    ; S-<arrow> navig fenetres
+(require 'buffer-move)                            ; M-S<arrow> swap buffers
+
+(advice-add 'split-window-horizontally :after #'balance-windows)
+(advice-add 'split-window-vertically :after #'balance-windows)
+(advice-add 'delete-window :after #'balance-windows)
+
+(global-set-key (kbd "<f5>") 'split-window-horizontally)
+(global-set-key (kbd "C-<f5>") 'fci-mode)
+(global-set-key (kbd "<f7>") 'delete-window)
+(global-set-key (kbd "<f8>") 'delete-window)
+(global-set-key (kbd "<C-S-up>")     'buf-move-up)
+(global-set-key (kbd "<C-S-down>")   'buf-move-down)
+(global-set-key (kbd "<C-S-left>")   'buf-move-left)
+(global-set-key (kbd "<C-S-right>")  'buf-move-right)
+
+;; ===========================================================================
+;; EXPLORATEUR
+;; ===========================================================================
+
+(ido-mode 1)                                      ; active ido
+(ido-vertical-mode 1)                             ; disposition verticale
+
+(setq ido-enable-flex-matching t                  ; souplesse du matching
+      ido-everywhere t                            ; tous les buffers/fichiers
+      ido-create-new-buffer 'always               ; nveau quand pas trouvé
+      ido-auto-merge-work-directories-length -1)  ; pas ds les autres dossiers
+
+(require 'recentf)
+(setq recentf-max-saved-items 50)                 ; se souvient des 50 derniers
+(recentf-mode 1)                                  ; fichiers
+
+(defun ido-recentf-open ()
+  "Use `ido-completing-read' to \[find-file] a recent file"
+  (interactive)
+  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+      (message "Opening file...")
+    (message "Aborting")))
+
+(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "M-x") 'smex)
+
+;; ===========================================================================
+;; ÉDITION
+;; ===========================================================================
+
+(delete-selection-mode t)                         ; overwrite region
+(setq-default indent-tabs-mode nil)               ; pas de tabs
 
 (defun kill-region-or-line ()
   (interactive)
@@ -179,57 +177,28 @@ point reaches the beginning or end of the buffer, stop there."
       (comment-region (line-beginning-position)
                       (line-end-position)))))
 
-(defun ido-recentf-open ()
-  "Use `ido-completing-read' to \[find-file] a recent file"
-  (interactive)
-  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
-      (message "Opening file...")
-    (message "Aborting")))
-
-;; ===========================================================================
-;; MODIFIER FONCTIONS
-;; ===========================================================================
-
-(advice-add 'split-window-horizontally :after #'balance-windows)
-(advice-add 'split-window-vertically :after #'balance-windows)
-(advice-add 'delete-window :after #'balance-windows)
-
-;; ===========================================================================
-;; BINDINGS
-;; ===========================================================================
-
-;; Bindings++
-
 (global-set-key (kbd "C-w") 'kill-region-or-line)
-(global-set-key (kbd "C-a") 'smarter-move-beginning-of-line)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "M-w") 'copy-region-or-line)
-(windmove-default-keybindings)                    ; S-<arrow> navig fenetres
-
-;; Remap
-
-(global-set-key (kbd "C-:") 'dabbrev-expand)
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
-;; Unset
-
-(global-unset-key (kbd "C-z"))
-(global-unset-key (kbd "C-x C-z"))
-
-;; New bindings
-
 (global-set-key (kbd "M-_") 'undo-only)
 (global-set-key (kbd "C-=") 'er/expand-region)
 (global-set-key (kbd "C-;") 'copy-and-comment-region)
-(global-set-key (kbd "<C-S-up>")     'buf-move-up)
-(global-set-key (kbd "<C-S-down>")   'buf-move-down)
-(global-set-key (kbd "<C-S-left>")   'buf-move-left)
-(global-set-key (kbd "<C-S-right>")  'buf-move-right)
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
+(global-set-key (kbd "C-:") 'dabbrev-expand)
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
-;; F-keys
+;; ===========================================================================
+;; COMPILATION
+;; ===========================================================================
+
+(setq compile-command "")
+(defun new-compile-cmd (nveau)
+  "Change the compile command without compiling."
+  (interactive "sNew compile command: ")
+  (setq compile-command nveau))
+
+(defun clean()
+  "Launch make clean from the current directory."
+  (interactive)
+  (shell-command "make clean"))
 
 (global-set-key (kbd "<f1>") 'compile)
 (global-set-key (kbd "C-<f1>") 'new-compile-cmd)
@@ -239,9 +208,14 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "C-<f3>") 'flycheck-next-error)
 (global-set-key (kbd "<f4>") 'clean)
 
-(global-set-key (kbd "<f5>") 'split-window-horizontally)
-(global-set-key (kbd "C-<f5>") 'fci-mode)
-(global-set-key (kbd "<f6>") 'delete-window)
+;; ===========================================================================
+;; OCAML
+;; ===========================================================================
 
-(global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
-(global-set-key (kbd "C-<f11>") 'toggle-frame-maximized)
+(let ((opam-share (ignore-errors
+                    (car (process-lines "opam" "config" "var" "share")))))
+  (when (and opam-share (file-directory-p opam-share))
+  (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
+  (autoload 'merlin-mode "merlin" nil t nil)
+  (add-hook 'tuareg-mode-hook 'merlin-mode t)
+  (add-hook 'caml-mode-hook 'merlin-mode t)))
