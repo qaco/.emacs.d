@@ -93,6 +93,8 @@ point reaches the beginning or end of the buffer, stop there."
       (move-beginning-of-line 1))))
 
 (global-set-key (kbd "C-a") 'smarter-move-beginning-of-line)
+(global-set-key (kbd "C-c SPC") 'ace-jump-word-mode)
+(global-set-key (kbd "C-l") 'goto-line)
 
 ;; ===========================================================================
 ;; FENETRES
@@ -109,6 +111,10 @@ point reaches the beginning or end of the buffer, stop there."
 (advice-add 'split-window-vertically :after #'balance-windows)
 (advice-add 'delete-window :after #'balance-windows)
 
+(defun kill-current-buffer ()
+  (interactive)
+  (kill-buffer (current-buffer)))
+
 (global-set-key (kbd "<f5>") 'split-window-horizontally)
 (global-set-key (kbd "C-<f5>") 'fci-mode)
 (global-set-key (kbd "<f7>") 'delete-window)
@@ -117,6 +123,7 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "<C-S-down>")   'buf-move-down)
 (global-set-key (kbd "<C-S-left>")   'buf-move-left)
 (global-set-key (kbd "<C-S-right>")  'buf-move-right)
+(global-set-key (kbd "C-x C-k")  'kill-current-buffer)
 
 ;; ===========================================================================
 ;; EXPLORATEUR
@@ -141,9 +148,14 @@ point reaches the beginning or end of the buffer, stop there."
       (message "Opening file...")
     (message "Aborting")))
 
+(defun open-home-doc ()
+  (interactive)
+  (find-file-other-window "~/.emacs.d/README.org"))
+
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "C-h h") 'open-home-doc)
 
 ;; ===========================================================================
 ;; ÉDITION

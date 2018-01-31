@@ -17,17 +17,18 @@ delete-window                       f8
 maximize                            C-f11
 fullscreen                          f11
 
-** Built-in documentation
+** Documentation
 
 *** Emacs/Elisp
 
-describe-function                    C-h f  
-describe-variable                    C-h v  
-describe-bindings                    C-h b  
-describe-key                         C-h k  
-recherche commande                   C-h a  
-view-emacs-problems                  C-h C-p
-view-emacs-todo                      C-h C-t
+describe-function   C-h f  
+describe-variable   C-h v  
+describe-bindings   C-h b  
+describe-key        C-h k  
+recherche commande  C-h a  
+view-emacs-problems C-h C-p
+view-emacs-todo     C-h C-t
+view home doc       C-h h
 
 *** UNIX
 
@@ -43,18 +44,17 @@ Elisp Interpreter
 
 ** Navigation
 
-caractère                            C-b/C-f    
-mot                                  M-b/M-f    
-ligne                                C-p/C-n    
-fin/début de ligne                   C-a/C-e    
-fin/début de fonction                C-M-a/C-M-e
-écran suivant/précédent              C-v/M-v    
-centrer l'écran                      C-l        
-goto-line                            M-g M-g    
-scroll other window                  M-C-V/M-C-v
-select other window                  S-<arrow>
-rechercher                           C-s/C-r
-zap-to-char                          M-z
+caractère                C-b/C-f    
+mot                      M-b/M-f    
+ligne                    C-p/C-n    
+fin/début de ligne       C-a/C-e    
+fin/début de fonction    C-M-a/C-M-e
+écran suivant/précédent  C-v/M-v    
+goto-line                C-l        
+scroll other window      M-C-V/M-C-v
+select other window      S-<arrow>
+rechercher               C-s/C-r
+ace-jump-mode            C-c SPC
 
 ** Affichage
 
@@ -63,10 +63,15 @@ lignes                               C-x l
 
 ** édition
 
-*** édition intelligente
+*** Édition intelligente
 
-chercher et remplacer                M-%
-completion                           C-:
+Commencer macro       C-x (
+Finir macro           C-x )
+Éxécuter macro        C-x e
+chercher et remplacer M-%
+completion            C-:
+zap-to-char           M-z
+
 
 *** Supprimer/commenter
 
@@ -80,10 +85,11 @@ naviguer kill-ring                   M-y
 
 *** Marquer 
 
-marquer le paragraphe                M-h  
-marquer la fonction                  C-M-h
-marquer le buffer                    C-x h
-étendre région                       C-=
+manipuler le rectangle  C-x r *
+marquer le paragraphe   M-h  
+marquer la fonction     C-M-h
+marquer le buffer       C-x h
+étendre région          C-=
 
 *** Undo/Redo
 
