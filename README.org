@@ -55,6 +55,10 @@ scroll other window      M-C-V/M-C-v
 select other window      S-<arrow>
 rechercher               C-s/C-r
 ace-jump-mode            C-c SPC
+placer bookmark          C-x r m name RET
+sauter au bookmark       C-x r b name RET
+supprimer bookmark       M-x delete
+liste des bookmarks      C-x r l
 
 ** Affichage
 
@@ -68,11 +72,15 @@ lignes                               C-x l
 Commencer macro       C-x (
 Finir macro           C-x )
 Éxécuter macro        C-x e
+nommer macro          C-x C-k n
 chercher et remplacer M-%
 completion            C-:
 zap-to-char           M-z
 
-
+*** Inverser
+transpose-char C-t
+transpose-word M-t
+transpose-line C-x C-t
 *** Supprimer/commenter
 
 comment current line                 C-x C-;  
@@ -102,6 +110,7 @@ undo/redo window configuration       C-c <left>/C-c <right>
 *** local
 
 fichiers récents                     C-x r             
+ouvrir en lecture seule              C-x C-q
 
 *** Magit
 
