@@ -65,7 +65,7 @@ liste des bookmarks      C-x r l
 nombre de lignes                     M-l
 lignes                               C-x l
 
-** édition
+** Édition
 
 *** Édition intelligente
 
@@ -105,12 +105,13 @@ undo/redo                            C-_
 remonter undo-ring                   M-_                   
 undo/redo window configuration       C-c <left>/C-c <right>
 
-** fichiers
+** Fichiers
 
 *** local
 
 fichiers récents                     C-x r             
 ouvrir en lecture seule              C-x C-q
+rafraîchir le buffer                 f4
 
 *** Magit
 
@@ -121,7 +122,7 @@ switch to another branch             b b
 push                                 P u               
 pull                                 F u               
                                                        
-** ocaml
+** OCaml
 
 *** Tuareg
 
@@ -131,6 +132,11 @@ toplevel                             M-x run-ocaml
 
 get type of expression               C-c C-t
 go to definition of identifier       C-c C-l
+** Shell
+
+*** Ansi-term
+launch                               C-x C-x
+
 * Locations
 ** Elisp files
 

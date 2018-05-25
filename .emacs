@@ -156,6 +156,7 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "C-h h") 'open-home-doc)
+(global-set-key (kbd "<f4>") 'revert-buffer)
 
 ;; ===========================================================================
 ;; ÉDITION
@@ -169,13 +170,20 @@ point reaches the beginning or end of the buffer, stop there."
   (if mark-active
       (call-interactively 'kill-region)
     (call-interactively 'kill-whole-line)))
+    ;; (progn
+    ;;   (call-interactively 'smarter-move-beginning-of-line)
+    ;;   (call-interactively 'kill-line)
+    ;;   (call-interactively 'delete-blank-lines))))
 
 (defun copy-region-or-line ()
   (interactive)
   (if mark-active
       (call-interactively 'copy-region-as-kill)
-    (kill-ring-save (line-beginning-position)
-                    (line-beginning-position 2))))
+    (save-excursion
+      (progn
+        (call-interactively 'smarter-move-beginning-of-line)
+        (kill-ring-save (point)
+                        (line-end-position))))))
 
 (defun copy-and-comment-region ()
   (interactive)
@@ -218,7 +226,6 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "C-<f2>") 'global-flycheck-mode)
 (global-set-key (kbd "<f3>") 'next-error)
 (global-set-key (kbd "C-<f3>") 'flycheck-next-error)
-(global-set-key (kbd "<f4>") 'clean)
 
 ;; ===========================================================================
 ;; OCAML
@@ -258,4 +265,4 @@ point reaches the beginning or end of the buffer, stop there."
   (define-key term-raw-map (kbd "C-y") 'term-paste))
 (add-hook 'term-mode-hook 'my-term-hook)
 
-(global-set-key (kbd "C-x x") 'ansi-term)
+(global-set-key (kbd "C-x C-x") 'ansi-term)
