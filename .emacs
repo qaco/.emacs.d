@@ -11,6 +11,17 @@
 
 (package-initialize)
 
+(setq package-list '(base16-theme
+		     buffer-move
+		     ido-vertical-mode))
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
 ;; ===========================================================================
 ;; BACKUPS
 ;; ===========================================================================
@@ -28,6 +39,8 @@
 ;; ===========================================================================
 ;; AFFICHAGE
 ;; ===========================================================================
+
+
 
 (load-theme 'base16-google-dark t)                ; charger theme
 
