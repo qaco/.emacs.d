@@ -13,7 +13,10 @@
 
 (setq package-list '(base16-theme
 		     buffer-move
-		     ido-vertical-mode))
+		     ido-vertical-mode
+                     smex
+                     magit
+                     recentf))
 
 (unless package-archive-contents
   (package-refresh-contents))
@@ -106,7 +109,7 @@ point reaches the beginning or end of the buffer, stop there."
       (move-beginning-of-line 1))))
 
 (global-set-key (kbd "C-a") 'smarter-move-beginning-of-line)
-(global-set-key (kbd "C-c SPC") 'ace-jump-word-mode)
+;; (global-set-key (kbd "C-c SPC") 'ace-jump-word-mode)
 (global-set-key (kbd "C-l") 'goto-line)
 
 ;; ===========================================================================
