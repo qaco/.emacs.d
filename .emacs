@@ -255,7 +255,9 @@ point reaches the beginning or end of the buffer, stop there."
   (add-hook 'tuareg-mode-hook 'merlin-mode t)
   (add-hook 'caml-mode-hook 'merlin-mode t)))
 
-;; (setq tuareg-indent-align-with-first-arg t)
+(setq tuareg-indent-align-with-first-arg t)
+
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
 
 ;; ===========================================================================
 ;; ANSI-TERM
@@ -282,3 +284,15 @@ point reaches the beginning or end of the buffer, stop there."
 (add-hook 'term-mode-hook 'my-term-hook)
 
 (global-set-key (kbd "C-x C-x") 'ansi-term)
+
+;; ===========================================================================
+;; LUSTRE
+;; ===========================================================================
+
+(setq auto-mode-alist (cons '("\\.lus$" . lustre-mode) auto-mode-alist))
+(autoload 'lustre-mode "lustre" "Edition de code lustre" t)
+
+
+(setq load-path
+     (append load-path
+	      '("~/.emacs.d/elisp")))
