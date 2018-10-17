@@ -290,6 +290,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ===========================================================================
 
 (setq auto-mode-alist (cons '("\\.lus$" . lustre-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.ept" . lustre-mode) auto-mode-alist))
 (autoload 'lustre-mode "lustre" "Edition de code lustre" t)
 
 
