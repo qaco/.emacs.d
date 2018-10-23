@@ -93,8 +93,8 @@
 (if lustre-mode-map
     ()
   (setq lustre-mode-map (make-sparse-keymap))
-  (define-key lustre-mode-map ","   'electric-lustre-special-char)
-  (define-key lustre-mode-map ":"   'electric-lustre-special-char)
+  ;; (define-key lustre-mode-map ","   'electric-lustre-special-char)
+  ;; (define-key lustre-mode-map ":"   'electric-lustre-special-char)
   (define-key lustre-mode-map "\C-c\C-c" 'lustre-compil)
   (define-key lustre-mode-map "\r"  'electric-lustre-end-of-line)
 ;;  (define-key lustre-mode-map "\t"  'electric-lustre-tab)
@@ -167,13 +167,13 @@
       '(("--.*$" . font-lock-comment-face)
 	("(\\*\\(.\\|\n\\)*?\\*)" . font-lock-comment-face)
 	("node *\\([a-zA-Z0-9_-]*\\) *(" 1 font-lock-function-name-face)
-        ("\\<\\(const\\|function\\|include\\|let\\|node\\|returns\\|tel\\|type\\|var\\)\\>" . font-lock-string-face)
-        ("\\<\\(if\\|then\\|else\\)\\>[ \t\n]" 1 font-lock-keyword-face)
+        ("fun *\\([a-zA-Z0-9_-]*\\) *(" 1 font-lock-function-name-face)
+        ("\\<\\(const\\|function\\|fun\\|include\\|let\\|node\\|returns\\|tel\\|type\\|var\\)\\>" . font-lock-string-face)
+        ("\\<\\(automaton\\|state\\|end\\)\\>" . font-lock-string-face)
+        ("\\<\\(if\\|then\\|else\\|do\\|until\\)\\>[ \t\n]" 1 font-lock-keyword-face)
         ("\\<\\(true\\|and\\|or\\|not\\|false\\|xor\\)\\>" . font-lock-reference-face)
-	("\\<\\(bool\\|int\\|real\\)\\(\\^[^ ;,)]+\\)?\\>" .
-font-lock-variable-name-face)
-	("\\(\\<\\(assert\\|pre\\)\\>\\|->\\)" .
-font-lock-function-name-face)))
+	("\\<\\(bool\\|int\\|float\\)\\(\\^[^ ;,)]+\\)?\\>" . font-lock-variable-name-face)
+	("\\(\\<\\(assert\\|pre\\)\\>\\|->\\)" . font-lock-function-name-face)))
 
 
 (defun lustre-font-mode ()
