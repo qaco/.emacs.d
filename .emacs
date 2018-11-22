@@ -16,7 +16,9 @@
 		     ido-vertical-mode
                      smex
                      magit
-                     recentf))
+                     recentf
+                     sbt-mode
+                     projectile))
 
 (unless package-archive-contents
   (package-refresh-contents))
@@ -24,6 +26,10 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+
+(setq load-path
+     (append load-path
+	      '("~/.emacs.d/elisp")))
 
 ;; ===========================================================================
 ;; BACKUPS
@@ -43,7 +49,7 @@
 ;; AFFICHAGE
 ;; ===========================================================================
 
-
+(require 'fill-column-indicator)
 
 (load-theme 'base16-google-dark t)                ; charger theme
 
@@ -123,9 +129,9 @@ point reaches the beginning or end of the buffer, stop there."
 (windmove-default-keybindings)                    ; S-<arrow> navig fenetres
 (require 'buffer-move)                            ; M-S<arrow> swap buffers
 
-(advice-add 'split-window-horizontally :after #'balance-windows)
-(advice-add 'split-window-vertically :after #'balance-windows)
-(advice-add 'delete-window :after #'balance-windows)
+;; (advice-add 'split-window-horizontally :after #'balance-windows)
+;; (advice-add 'split-window-vertically :after #'balance-windows)
+;; (advice-add 'delete-window :after #'balance-windows)
 
 (defun kill-current-buffer ()
   (interactive)
@@ -168,6 +174,32 @@ point reaches the beginning or end of the buffer, stop there."
   (interactive)
   (find-file-other-window "~/.emacs.d/README.org"))
 
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+(defun dired-mode-setup ()
+  (dired-hide-details-mode 1)
+  (define-key dired-mode-map ";" 'dired-subtree-remove)
+  (defun dired-maybe-insert-subdir (&optional dirname switches)
+    (interactive)
+    (call-interactively 'dired-subtree-insert))
+  (defun find-file-other-window (file &optional wildcards)
+    (interactive)
+    (set-window-buffer (other-window 1)
+                       (find-file-noselect file nil nil wildcards)))
+    
+  (defun dired-mouse-find-file-other-window (event)
+    "In Dired, visit the file or directory name you click on in another window."
+    (interactive "e")
+    (dired-mouse-find-file event
+                           'find-file-other-window
+                           'dired-maybe-insert-subdir))
+  
+  )
+
+(add-hook 'dired-mode-hook 'dired-mode-setup)
+
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "M-x") 'smex)
@@ -177,7 +209,6 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ===========================================================================
 ;; ÉDITION
 ;; ===========================================================================
-
 (delete-selection-mode t)                         ; overwrite region
 (setq-default indent-tabs-mode nil)               ; pas de tabs
 
@@ -290,10 +321,53 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ===========================================================================
 
 (setq auto-mode-alist (cons '("\\.lus$" . lustre-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.ept" . lustre-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.ept" . heptagon-mode) auto-mode-alist))
 (autoload 'lustre-mode "lustre" "Edition de code lustre" t)
 
 
-(setq load-path
-     (append load-path
-	      '("~/.emacs.d/elisp")))
+
+
+(load "~/.emacs.d/elisp/heptagon.el")
+(require 'heptagon-mode)
+(require 'why3)
+
+;; ===========================================================================
+;; SCALA
+;; ===========================================================================
+
+(defun my-sbt-layout ()
+  (interactive)
+
+  (set-frame-parameter nil 'fullscreen 'maximized)
+  
+  (delete-other-windows)
+  
+  (split-window-vertically)
+  
+  (split-window-horizontally)
+  (balance-windows)
+  
+  (buf-move-right)
+  (windmove-left)
+  (projectile-dired)
+  (window-resize (selected-window)
+                 (-(* 3 (/ (window-width) 4)))
+                 t)
+  
+  (windmove-right)
+  (split-window-horizontally)
+  
+  (windmove-down)
+  (sbt-start)
+  (window-resize (selected-window)
+                 (- (/ (window-height) 2)))
+
+  (split-window-horizontally)
+  (windmove-right)
+  (window-resize (selected-window)
+                 (-  (- (window-width) (window-width (other-window 3))))
+                 t)
+  (other-window 2)
+  (call-interactively 'ansi-term)
+  (other-window 2)
+  )

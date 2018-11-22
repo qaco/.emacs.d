@@ -649,8 +649,8 @@
   (run-hooks 'lustre-mode-hook))
 
 
-(setq comment-start "-- ")
-(setq comment-end "")
+(setq comment-start "(*")
+(setq comment-end "*)")
 
 (provide 'lustre)
 

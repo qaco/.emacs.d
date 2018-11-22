@@ -1,4 +1,7 @@
 \#*
+projectile-bookmarks.eld
+url/*
+elpa/*
 backups/*
 auto-save-list/*
 ido.last
