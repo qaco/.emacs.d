@@ -129,17 +129,24 @@ point reaches the beginning or end of the buffer, stop there."
 (windmove-default-keybindings)                    ; S-<arrow> navig fenetres
 (require 'buffer-move)                            ; M-S<arrow> swap buffers
 
-;; (advice-add 'split-window-horizontally :after #'balance-windows)
-;; (advice-add 'split-window-vertically :after #'balance-windows)
-;; (advice-add 'delete-window :after #'balance-windows)
+(defun split-horizontally-and-balance ()
+  (interactive)
+  (split-window-horizontally)
+  (balance-windows))
+
+(defun delete-and-rebalance ()
+  (interactive)
+  (split-window-horizontally)
+  (balance-windows))
 
 (defun kill-current-buffer ()
   (interactive)
   (kill-buffer (current-buffer)))
 
-(global-set-key (kbd "<f5>") 'split-window-horizontally)
+(global-set-key (kbd "<f5>") 'split-horizontally-and-balance)
 (global-set-key (kbd "C-<f5>") 'fci-mode)
-(global-set-key (kbd "<f7>") 'delete-window)
+(global-set-key (kbd "<f6>") 'split-window-vertically)
+(global-set-key (kbd "<f7>") 'delete-other-windows)
 (global-set-key (kbd "<f8>") 'delete-window)
 (global-set-key (kbd "<C-S-up>")     'buf-move-up)
 (global-set-key (kbd "<C-S-down>")   'buf-move-down)
@@ -180,7 +187,6 @@ point reaches the beginning or end of the buffer, stop there."
 
 (defun dired-mode-setup ()
   (dired-hide-details-mode 1)
-  (define-key dired-mode-map ";" 'dired-subtree-remove)
   (defun dired-maybe-insert-subdir (&optional dirname switches)
     (interactive)
     (call-interactively 'dired-subtree-insert))
@@ -195,8 +201,7 @@ point reaches the beginning or end of the buffer, stop there."
     (dired-mouse-find-file event
                            'find-file-other-window
                            'dired-maybe-insert-subdir))
-  
-  )
+  (define-key dired-mode-map ";" 'dired-subtree-remove))
 
 (add-hook 'dired-mode-hook 'dired-mode-setup)
 
@@ -217,10 +222,6 @@ point reaches the beginning or end of the buffer, stop there."
   (if mark-active
       (call-interactively 'kill-region)
     (call-interactively 'kill-whole-line)))
-    ;; (progn
-    ;;   (call-interactively 'smarter-move-beginning-of-line)
-    ;;   (call-interactively 'kill-line)
-    ;;   (call-interactively 'delete-blank-lines))))
 
 (defun copy-region-or-line ()
   (interactive)
@@ -323,12 +324,13 @@ point reaches the beginning or end of the buffer, stop there."
 (setq auto-mode-alist (cons '("\\.lus$" . lustre-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.ept" . heptagon-mode) auto-mode-alist))
 (autoload 'lustre-mode "lustre" "Edition de code lustre" t)
-
-
-
-
 (load "~/.emacs.d/elisp/heptagon.el")
 (require 'heptagon-mode)
+
+;; ===========================================================================
+;; WHY3
+;; ===========================================================================
+
 (require 'why3)
 
 ;; ===========================================================================
