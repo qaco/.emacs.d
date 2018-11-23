@@ -334,42 +334,36 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'why3)
 
 ;; ===========================================================================
-;; SCALA
+;; LAYOUTS
 ;; ===========================================================================
 
-(defun my-sbt-layout ()
+(defun my-ide-layout()
   (interactive)
-
   (set-frame-parameter nil 'fullscreen 'maximized)
-  
   (delete-other-windows)
-  
-  (split-window-vertically)
-  
+
   (split-window-horizontally)
-  (balance-windows)
-  
-  (buf-move-right)
-  (windmove-left)
-  (projectile-dired)
   (window-resize (selected-window)
                  (-(* 3 (/ (window-width) 4)))
                  t)
-  
+
   (windmove-right)
+  (split-window-vertically)
   (split-window-horizontally)
-  
+
   (windmove-down)
-  (sbt-start)
   (window-resize (selected-window)
                  (- (/ (window-height) 2)))
-
   (split-window-horizontally)
   (windmove-right)
-  (window-resize (selected-window)
-                 (-  (- (window-width) (window-width (other-window 3))))
-                 t)
-  (other-window 2)
+  (other-window 1))
+
+(defun my-sbt-layout()
+  (interactive)
+  (my-ide-layout)
+  (projectile-dired)
+  (other-window 3)
+  (sbt-start)
+  (other-window 1)
   (call-interactively 'ansi-term)
-  (other-window 2)
-  )
+  (other-window 1))
