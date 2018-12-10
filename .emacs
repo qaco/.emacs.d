@@ -180,10 +180,6 @@ point reaches the beginning or end of the buffer, stop there."
   (interactive)
   (find-file-other-window "~/.emacs.d/README.org"))
 
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
 (defun dired-mode-setup ()
   (dired-hide-details-mode 1)
   (defun dired-maybe-insert-subdir (&optional dirname switches)
