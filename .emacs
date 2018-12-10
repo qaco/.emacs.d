@@ -17,8 +17,7 @@
                      smex
                      magit
                      recentf
-                     sbt-mode
-                     projectile))
+                     sbt-mode))
 
 (unless package-archive-contents
   (package-refresh-contents))
@@ -332,38 +331,3 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ===========================================================================
 
 (require 'why3)
-
-;; ===========================================================================
-;; LAYOUTS
-;; ===========================================================================
-
-(defun my-ide-layout()
-  (interactive)
-  (set-frame-parameter nil 'fullscreen 'maximized)
-  (delete-other-windows)
-
-  (split-window-horizontally)
-  (window-resize (selected-window)
-                 (-(* 3 (/ (window-width) 4)))
-                 t)
-
-  (windmove-right)
-  (split-window-vertically)
-  (split-window-horizontally)
-
-  (windmove-down)
-  (window-resize (selected-window)
-                 (- (/ (window-height) 2)))
-  (split-window-horizontally)
-  (windmove-right)
-  (other-window 1))
-
-(defun my-sbt-layout()
-  (interactive)
-  (my-ide-layout)
-  (projectile-dired)
-  (other-window 3)
-  (sbt-start)
-  (other-window 1)
-  (call-interactively 'ansi-term)
-  (other-window 1))
