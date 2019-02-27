@@ -317,8 +317,8 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ===========================================================================
 
 (setq auto-mode-alist (cons '("\\.lus$" . lustre-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.ept" . heptagon-mode) auto-mode-alist))
 (autoload 'lustre-mode "lustre" "Edition de code lustre" t)
+(setq auto-mode-alist (cons '("\\.ept" . heptagon-mode) auto-mode-alist))
 (load "~/.emacs.d/elisp/heptagon.el")
 (require 'heptagon-mode)
 
@@ -327,3 +327,25 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ===========================================================================
 
 (require 'why3)
+;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+;; ## end of OPAM user-setup addition for emacs / base ## keep this line
+
+
+
+
+
+(setenv "PATH" (concat (getenv "PATH") ":~/.cargo/bin"))
+(setq exec-path (append exec-path '("~/.cargo/bin")))
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(add-hook 'rust-mode-hook 'flycheck-mode)
+
+
+
+(setq auto-mode-alist (cons '("\\.fx" . fopix-mode) auto-mode-alist))
+(load "~/.emacs.d/elisp/fopix.el")
+(require 'fopix-mode)
+(setq auto-mode-alist (cons '("\\.k" . javix-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.j" . javix-mode) auto-mode-alist))
+(load "~/.emacs.d/elisp/javix.el")
+(require 'javix-mode)
