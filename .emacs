@@ -157,6 +157,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;; EXPLORATEUR
 ;; ===========================================================================
 
+(setq revert-without-query '(".*"))    ; revert sans prompt
 (ido-mode 1)                                      ; active ido
 (ido-vertical-mode 1)                             ; disposition verticale
 
