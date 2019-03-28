@@ -280,10 +280,26 @@ point reaches the beginning or end of the buffer, stop there."
 ;; OCAML
 ;; ===========================================================================
 (require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
-(setq tuareg-indent-align-with-first-arg t)
 
-(setq tuareg-prettify-symbols-full t)
-
+(setq tuareg-indent-align-with-first-arg t
+      tuareg-match-patterns-aligned 1
+      tuareg-prettify-symbols-basic-alist
+      `(("'a" . ?α)
+        ("'b" . ?β)
+        ("'c" . ?γ)
+        ("'d" . ?δ)
+        ("'e" . ?ε)
+        ("'f" . ?φ)
+        ("'i" . ?ι)
+        ("'k" . ?κ)
+        ("'m" . ?μ)
+        ("'n" . ?ν)
+        ("'o" . ?ω)
+        ("'p" . ?π)
+        ("'r" . ?ρ)
+        ("'s" . ?σ)
+        ("'t" . ?τ)
+        ("'x" . ?ξ)))
 (add-hook
  'tuareg-mode-hook
  (lambda()
