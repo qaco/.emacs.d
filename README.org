@@ -7,7 +7,7 @@ recompile                           f2
 flycheck                            C-f2 
 next-error                          f3   
 flycheck-next-error                 C-f3 
-make clean                          f4   
+revert-buffer                       f4   
                                          
 split-horizontally                  f5   
 regle                               C-f5 
@@ -50,7 +50,8 @@ ligne                    C-p/C-n
 fin/début de ligne       C-a/C-e    
 fin/début de fonction    C-M-a/C-M-e
 écran suivant/précédent  C-v/M-v    
-goto-line                C-l        
+centrer le curseur       C-l
+curseur en haut          M-r
 scroll other window      M-C-V/M-C-v
 select other window      S-<arrow>
 rechercher               C-s/C-r
@@ -90,6 +91,7 @@ supprimer mot                        M-DEL/M-d
 kill phrase                          M-k      
 kill sexp                            C-M-k    
 naviguer kill-ring                   M-y
+historique du kill ring M-y
 
 *** Marquer 
 

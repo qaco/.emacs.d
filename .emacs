@@ -115,7 +115,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 (global-set-key (kbd "C-a") 'smarter-move-beginning-of-line)
 ;; (global-set-key (kbd "C-c SPC") 'ace-jump-word-mode)
-(global-set-key (kbd "C-l") 'goto-line)
+;; (global-set-key (kbd "C-l") 'goto-line)
 
 ;; ===========================================================================
 ;; FENETRES
@@ -157,6 +157,10 @@ point reaches the beginning or end of the buffer, stop there."
 ;; EXPLORATEUR
 ;; ===========================================================================
 
+(setq browse-url-browser-function                 ; firefox browser par défaut
+      'browse-url-firefox)
+
+(setq vc-follow-symlinks nil)                     ; suit les liens symboliques
 (setq revert-without-query '(".*"))               ; revert sans prompt
 (ido-mode 1)                                      ; active ido
 (ido-vertical-mode 1)                             ; disposition verticale
@@ -241,6 +245,7 @@ point reaches the beginning or end of the buffer, stop there."
       (comment-region (line-beginning-position)
                       (line-end-position)))))
 
+(global-set-key (kbd "C-x <down>") 'reverse-region)
 (global-set-key (kbd "C-w") 'kill-region-or-line)
 (global-set-key (kbd "M-w") 'copy-region-or-line)
 (global-set-key (kbd "M-_") 'undo-only)
@@ -274,18 +279,21 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ===========================================================================
 ;; OCAML
 ;; ===========================================================================
-
-(let ((opam-share (ignore-errors
-                    (car (process-lines "opam" "config" "var" "share")))))
-  (when (and opam-share (file-directory-p opam-share))
-  (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
-  (autoload 'merlin-mode "merlin" nil t nil)
-  (add-hook 'tuareg-mode-hook 'merlin-mode t)
-  (add-hook 'caml-mode-hook 'merlin-mode t)))
-
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
 (setq tuareg-indent-align-with-first-arg t)
 
-(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+(setq tuareg-prettify-symbols-full t)
+
+(add-hook
+ 'tuareg-mode-hook
+ (lambda()
+   (when (functionp 'prettify-symbols-mode)
+       (prettify-symbols-mode))
+   ))
+
+(setq auto-mode-alist (cons '("\\.mly" . menhir-mode) auto-mode-alist))
+(load "~/.emacs.d/elisp/menhir.el")
+(require 'menhir-mode)
 
 ;; ===========================================================================
 ;; ANSI-TERM
@@ -323,7 +331,3 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ===========================================================================
 ;; TMP
 ;; ===========================================================================
-
-(setq auto-mode-alist (cons '("\\.mly" . menhir-mode) auto-mode-alist))
-(load "~/.emacs.d/elisp/menhir.el")
-(require 'menhir-mode)
