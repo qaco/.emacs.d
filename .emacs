@@ -28,6 +28,7 @@
 (setq load-path (append load-path '("~/.emacs.d/elisp")))
 (require 'fill-column-indicator)
 (require 'buffer-move)
+(require 'auto-close-shell)
 (require 'recentf)
 (require 'opam-user-setup)
 (require 'menhir-mode)
@@ -334,7 +335,6 @@ point reaches the beginning or end of the buffer, stop there."
                     :inherit font-lock-variable-name-face
                     :bold t)
 
-(require 'auto-close-shell)
 ;; Préfixe C-u pour en créer un nouveau
 (global-set-key (kbd "C-x C-x") 'auto-close-shell)
 
