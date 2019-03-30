@@ -227,22 +227,22 @@ point reaches the beginning or end of the buffer, stop there."
   (newline-and-indent)
   )
 
-(defun current-line-empty-p ()
-  (save-excursion
-    (beginning-of-line)
-    (looking-at "[[:space:]]*$")))
-
 (defun smarter-kill-line ()
   (interactive)
   (if (looking-at "[[:space:]]*$")
       (delete-region (point) (+ 1 (line-end-position)))
     (kill-line)))
 
+(defun current-line-empty-p ()
+  (save-excursion
+    (beginning-of-line)
+    (looking-at "[[:space:]]*$")))
+
 (defun smarter-kill-whole-line ()
   (interactive)
   (if (current-line-empty-p)
       (progn
-        (call-interactively 'smarter-move-beginning-of-line)
+        (beginning-of-line)
         (smarter-kill-line))
     (delete-indentation)
     (kill-line)
