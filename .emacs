@@ -221,6 +221,12 @@ point reaches the beginning or end of the buffer, stop there."
 
 (delete-selection-mode t)                         ; overwrite region
 
+(defun newline-above ()
+  (interactive)
+  (end-of-line 0)
+  (newline-and-indent)
+  )
+
 (defun current-line-empty-p ()
   (save-excursion
     (beginning-of-line)
@@ -245,12 +251,6 @@ point reaches the beginning or end of the buffer, stop there."
 
 (advice-add 'kill-whole-line :override #'smarter-kill-whole-line)
 
-(defun newline-above ()
-  (interactive)
-  (end-of-line 0)
-  (newline-and-indent)
-  )
-
 (defun kill-region-or-line ()
   (interactive)
   (if mark-active
@@ -268,8 +268,8 @@ point reaches the beginning or end of the buffer, stop there."
 
 (advice-add 'comment-region :before #'copy-region-as-kill)
 
-(global-set-key (kbd "C-k") 'smarter-kill-line)
 (global-set-key (kbd "C-<return>") 'newline-above)
+(global-set-key (kbd "C-k") 'smarter-kill-line)
 (global-set-key (kbd "C-x <down>") 'reverse-region)
 (global-set-key (kbd "C-w") 'kill-region-or-line)
 (global-set-key (kbd "M-w") 'copy-region-or-line)
