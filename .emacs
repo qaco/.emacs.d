@@ -226,12 +226,24 @@ point reaches the beginning or end of the buffer, stop there."
     (beginning-of-line)
     (looking-at "[[:space:]]*$")))
 
+(defun ruthlessly-kill-line ()
+  "Deletes a line, but does not put it in the kill-ring. (kinda)"
+  (interactive)
+  (call-interactively 'kill-line)
+  (setq kill-ring (cdr kill-ring)))
+
+(defun smarter-kill-line ()
+  (interactive)
+  (if (looking-at "[[:space:]]*$")
+      (call-interactively 'ruthlessly-kill-line)
+    (call-interactively 'kill-line)))
+
 (defun smarter-kill-whole-line ()
   (interactive)
   (if (current-line-empty-p)
       (progn
         (call-interactively 'move-beginning-of-line)
-        (call-interactively 'kill-line))
+        (call-interactively 'smarter-kill-line))
     (call-interactively 'delete-indentation)
     (call-interactively 'kill-line)
     (call-interactively 'next-line)
@@ -262,6 +274,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 (advice-add 'comment-region :before #'copy-region-as-kill)
 
+(global-set-key (kbd "C-k") 'smarter-kill-line)
 (global-set-key (kbd "C-<return>") 'newline-above)
 (global-set-key (kbd "C-x <down>") 'reverse-region)
 (global-set-key (kbd "C-w") 'kill-region-or-line)
