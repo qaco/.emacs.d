@@ -129,7 +129,30 @@
 
 (setq case-fold-search t)                         ; search ignore la casse
 
-(global-set-key (kbd "C-a") 'back-to-indentation)
+(defun smarter-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.
+
+Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.
+
+If ARG is not nil or 1, move forward ARG - 1 lines first.  If
+point reaches the beginning or end of the buffer, stop there."
+  (interactive "^p")
+  (setq arg (or arg 1))
+
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
+
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+
+(global-set-key (kbd "C-a") 'smarter-move-beginning-of-line)
 
 ;; ===========================================================================
 ;; FENETRES
@@ -152,7 +175,7 @@
 (global-set-key (kbd "<C-S-down>")   'buf-move-down)
 (global-set-key (kbd "<C-S-left>")   'buf-move-left)
 (global-set-key (kbd "<C-S-right>")  'buf-move-right)
-(global-set-key (kbd "C-x C-k")  'kill-current-buffer)
+(global-set-key (kbd "C-x k")  'kill-current-buffer)
 
 ;; ===========================================================================
 ;; EXPLORATEUR
@@ -233,7 +256,7 @@
       (call-interactively 'copy-region-as-kill)
     (save-excursion
       (progn
-        (call-interactively 'back-to-indentation)
+        (call-interactively 'smarter-move-beginning-of-line)
         (kill-ring-save (point) (line-end-position))))))
 
 (advice-add 'comment-region :before #'copy-region-as-kill)
@@ -313,33 +336,9 @@
                     :inherit font-lock-variable-name-face
                     :bold t)
 
-;; ansi-term lance automatiquement bash
-(defvar my-term-shell "/bin/bash")
-(defadvice ansi-term (before force-bash)
-  (interactive (list my-term-shell)))
-(ad-activate 'ansi-term)
-
-(defun my-term-hook ()
-  (goto-address-mode) ; URL cliquables
-  (define-key term-raw-map (kbd "C-y") 'term-paste)
-  (define-key term-raw-map (kbd "C-i") 'term-line-mode)
-  (define-key term-mode-map (kbd "C-:") 'term-char-mode)
-  )
-
-(add-hook 'term-mode-hook 'my-term-hook)
-
-(defun my-term-exec-hook ()
-  (let* ((buff (current-buffer))
-         (proc (get-buffer-process buff)))
-    (set-process-sentinel
-     proc
-     `(lambda (process event)
-        (if (string= event "finished\n")
-            (kill-buffer ,buff))))))
-
-(add-hook 'term-exec-hook 'my-term-exec-hook)
-
-(global-set-key (kbd "C-x C-x") 'ansi-term)
+;; Préfixe C-u pour en créer un nouveau
+(global-set-key (kbd "C-x t") 'multishell-pop-to-shell)
+(global-set-key (kbd "M-t") 'multishell-list)
 
 ;; ===========================================================================
 ;; PRINT
