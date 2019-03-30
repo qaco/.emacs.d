@@ -226,27 +226,21 @@ point reaches the beginning or end of the buffer, stop there."
     (beginning-of-line)
     (looking-at "[[:space:]]*$")))
 
-(defun ruthlessly-kill-line ()
-  "Deletes a line, but does not put it in the kill-ring. (kinda)"
-  (interactive)
-  (call-interactively 'kill-line)
-  (setq kill-ring (cdr kill-ring)))
-
 (defun smarter-kill-line ()
   (interactive)
   (if (looking-at "[[:space:]]*$")
-      (call-interactively 'ruthlessly-kill-line)
-    (call-interactively 'kill-line)))
+      (delete-region (point) (+ 1 (line-end-position)))
+    (kill-line)))
 
 (defun smarter-kill-whole-line ()
   (interactive)
   (if (current-line-empty-p)
       (progn
-        (call-interactively 'move-beginning-of-line)
-        (call-interactively 'smarter-kill-line))
-    (call-interactively 'delete-indentation)
-    (call-interactively 'kill-line)
-    (call-interactively 'next-line)
+        (call-interactively 'smarter-move-beginning-of-line)
+        (smarter-kill-line))
+    (delete-indentation)
+    (kill-line)
+    (next-line)
     (call-interactively 'smarter-move-beginning-of-line)))
 
 (advice-add 'kill-whole-line :override #'smarter-kill-whole-line)
@@ -260,13 +254,13 @@ point reaches the beginning or end of the buffer, stop there."
 (defun kill-region-or-line ()
   (interactive)
   (if mark-active
-      (call-interactively 'kill-region)
-    (call-interactively 'kill-whole-line)))
+      (kill-region (mark) (point))
+    (kill-whole-line)))
 
 (defun copy-region-or-line ()
   (interactive)
   (if mark-active
-      (call-interactively 'copy-region-as-kill)
+      (copy-region-as-kill (mark) (point))
     (save-excursion
       (progn
         (call-interactively 'smarter-move-beginning-of-line)
