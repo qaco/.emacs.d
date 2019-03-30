@@ -336,9 +336,9 @@ point reaches the beginning or end of the buffer, stop there."
                     :inherit font-lock-variable-name-face
                     :bold t)
 
+(require 'auto-close-shell)
 ;; Préfixe C-u pour en créer un nouveau
-(global-set-key (kbd "C-x t") 'multishell-pop-to-shell)
-(global-set-key (kbd "M-t") 'multishell-list)
+(global-set-key (kbd "C-x C-x") 'auto-close-shell)
 
 ;; ===========================================================================
 ;; PRINT
