@@ -170,8 +170,6 @@ point reaches the beginning or end of the buffer, stop there."
 (windmove-default-keybindings)                    ; S-<arrow> navig fenetres
 (global-set-key (kbd "<f5>") 'split-window-horizontally)
 (global-set-key (kbd "<f6>") 'split-window-vertically)
-(global-set-key (kbd "<f7>") 'delete-other-windows)
-(global-set-key (kbd "<f8>") 'delete-window)
 (global-set-key (kbd "<C-S-up>")     'buf-move-up)
 (global-set-key (kbd "<C-S-down>")   'buf-move-down)
 (global-set-key (kbd "<C-S-left>")   'buf-move-left)
@@ -205,14 +203,9 @@ point reaches the beginning or end of the buffer, stop there."
       (message "Opening file...")
     (message "Aborting")))
 
-(defun open-home-doc ()
-  (interactive)
-  (find-file-other-window "~/.emacs.d/README.org"))
-
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "C-h h") 'open-home-doc)
 (global-set-key (kbd "<f4>") 'revert-buffer)
 
 ;; ===========================================================================
@@ -224,8 +217,7 @@ point reaches the beginning or end of the buffer, stop there."
 (defun newline-above ()
   (interactive)
   (end-of-line 0)
-  (newline-and-indent)
-  )
+  (newline-and-indent))
 
 (defun smarter-kill-line ()
   (interactive)
@@ -274,7 +266,6 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "C-w") 'kill-region-or-line)
 (global-set-key (kbd "M-w") 'copy-region-or-line)
 (global-set-key (kbd "M-_") 'undo-only)
-(global-set-key (kbd "C-=") 'er/expand-region)
 (global-set-key (kbd "C-:") 'dabbrev-expand)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
@@ -287,11 +278,6 @@ point reaches the beginning or end of the buffer, stop there."
   "Change the compile command without compiling."
   (interactive "sNew compile command: ")
   (setq compile-command nveau))
-
-(defun clean()
-  "Launch make clean from the current directory."
-  (interactive)
-  (shell-command "make clean"))
 
 (global-set-key (kbd "<f1>") 'compile)
 (global-set-key (kbd "C-<f1>") 'new-compile-cmd)
