@@ -234,7 +234,7 @@ point reaches the beginning or end of the buffer, stop there."
     (call-interactively 'delete-indentation)
     (call-interactively 'kill-line)
     (call-interactively 'next-line)
-    (call-interactively 'back-to-line)))
+    (call-interactively 'smarter-move-beginning-of-line)))
 
 (advice-add 'kill-whole-line :override #'smarter-kill-whole-line)
 
@@ -288,9 +288,7 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key (kbd "<f1>") 'compile)
 (global-set-key (kbd "C-<f1>") 'new-compile-cmd)
 (global-set-key (kbd "<f2>") 'recompile)
-(global-set-key (kbd "C-<f2>") 'global-flycheck-mode)
 (global-set-key (kbd "<f3>") 'next-error)
-(global-set-key (kbd "C-<f3>") 'flycheck-next-error)
 
 ;; ===========================================================================
 ;; OCAML
