@@ -22,13 +22,9 @@
   (setq font-lock-defaults
         '(menhir-font-lock-keywords t)))
 
-(if window-system
-    (progn
-	(add-hook 'menhir-mode-hook
-		  'turn-on-font-lock)
-	(add-hook 'menhir-mode-hook
-		  'menhir-font-mode)
-        (setq font-lock-maximum-decoration t)))
+(add-hook 'menhir-mode-hook 'turn-on-font-lock)
+(add-hook 'menhir-mode-hook 'menhir-font-mode)
+(setq font-lock-maximum-decoration t)
 
 (defun menhir-mode ()
   "Major mode for editing Menhir files"
@@ -37,5 +33,7 @@
   (setq major-mode 'menhir-mode)
   (setq mode-name "Menhir")
   (run-hooks 'menhir-mode-hook))
+          
+(setq auto-mode-alist (cons '("\\.mly" . menhir-mode) auto-mode-alist))
 
 (provide 'menhir-mode)
