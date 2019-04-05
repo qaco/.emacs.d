@@ -67,11 +67,7 @@ char (and doesn't save anything if blank.)"
 					       ; something above :
 	     (next-line))))                    ; back to next line
 
-    (if (<= former-column                      ; restore column
-	    (- (line-end-position)
-	       (line-beginning-position)))
-	(move-to-column former-column)
-      (end-of-line))))
+    (move-to-column former-column)))           ; restore column
 
 (defun kill-region-or-line ()
 
