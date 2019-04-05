@@ -19,4 +19,9 @@
           (delq (current-buffer) 
                 (remove-if-not 'buffer-file-name (buffer-list)))))
 
+(defun yank-indented ()
+  (interactive)
+  (yank)
+  (indent-region (mark) (point)))
+
 (provide 'extra-commands)

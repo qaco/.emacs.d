@@ -40,32 +40,39 @@ if empty."
       (smarter-kill-whitespaces)
     (kill-line)))
 
+;; Todo : restore column
 (defun smarter-kill-whole-line ()
 
-  "Kills the current line preserving indentation. Point goes at beginning of 
-the next line. Doesn't save newline char (and doesn't save anything if
-blank.)"
+  "Kills the current line preserving column position. Doesn't save newline
+char (and doesn't save anything if blank.)"
   
   (interactive)
 
-  (beginning-of-line)
-  
-  (if (looking-at "[[:space:]]*$") ; empty line :
-      (smarter-kill-whitespaces)   ; just kill it
+  (let ((former-column (current-column)))      ; save column
     
-				   ; real line :  
-    (delete-indentation)           ; join to above & del whitespaces
-    (delete-forward-char 1 nil)    ; del last whitespace
-    (kill-line)                    ; regular kill
+    (beginning-of-line)
     
-    (if (= (point) 1)              ; nothing above :
-	(smarter-kill-whitespaces) ; achieve it
-      
-				   ; something above :
-      (next-line)                  ; back to next line
-      (beginning-of-line)))
-  
-  (indent-according-to-mode))      ; indent new position if needed
+    (cond ((looking-at "[[:space:]]*$")        ; blank line
+	   (smarter-kill-whitespaces))         ; just kill it
+
+	  ((= (line-end-position) (point-max)) ; last line
+	   (smarter-kill-line))                ; just kill it
+	  
+	  
+	  (t                                   ; any other line :  
+	   (delete-indentation)
+	   (delete-forward-char 1 nil)         ; del last whitespace
+	   (kill-line)                         ; regular kill
+	   (if (= (point) (point-min))         ; nothing above :
+	       (smarter-kill-whitespaces)      ; achieve it
+					       ; something above :
+	     (next-line))))                    ; back to next line
+
+    (if (<= former-column                      ; restore column
+	    (- (line-end-position)
+	       (line-beginning-position)))
+	(move-to-column former-column)
+      (end-of-line))))
 
 (defun kill-region-or-line ()
 
@@ -87,7 +94,8 @@ blank.)"
       (copy-region-as-kill (mark) (point))
     (save-excursion
       (progn
-        (call-interactively 'smarter-beginning-of-line)
+	(beginning-of-line)
+	(indent-for-tab-command)
         (kill-ring-save (point) (line-end-position))))))
 
 (provide 'smarter-edition)
