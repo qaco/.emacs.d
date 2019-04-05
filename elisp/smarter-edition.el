@@ -58,7 +58,6 @@ char (and doesn't save anything if blank.)"
 	  ((= (line-end-position) (point-max)) ; last line
 	   (smarter-kill-line))                ; just kill it
 	  
-	  
 	  (t                                   ; any other line :  
 	   (delete-indentation)                ; join to above, del spaces
 	   (delete-forward-char 1 nil)         ; del last whitespace
