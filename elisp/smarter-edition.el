@@ -60,7 +60,7 @@ char (and doesn't save anything if blank.)"
 	  
 	  
 	  (t                                   ; any other line :  
-	   (delete-indentation)
+	   (delete-indentation)                ; joint to above, del spaces
 	   (delete-forward-char 1 nil)         ; del last whitespace
 	   (kill-line)                         ; regular kill
 	   (if (= (point) (point-min))         ; nothing above :
