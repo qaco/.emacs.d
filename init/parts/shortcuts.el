@@ -12,6 +12,7 @@
 
 ;; edit
 
+(global-set-key (kbd "C-y") 'yank-and-indent)
 (global-set-key (kbd "C-a") 'smarter-beginning-of-line)
 (global-set-key (kbd "C-<return>") 'newline-above)
 (global-set-key (kbd "C-k") 'smarter-kill-line)
