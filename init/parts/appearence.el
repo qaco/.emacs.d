@@ -29,6 +29,7 @@
 (add-to-list 'default-frame-alist '(height . 30)) ; hauteur par défaut
 (add-to-list 'default-frame-alist '(width . 81))  ; largeur par défaut
 (setq inhibit-startup-message t)                  ; cacher startup-message
+(setq initial-scratch-message nil)
 
 ;; whole window
 

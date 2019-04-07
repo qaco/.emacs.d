@@ -16,31 +16,21 @@ if empty."
 
 (defun smarter-kill-whole-line ()
 
-  "Kills the current line preserving column position. Doesn't save newline
-char (and doesn't save anything if blank.)"
+  "Kills the current line preserving column position. Doesn't save nor newline
+char nor indentation (doesn't save anything if blank line.)"
   
   (interactive)
 
-  (let ((former-column (current-column)))      ; save column
-    
+  (let ((former-column (current-column)))
+
+    (move-to-column (current-indentation))
+
+    (when (not (looking-at "[[:space:]]*$"))
+      (smarter-kill-line))
+
     (beginning-of-line)
-    
-    (cond ((looking-at "[[:space:]]*$")        ; blank line
-	   (smarter-kill-whitespaces))         ; just kill it
-
-	  ((= (line-end-position) (point-max)) ; last line
-	   (smarter-kill-line))                ; just kill it
-	  
-	  (t                                   ; any other line :  
-	   (delete-indentation)                ; join to above, del spaces
-	   (delete-forward-char 1 nil)         ; del last whitespace
-	   (kill-line)                         ; regular kill
-	   (if (= (point) (point-min))         ; nothing above :
-	       (smarter-kill-whitespaces)      ; achieve it
-					       ; something above :
-	     (next-line))))                    ; back to next line
-
-    (move-to-column former-column)))           ; restore column
+    (smarter-kill-whitespaces)
+    (move-to-column former-column)))
 
 (defun kill-region-or-line ()
 
@@ -60,10 +50,7 @@ char (and doesn't save anything if blank.)"
   
   (if mark-active
       (copy-region-as-kill (mark) (point))
-    (save-excursion
-      (progn
-	(beginning-of-line)
-	(indent-for-tab-command)
-        (kill-ring-save (point) (line-end-position))))))
+    (kill-ring-save (+ (line-beginning-position) (current-indentation))
+		    (line-end-position))))
 
 (provide 'smarter-edition)

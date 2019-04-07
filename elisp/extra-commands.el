@@ -45,7 +45,7 @@ point reaches the beginning or end of the buffer, stop there."
           (delq (current-buffer) 
                 (remove-if-not 'buffer-file-name (buffer-list)))))
 
-(defun yank-indented ()
+(defun yank-and-indent ()
   (interactive)
   (yank)
   (indent-region (mark) (point)))
