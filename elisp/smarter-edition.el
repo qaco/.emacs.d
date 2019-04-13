@@ -26,7 +26,7 @@ char nor indentation (doesn't save anything if blank line.)"
     (move-to-column (current-indentation))
 
     (when (not (looking-at "[[:space:]]*$"))
-      (smarter-kill-line))
+      (kill-line))
 
     (beginning-of-line)
     (smarter-kill-whitespaces)
