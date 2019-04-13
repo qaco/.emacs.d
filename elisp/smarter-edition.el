@@ -50,7 +50,9 @@ char nor indentation (doesn't save anything if blank line.)"
   
   (if mark-active
       (copy-region-as-kill (mark) (point))
-    (kill-ring-save (+ (line-beginning-position) (current-indentation))
-		    (line-end-position))))
+    (save-excursion
+      (progn
+	(move-to-column (current-indentation))
+	(kill-ring-save (point) (line-end-position))))))
 
 (provide 'smarter-edition)
