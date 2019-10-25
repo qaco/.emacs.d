@@ -1,6 +1,7 @@
 (load "~/.emacs.d/opam-user-setup.el")
 (require 'opam-user-setup)
 (require 'menhir-mode)
+(require 'heptagon-mode)
 
 (setq tuareg-indent-align-with-first-arg t
       tuareg-match-patterns-aligned 1
