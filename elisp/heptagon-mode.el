@@ -10,7 +10,7 @@
 	;; Commentaires
         ("(\\*\\(.\\|\n\\)*?\\*)" . font-lock-comment-face)
 	;; Mots-clés
-	("\\<\\(fun\\|node\\|let\\|tel\\|var\\|returns\\|const\\|type\\)\\>" . font-lock-keyword-face)
+	("\\<\\(open\\|fun\\|node\\|let\\|tel\\|var\\|returns\\|const\\|type\\)\\>" . font-lock-keyword-face)
 	;; Fonctions
 	("\\<\\(map\\|mapi\\|fold\\|foldi\\|mapfold\\)\\>" . font-lock-builtin-face)
 	("\\([a-zA-Z0-9_-]*\\)\\( \\|\n\\)*<<" 1 font-lock-function-name-face)
@@ -46,6 +46,8 @@
   "Major mode for editing Heptagon files"
   (interactive)
   (kill-all-local-variables)
+  (setq-local comment-start "(* ")
+  (setq-local comment-end " *)")
   (setq major-mode 'heptagon-mode)
   (setq mode-name "Heptagon")
   (run-hooks 'heptagon-mode-hook))
