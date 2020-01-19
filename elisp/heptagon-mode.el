@@ -60,13 +60,18 @@
 	      (prog2
 	     	  (goto-char (match-end 1))
 	     	  (get-next-indentation curr)))
+
+	     ((looking-at "\\([a-zA-Z0-9_]+ *: *[a-zA-Z0-9_]+ *\\)[}]")
+	      (prog2
+		  (goto-char (match-end 1))
+		  (get-next-indentation curr)))
 	     
-	     ((looking-at "\\<\\(let\\|fun\\|var\\)\\>")
+	     ((looking-at "\\<\\(let\\|fun\\|var\\|switch\\)\\>")
 	      (prog2
 		 (goto-char (match-end 1))
 		  (get-next-indentation (+ curr 2))))
 
-	     ((looking-at "\\(\\<*[a-zA-Z0-9_]+ *=\\|\\<if\\>.*\\|\\<const\\>.*=\\|:\\)")
+	     ((looking-at "\\(\\<*[a-zA-Z0-9_]+ *=\\|\\<if\\>.*\\|\\<const\\>.*=\\|:\\|| *[a-zA-Z0-9_]+ +do\\)")
 	      (prog2
 		 (goto-char (match-end 1))
 		 (get-next-indentation (+ curr 2))))
@@ -86,7 +91,7 @@
 		 (goto-char (match-end 1))
 		 (get-next-indentation (- curr 1))))
 	    
-	    ((looking-at "\\(tel\\|returns\\|;\\)")
+	    ((looking-at "\\(tel\\|returns\\|;\\|[}]\\)")
 	     (prog2
 		 (goto-char (match-end 1))
 		 (get-next-indentation (- curr 2))))
@@ -96,11 +101,6 @@
 		 (goto-char (match-end 1))
 		 (get-next-indentation (- curr 3))))
 
-	    ((looking-at "\\([}]\\)")
-	     (prog2
-		 (goto-char (match-end 1))
-		 (get-next-indentation (- curr 4))))
-	    
 	    (t
 	     (prog2
 	     	 (forward-char)
@@ -113,6 +113,9 @@
      
      ((looking-at "\\(tel\\|let\\|var\\|const\\|type\\|open\\|#\\)\\>")
       0)
+
+     ((looking-at "\\(| *[a-zA-Z0-9_]+ +do\\)")
+      (- curr 2))
      
      ((looking-at "\\<\\(then\\|else\\|end\\)\\>")
       (- curr 2))
