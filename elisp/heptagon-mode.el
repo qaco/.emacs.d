@@ -7,20 +7,26 @@
 
 (setq heptagon-font-lock-keywords
       '(
+	;; Comments
 	("(\\*.*" . font-lock-comment-face)
-	("\\(#include\\|#define\\|#ifndef\\|#endif\\|#if\\|#else\\|![a-zA-Z0-9_]*\\)\\>" . font-lock-keyword-face)
+	;; Preprocessors
+	("\\(![a-zA-Z0-9_]*\\)\\>" . font-lock-keyword-face)
+	("\\(#include\\|#define\\|#ifndef\\|#endif\\|#if\\|#else\\)\\>" . font-lock-keyword-face)
 	("#define \\([a-zA-Z0-9_]*\\)" 1 font-lock-variable-name-face)
 	("#ifndef \\([a-zA-Z0-9_]*\\)" 1 font-lock-variable-name-face)
 	("![a-zA-Z0-9_]* +\\([a-zA-Z0-9_]*\\)" 1 font-lock-variable-name-face)
+	;; Keywords
 	("\\<\\(open\\|fun\\|node\\|let\\|tel\\|var\\|returns\\)\\>" . font-lock-keyword-face)
 	("\\<\\(const\\|type\\|if\\|then\\|else\\|end\\|switch\\|do\\)\\>" . font-lock-keyword-face)
+	;; Functions
 	("\\<\\(map\\|mapi\\|fold\\|foldi\\|mapfold\\)\\>" . font-lock-builtin-face)
+	("\\<\\(fby\\|pre\\|->\\|and\\|or\\)\\>" . font-lock-builtin-face)
+	("\\<\\(when\\|whenot\\|merge\\)\\>" . font-lock-builtin-face)
 	("\\([a-zA-Z0-9_]*\\)\\( \\|\\\n\\)*<<" 1 font-lock-function-name-face)
 	("\\([a-zA-Z0-9_]*\\)\\( \\|\\\n\\)*([^\\*]" 1 font-lock-function-name-face)
         ("fun *\\([a-zA-Z0-9_]*\\) *" 1 font-lock-function-name-face)
 	("node *\\([a-zA-Z0-9_]*\\) *" 1 font-lock-function-name-face)
-	("\\<\\(fby\\|pre\\|->\\|and\\|or\\)\\>" . font-lock-builtin-face)
-	("\\<\\(when\\|whenot\\|merge\\)\\>" . font-lock-builtin-face)
+	;; Variables
         ("\\<\\([a-zA-Z0-9_]*\\) *:" 1 font-lock-variable-name-face)
 	(": *\\([a-zA-Z0-9_\\^ ]*\\)" 1 font-lock-type-face)
 	("\\<type +\\([a-zA-Z0-9_]*\\) *" 1 font-lock-type-face)
