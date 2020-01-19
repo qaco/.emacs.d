@@ -19,14 +19,21 @@
 
 ;; format
 
-(setq-default fill-column 80                  ; largeur de page : 80 char
+(setq-default fill-column 70                  ; largeur de page : 80 char
               word-wrap t)                    ; coupe après le mot
+
+(global-visual-line-mode t)
 (setq indent-tabs-mode nil)
 
 ;; edition/navigation
 
 (delete-selection-mode t)                     ; overwrite region
 (setq case-fold-search t)                     ; search ignore la casse
+
+;;
+
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
 
 ;; advices
 
