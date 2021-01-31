@@ -69,7 +69,7 @@
          " "
          mode-line-buffer-identification          ; le nom du buffer
          "    "
-         "%p of %I (%l,%c)"                       ; position
+         "%l,%c (%p)"                       ; position
          "    "
          "%m"                                     ; major mode
          minor-mode-alist                         ; minor modes

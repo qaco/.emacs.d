@@ -14,3 +14,17 @@
 (require 'filesystem)
 (require 'my-caml)
 (require 'shortcuts)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (modern-cpp-font-lock smex scala-mode sbt-mode rust-mode projectile markdown-mode+ magit ido-vertical-mode go-mode flycheck-rust feature-mode dockerfile-mode dired-subtree buffer-move base16-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

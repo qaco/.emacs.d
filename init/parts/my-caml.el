@@ -2,6 +2,7 @@
 (require 'opam-user-setup)
 (require 'menhir-mode)
 (require 'heptagon-mode)
+(require 'mlir-mode)
 
 (setq tuareg-indent-align-with-first-arg t
       tuareg-match-patterns-aligned 1
@@ -29,5 +30,13 @@
      (prettify-symbols-mode))
    (setq mode-name "🐫")
    ))
+
+(require 'modern-cpp-font-lock)
+(modern-c++-font-lock-global-mode t)
+
+(defun llvm-cout ()
+  (interactive)
+  (insert "std::error_code err;\n")
+  (insert "llvm::raw_fd_ostream stream(\"/dev/stdout\", err);\n"))
 
 (provide 'my-caml)

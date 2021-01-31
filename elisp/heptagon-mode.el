@@ -111,7 +111,7 @@
   (save-excursion
     (cond
      
-     ((looking-at "\\(tel\\|let\\|var\\|const\\|type\\|open\\|#\\)\\>")
+     ((looking-at "\\(tel\\|let\\|var\\|const\\|type\\|open\\|#\\|returns\\)\\>")
       0)
 
      ((looking-at "\\(| *[a-zA-Z0-9_]+ +do\\)")

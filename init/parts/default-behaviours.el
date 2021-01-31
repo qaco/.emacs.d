@@ -19,7 +19,7 @@
 
 ;; format
 
-(setq-default fill-column 70                  ; largeur de page : 80 char
+(setq-default fill-column 79                  ; largeur de page : 80 char
               word-wrap t)                    ; coupe après le mot
 
 (global-visual-line-mode t)
