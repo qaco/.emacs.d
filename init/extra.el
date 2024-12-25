@@ -1,17 +1,3 @@
-(add-to-list
- 'package-archives
- '("melpa-stable" . "https://stable.melpa.org/packages/")
- t)
-(setq package-install-upgrade-built-in t)
-(package-initialize)
-
-(add-to-list 'display-buffer-alist
-             '("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
-               (display-buffer-no-window)
-               (allow-no-window . t)))
-
-(setq package-archive-enable-alist nil)
-
 ;; Elisp primitives
 
 (use-package seq
