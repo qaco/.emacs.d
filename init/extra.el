@@ -58,9 +58,6 @@
 ;; System
 
 ;; Require the installation of xclip system-wide
-(use-package clipetty
-  :ensure t
-  :hook (after-init . global-clipetty-mode))
 (use-package xclip
   :ensure t
   :config
