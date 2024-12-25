@@ -118,11 +118,15 @@
 
 (add-hook 'python-mode-hook 'my/python-mode-setup)
 
-(use-package highlight-indentation
+;; (use-package highlight-indentation
+;;   :ensure t
+;;   :config
+;;   (setq highlight-indentation-blank-lines t)
+;;   :hook (prog-mode . highlight-indentation-mode))
+
+(use-package indent-guide
   :ensure t
-  :config
-  (setq highlight-indentation-blank-lines t)
-  :hook (prog-mode . highlight-indentation-mode))
+  :hook (prog-mode . indent-guide-mode))
 
 (use-package rainbow-delimiters
   :ensure t
