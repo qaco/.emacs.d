@@ -63,13 +63,6 @@
   :config
   (xclip-mode 1))
 
-;; Doc
-;; Show descriptions in fido
-;; (use-package marginalia
-;;   :ensure t
-;;   :config
-;;   (marginalia-mode))
-
 (use-package free-keys
   :ensure t
   :commands free-keys)
