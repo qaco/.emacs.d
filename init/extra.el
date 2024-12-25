@@ -88,14 +88,6 @@
 
 ;; Programmation specific
 
-(defun my/python-mode-setup ()
-  "Custom configurations for python-mode."
-  (setq-local eldoc-echo-area-use-multiline-p 1)
-  (setq-local electric-indent-mode -1)
-  (local-set-key (kbd "TAB") 'indent-for-tab-command))
-
-(add-hook 'python-mode-hook 'my/python-mode-setup)
-
 (use-package eglot
   :ensure t
   :hook
@@ -107,10 +99,24 @@
 
 (use-package lsp-pyright
   :ensure t
-  :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp))))  ; or lsp-deferred
+  :config
+  (setq lsp-pyright-langserver-command "pyright"))
+
+(use-package lsp-ui
+  :ensure t
+  :config
+  (setq lsp-ui-doc-show-with-mouse nil))
+
+(defun my/python-mode-setup ()
+  "Custom configurations for python-mode."
+  (require 'lsp-pyright)
+  (lsp-deferred)
+  (setq-local eldoc-echo-area-use-multiline-p 1)
+  ;; (setq-local electric-indent-mode -1)
+  (setq-local lsp-pyright-venv-path (pyright--locate-python-venv))
+  (local-set-key (kbd "TAB") 'indent-for-tab-command))
+
+(add-hook 'python-mode-hook 'my/python-mode-setup)
 
 (use-package highlight-indentation
   :ensure t
