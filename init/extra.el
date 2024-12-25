@@ -90,12 +90,12 @@
 
 (defun my/python-mode-setup ()
   "Custom configurations for python-mode."
+  (setq-local eldoc-echo-area-use-multiline-p 1)
+  (setq-local electric-indent-mode -1)
   (local-set-key (kbd "TAB") 'indent-for-tab-command))
 
 (add-hook 'python-mode-hook 'my/python-mode-setup)
 
-;; An LSP server should be installed system-wide for each concerned
-;; language
 (use-package eglot
   :ensure t
   :hook
@@ -104,6 +104,13 @@
 (use-package company
   :ensure t
   :hook (python-mode . company-mode))
+
+(use-package lsp-pyright
+  :ensure t
+  :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
 
 (use-package highlight-indentation
   :ensure t
