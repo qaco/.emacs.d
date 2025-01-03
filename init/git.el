@@ -38,6 +38,13 @@
 (global-set-key (kbd "C-x v C") 'my-git-amend)
 (global-set-key (kbd "C-x v p") 'my-git-push)
 (global-set-key (kbd "C-x v H") 'my-git-stage-hunks)
+(global-set-key (kbd "C-x v d") 'my-git-gutter-popup-hunk)
+
+(defun my-git-gutter-popup-hunk()
+  (interactive)
+  (let ((popup-window (git-gutter:popup-hunk)))
+    (when popup-window
+      (select-window popup-window))))
 
 (defun my-stage-hunks ()
   "Stage hunks one by one until there are no more hunks to stage.
