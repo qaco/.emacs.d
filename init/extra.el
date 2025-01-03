@@ -43,6 +43,12 @@
 
 ;; System
 
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :init
+;;   (doom-modeline-mode 1)
+;;   (doom-modeline-icon nil))
+
 ;; Require the installation of xclip system-wide
 (use-package xclip
   :ensure t
@@ -83,23 +89,10 @@
   :ensure t
   :hook (python-mode . company-mode))
 
-(use-package lsp-pyright
-  :ensure t
-  :config
-  (setq lsp-pyright-langserver-command "pyright"))
-
-(use-package lsp-ui
-  :ensure t
-  :config
-  (setq lsp-ui-doc-show-with-mouse nil))
-
 (defun my/python-mode-setup ()
   "Custom configurations for python-mode."
-  (require 'lsp-pyright)
-  (lsp-deferred)
   (setq-local eldoc-echo-area-use-multiline-p 1)
-  ;; (setq-local electric-indent-mode -1)
-  (setq-local lsp-pyright-venv-path (pyright--locate-python-venv))
+  ;; (setq-local lsp-pyright-venv-path (pyright--locate-python-venv))
   (local-set-key (kbd "TAB") 'indent-for-tab-command))
 
 (add-hook 'python-mode-hook 'my/python-mode-setup)
