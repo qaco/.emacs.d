@@ -43,11 +43,11 @@
 
 ;; System
 
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :init
-;;   (doom-modeline-mode 1)
-;;   (doom-modeline-icon nil))
+(use-package doom-modeline
+  :ensure t
+  :init
+  (doom-modeline-mode 1)
+  (setq doom-modeline-icon nil))
 
 ;; Require the installation of xclip system-wide
 (use-package xclip
