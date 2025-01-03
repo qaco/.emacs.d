@@ -87,6 +87,8 @@
 
 (use-package company
   :ensure t
+  :config (setq company-idle-delay nil)
+  :bind (("M-TAB" . company-complete))
   :hook (python-mode . company-mode))
 
 (defun my/python-mode-setup ()
