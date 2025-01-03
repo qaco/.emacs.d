@@ -4,7 +4,7 @@
 (use-package multi-vterm
   :ensure t
   :bind
-  ("C-c s" . multi-vterm))
+  ("C-x t" . multi-vterm))
 
 (add-hook 'vterm-mode-hook
           (lambda ()
