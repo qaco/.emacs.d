@@ -80,24 +80,11 @@
 
 ;; Programmation specific
 
-(use-package eglot
-  :ensure t
-  :hook
-  (python-mode . eglot-ensure))
-
 (use-package company
   :ensure t
   :config (setq company-idle-delay nil)
   :bind (("M-TAB" . company-complete))
   :hook (python-mode . company-mode))
-
-(defun my/python-mode-setup ()
-  "Custom configurations for python-mode."
-  (setq-local eldoc-echo-area-use-multiline-p 1)
-  ;; (setq-local lsp-pyright-venv-path (pyright--locate-python-venv))
-  (local-set-key (kbd "TAB") 'indent-for-tab-command))
-
-(add-hook 'python-mode-hook 'my/python-mode-setup)
 
 ;; (use-package highlight-indentation
 ;;   :ensure t

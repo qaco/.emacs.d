@@ -58,11 +58,17 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
+(add-hook 'prog-mode-hook 'my/prog-mode-setup)
+
+(defun my/prog-mode-setup ()
+  "Custom configurations for prog-mode."
+  (eglot-ensure)
+  (setq-local eldoc-echo-area-use-multiline-p 1)
+  (local-set-key (kbd "TAB") 'indent-for-tab-command))
 
 ;; Theme
 
 (load-theme 'modus-vivendi t)
-
 
 ;; Functions
 
