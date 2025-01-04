@@ -15,12 +15,6 @@
   :ensure t
   :bind ("C-x C-r" . consult-recent-file))
 
-(use-package ibuffer
-  :ensure t
-  :bind ("C-x B" . ibuffer)
-  :config
-  (setq ibuffer-expert t))
-
 ;; Window management
 
 ;; C-x w <n>: go to window n (kill if negative)
