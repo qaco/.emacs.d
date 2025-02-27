@@ -11,7 +11,13 @@
             (define-key vterm-mode-map (kbd "C-<left>") 'windmove-left)
             (define-key vterm-mode-map (kbd "C-<right>") 'windmove-right)
             (define-key vterm-mode-map (kbd "C-<up>") 'windmove-up)
-            (define-key vterm-mode-map (kbd "C-<down>") 'windmove-down)))
+            (define-key vterm-mode-map (kbd "<deletechar>") (lambda () (interactive) (vterm-send-key "C-d")))
+            (define-key vterm-mode-map (kbd "C-<down>") 'windmove-down)
+            (vterm-send-string "EDITOR=vi;VISUAL=vi")
+            (vterm-send-return)
+            (vterm-send-string "clear")
+            (vterm-send-return)
+            ))
 
 (add-hook 'vterm-mode-hook
           (lambda ()
@@ -30,6 +36,6 @@
   (let ((default-directory (project-root (project-current t))))
     (multi-vterm)))
 
-(define-key project-prefix-map (kbd "s") 'project-vterm)
+(define-key project-prefix-map (kbd "t") 'project-vterm)
 
 (provide 'console)
