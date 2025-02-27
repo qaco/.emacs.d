@@ -58,13 +58,17 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
-(add-hook 'prog-mode-hook 'my/prog-mode-setup)
+
+(add-hook 'python-mode-hook 'my/prog-mode-setup)
 
 (defun my/prog-mode-setup ()
   "Custom configurations for prog-mode."
   (eglot-ensure)
-  (setq-local eldoc-echo-area-use-multiline-p 1)
-  (local-set-key (kbd "TAB") 'indent-for-tab-command))
+  ;; (setq-local eldoc-echo-area-use-multiline-p 1)
+  (local-set-key (kbd "TAB") 'indent-for-tab-command)
+  (local-set-key (kbd "M-TAB") 'completion-at-point)
+  (local-set-key (kbd "M-/") 'eglot-rename)
+  )
 
 ;; Theme
 
@@ -198,6 +202,7 @@
 (global-set-key (kbd "M-w") #'(lambda() (interactive) (if mark-active
                                                           (copy-region-as-kill (mark) (point))
                                                         (wise-copy-line))))
+(global-set-key (kbd "M-TAB")   'dabbrev-expand)
 
 ;; navigation
 (global-set-key (kbd "C-a") 'smarter-beginning-of-line)
