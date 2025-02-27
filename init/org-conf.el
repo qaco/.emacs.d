@@ -1,9 +1,15 @@
 (use-package org
   :ensure t
+  :config
+  (setq org-highlight-latex-and-related '(native latex script entities))
+  (setq org-hide-emphasis-markers t)
   :bind ("C-x C-a t" . org-todo-list)
   :bind ("C-x C-a a" . org-agenda-list)
   :bind ("C-x C-a A" . org-agenda)
   )
+
+(setq org-agenda-start-with-follow-mode nil)
+(setq org-agenda-span 'month)
 
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "C-c C-o") nil))
@@ -19,6 +25,11 @@
     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
 (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
+
+;; (use-package org-modern
+;;   :ensure t
+;;   :config (setq org-modern-table nil)
+;;   :hook (org-mode . org-modern-mode))
 
 ;; (use-package org-journal
 ;;   :ensure t
