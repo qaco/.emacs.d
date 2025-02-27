@@ -2,8 +2,6 @@
 (setq load-path (append load-path '("~/conf/.emacs.d/major-modes")))
 
 (require 'standalone)
-(require 'mlir-mode)
-(require 'tablegen-mode)
 
 (add-to-list
  'package-archives
@@ -23,3 +21,4 @@
 (require 'git)
 (require 'org-conf)
 (require 'console)
+(require 'major-modes)
