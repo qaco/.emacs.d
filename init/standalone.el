@@ -2,6 +2,7 @@
 
 (setq custom-file null-device)
 (setq backup-directory-alist `(("." . "~/.saves")))
+(setq auto-save-file-name-transforms '((".*" "/tmp/emacs-autosaves/" t)))
 
 ;; External tools
 
