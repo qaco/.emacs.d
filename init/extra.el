@@ -3,6 +3,17 @@
 (use-package seq
   :ensure t)
 
+;; General
+
+(use-package consult
+  :ensure t
+  :bind ("C-x C-r" . consult-recent-file)
+  :config
+  (setq consult-preview-key nil)
+  (setq xref-show-xrefs-function #'consult-xref
+      xref-show-definitions-function #'consult-xref)
+  )
+
 ;; File & buffer management
 
 (use-package recentf
@@ -10,10 +21,6 @@
   :config
   (recentf-mode 1)
   (setq recentf-max-saved-items 50))
-
-(use-package consult
-  :ensure t
-  :bind ("C-x C-r" . consult-recent-file))
 
 ;; Window management
 
