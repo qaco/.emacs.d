@@ -210,8 +210,8 @@
 (global-set-key (kbd "<mouse-5>") 'next-line)
 (global-set-key (kbd "M-<mouse-4>") #'(lambda() (interactive) (forward-line -5)))
 (global-set-key (kbd "M-<mouse-5>") #'(lambda() (interactive) (forward-line 5)))
-(global-set-key (kbd "<M-down>") #'(lambda() (interactive) (forward-line 5)))
-(global-set-key (kbd "<M-up>") #'(lambda() (interactive) (forward-line -5)))
+(global-set-key (kbd "M-p") #'(lambda() (interactive) (forward-line -5)))
+(global-set-key (kbd "M-n") #'(lambda() (interactive) (forward-line 5)))
 
 ;; buffers
 (global-set-key (kbd "C-x C-<up>") #'(lambda() (interactive) (swap-buffer-with-adjacent 'above)))
