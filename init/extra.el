@@ -83,9 +83,11 @@
 
 (use-package company
   :ensure t
-  :config (setq company-idle-delay nil)
-  :bind (("M-TAB" . company-complete))
-  :hook (python-mode . company-mode))
+  :init
+  (global-company-mode)
+  :config
+  (advice-add 'completion-at-point :override #'company-complete)
+  )
 
 ;; (use-package highlight-indentation
 ;;   :ensure t
