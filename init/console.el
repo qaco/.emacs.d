@@ -1,10 +1,12 @@
 (use-package vterm
-  :ensure t)
-
-(use-package multi-vterm
   :ensure t
   :bind
-  ("C-x t" . multi-vterm))
+  ("C-x t" . vterm))
+
+;; (use-package multi-vterm
+;;   :ensure t
+;;   :bind
+;;   ("C-x t" . multi-vterm))
 
 (add-hook 'vterm-mode-hook
           (lambda ()
@@ -34,7 +36,7 @@
   "Open a `vterm` buffer in the project root."
   (interactive)
   (let ((default-directory (project-root (project-current t))))
-    (multi-vterm)))
+    (vterm)))
 
 (define-key project-prefix-map (kbd "t") 'project-vterm)
 
