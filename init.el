@@ -2,6 +2,7 @@
 (setq load-path (append load-path '("~/conf/.emacs.d/major-modes")))
 
 (require 'standalone)
+(require 'package)
 
 (add-to-list
  'package-archives
