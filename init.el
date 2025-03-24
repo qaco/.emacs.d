@@ -2,6 +2,7 @@
 (setq load-path (append load-path '("~/conf/.emacs.d/major-modes")))
 
 (require 'standalone)
+(require 'use-package)
 (require 'package)
 
 (add-to-list
@@ -13,6 +14,7 @@
  'package-archives
  '("melpa-stable" . "https://stable.melpa.org/packages/")
  t)
+
 
 (setq package-install-upgrade-built-in t)
 (package-initialize)
