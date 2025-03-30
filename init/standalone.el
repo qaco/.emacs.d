@@ -32,6 +32,8 @@
 
 ;; User inteface defaults
 
+(setq column-number-mode t)
+
 (menu-bar-mode -1) ; hide the menubar
 (blink-cursor-mode 0) ; stop the cursor from blinking
 (setq inhibit-startup-message t) ; disable startup message
@@ -58,8 +60,6 @@
 ;; Hooks
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(add-hook 'text-mode-hook 'visual-line-mode)
-
 (add-hook 'python-mode-hook 'my/prog-mode-setup)
 
 (defun my/prog-mode-setup ()

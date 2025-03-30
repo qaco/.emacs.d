@@ -106,4 +106,17 @@
          (z3-smt2-mode . rainbow-delimiters-mode)
          (z3-mode . rainbow-delimiters-mode)))
 
+;; Text specific
+
+(use-package visual-fill-column
+  :hook
+  (text-mode . visual-line-mode)
+  (text-mode . (lambda ()
+                 (unless (derived-mode-p 'org-mode)
+                   (visual-fill-column-mode))))
+  :config
+  (setq visual-fill-column-width 80)
+  :ensure t
+  )
+
 (provide 'extra)
