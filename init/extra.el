@@ -82,6 +82,10 @@
 
 ;; Programmation specific
 
+(use-package snakemake-mode
+  :ensure t
+  :mode ("\\Snakefile\\'" . snakemake-mode))
+
 (use-package company
   :ensure t
   :init
@@ -116,6 +120,10 @@
                    (visual-fill-column-mode))))
   :config
   (setq visual-fill-column-width 80)
+  :ensure t
+  )
+
+(use-package yaml-mode
   :ensure t
   )
 
