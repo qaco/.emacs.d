@@ -60,6 +60,7 @@
 ;; Hooks
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'text-mode-hook 'display-line-numbers-mode)
 (add-hook 'python-mode-hook 'my/prog-mode-setup)
 
 (defun my/prog-mode-setup ()
