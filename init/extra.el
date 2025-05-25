@@ -112,12 +112,18 @@
 
 ;; Text specific
 
-(use-package visual-fill-column
+(use-package olivetti
+  :ensure t
   :hook
-  (text-mode . visual-line-mode)
   (text-mode . (lambda ()
                  (unless (derived-mode-p 'org-mode)
-                   (visual-fill-column-mode))))
+                   (olivetti-mode)))))
+
+;; (use-package visual-fill-column
+;;   :hook
+;;   (text-mode . (lambda ()
+;;                  (unless (derived-mode-p 'org-mode)
+;;                    (visual-fill-column-mode))))
   :config
   (setq visual-fill-column-width 80)
   :ensure t
