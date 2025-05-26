@@ -119,7 +119,7 @@
                  (unless (derived-mode-p 'org-mode)
                    (olivetti-mode)))))
 
- ;; (add-hook 'olivetti-mode-on-hook (lambda () (olivetti-set-width 80))) 
+ (add-hook 'olivetti-mode-on-hook (lambda () (olivetti-set-width 80))) 
 
 ;; (use-package visual-fill-column
 ;;   :hook
