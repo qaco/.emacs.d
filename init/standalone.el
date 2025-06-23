@@ -158,6 +158,19 @@
   (write-region (point-min) (point-max) filename)
   (message "Buffer saved to %s" filename))
 
+(defun move-line-up ()
+  "Move the current line up by one."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2))
+
+(defun move-line-down ()
+  "Move the current line down by one."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1))
+
 (defvar my-last-compile-command "make"
   "Last compile command used in the current Emacs session.")
 
@@ -213,6 +226,8 @@
                                                           (copy-region-as-kill (mark) (point))
                                                         (wise-copy-line))))
 (global-set-key (kbd "M-TAB")   'dabbrev-expand)
+(global-set-key (kbd "M-<up>") 'move-line-up)
+(global-set-key (kbd "M-<down>") 'move-line-down)
 
 ;; navigation
 (global-set-key (kbd "C-a") 'smarter-beginning-of-line)
