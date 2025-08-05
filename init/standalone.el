@@ -226,8 +226,8 @@
                                                           (copy-region-as-kill (mark) (point))
                                                         (wise-copy-line))))
 (global-set-key (kbd "M-TAB")   'dabbrev-expand)
-(global-set-key (kbd "C-P") 'move-line-up)
-(global-set-key (kbd "C-N") 'move-line-down)
+(global-set-key (kbd "S-<up>") 'move-line-up)
+(global-set-key (kbd "S-<down>") 'move-line-down)
 
 ;; navigation
 (global-set-key (kbd "C-a") 'smarter-beginning-of-line)
