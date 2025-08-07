@@ -52,7 +52,10 @@
 (setq read-file-name-completion-ignore-case t)
 (setq read-file-name-function 'read-file-name-default)
 
-(fido-vertical-mode 1)
+(if (version<= "28.0" emacs-version)
+    (fido-vertical-mode 1)
+  (fido-mode 1))
+
 (setq ido-everywhere t
       ido-create-new-buffer 'always
       ido-auto-merge-work-directories-length -1)
@@ -75,7 +78,9 @@
 
 ;; Theme
 
-(load-theme 'modus-vivendi t)
+(if (version<= "28.0" emacs-version)
+    (load-theme 'modus-vivendi t)
+  (load-theme 'deeper-blue t))
 
 ;; Functions
 
