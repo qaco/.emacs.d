@@ -84,7 +84,7 @@
 
 (use-package snakemake-mode
   :ensure t
-  :mode ("\\Snakefile\\'" . snakemake-mode))
+  :mode ("\\`Snakefile\\'" . snakemake-mode))
 
 (use-package company
   :ensure t
