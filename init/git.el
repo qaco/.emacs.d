@@ -18,9 +18,6 @@
   (setq git-gutter:refresh-timer 1)
   (setq git-gutter:update-interval 1)
   (setq git-gutter:delay 0)
-  (set-face-background 'git-gutter:modified "purple")
-  (set-face-foreground 'git-gutter:added "green")
-  (set-face-foreground 'git-gutter:deleted "red")
   :bind
   ("C-x v h" . 'git-gutter:stage-hunk)
   ("C-x v n" . 'git-gutter:next-hunk)

@@ -13,6 +13,9 @@
 
 (add-hook 'vterm-mode-hook
           (lambda ()
+            (hl-line-mode -1)
+            (when (bound-and-true-p global-hl-line-mode)
+              (setq-local global-hl-line-mode nil))
             (define-key vterm-mode-map (kbd "C-<left>") 'windmove-left)
             (define-key vterm-mode-map (kbd "C-<right>") 'windmove-right)
             (define-key vterm-mode-map (kbd "C-<up>") 'windmove-up)
