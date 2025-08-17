@@ -9,7 +9,7 @@
   )
 
 (setq org-agenda-start-with-follow-mode nil)
-(setq org-agenda-span 'month)
+(setq org-agenda-span 60)
 
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "C-c C-o") nil))
