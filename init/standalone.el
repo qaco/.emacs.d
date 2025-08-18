@@ -78,9 +78,9 @@
 
 ;; Theme
 
-(if (version<= "28.0" emacs-version)
-    (load-theme 'modus-vivendi t)
-  (load-theme 'deeper-blue t))
+;; (if (version<= "28.0" emacs-version)
+;;     (load-theme 'modus-vivendi t)
+;;   (load-theme 'deeper-blue t))
 
 ;; Functions
 
