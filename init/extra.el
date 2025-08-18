@@ -52,6 +52,10 @@
   (setq doom-modeline-icon nil))
 
 ;; Require the installation of xclip system-wide
+
+(setq select-enable-clipboard t
+      select-enable-primary t)
+
 (use-package xclip
   :ensure t
   :config
