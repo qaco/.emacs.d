@@ -115,8 +115,11 @@
   :ensure t
   :hook
   (text-mode . (lambda ()
-                 (unless (derived-mode-p 'org-mode)
-                   (olivetti-mode)))))
+                 (unless (or (derived-mode-p 'org-mode)
+                             (derived-mode-p 'tex-mode))
+                   (olivetti-mode))))
+  )
+
 
  (add-hook 'olivetti-mode-on-hook (lambda () (olivetti-set-width 80))) 
 

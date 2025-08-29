@@ -13,6 +13,7 @@
   :ensure t
   :hook ((prog-mode . git-gutter-mode)
          (org-mode . git-gutter-mode)
+         (tex-mode . git-gutter-mode)
          (conf-mode . git-gutter-mode))
   :config
   (setq git-gutter:refresh-timer 1)

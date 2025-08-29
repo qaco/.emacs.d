@@ -42,6 +42,8 @@
 (show-paren-mode t) ; highlight matching parentheses
 (global-hl-line-mode t) ; highlight the current line
 
+(setq-default display-fill-column-indicator-column 80)
+
 ;; Less confirms
 (fset 'yes-or-no-p 'y-or-n-p) ; use y/n instead of yes/no
 (setq confirm-nonexistent-file-or-buffer nil ; create file without confirm
@@ -63,6 +65,7 @@
 ;; Hooks
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'tex-mode-hook 'display-line-numbers-mode)
 ;; (add-hook 'text-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 (add-hook 'python-mode-hook 'my/prog-mode-setup)

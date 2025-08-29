@@ -26,8 +26,8 @@
 
 (setq package-archive-enable-alist nil)
 
-(require 'extra)
 (require 'git)
+(require 'extra)
 (require 'org-conf)
 (require 'console)
 (require 'major-modes)
