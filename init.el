@@ -26,6 +26,8 @@
 
 (setq package-archive-enable-alist nil)
 
+(setq auto-save-list-file-prefix "~/.emacs.d/auto-save-list/.saves-")
+
 (require 'git)
 (require 'extra)
 (require 'org-conf)

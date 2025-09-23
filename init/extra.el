@@ -92,12 +92,12 @@
   (advice-add 'completion-at-point :override #'company-complete)
   )
 
-(use-package highlight-indentation
-  :ensure t
-  :config
-  (setq highlight-indentation-blank-lines t)
-  (set-face-background 'highlight-indentation-face "#555555")
-  :hook (prog-mode . highlight-indentation-mode))
+;; (use-package highlight-indentation
+;;   :ensure t
+;;   :config
+;;   (setq highlight-indentation-blank-lines t)
+;;   (set-face-background 'highlight-indentation-face "#555555")
+;;   :hook (prog-mode . highlight-indentation-mode))
 
 ;; (use-package indent-guide
 ;;   :ensure t
