@@ -11,11 +11,13 @@
             (face-remap-add-relative 'bold '(:weight normal))
             (when (bound-and-true-p global-hl-line-mode)
               (setq-local global-hl-line-mode nil))
+            (define-key vterm-mode-map (kbd "C-k") 'my/vterm-kill-line)
+            (define-key vterm-mode-map (kbd "C-z") 'suspend-frame)
             (define-key vterm-mode-map (kbd "C-<left>") 'windmove-left)
             (define-key vterm-mode-map (kbd "C-<right>") 'windmove-right)
             (define-key vterm-mode-map (kbd "C-<up>") 'windmove-up)
-            (define-key vterm-mode-map (kbd "<deletechar>") (lambda () (interactive) (vterm-send-key "C-d")))
             (define-key vterm-mode-map (kbd "C-<down>") 'windmove-down)
+            (define-key vterm-mode-map (kbd "<deletechar>") (lambda () (interactive) (vterm-send-key "C-d")))
             (vterm-send-string "EDITOR=vi;VISUAL=vi")
             (vterm-send-return)
             (vterm-send-string "clear")
@@ -42,10 +44,6 @@
                   (vterm-color-bright-cyan    . vterm-color-cyan)
                   (vterm-color-bright-white   . vterm-color-white)))
     (set-face-attribute (car pair) nil :inherit (cdr pair))))
-
-(add-hook 'vterm-mode-hook
-          (lambda ()
-            (define-key vterm-mode-map (kbd "C-k") 'my/vterm-kill-line)))
 
 (defun my/vterm-kill-line ()
   (interactive)
