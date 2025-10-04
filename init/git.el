@@ -1,3 +1,12 @@
+(defun my/exit-after-with-editor ()
+  (if (and (boundp 'server-buffer-clients) server-buffer-clients)
+      (delete-frame)
+    (kill-emacs)))
+
+(with-eval-after-load 'with-editor
+  (add-hook 'with-editor-post-finish-hook #'my/exit-after-with-editor)
+  (add-hook 'with-editor-post-cancel-hook  #'my/exit-after-with-editor))
+
 (use-package magit
   :ensure t
   :bind ("C-x g" . magit-status)
