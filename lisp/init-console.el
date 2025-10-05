@@ -1,5 +1,8 @@
 (use-package vterm
-  :ensure t)
+  :ensure t
+  :init
+  (setq vterm-always-compile-module t)
+  )
 
 (use-package multi-vterm
   :ensure t

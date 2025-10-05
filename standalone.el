@@ -1,1 +1,1 @@
-(require 'standalone)
+(require 'init-standalone)
