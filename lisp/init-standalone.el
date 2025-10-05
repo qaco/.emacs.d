@@ -64,6 +64,7 @@
 (add-hook 'mlir-mode-hook 'eglot-ensure)
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'conf-mode-hook 'display-line-numbers-mode)
 (add-hook 'tex-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 (add-hook 'python-mode-hook 'my/prog-mode-setup)
