@@ -1,9 +1,3 @@
-;; Environment variables
-
-(setq custom-file null-device)
-(setq backup-directory-alist `(("." . "~/.saves")))
-(setq auto-save-file-name-transforms '((".*" "/tmp/emacs-autosaves/" t)))
-
 ;; External tools
 
 (defvar browse-url-browser-function 'browse-url-firefox)
@@ -71,24 +65,18 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'tex-mode-hook 'display-line-numbers-mode)
-;; (add-hook 'text-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 (add-hook 'python-mode-hook 'my/prog-mode-setup)
 
 (defun my/prog-mode-setup ()
   "Custom configurations for prog-mode."
   (eglot-ensure)
-  ;; (setq-local eldoc-echo-area-use-multiline-p 1)
   (local-set-key (kbd "TAB") 'indent-for-tab-command)
   (local-set-key (kbd "M-TAB") 'completion-at-point)
   (local-set-key (kbd "M-/") 'eglot-rename)
   )
 
 ;; Theme
-
-;; (if (version<= "28.0" emacs-version)
-;;     (load-theme 'modus-vivendi t)
-;;   (load-theme 'deeper-blue t))
 
 ;; Functions
 
@@ -215,10 +203,6 @@
 
 ;; windows
 (global-set-key (kbd "C-x 2") 'split-window-below-and-center-cursor)
-(global-set-key (kbd "M-=") 'enlarge-window)
-(global-set-key (kbd "M--") 'shrink-window)
-(global-set-key (kbd "C-x N") 'other-window)
-(global-set-key (kbd "C-x P") #'(lambda() (interactive) (other-window -1)))
 (global-set-key (kbd "<C-right>")   'windmove-right)
 (global-set-key (kbd "<C-left>")   'windmove-left)
 (global-set-key (kbd "<C-up>")   'windmove-up)
@@ -229,8 +213,6 @@
 (global-set-key (kbd "C-k") #'my/kill-line-smart)
 (global-set-key (kbd "C-q")   'delete-region)
 (global-set-key (kbd "C-j") #'(lambda() (interactive) (delete-region (point) (line-end-position))))
-(global-set-key (kbd "M-_") 'undo-only)
-(global-set-key (kbd "C-x :") 'dabbrev-expand)
 (global-set-key (kbd "C-x q") 'join-line)
 (global-set-key (kbd "C-w") #'(lambda() (interactive) (if mark-active
                                                           (kill-region (mark) (point))
@@ -238,7 +220,6 @@
 (global-set-key (kbd "M-w") #'(lambda() (interactive) (if mark-active
                                                           (copy-region-as-kill (mark) (point))
                                                         (wise-copy-line))))
-(global-set-key (kbd "M-TAB")   'dabbrev-expand)
 (global-set-key (kbd "S-<up>") 'move-line-up)
 (global-set-key (kbd "S-<down>") 'move-line-down)
 
@@ -246,8 +227,6 @@
 (global-set-key (kbd "C-a") 'smarter-beginning-of-line)
 (global-set-key (kbd "<mouse-4>") 'previous-line)
 (global-set-key (kbd "<mouse-5>") 'next-line)
-(global-set-key (kbd "M-<mouse-4>") #'(lambda() (interactive) (forward-line -5)))
-(global-set-key (kbd "M-<mouse-5>") #'(lambda() (interactive) (forward-line 5)))
 (global-set-key (kbd "M-p") #'(lambda() (interactive) (forward-line -5)))
 (global-set-key (kbd "M-n") #'(lambda() (interactive) (forward-line 5)))
 
