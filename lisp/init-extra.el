@@ -1,8 +1,3 @@
-;; Elisp primitives
-
-(use-package seq
-  :ensure t)
-
 ;; Window management
 
 ;; C-x w <n>: go to window n (kill if negative)
