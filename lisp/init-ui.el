@@ -13,10 +13,6 @@
   (advice-add 'completion-at-point :override #'company-complete)
   )
 
-(use-package indent-guide
-  :ensure t
-  :hook (prog-mode . indent-guide-mode))
-
 (use-package free-keys
   :ensure t
   :commands free-keys)
