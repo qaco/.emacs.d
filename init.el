@@ -17,8 +17,8 @@
 
 (setq package-archive-enable-alist nil)
 
-
 (require 'init-text)
+(require 'init-ui)
 (require 'init-git)
 (require 'init-extra)
 (require 'init-org)
