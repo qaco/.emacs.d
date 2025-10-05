@@ -3,18 +3,6 @@
 (use-package seq
   :ensure t)
 
-;; General
-
-(use-package consult
-  :ensure t
-  :bind ("C-x C-r" . consult-recent-file)
-  :config
-  (setq consult-preview-key nil)
-  )
-
-(setq xref-show-definitions-function #'consult-xref)
-(setq xref-show-xrefs-function #'consult-xref)
-
 ;; Window management
 
 ;; C-x w <n>: go to window n (kill if negative)

@@ -14,4 +14,14 @@
   :config
   (recentf-mode 1))
 
+(use-package consult
+  :ensure t
+  :bind ("C-x C-r" . consult-recent-file)
+  :config
+  (setq consult-preview-key nil)
+  )
+
+(setq xref-show-definitions-function #'consult-xref)
+(setq xref-show-xrefs-function #'consult-xref)
+
 (provide 'init-system)
