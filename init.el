@@ -23,7 +23,7 @@
 (require 'init-windows)
 (require 'init-edit)
 (require 'init-git)
-(require 'init-extra)
+(require 'init-languages)
 (require 'init-org)
 (require 'init-console)
 (require 'init-ai)
