@@ -1,4 +1,6 @@
-(setq load-path (append load-path '("~/.emacs.d/lisp")))
+(setq load-path
+      (append load-path
+              (list (expand-file-name "lisp" user-emacs-directory))))
 
 ;; Disable package.el's automatic initialization before init.el
 (setq package-enable-at-startup nil)
@@ -11,8 +13,6 @@
 
 ;; Disable unneeded UI elements early for a cleaner startup
 (menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
 
 ;; Disable startup messages and screens
 (setq inhibit-startup-screen t
