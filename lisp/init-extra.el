@@ -15,17 +15,6 @@
 (setq xref-show-definitions-function #'consult-xref)
 (setq xref-show-xrefs-function #'consult-xref)
 
-;; File & buffer management
-
-(use-package recentf
-  :ensure t
-  :init
-  (setq recentf-save-file (expand-file-name ".recentf" user-emacs-directory)
-        recentf-max-saved-items 50)
-  :config
-  (recentf-mode 1))
-  
-
 ;; Window management
 
 ;; C-x w <n>: go to window n (kill if negative)
@@ -40,16 +29,6 @@
   ("C-c w" . windresize))
 
 ;; System
-
-;; Require the installation of xclip system-wide
-
-(setq select-enable-clipboard t
-      select-enable-primary t)
-
-(use-package xclip
-  :ensure t
-  :config
-  (xclip-mode 1))
 
 (use-package free-keys
   :ensure t
