@@ -72,7 +72,6 @@
   "Custom configurations for prog-mode."
   (eglot-ensure)
   (local-set-key (kbd "TAB") 'indent-for-tab-command)
-  (local-set-key (kbd "M-TAB") 'completion-at-point)
   (local-set-key (kbd "M-/") 'eglot-rename)
   )
 
@@ -222,6 +221,9 @@
                                                         (wise-copy-line))))
 (global-set-key (kbd "S-<up>") 'move-line-up)
 (global-set-key (kbd "S-<down>") 'move-line-down)
+(add-hook 'after-change-major-mode-hook
+          (lambda ()
+            (local-set-key (kbd "M-TAB") #'completion-at-point)))
 
 ;; navigation
 (global-set-key (kbd "C-a") 'smarter-beginning-of-line)
