@@ -28,17 +28,6 @@
   :bind
   ("C-c w" . windresize))
 
-;; System
-
-(use-package free-keys
-  :ensure t
-  :commands free-keys)
-
-(use-package which-key
-  :ensure t
-  :config
-  (which-key-mode))
-
 ;; Programmation specific
 
 (use-package snakemake-mode

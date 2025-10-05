@@ -23,4 +23,13 @@
          (z3-smt2-mode . rainbow-delimiters-mode)
          (z3-mode . rainbow-delimiters-mode)))
 
+(use-package free-keys
+  :ensure t
+  :commands free-keys)
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
 (provide 'init-ui)
