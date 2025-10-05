@@ -19,6 +19,7 @@
 
 (require 'init-text)
 (require 'init-ui)
+(require 'init-edit)
 (require 'init-git)
 (require 'init-extra)
 (require 'init-org)
