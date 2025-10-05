@@ -2,6 +2,14 @@
       (append load-path
               (list (expand-file-name "lisp" user-emacs-directory))))
 
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "saves/" user-emacs-directory))))
+
+(setq auto-save-file-name-transforms
+      `((".*" ,(expand-file-name ".autosaves/" user-emacs-directory) t)))
+
+(setq custom-file null-device)
+
 ;; Disable package.el's automatic initialization before init.el
 (setq package-enable-at-startup nil)
 
