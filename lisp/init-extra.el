@@ -39,13 +39,6 @@
   :bind
   ("C-c w" . windresize))
 
-(use-package avy
-  :ensure t
-  :bind
-  ("M-g c" . avy-goto-char)
-  ("M-g l" . avy-goto-line)
-  ("M-g w" . avy-goto-word-1))
-
 ;; System
 
 ;; Require the installation of xclip system-wide
@@ -66,13 +59,6 @@
   :ensure t
   :config
   (which-key-mode))
-
-;; Text edition
-
-(use-package move-text
-  :ensure t
-  :bind (("C-M-<up>" . move-text-up)
-         ("C-M-<down>" . move-text-down)))
 
 ;; Programmation specific
 
