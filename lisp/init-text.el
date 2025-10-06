@@ -10,7 +10,7 @@
 (use-package olivetti
   :ensure t
   :hook (text-mode . (lambda ()
-                       (unless (derived-mode-p 'yaml-mode)
+                       (unless (derived-mode-p 'yaml-mode 'org-mode)
                          (olivetti-mode 1))))
   :config
   (setq olivetti-body-width 80))
