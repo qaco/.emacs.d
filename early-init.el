@@ -3,7 +3,7 @@
               (list (expand-file-name "lisp" user-emacs-directory))))
 
 (setq backup-directory-alist
-      `(("." . ,(expand-file-name "saves/" user-emacs-directory))))
+      `(("." . ,(expand-file-name ".saves/" user-emacs-directory))))
 
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name ".autosaves/" user-emacs-directory) t)))
