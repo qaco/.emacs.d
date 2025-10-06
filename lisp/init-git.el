@@ -39,12 +39,6 @@
 (global-set-key (kbd "C-x v C") #'magit-commit-amend)
 (global-set-key (kbd "C-x v P") #'magit-push-current-to-pushremote)
 
-(defun my-git-gutter-popup-hunk()
-  (interactive)
-  (let ((popup-window (git-gutter:popup-hunk)))
-    (when popup-window
-      (select-window popup-window))))
-
 (defun my/magit-stage-modified-no-confirm ()
   "Stage all modified and deleted files without asking for confirmation.
 Runs `git add -u` directly, refreshes Magit, and shows a success message."
