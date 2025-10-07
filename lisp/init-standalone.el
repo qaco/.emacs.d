@@ -56,27 +56,13 @@
 
 ;; Language-dependant
 
-(require 'eglot)
-
 (require 'tablegen-mode)
 (require 'mlir-mode)
-(add-to-list 'eglot-server-programs '(mlir-mode . ("mlir-lsp-server")))
-(add-hook 'mlir-mode-hook 'eglot-ensure)
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'conf-mode-hook 'display-line-numbers-mode)
 (add-hook 'tex-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
-(add-hook 'python-mode-hook 'my/prog-mode-setup)
-
-(defun my/prog-mode-setup ()
-  "Custom configurations for prog-mode."
-  (eglot-ensure)
-  (local-set-key (kbd "TAB") 'indent-for-tab-command)
-  (local-set-key (kbd "M-/") 'eglot-rename)
-  )
-
-;; Theme
 
 ;; Functions
 
