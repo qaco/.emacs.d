@@ -36,8 +36,9 @@
 
 (setq-default display-fill-column-indicator-column 80)
 
-(when (version< emacs-version "29")
-  (load-theme 'deeper-blue t))
+(unless (display-graphic-p)
+  (setq frame-background-mode 'dark)
+  (add-to-list 'default-frame-alist '(background-mode . dark)))
 
 ;; Less confirms
 (fset 'yes-or-no-p 'y-or-n-p) ; use y/n instead of yes/no
