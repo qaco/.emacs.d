@@ -16,21 +16,17 @@ jobs:
 
       - name: Validate repository layout
         run: |
-          # The repo directory itself must be named ".emacs.d"
           if [ "$(basename "$PWD")" != ".emacs.d" ]; then
             echo "::error::The repository root must be a directory named '.emacs.d'."
             exit 1
           fi
-          # It must contain init.el
-          if [ ! -f "./init.el" ]; then
-            echo "::error::Missing './init.el' at the repo root."
-            exit 1
-          fi
-          # It must contain early-init.el
-          if [ ! -f "./early-init.el" ]; then
-            echo "::error::Missing './early-init.el' at the repo root."
-            exit 1
-          fi
+          required_files=(init.el early-init.el standalone.el)
+          for f in "${required_files[@]}"; do
+            if [ ! -f "./$f" ]; then
+              echo "::error::Missing './$f' at the repo root."
+              exit 1
+            fi
+          done
 
       - name: Install Emacs and deps
         run: |
@@ -44,15 +40,23 @@ jobs:
       - name: Print Emacs version
         run: emacs --version
 
-      - name: Startup test
+      - name: Startup test (init.el)
         run: |
           export HOME="$(dirname "$PWD")"
           emacs --batch \
             --eval '(setq debug-on-error t inhibit-startup-screen t)' \
             --eval '(setq user-emacs-directory (expand-file-name "~/.emacs.d/"))' \
             -l "$HOME/.emacs.d/early-init.el" \
-            -l "$HOME/.emacs.d/init.el" \
-            --eval '(message "Init loaded OK")'
+            -l "$HOME/.emacs.d/init.el"
+
+      - name: Startup test (standalone.el)
+        run: |
+          export HOME="$(dirname "$PWD")"
+          emacs --batch \
+            -L "$HOME/.emacs.d" \
+            --eval '(setq debug-on-error t inhibit-startup-screen t)' \
+            --eval '(setq user-emacs-directory (expand-file-name "~/.emacs.d/"))' \
+            -l "$HOME/.emacs.d/standalone.el"
 
       - name: Byte-compile configuration
         run: |

@@ -1,5 +1,4 @@
 (require 'init-standalone)
-(require 'use-package)
 (require 'package)
 
 (add-to-list
@@ -17,6 +16,7 @@
 
 (setq package-archive-enable-alist nil)
 
+(require 'use-package)
 (require 'init-text)
 (require 'init-ui)
 (require 'init-system)
