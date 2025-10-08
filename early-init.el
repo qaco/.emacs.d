@@ -54,3 +54,5 @@
     (when (and (file-directory-p old-cache)
                (not (string-equal old-cache eln-dir)))
       (delete-directory old-cache t))))
+
+(provide 'early-init)

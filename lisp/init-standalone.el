@@ -36,6 +36,9 @@
 
 (setq-default display-fill-column-indicator-column 80)
 
+(when (version< emacs-version "29")
+  (load-theme 'deeper-blue t))
+
 ;; Less confirms
 (fset 'yes-or-no-p 'y-or-n-p) ; use y/n instead of yes/no
 (setq confirm-nonexistent-file-or-buffer nil ; create file without confirm
