@@ -57,7 +57,7 @@
       ido-create-new-buffer 'always
       ido-auto-merge-work-directories-length -1)
 
-(if (version<= "28.0" emacs-version)
+(if (boundp 'fido-vertical-mode)
     (fido-vertical-mode 1)
   (fido-mode 1))
 

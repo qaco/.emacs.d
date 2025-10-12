@@ -55,4 +55,6 @@
                (not (string-equal old-cache eln-dir)))
       (delete-directory old-cache t))))
 
+(setq my/early-init-loaded t)
+
 (provide 'early-init)
