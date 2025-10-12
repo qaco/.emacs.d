@@ -16,12 +16,20 @@
 
 (use-package consult
   :ensure t
-  :bind ("C-x C-r" . consult-recent-file)
-  :config
+  :commands
+  (consult-recent-file consult-xref consult-buffer consult-line consult-yank-from-kill-ring)
+  :bind
+  (
+   ("C-x C-r" . consult-recent-file)
+   ("C-x C-b" . consult-buffer)
+   ("C-x b" . consult-buffer)
+   ("C-c s" . consult-line)
+   ("M-y" . consult-yank-from-kill-ring)
+   )
+  :init
   (setq consult-preview-key nil)
-  )
-
-(setq xref-show-definitions-function #'consult-xref)
-(setq xref-show-xrefs-function #'consult-xref)
+  (with-eval-after-load 'xref
+    (setq xref-show-definitions-function #'consult-xref
+          xref-show-xrefs-function       #'consult-xref)))
 
 (provide 'init-system)
