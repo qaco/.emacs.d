@@ -2,33 +2,20 @@
   :ensure t
   :init
   (setq vterm-always-compile-module t)
-  )
-
-(use-package multi-vterm
-  :ensure t
+  :hook
+  (vterm-mode . my/vterm-setup)
   :bind
-  ("C-x t" . multi-vterm))
-
-(add-hook 'vterm-mode-hook
-          (lambda ()
-            (face-remap-add-relative 'bold '(:weight normal))
-            (when (bound-and-true-p global-hl-line-mode)
-              (setq-local global-hl-line-mode nil))
-            (define-key vterm-mode-map (kbd "C-k") 'my/vterm-kill-line)
-            (define-key vterm-mode-map (kbd "C-z") 'suspend-frame)
-            (define-key vterm-mode-map (kbd "C-<left>") 'windmove-left)
-            (define-key vterm-mode-map (kbd "C-<right>") 'windmove-right)
-            (define-key vterm-mode-map (kbd "C-<up>") 'windmove-up)
-            (define-key vterm-mode-map (kbd "C-<down>") 'windmove-down)
-            (define-key vterm-mode-map (kbd "<deletechar>") (lambda () (interactive) (vterm-send-key "C-d")))
-            (vterm-send-string "EDITOR=vi;VISUAL=vi")
-            (vterm-send-return)
-            (vterm-send-string "clear")
-            (vterm-send-return)
-            ))
-
-(with-eval-after-load 'vterm
-  (custom-set-faces
+  (:map vterm-mode-map
+        ("C-k"        . my/vterm-kill-line)
+        ("C-z"        . suspend-frame)
+        ("C-<left>"   . windmove-left)
+        ("C-<right>"  . windmove-right)
+        ("C-<up>"     . windmove-up)
+        ("C-<down>"   . windmove-down)
+        ("<deletechar>" . my/vterm-forward-delete))
+  :config
+  (custom-theme-set-faces
+   'user
    '(vterm-color-black   ((t (:foreground "gray25"      :background "gray25"))))
    '(vterm-color-red     ((t (:foreground "red2"        :background "red2"))))
    '(vterm-color-green   ((t (:foreground "green3"      :background "green3"))))
@@ -37,7 +24,6 @@
    '(vterm-color-magenta ((t (:foreground "purple2"     :background "purple2"))))
    '(vterm-color-cyan    ((t (:foreground "cyan3"       :background "cyan3"))))
    '(vterm-color-white   ((t (:foreground "gray97"      :background "gray97")))))
-
   (dolist (pair '((vterm-color-bright-black   . vterm-color-black)
                   (vterm-color-bright-red     . vterm-color-red)
                   (vterm-color-bright-green   . vterm-color-green)
@@ -46,17 +32,35 @@
                   (vterm-color-bright-magenta . vterm-color-magenta)
                   (vterm-color-bright-cyan    . vterm-color-cyan)
                   (vterm-color-bright-white   . vterm-color-white)))
-    (set-face-attribute (car pair) nil :inherit (cdr pair))))
+    (set-face-attribute (car pair) nil :inherit (cdr pair)))
+  )
+
+(use-package multi-vterm
+  :ensure t
+  :bind
+  ("C-x t" . multi-vterm))
+
+(defun my/vterm-setup ()
+  (face-remap-add-relative 'bold '(:weight normal))
+  (when (bound-and-true-p global-hl-line-mode)
+    (setq-local global-hl-line-mode nil))
+  (vterm-send-string "EDITOR=vi;VISUAL=vi;clear")
+  (vterm-send-return)
+  )
+  
+(defun my/vterm-forward-delete ()
+  (interactive)
+  (vterm-send-key "d" nil nil t))
 
 (defun my/vterm-kill-line ()
   (interactive)
   (let ((beg (point))
-        (end (point-at-eol)))
-    (kill-new (buffer-substring beg end))
-    (vterm-send-string (kbd "C-k"))))
+        (end (line-end-position)))
+    (when (< beg end)
+      (kill-new (buffer-substring beg end))))
+  (vterm-send-key "k" nil nil t))
 
 (defun project-vterm ()
-  "Open a `vterm` buffer in the project root."
   (interactive)
   (let ((default-directory (project-root (project-current t))))
     (multi-vterm)))
