@@ -22,4 +22,12 @@
   :config
   (which-key-mode))
 
+(use-package smart-mode-line
+  :ensure t
+  :init
+  (setq sml/theme 'respectful
+	sml/pre-modes-separator " • ")
+  (sml/setup)
+  )
+
 (provide 'init-ui)
