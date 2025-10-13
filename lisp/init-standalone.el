@@ -39,6 +39,8 @@
       revert-without-query '(".*")
       display-fill-column-indicator-column 80)
 
+(setq mode-line-mule-info nil)
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (show-paren-mode 1)
