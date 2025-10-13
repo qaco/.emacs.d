@@ -25,8 +25,7 @@
 (use-package smart-mode-line
   :ensure t
   :init
-  (setq sml/theme 'respectful
-	sml/pre-modes-separator " • ")
+  (setq sml/theme 'automatic)
   (sml/setup)
   )
 
