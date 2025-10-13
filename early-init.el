@@ -55,6 +55,9 @@
                (not (string-equal old-cache eln-dir)))
       (delete-directory old-cache t))))
 
+;; Run themes without confirmation
+(setq custom-safe-themes t)
+
 (setq my/early-init-loaded t)
 
 (provide 'early-init)
