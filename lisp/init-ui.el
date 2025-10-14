@@ -22,12 +22,8 @@
   :config
   (which-key-mode))
 
-(use-package smart-mode-line
+(use-package simple-modeline
   :ensure t
-  :init
-  (setq sml/theme 'respectful
-	sml/pre-modes-separator " • ")
-  (sml/setup)
-  )
+  :hook (after-init . simple-modeline-mode))
 
 (provide 'init-ui)
