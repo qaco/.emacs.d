@@ -60,6 +60,16 @@
     (fido-vertical-mode 1)
   (fido-mode 1))
 
+(setq-default mode-line-format
+	      '(" "
+		"" "%3l:%2c"
+		" · " (:eval (abbreviate-file-name default-directory)) (:eval (or (buffer-name) ""))
+		" " mode-line-modified
+		(:eval (when (and vc-mode (string-match "Git" vc-mode))
+			 (concat " · " (substring-no-properties vc-mode 5))))
+		" · " (:eval (format-mode-line mode-name))
+	      ))
+
 ;;; Language-dependant
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
