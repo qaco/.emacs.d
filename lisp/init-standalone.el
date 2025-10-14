@@ -112,8 +112,8 @@
 (global-set-key (kbd "C-a") 'smarter-beginning-of-line)
 (global-set-key (kbd "<mouse-4>") 'previous-line)
 (global-set-key (kbd "<mouse-5>") 'next-line)
-(global-set-key (kbd "M-p") #'(lambda() (interactive) (forward-line -5)))
-(global-set-key (kbd "M-n") #'(lambda() (interactive) (forward-line 5)))
+(global-set-key (kbd "M-p") #'(lambda() (interactive) (next-line -5)))
+(global-set-key (kbd "M-n") #'(lambda() (interactive) (next-line 5)))
 
 ;; buffers
 (global-set-key (kbd "C-x C-<up>") #'(lambda() (interactive) (swap-buffer-with-adjacent 'above)))
