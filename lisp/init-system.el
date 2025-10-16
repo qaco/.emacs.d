@@ -28,6 +28,7 @@
    ("C-x C-r" . consult-recent-file)
    ("C-x C-b" . consult-buffer)
    ("C-x b" . consult-buffer)
+   ("C-x F" . consult-find)
    ("C-c s" . consult-line)
    ("M-y" . consult-yank-from-kill-ring)
    )
