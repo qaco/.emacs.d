@@ -15,8 +15,9 @@
       scroll-step 1
       auto-window-vscroll nil
       scroll-conservatively 10000
-      indent-tabs-mode nil       ; Use spaces instead of tabs
       fill-column 80)
+
+(setq-default indent-tabs-mode nil)
 
 (global-auto-revert-mode 1)
 (save-place-mode 1)
