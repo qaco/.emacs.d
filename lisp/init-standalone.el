@@ -94,6 +94,7 @@
 ;; edit
 (advice-add 'comment-region :before #'copy-region-as-kill)
 (global-set-key (kbd "C-k") #'my/kill-line-smart)
+(global-set-key (kbd "M-k") 'delete-indentation)
 (global-set-key (kbd "C-q")   'delete-region)
 (global-set-key (kbd "C-j") #'(lambda() (interactive) (delete-region (point) (line-end-position))))
 (global-set-key (kbd "C-x q") 'join-line)
