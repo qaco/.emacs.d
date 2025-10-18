@@ -12,6 +12,8 @@
 
 (use-package olivetti
   :ensure t
+  :init
+  (setq-default olivetti-body-width 80)
   :hook (text-mode . (lambda ()
                        (unless (derived-mode-p
                                 'yaml-mode
@@ -19,7 +21,6 @@
                                 'tex-mode
 				)
                          (olivetti-mode 1))))
-  :config
-  (setq olivetti-body-width 80))
+  )
 
 (provide 'init-text)
