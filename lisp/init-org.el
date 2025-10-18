@@ -19,9 +19,7 @@
   (setq org-agenda-files
         (append
          (directory-files-recursively
-          (expand-file-name "agenda" (getenv "ORG_HOME")) "\\.org$")
-         (directory-files-recursively
-          (expand-file-name "notes" (getenv "ORG_HOME")) "\\.org$"))))
+          (expand-file-name "agenda" (getenv "ORG_HOME")) "\\.org$"))))
 
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
