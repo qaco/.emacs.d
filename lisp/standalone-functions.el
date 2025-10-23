@@ -90,27 +90,4 @@
   (transpose-lines 1)
   (forward-line -1))
 
-(defvar my/last-compile-command "make"
-  "Last compile command used in the current Emacs session.")
-
-(defun my/project-run-command (command)
-  "Run the given compile COMMAND from the project root."
-  (let* ((project (project-current t))
-         (root (project-root project))
-         (default-directory root))
-    (compile command)))
-
-(defun my/project-compile-command ()
-  "Ask for compile command and run it from the project root.
-   Use the last compile command as default."
-  (interactive)
-  (let ((command (read-string "Compile command: " my/last-compile-command)))
-    (setq my/last-compile-command command)
-    (my/project-run-command command)))
-
-(defun my/project-recompile-command ()
-  "Recompile using the last compile command."
-  (interactive)
-  (my-project-run-command my-last-compile-command))
-
 (provide 'standalone-functions)
