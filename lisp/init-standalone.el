@@ -125,8 +125,8 @@
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 
 ;; System
-(global-set-key (kbd "C-c c") 'my/project-compile-command)
-(global-set-key (kbd "C-c r") 'my/project-recompile-command)
+(global-set-key (kbd "C-c c") 'compile)
+(global-set-key (kbd "C-c r") 'recompile)
 (global-set-key (kbd "C-c n") 'next-error)
 (global-set-key (kbd "C-x C-w") 'write-file)
 (global-set-key (kbd "C-x w") 'save-buffer-copy)
