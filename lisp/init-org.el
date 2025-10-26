@@ -28,4 +28,19 @@
 
 (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
 
+(defun my/agenda-apply-category-faces ()
+  (save-excursion
+    (goto-char (point-min))
+    (while (not (eobp))
+      (let* ((cat  (or (get-text-property (point) 'org-category) ""))
+             (face (cdr (assoc cat '(("TRAVEL" . (:foreground "DodgerBlue" :weight bold))
+                                     ("RDV_REG" . (:foreground "gray60"))
+                                     ("TODO_WARN" . (:foreground "red" :weight bold))
+                                     )))))
+        (when face
+          (add-text-properties (line-beginning-position) (line-end-position)
+                               `(face ,face))))
+      (forward-line 1))))
+(add-hook 'org-agenda-finalize-hook #'my/agenda-apply-category-faces)
+
 (provide 'init-org)
