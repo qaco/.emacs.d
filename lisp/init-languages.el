@@ -15,11 +15,7 @@
         ("M-/" . eglot-rename))
   :config
   (add-to-list 'eglot-server-programs '(mlir-mode . ("mlir-lsp-server")))
-  (add-to-list 'eglot-server-programs '((c-mode c++-mode) . ("ccls")))
-  (setq eglot-workspace-configuration
-        '(:ccls (:completion (:detailedLabel t)
-                 :index (:threads 4)
-                 :cache (:directory ".ccls-cache"))))
+  (add-to-list 'eglot-server-programs '((c-mode c++-mode) . ("clangd")))
   )
 
 (provide 'init-languages)
