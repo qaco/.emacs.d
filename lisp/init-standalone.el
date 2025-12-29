@@ -46,6 +46,11 @@
 (global-hl-line-mode 1)
 (icomplete-mode 1)
 
+(add-to-list
+ 'display-buffer-alist
+ '("\\*vc-diff\\*"
+   (display-buffer-full-frame)))
+
 ;;; System
 
 (setq confirm-nonexistent-file-or-buffer nil
