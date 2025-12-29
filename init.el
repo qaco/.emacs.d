@@ -19,12 +19,12 @@
 (setq package-archive-enable-alist nil)
 
 (require 'use-package)
+(require 'init-git)
 (require 'init-text)
 (require 'init-ui)
 (require 'init-system)
 (require 'init-windows)
 (require 'init-edit)
-(require 'init-git)
 (require 'init-languages)
 (require 'init-org)
 (require 'init-console)
