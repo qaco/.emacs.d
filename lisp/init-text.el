@@ -14,13 +14,14 @@
   :ensure t
   :init
   (setq-default olivetti-body-width 80)
-  :hook (text-mode . (lambda ()
-                       (unless (derived-mode-p
-                                'yaml-mode
-                                'org-mode
-                                'tex-mode
-				)
-                         (olivetti-mode 1))))
+  :hook
+  (text-mode . (lambda ()
+                 (unless (derived-mode-p
+                          'yaml-mode
+                          'org-mode
+                          'tex-mode
+			  )
+                   (olivetti-mode 1))))
   )
 
 (provide 'init-text)

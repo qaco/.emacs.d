@@ -8,12 +8,15 @@
 (defun magit-run-post-commit-hook (&rest _args)
   nil)
 
+(defun my/git-gutter ()
+  (unless (bound-and-true-p olivetti-mode)
+    (git-gutter-mode 1)))
+
 (use-package git-gutter
   :ensure t
-  :hook ((prog-mode . git-gutter-mode)
-         (tex-mode . git-gutter-mode)
-         (org-mode . git-gutter-mode)
-         (conf-mode . git-gutter-mode))
+  :hook ((prog-mode . my/git-gutter)
+         (text-mode . my/git-gutter)
+         (conf-mode . my/git-gutter))
   :config
   (setq git-gutter:refresh-timer 1)
   (setq git-gutter:update-interval 1)
