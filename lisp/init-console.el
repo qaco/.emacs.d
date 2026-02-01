@@ -14,6 +14,8 @@
         ("C-<down>"   . windmove-down)
         ("<deletechar>" . my/vterm-forward-delete))
   :config
+  (define-key vterm-mode-map (kbd "ESC") 
+              (lambda () (interactive) (vterm-send-escape)))
   (custom-theme-set-faces
    'user
    '(vterm-color-black   ((t (:foreground "gray25"      :background "gray25"))))

@@ -11,7 +11,8 @@
   (global-company-mode)
   :config
   (advice-add 'completion-at-point :override #'company-complete)
-  )
+  ;; meta is just alt (not esc) - must be set after company loads
+  (setq meta-prefix-char nil))
 
 (use-package free-keys
   :ensure t
