@@ -44,9 +44,10 @@
   (face-remap-add-relative 'bold '(:weight normal))
   (when (bound-and-true-p global-hl-line-mode)
     (setq-local global-hl-line-mode nil))
+  (setq-local meta-prefix-char nil)
+  (local-set-key [?\e] 'vterm-send-escape)
   (vterm-send-string "EDITOR=vi;VISUAL=vi;clear")
-  (vterm-send-return)
-  )
+  (vterm-send-return))
   
 (defun my/vterm-forward-delete ()
   (interactive)
