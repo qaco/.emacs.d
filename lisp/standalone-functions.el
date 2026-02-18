@@ -65,12 +65,6 @@
     ;; Restore the column position
     (move-to-column former-column)))
 
-(defun my/kill-line-smart (&optional arg)
-  "Kill to the end of the logical line regardless of visual-line-mode."
-  (interactive "P")
-  (let ((line-move-visual nil))
-    (kill-line arg)))
-
 (defun save-buffer-copy (filename)
   "Save a copy of the current buffer to a specified FILENAME without changing the buffer."
   (interactive "FSave buffer copy to file: ")
