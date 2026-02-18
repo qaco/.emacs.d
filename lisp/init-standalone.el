@@ -83,6 +83,31 @@
 (add-hook 'tex-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 
+;; Overrides
+
+(advice-add 'comment-region :before #'copy-region-as-kill)
+
+(advice-add 'kill-line :around
+            (lambda (orig-fun &optional arg)
+              (let ((line-move-visual nil))
+                (funcall orig-fun arg))))
+
+(advice-add 'kill-ring-save :around
+            (lambda (orig-fun beg end &optional region)
+              (interactive (list (mark) (point) 'region))
+              (if (use-region-p)
+                  (funcall orig-fun beg end region)
+                (wise-copy-line))))
+
+(advice-add 'kill-region :around
+            (lambda (orig-fun beg end &optional region)
+              (interactive (list (mark) (point) 'region))
+              (if (use-region-p)
+                  (funcall orig-fun beg end region)
+                (wise-kill-line))))
+
+(advice-add 'move-beginning-of-line :override #'smarter-beginning-of-line)
+
 ;;; Keys
 
 ;; display informations
@@ -97,18 +122,10 @@
 (global-set-key (kbd "<C-down>")   'windmove-down)
 
 ;; edit
-(advice-add 'comment-region :before #'copy-region-as-kill)
-(global-set-key (kbd "C-k") #'my/kill-line-smart)
 (global-set-key (kbd "M-k") 'delete-indentation)
 (global-set-key (kbd "C-q")   'delete-region)
 (global-set-key (kbd "C-j") #'(lambda() (interactive) (delete-region (point) (line-end-position))))
 (global-set-key (kbd "C-x q") 'join-line)
-(global-set-key (kbd "C-w") #'(lambda() (interactive) (if mark-active
-                                                          (kill-region (mark) (point))
-                                                        (wise-kill-line))))
-(global-set-key (kbd "M-w") #'(lambda() (interactive) (if mark-active
-                                                          (copy-region-as-kill (mark) (point))
-                                                        (wise-copy-line))))
 (global-set-key (kbd "S-<up>") 'move-line-up)
 (global-set-key (kbd "S-<down>") 'move-line-down)
 (add-hook 'after-change-major-mode-hook
@@ -116,7 +133,6 @@
             (local-set-key (kbd "M-TAB") #'completion-at-point)))
 
 ;; navigation
-(advice-add 'move-beginning-of-line :override #'smarter-beginning-of-line)
 (global-set-key (kbd "<mouse-4>") 'previous-line)
 (global-set-key (kbd "<mouse-5>") 'next-line)
 (global-set-key (kbd "M-p") 'scroll-down-command)
