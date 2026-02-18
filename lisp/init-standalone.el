@@ -116,7 +116,7 @@
             (local-set-key (kbd "M-TAB") #'completion-at-point)))
 
 ;; navigation
-(global-set-key (kbd "C-a") 'smarter-beginning-of-line)
+(advice-add 'move-beginning-of-line :override #'smarter-beginning-of-line)
 (global-set-key (kbd "<mouse-4>") 'previous-line)
 (global-set-key (kbd "<mouse-5>") 'next-line)
 (global-set-key (kbd "M-p") 'scroll-down-command)

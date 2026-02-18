@@ -28,7 +28,7 @@
   (let ((initial-point (point)))
     (back-to-indentation)
     (when (= initial-point (point))
-      (move-beginning-of-line 1))))
+      (beginning-of-line))))
 
 (defun wise-kill-whitespaces ()
  (if (< (line-end-position) (point-max))
