@@ -39,6 +39,7 @@ jobs:
             emacs-nox \
             git \
             xclip \
+            xvfb \
             cmake libtool-bin build-essential pkg-config
 
       - name: Install Emacs and deps (macOS)
@@ -74,3 +75,36 @@ jobs:
             -l "$HOME/.emacs.d/init.el" \
             --eval '(setq debug-on-error t)' \
             --eval '(byte-recompile-directory (expand-file-name "~/.emacs.d") 0 t)'
+
+      - name: Clipboard test (Ubuntu)
+        if: runner.os == 'Linux'
+        run: |
+          export HOME="$(dirname "$PWD")"
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1024x768x24 &
+          sleep 1
+          script -q -c "emacs \
+            -l \"$HOME/.emacs.d/early-init.el\" \
+            -l \"$HOME/.emacs.d/init.el\" \
+            --eval '(with-temp-buffer (insert \"emacs-clipboard-test\") (beginning-of-buffer) (kill-line))' \
+            --eval '(kill-emacs)'" /dev/null
+          result=$(xclip -selection clipboard -o 2>&1 || true)
+          if [ "$result" != "emacs-clipboard-test" ]; then
+            echo "::error::Clipboard test failed. Expected 'emacs-clipboard-test', got '$result'"
+            exit 1
+          fi
+
+      - name: Clipboard test (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          export HOME="$(dirname "$PWD")"
+          script -q /dev/null emacs -nw \
+            -l "$HOME/.emacs.d/early-init.el" \
+            -l "$HOME/.emacs.d/init.el" \
+            --eval '(with-temp-buffer (insert "emacs-clipboard-test") (beginning-of-buffer) (kill-line))' \
+            --eval '(kill-emacs)'
+          result=$(pbpaste)
+          if [ "$result" != "emacs-clipboard-test" ]; then
+            echo "::error::Clipboard test failed. Expected 'emacs-clipboard-test', got '$result'"
+            exit 1
+          fi
