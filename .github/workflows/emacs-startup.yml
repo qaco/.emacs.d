@@ -8,7 +8,10 @@ on:
 
 jobs:
   startup:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - name: Checkout repository
@@ -28,7 +31,8 @@ jobs:
             fi
           done
 
-      - name: Install Emacs and deps
+      - name: Install Emacs and deps (Ubuntu)
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -36,6 +40,10 @@ jobs:
             git \
             xclip \
             cmake libtool-bin build-essential pkg-config
+
+      - name: Install Emacs and deps (macOS)
+        if: runner.os == 'macOS'
+        run: brew install emacs cmake libtool
 
       - name: Print Emacs version
         run: emacs --version
