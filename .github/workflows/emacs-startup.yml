@@ -38,7 +38,6 @@ jobs:
           sudo apt-get install -y \
             emacs-nox \
             git \
-            xclip \
             cmake libtool-bin build-essential pkg-config
 
       - name: Install Emacs and deps (macOS)
