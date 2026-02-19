@@ -30,6 +30,9 @@
 ;; Setup the places file
 (setq save-place-file (expand-file-name ".places" user-emacs-directory))
 
+;; Setup the projects file
+(setq project-list-file (expand-file-name ".projects" user-emacs-directory))
+
 ;; Setup the transient state
 (let ((tdir (expand-file-name ".transient/" user-emacs-directory)))
   (make-directory tdir t)
