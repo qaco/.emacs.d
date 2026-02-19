@@ -102,7 +102,7 @@
 (advice-add 'kill-region :around
             (lambda (orig-fun beg end &optional region)
               (interactive (list (mark) (point) 'region))
-              (if (use-region-p)
+              (if (or (use-region-p) (not (called-interactively-p 'any)))
                   (funcall orig-fun beg end region)
                 (wise-kill-line))))
 
