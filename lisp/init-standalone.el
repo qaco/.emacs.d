@@ -121,8 +121,8 @@
 ;;; Keys
 
 ;; display informations
-(global-set-key (kbd "C-x \"") 'display-fill-column-indicator-mode)
-(global-set-key (kbd "C-x l") 'count-lines-page)
+(global-set-key (kbd "C-c |") 'display-fill-column-indicator-mode)
+(global-set-key (kbd "C-c l") 'count-lines-page)
 
 ;; windows
 (global-set-key (kbd "<C-right>")   'windmove-right)
@@ -131,10 +131,9 @@
 (global-set-key (kbd "<C-down>")   'windmove-down)
 
 ;; edit
-(global-set-key (kbd "M-k") 'delete-indentation)
-(global-set-key (kbd "C-q")   'delete-region)
 (global-set-key (kbd "C-j") #'(lambda() (interactive) (delete-region (point) (line-end-position))))
-(global-set-key (kbd "C-x q") 'join-line)
+(global-set-key (kbd "C-c j") 'delete-indentation)
+(global-set-key (kbd "C-c J") #'(lambda () (interactive) (delete-indentation t)))
 (global-set-key (kbd "S-<up>") 'move-line-up)
 (global-set-key (kbd "S-<down>") 'move-line-down)
 (add-hook 'after-change-major-mode-hook
@@ -157,8 +156,8 @@
 (global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c r") 'recompile)
 (global-set-key (kbd "C-c n") 'next-error)
-(global-set-key (kbd "C-x C-w") 'write-file)
-(global-set-key (kbd "C-x w") 'save-buffer-copy)
+(global-set-key (kbd "C-c C-w") 'write-file)
+(global-set-key (kbd "C-c w") 'save-buffer-copy)
 (global-set-key (kbd "M-o i") #'(lambda() (interactive) (message (buffer-file-name))))
 (global-set-key (kbd "M-o M-i") #'(lambda() (interactive) (kill-new (message (buffer-file-name)))))
 
