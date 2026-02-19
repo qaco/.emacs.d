@@ -108,6 +108,8 @@
 
 (advice-add 'move-beginning-of-line :override #'smarter-beginning-of-line)
 
+(advice-add 'list-buffers :override #'ido-switch-buffer)
+
 (advice-add 'split-window-below :after
             (lambda (&rest _)
               (let ((current-window (selected-window)))
@@ -150,7 +152,6 @@
 (global-set-key (kbd "C-x C-<down>") #'(lambda() (interactive) (swap-buffer-with-adjacent 'below)))
 (global-set-key (kbd "C-x C-<left>") #'(lambda() (interactive) (swap-buffer-with-adjacent 'left)))
 (global-set-key (kbd "C-x C-<right>") #'(lambda() (interactive) (swap-buffer-with-adjacent 'right)))
-(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 
 ;; System
 (global-set-key (kbd "C-c c") 'compile)
