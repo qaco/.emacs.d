@@ -10,16 +10,6 @@
         (set-window-buffer other-window current-buffer)
         (select-window other-window)))))
 
-(defun split-window-below-and-center-cursor ()
-  "Split the window horizontally and center the cursor both in the old
-   window and in the new one."
-  (interactive)
-  (let ((current-window (selected-window)))
-    (select-window (split-window-below))
-    (recenter-top-bottom)
-    (select-window current-window)
-    (recenter-top-bottom)))
-
 (defun smarter-beginning-of-line ()
   "Move point to the first non-whitespace character or beginning of
    line. Move point to the beginning of line if point was already at
