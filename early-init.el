@@ -8,6 +8,14 @@
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name ".autosaves/" user-emacs-directory) t)))
 
+(setq auto-save-list-file-prefix "~/.emacs.d/.auto-save-list/.saves-")
+
+(setq save-place-file (expand-file-name ".places" user-emacs-directory))
+
+(setq project-list-file (expand-file-name ".projects" user-emacs-directory))
+
+(setq eshell-directory-name (expand-file-name ".eshell" user-emacs-directory))
+
 (setq custom-file null-device)
 
 ;; Disable package.el's automatic initialization before init.el
@@ -27,21 +35,12 @@
       inhibit-startup-message t
       inhibit-startup-echo-area-message user-login-name)
 
-;; Setup the places file
-(setq save-place-file (expand-file-name ".places" user-emacs-directory))
-
-;; Setup the projects file
-(setq project-list-file (expand-file-name ".projects" user-emacs-directory))
-
 ;; Setup the transient state
 (let ((tdir (expand-file-name ".transient/" user-emacs-directory)))
   (make-directory tdir t)
   (setq transient-history-file (expand-file-name "history.el" tdir)
         transient-levels-file  (expand-file-name "levels.el"  tdir)
         transient-values-file  (expand-file-name "values.el"  tdir)))
-
-;; Setup the autosave directory
-(setq auto-save-list-file-prefix "~/.emacs.d/.auto-save-list/.saves-")
 
 ;; Setup the compilation cache
 (let ((eln-dir (expand-file-name ".eln-cache/" user-emacs-directory)))

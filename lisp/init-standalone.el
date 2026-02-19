@@ -104,8 +104,6 @@
                 " $ ")
       (concat dir " $ "))))
 
-(setq eshell-directory-name (expand-file-name ".eshell" user-emacs-directory))
-
 (with-eval-after-load 'em-prompt
   (set-face-attribute 'eshell-prompt nil :foreground "RoyalBlue2" :weight 'normal)
   (setq eshell-prompt-function #'my/eshell-prompt
