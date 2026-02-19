@@ -108,6 +108,14 @@
 
 (advice-add 'move-beginning-of-line :override #'smarter-beginning-of-line)
 
+(advice-add 'split-window-below :after
+            (lambda (&rest _)
+              (let ((current-window (selected-window)))
+                (select-window (window-in-direction 'below))
+                (recenter-top-bottom)
+                (select-window current-window)
+                (recenter-top-bottom))))
+
 ;;; Keys
 
 ;; display informations
@@ -115,7 +123,6 @@
 (global-set-key (kbd "C-x l") 'count-lines-page)
 
 ;; windows
-(global-set-key (kbd "C-x 2") 'split-window-below-and-center-cursor)
 (global-set-key (kbd "<C-right>")   'windmove-right)
 (global-set-key (kbd "<C-left>")   'windmove-left)
 (global-set-key (kbd "<C-up>")   'windmove-up)
