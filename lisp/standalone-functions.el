@@ -74,4 +74,15 @@
   (transpose-lines 1)
   (forward-line -1))
 
+(defun project-eshell ()
+  (interactive)
+  (let ((default-directory (project-root (project-current t))))
+    (eshell)))
+
+(defun my/git-branch ()
+  (let ((branch (string-trim
+                 (shell-command-to-string
+                  "git rev-parse --abbrev-ref HEAD 2>/dev/null"))))
+    (unless (string-empty-p branch) branch)))
+
 (provide 'standalone-functions)

@@ -83,6 +83,30 @@
 (add-hook 'tex-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 
+;; Eshell
+
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (when (bound-and-true-p global-hl-line-mode)
+              (setq-local global-hl-line-mode nil))
+            (setenv "TERM" "xterm-256color")))
+
+(defun my/eshell-prompt ()
+  (let* ((dir    (file-name-nondirectory (directory-file-name default-directory)))
+         (branch (my/git-branch)))
+    (if branch
+        (concat dir " "
+                (propertize (format "(%s)" branch) 'face '(:foreground "green3"))
+                " $ ")
+      (concat dir " $ "))))
+
+(setq eshell-directory-name (expand-file-name ".eshell" user-emacs-directory))
+
+(with-eval-after-load 'em-prompt
+  (set-face-attribute 'eshell-prompt nil :foreground "RoyalBlue2" :weight 'normal)
+  (setq eshell-prompt-function #'my/eshell-prompt
+        eshell-prompt-regexp   "^.* \\$ "))
+
 ;; Overrides
 
 (advice-add 'comment-region :before #'copy-region-as-kill)
@@ -160,5 +184,7 @@
 (global-set-key (kbd "C-c w") 'save-buffer-copy)
 (global-set-key (kbd "M-o i") #'(lambda() (interactive) (message (buffer-file-name))))
 (global-set-key (kbd "M-o M-i") #'(lambda() (interactive) (kill-new (message (buffer-file-name)))))
+(global-set-key (kbd "C-x t") 'eshell)
+(define-key project-prefix-map (kbd "t") 'project-eshell)
 
 (provide 'init-standalone)

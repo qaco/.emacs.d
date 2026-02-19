@@ -5,3 +5,4 @@ elpa
 .transient
 .auto-save-list
 .saves
+.eshell
