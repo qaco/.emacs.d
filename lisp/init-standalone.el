@@ -91,6 +91,10 @@
               (setq-local global-hl-line-mode nil))
             (setenv "TERM" "xterm-256color")))
 
+(with-eval-after-load 'em-hist
+  (define-key eshell-hist-mode-map (kbd "<C-up>")   'windmove-up)
+  (define-key eshell-hist-mode-map (kbd "<C-down>") 'windmove-down))
+
 (defun my/eshell-prompt ()
   (let* ((dir    (file-name-nondirectory (directory-file-name default-directory)))
          (branch (my/git-branch)))
