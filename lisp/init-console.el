@@ -38,7 +38,7 @@
 (use-package multi-vterm
   :ensure t
   :bind
-  ("C-x t" . multi-vterm))
+  ("C-x T" . multi-vterm))
 
 (defun my/vterm-setup ()
   (face-remap-add-relative 'bold '(:weight normal))
@@ -65,6 +65,6 @@
   (let ((default-directory (project-root (project-current t))))
     (multi-vterm)))
 
-(define-key project-prefix-map (kbd "t") 'project-vterm)
+(define-key project-prefix-map (kbd "T") 'project-vterm)
 
 (provide 'init-console)
