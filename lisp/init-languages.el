@@ -18,4 +18,10 @@
   (add-to-list 'eglot-server-programs '((c-mode c++-mode) . ("clangd")))
   )
 
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (c-set-offset 'arglist-close 0)
+            (c-set-offset 'arglist-cont-nonempty '+)
+            (c-set-offset 'arglist-intro '+)))
+
 (provide 'init-languages)
