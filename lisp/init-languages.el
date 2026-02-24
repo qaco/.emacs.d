@@ -24,4 +24,7 @@
             (c-set-offset 'arglist-cont-nonempty '+)
             (c-set-offset 'arglist-intro '+)))
 
+(add-hook 'eglot-managed-mode-hook
+          (lambda () (eglot-inlay-hints-mode -1)))
+          
 (provide 'init-languages)
