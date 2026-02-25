@@ -1,8 +1,12 @@
-(require 'standalone-functions)
+(use-package standalone-functions
+  :load-path "lisp")
+
+(use-package mlir-mode
+  :load-path "lisp")
+
 (use-package tablegen-mode
   :mode "\\.td\\'"
   :hook (tablegen-mode . eglot-ensure))
-(require 'mlir-mode)
 
 ;;; External tools
 
