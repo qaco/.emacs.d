@@ -1,5 +1,7 @@
 (require 'standalone-functions)
-(require 'tablegen-mode)
+(use-package tablegen-mode
+  :mode "\\.td\\'"
+  :hook (tablegen-mode . eglot-ensure))
 (require 'mlir-mode)
 
 ;;; External tools
