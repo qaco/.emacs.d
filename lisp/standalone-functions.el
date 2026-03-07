@@ -10,11 +10,11 @@
         (set-window-buffer other-window current-buffer)
         (select-window other-window)))))
 
-(defun smarter-beginning-of-line ()
+(defun smarter-beginning-of-line (&optional arg)
   "Move point to the first non-whitespace character or beginning of
    line. Move point to the beginning of line if point was already at
    the indentation."
-  (interactive)
+  (interactive "^p")
   (let ((initial-point (point)))
     (back-to-indentation)
     (when (= initial-point (point))
