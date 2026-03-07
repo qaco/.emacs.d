@@ -1,5 +1,6 @@
 (use-package anzu
   :ensure t
+  :demand t
   :config
   (global-anzu-mode +1)
   :bind (("M-%" . anzu-query-replace)

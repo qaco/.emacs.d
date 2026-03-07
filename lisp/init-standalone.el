@@ -20,8 +20,9 @@
       case-fold-search t          ; case-insensitive search
       scroll-step 1
       auto-window-vscroll nil
-      scroll-conservatively 10000
-      fill-column 80)
+      scroll-conservatively 10000)
+
+(setq-default fill-column 80)
 
 (setq-default indent-tabs-mode nil)
 
@@ -88,6 +89,7 @@
 (add-hook 'conf-mode-hook 'display-line-numbers-mode)
 (add-hook 'tex-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
+(define-key visual-line-mode-map [remap kill-line] nil)
 
 ;; Eshell
 
