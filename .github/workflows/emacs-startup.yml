@@ -48,29 +48,18 @@ jobs:
       - name: Print Emacs version
         run: emacs --version
 
-      - name: Startup test (init.el)
+      - name: Startup test
         run: |
           export HOME="$(dirname "$PWD")"
-          emacs --batch \
-            --eval '(setq debug-on-error t inhibit-startup-screen t)' \
-            --eval '(setq user-emacs-directory (expand-file-name "~/.emacs.d/"))' \
-            -l "$HOME/.emacs.d/early-init.el" \
-            -l "$HOME/.emacs.d/init.el"
-
-      - name: Startup test (standalone.el)
-        run: |
-          export HOME="$(dirname "$PWD")"
-          emacs --batch \
-            -L "$HOME/.emacs.d" \
-            --eval '(setq debug-on-error t inhibit-startup-screen t)' \
-            --eval '(setq user-emacs-directory (expand-file-name "~/.emacs.d/"))' \
-            -l "$HOME/.emacs.d/standalone.el"
+          make standalone
+          make init
 
       - name: Byte-compile configuration
         run: |
           export HOME="$(dirname "$PWD")"
-          emacs --batch \
-            -l "$HOME/.emacs.d/early-init.el" \
-            -l "$HOME/.emacs.d/init.el" \
-            --eval '(setq debug-on-error t)' \
-            --eval '(byte-recompile-directory (expand-file-name "~/.emacs.d") 0 t)'
+          make byte
+
+      - name: Run unit tests
+        run: |
+          export HOME="$(dirname "$PWD")"
+          make unit
