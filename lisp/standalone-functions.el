@@ -46,13 +46,14 @@
     ;; Copy & delete (instead of kill) the text until the end of line
     (call-interactively 'set-mark-command)
     (call-interactively 'end-of-line)
-    (copy-region-as-kill (mark) (point))
+    (kill-new (filter-buffer-substring (mark) (point)))
     (when should-kill
       (delete-region (mark) (point))
       ;; Remove all remaining whitespaces (including newline)
       (beginning-of-line)
       (wise-kill-whitespaces))
-    ;; Restore the column position
+    ;; Restore the initial state
+    (setq deactivate-mark t)
     (move-to-column former-column)))
 
 (defun save-buffer-copy (filename)

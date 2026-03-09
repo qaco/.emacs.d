@@ -50,6 +50,26 @@
       (wise-copy-line)
       (should (equal (buffer-string) before)))))
 
+(ert-deftest test/wise-copy-line-no-append-after-kill ()
+  "wise-copy-line creates a new kill ring entry even when last-command was kill-region"
+  (with-temp-buffer
+    (insert "line1\nline2\nline3")
+    (goto-char (point-min))
+    (let ((kill-ring '("previous"))
+          (last-command 'kill-region))
+      (wise-copy-line)
+      (should (= (length kill-ring) 2))
+      (should (equal (car kill-ring) "line1")))))
+
+(ert-deftest test/wise-copy-line-deactivates-mark ()
+  "wise-copy-line sets deactivate-mark to avoid leaving a selection active"
+  (with-temp-buffer
+    (insert "  hello\nworld")
+    (goto-char (point-min))
+    (let ((deactivate-mark nil))
+      (wise-copy-line)
+      (should deactivate-mark))))
+
 ;;; wise-kill-line
 
 (ert-deftest test/wise-kill-line-removes-line ()
@@ -76,6 +96,17 @@
     (goto-char (point-min))
     (wise-kill-line)
     (should (equal (buffer-string) "world"))))
+
+(ert-deftest test/wise-kill-line-no-append-after-kill ()
+  "wise-kill-line creates a new kill ring entry even when last-command was kill-region"
+  (with-temp-buffer
+    (insert "line1\nline2\nline3")
+    (goto-char (point-min))
+    (let ((kill-ring '("previous"))
+          (last-command 'kill-region))
+      (wise-kill-line)
+      (should (= (length kill-ring) 2))
+      (should (equal (car kill-ring) "line1")))))
 
 ;;; move-line-up / move-line-down
 
