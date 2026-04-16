@@ -27,4 +27,7 @@
 (add-hook 'eglot-managed-mode-hook
           (lambda () (eglot-inlay-hints-mode -1)))
           
+(require 'llvm-mode)
+(require 'llvm-mir-mode)
+
 (provide 'init-languages)
