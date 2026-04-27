@@ -16,6 +16,7 @@
   :ensure t
   :hook ((prog-mode . my/git-gutter)
          (text-mode . my/git-gutter)
+         (tablegen-mode . my/git-gutter)
          (conf-mode . my/git-gutter))
   :config
   (setq git-gutter:refresh-timer 1)
