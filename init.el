@@ -6,6 +6,9 @@
 (use-package package
   :config
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives
+               '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (add-to-list 'package-pinned-packages '(consult . "melpa-stable"))
   (setq package-install-upgrade-built-in t
         package-archive-enable-alist nil)
   (package-initialize))
