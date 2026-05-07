@@ -21,12 +21,18 @@
 (add-hook 'c++-mode-hook
           (lambda ()
             (c-set-offset 'arglist-close 0)
-            (c-set-offset 'arglist-cont-nonempty '+)
+            (c-set-offset 'arglist-cont-nonempty 'c-lineup-arglist)
             (c-set-offset 'arglist-intro '+)))
 
 (add-hook 'eglot-managed-mode-hook
           (lambda () (eglot-inlay-hints-mode -1)))
           
+(use-package tablegen-mode
+  :load-path "lisp"
+  :mode "\\.td\\'"
+  :hook ((tablegen-mode . eglot-ensure)
+         (tablegen-mode . display-line-numbers-mode)))
+
 (require 'llvm-mode)
 (require 'llvm-mir-mode)
 

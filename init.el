@@ -44,6 +44,3 @@
 
 (use-package init-console
   :load-path "lisp")
-
-(use-package init-ai
-  :load-path "lisp")

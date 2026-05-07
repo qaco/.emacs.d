@@ -4,10 +4,6 @@
 (use-package mlir-mode
   :load-path "lisp")
 
-(use-package tablegen-mode
-  :mode "\\.td\\'"
-  :hook (tablegen-mode . eglot-ensure))
-
 ;;; External tools
 
 (setq browse-url-browser-function 'browse-url-firefox
@@ -42,12 +38,9 @@
 (setq column-number-mode t
       blink-cursor-mode nil
       initial-scratch-message nil
-      confirm-nonexistent-file-or-buffer nil
-      vc-follow-symlinks nil
-      revert-without-query '(".*")
       display-fill-column-indicator-column 80)
 
-(fset 'yes-or-no-p 'y-or-n-p)
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (show-paren-mode 1)
 (global-hl-line-mode 1)
@@ -88,7 +81,6 @@
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'conf-mode-hook 'display-line-numbers-mode)
 (add-hook 'tex-mode-hook 'display-line-numbers-mode)
-(add-hook 'tablegen-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 (define-key visual-line-mode-map [remap kill-line] nil)
 
@@ -194,7 +186,6 @@
 (global-set-key (kbd "C-c r") 'recompile)
 (global-set-key (kbd "C-c n") 'next-error)
 (global-set-key (kbd "C-c C-w") 'write-file)
-(global-set-key (kbd "C-c w") 'save-buffer-copy)
 (global-set-key (kbd "M-o i") #'(lambda() (interactive) (message (buffer-file-name))))
 (global-set-key (kbd "M-o M-i") #'(lambda() (interactive) (kill-new (message (buffer-file-name)))))
 (global-set-key (kbd "C-x t") 'eshell)
