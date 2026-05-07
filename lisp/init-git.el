@@ -5,6 +5,8 @@
   (setq magit-display-buffer-function
         #'magit-display-buffer-same-window-except-diff-v1))
 
+(add-hook 'magit-status-mode-hook #'visual-line-mode)
+
 (defun magit-run-post-commit-hook (&rest _args)
   nil)
 
@@ -38,6 +40,10 @@
 
 (advice-add 'git-gutter:set-window-margin :around
             #'my/git-gutter-set-window-margin)
+
+(use-package forge
+  :ensure t
+  :after magit)
 
 (global-set-key (kbd "C-x v u") #'my/magit-stage-modified-no-confirm)
 (global-set-key (kbd "C-x v c") #'magit-commit-create)
