@@ -25,11 +25,11 @@
   (setq git-gutter:update-interval 1)
   (setq git-gutter:delay 0)
   :bind
-  ("C-x v h" . 'git-gutter:stage-hunk)
-  ("C-x v n" . 'git-gutter:next-hunk)
-  ("C-x v p" . 'git-gutter:previous-hunk)
-  ("C-x v r" . 'git-gutter:revert-hunk)
-  ("C-x v d" . 'git-gutter:popup-hunk)
+  ("C-x v h" . git-gutter:stage-hunk)
+  ("C-x v n" . git-gutter:next-hunk)
+  ("C-x v p" . git-gutter:previous-hunk)
+  ("C-x v r" . git-gutter:revert-hunk)
+  ("C-x v d" . git-gutter:popup-hunk)
   )
 
 (defun my/git-gutter-set-window-margin (orig-fn width)
