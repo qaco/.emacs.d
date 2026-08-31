@@ -18,6 +18,13 @@
   (add-to-list 'eglot-server-programs '((c-mode c++-mode) . ("clangd")))
   )
 
+(with-eval-after-load 'eglot
+  (cl-defmethod eglot-register-capability
+    (server (method (eql workspace/didChangeWatchedFiles)) id
+            &key watchers &allow-other-keys)
+    (ignore server method id watchers)
+    nil))
+
 (add-hook 'c++-mode-hook
           (lambda ()
             (c-set-offset 'arglist-close 0)
