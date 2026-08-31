@@ -3,6 +3,15 @@
   :config
   (setq org-highlight-latex-and-related '(native latex script entities))
   (setq org-hide-emphasis-markers t)
+  ;; Keywords after the "|" are "done" states and are hidden from
+  ;; `org-todo-list'. CANCELED therefore never shows up there.
+  (setq org-todo-keywords
+        '((sequence "TODO" "|" "DONE" "CANCELED")))
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  ;; Never show CANCELED entries in any agenda view (DONE stays visible).
+  (setq org-agenda-skip-function-global
+        '(org-agenda-skip-entry-if 'todo '("CANCELED")))
   :bind ("C-x C-a t" . org-todo-list)
   :bind ("C-x C-a a" . org-agenda-list)
   :bind ("C-x C-a A" . org-agenda)
