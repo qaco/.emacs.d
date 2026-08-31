@@ -21,6 +21,8 @@
 ;; Disable package.el's automatic initialization before init.el
 (setq package-enable-at-startup nil)
 
+(setq package-check-signature nil)
+
 ;; Speed up startup by delaying garbage collection
 (setq gc-cons-threshold most-positive-fixnum)
 
