@@ -74,6 +74,14 @@ This is a modular Emacs configuration using **use-package** for package manageme
 - `C-c w` - Window resizing
 - `M-g` - Navigation (goto char/line/word)
 
+## Git Policy
+
+**Do not run any git command that changes state (`commit`, `add`, `reset`,
+`push`, `checkout`, `branch`, `rebase`, `stash`, ...) unless explicitly asked
+to.** Read-only inspection (`status`, `diff`, `log`) is fine. When asked to help
+organize changes, propose the commits (grouping + messages) as text and let the
+user run them.
+
 ## Commit Message Style
 
 Follow the pattern: `<feature>: <change-description> (#<PR-number>)`
