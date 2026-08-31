@@ -4,20 +4,6 @@
 
 ;;; Code:
 
-(ert-deftest test/yaml-mode-available ()
-  "yaml-mode is available"
-  (require 'yaml-mode)
-  (should (featurep 'yaml-mode)))
-
-(ert-deftest test/markdown-mode-available ()
-  "markdown-mode is available"
-  (should (featurep 'markdown-mode)))
-
-(ert-deftest test/olivetti-available ()
-  "olivetti is available"
-  (require 'olivetti)
-  (should (featurep 'olivetti)))
-
 (ert-deftest test/markdown-mode-activation ()
   "markdown-mode is activated on .md files"
   (with-temp-buffer

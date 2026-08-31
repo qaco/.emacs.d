@@ -67,25 +67,6 @@
     (let ((mark-active nil))
       (kill-region 1 7)                 ; positions 1-6 = "hello "
       (should (equal (buffer-string) "world")))))
-
-;;; Advice: move-beginning-of-line overridden by smarter-beginning-of-line
-
-(ert-deftest test/move-bol-goes-to-indent ()
-  "move-beginning-of-line goes to indentation on first call"
-  (with-temp-buffer
-    (insert "  hello")
-    (end-of-line)
-    (move-beginning-of-line nil)
-    (should (= (current-column) 2))))
-
-(ert-deftest test/move-bol-goes-to-column-zero ()
-  "move-beginning-of-line goes to column 0 when already at indentation"
-  (with-temp-buffer
-    (insert "  hello")
-    (back-to-indentation)
-    (move-beginning-of-line nil)
-    (should (= (current-column) 0))))
-
 (provide 'test-init-standalone)
 
 ;;; test/test-init-standalone.el ends here

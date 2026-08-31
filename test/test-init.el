@@ -5,7 +5,6 @@
 ;;; Code:
 
 (let ((default-directory (expand-file-name "." user-emacs-directory)))
-  (load "test/lib/helpers" nil t)
   (load "test/test-standalone-functions" nil t)
   (load "test/test-init-standalone" nil t)
   (load "test/test-modes" nil t)
