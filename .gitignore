@@ -7,3 +7,4 @@ elpa
 .saves
 .eshell
 .projects
+*.sqlite
